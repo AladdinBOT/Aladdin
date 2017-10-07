@@ -68,6 +68,10 @@ public class PremiumCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
+            if(e.getUserProfile().getPremiumKeys() <= 0) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, você não possui chaves.");
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
             e.getUserProfile().removeKey(1);
             Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).activatePremium(true);
 
