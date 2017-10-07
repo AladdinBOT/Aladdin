@@ -1,0 +1,52 @@
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.sedmelluq.jdaction' version '1.0.1'
+    id 'com.github.johnrengelman.shadow' version '1.2.4'
+}
+
+group 'net.heyzeer0.alladin'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = "net.heyzeer0.alladin.Main"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.jsoup:jsoup:1.10.1'
+    compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'commons-io:commons-io:2.5'
+    compile 'org.yaml:snakeyaml:1.17'
+    compile 'com.google.guava:guava:20.0'
+    compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5'
+    compile 'net.dv8tion:JDA:+'
+    compile 'com.mashape.unirest:unirest-java:1.4.9'
+    compile 'org.reflections:reflections:0.9.10'
+    compile 'com.rethinkdb:rethinkdb-driver:2.3.3'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1'
+    compile 'org.projectlombok:lombok:1.16.16'
+    compile 'com.sedmelluq:lavaplayer:1.2.41'
+    compile 'net.sf.trove4j:trove4j:3.0.3'
+    compile 'com.sedmelluq:jda-nas:1.0.5'
+    compile 'com.github.fedy2:yahoo-weather-java-api:2.0.2'
+    compile 'com.udojava:EvalEx:1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'org.json:json:20170516'
+    compile 'net.heyzeer0.papi:PaladinsAPI:+'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+shadowJar.archiveName = 'AladdinBOT-1.0.jar'

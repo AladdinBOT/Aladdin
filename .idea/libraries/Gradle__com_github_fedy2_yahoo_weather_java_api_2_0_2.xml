@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.fedy2/yahoo-weather-java-api/2.0.2/1f7697b7a2e67f92be153ccda7fdd2ee0f0db1c2/yahoo-weather-java-api-2.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.fedy2/yahoo-weather-java-api/2.0.2/20f746c0d6a88d4af91d2382c073d1599eea9027/yahoo-weather-java-api-2.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
