@@ -36,7 +36,6 @@ public class OverwatchManager {
         JSONObject competitive = json.getJSONObject("games").getJSONObject("competitive");
 
         if(competitive.has("won") && !competitive.isNull("won")) {
-            System.out.println(competitive.get("won").getClass().getName());
             p.setCompetitiveWins(competitive.getInt("won"));
         }
         if(competitive.has("lost") && !competitive.isNull("lost")) {

@@ -110,12 +110,9 @@ public class GuildProfile implements ManagedObject {
 
             for(Role r : u.getRoles()) {
                 if(groups.containsKey(r.getName().toLowerCase())) {
-                    System.out.println("tem");
 
                     if(permission.contains(".")) {
-                        System.out.println("tem o .");
                         for(String x : permission.split("\\.")) {
-                            System.out.println(x);
                             if (groups.get(r.getName().toLowerCase()).permissions.contains(x + ".*")) {
                                 found = true;
                                 break;
