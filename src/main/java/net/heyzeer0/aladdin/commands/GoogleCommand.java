@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class GoogleCommand implements CommandExecutor {
 
-    @Command(command = "google", description = "Faça uma pesquisa no google.\n\nObs: você pode definir o valor da pesquisa\nnEx: a!google **2** como preparar arroz", aliasses = {"serach", "pesquisar"}, parameters = {"pesquisa"}, type = CommandType.MISCELLANEOUS,
+    @Command(command = "google", description = "Realize uma pesquisa no google.\n\nObs: você pode definir o valor da pesquisa\nnEx: a!google **2** como preparar arroz", aliasses = {"serach", "pesquisar"}, parameters = {"pesquisa"}, type = CommandType.MISCELLANEOUS,
             usage = "a!google como preparar arroz\na!google 2 como preparar arroz")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         String titulo;
