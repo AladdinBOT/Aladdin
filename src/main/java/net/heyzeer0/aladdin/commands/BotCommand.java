@@ -27,7 +27,7 @@ import java.lang.management.ManagementFactory;
  */
 public class BotCommand implements CommandExecutor {
 
-    @Command(command = "bot", description = "Obtenha informações sobre mim", parameters = {"status/ping/info"}, sendTyping = false, type = CommandType.INFORMATIVE,
+    @Command(command = "bot", description = "Obtenha informações sobre mim", parameters = {"status/ping/info"}, type = CommandType.INFORMATIVE,
             usage = "a!bot ping\na!bot status\na!bot info")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("ping")) {
