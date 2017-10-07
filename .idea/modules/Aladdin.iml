@@ -27,7 +27,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.rethinkdb:rethinkdb-driver:2.3.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.sedmelluq:lavaplayer:1.2.41" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.sedmelluq:lavaplayer:1.2.43" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.sf.trove4j:trove4j:3.0.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.sedmelluq:jda-nas:1.0.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2" level="project" />
@@ -76,7 +76,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.rethinkdb:rethinkdb-driver:2.3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sedmelluq:lavaplayer:1.2.41" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sedmelluq:lavaplayer:1.2.43" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.sf.trove4j:trove4j:3.0.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sedmelluq:jda-nas:1.0.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2" level="project" />
@@ -125,7 +125,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.rethinkdb:rethinkdb-driver:2.3.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.sedmelluq:lavaplayer:1.2.41" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.sedmelluq:lavaplayer:1.2.43" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.sf.trove4j:trove4j:3.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.sedmelluq:jda-nas:1.0.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2" level="project" />

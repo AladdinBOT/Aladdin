@@ -22,14 +22,14 @@ import java.awt.*;
 public class OverwatchCommand implements CommandExecutor{
 
     @Command(command = "overwatch", description = "Comandos sobre overwatch.", aliasses = {"ow"}, parameters = {"perfil", "usuário#id"}, type = CommandType.FUN,
-            usage = "a!overwatch perfil HeyZeer0#1517")
+            usage = "a!overwatch perfil HeyZeer0#1903")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("perfil")) {
 
             String user = args.get(1).replace("#", "-");
 
             if(!user.contains("-")) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, é necessário incluir a id do jogador, exemplo: ``HeyZeer0#1517``");
+                e.sendMessage(EmojiList.WORRIED + " Oops, é necessário incluir a id do jogador, exemplo: ``HeyZeer0#1903``");
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
 

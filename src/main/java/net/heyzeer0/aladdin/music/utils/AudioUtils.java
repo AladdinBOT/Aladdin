@@ -59,13 +59,6 @@ public class AudioUtils {
             return false;
         }
         tc.getGuild().getAudioManager().openAudioConnection(vc);
-       /* while (tc.getGuild().getAudioManager().isAttemptingToConnect()) {
-            try {
-                System.out.println("trying to connect");
-                Thread.sleep(200);
-            } catch (Exception ex) {
-            }
-        }*/
         return true;
 
     }
