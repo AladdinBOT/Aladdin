@@ -14,6 +14,7 @@ import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
+import net.heyzeer0.aladdin.profiles.SocketInfo;
 import net.heyzeer0.aladdin.utils.JDAUtils;
 
 import java.io.File;
@@ -103,6 +104,14 @@ public class Main {
 
             ChooserManager.startCleanup();
             PaginatorManager.startCleanup();
+
+            new SocketInfo(9598, (l, i) -> {
+                if(l.equalsIgnoreCase("shutdown")) {
+                    i.shutdown();
+                    Stream.of(Main.getShards()).forEach(sc -> sc.getJDA().shutdown());
+                    System.exit(0);
+                }
+            });
 
         }catch (Exception ex) {
             ex.printStackTrace();
