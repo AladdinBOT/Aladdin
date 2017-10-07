@@ -32,6 +32,7 @@ public class GuildListener {
 
         e.getJDA().getSelfUser().getManager().setName("Aladdin").queue();
 
+
         Main.getDatabase().getGuildProfile(e.getGuild());
     }
 

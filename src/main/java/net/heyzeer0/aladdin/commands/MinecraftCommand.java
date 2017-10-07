@@ -32,7 +32,7 @@ public class MinecraftCommand implements CommandExecutor {
             e.sendMessage(new EmbedBuilder()
             .setTitle("Skin do jogador " + args.get(1))
             .setImage("https://mcapi.ca/skin/" + args.get(1))
-            .setColor(Color.YELLOW));
+            .setColor(Color.GREEN));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         return new CommandResult(CommandResultEnum.NOT_FOUND);

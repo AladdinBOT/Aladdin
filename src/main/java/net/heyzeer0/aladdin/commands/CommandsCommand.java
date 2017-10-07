@@ -82,14 +82,14 @@ public class CommandsCommand implements CommandExecutor {
                     return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.command.create");
                 }
             }
-            if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "create", "nome");
+            if(args.getSize() < 3) {
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "create", "nome", "mensagem");
             }
-            String msg = args.getCompleteAfter(2);
             if (e.getGuildProfile().hasCustomCommand(args.get(1))) {
                 e.sendMessage(EmojiList.WORRIED + " Ops, parece que este comando já existe ^0^");
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
+            String msg = args.getCompleteAfter(2);
 
             e.sendMessage(EmojiList.CORRECT + " O comando ``" + args.get(1).toLowerCase() + "`` foi criado com sucesso.");
             e.getGuildProfile().createCustomCommand(args.get(1).toLowerCase(), msg, e.getAuthor().getId());
