@@ -1,6 +1,7 @@
 package net.heyzeer0.aladdin.events.listeners;
 
 import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Icon;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
@@ -28,6 +29,8 @@ public class GuildListener {
                     "\n" +
                     "Espero que se divirta comigo :smiley: e se precisar de ajuda, entre na minha guilda! https://discord.gg/ANVp6qv").queue();
         }
+
+        e.getJDA().getSelfUser().getManager().setName("Aladdin").queue();
 
         Main.getDatabase().getGuildProfile(e.getGuild());
     }

@@ -11,7 +11,7 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-mainClassName = "net.heyzeer0.alladin.Main"
+mainClassName = "net.heyzeer0.aladdin.Main"
 
 repositories {
     mavenCentral()
