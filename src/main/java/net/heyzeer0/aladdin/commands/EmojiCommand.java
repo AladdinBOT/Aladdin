@@ -18,7 +18,7 @@ import java.awt.*;
  */
 public class EmojiCommand implements CommandExecutor {
 
-    @Command(command = "emoji", description = "Emule funções em java.", parameters = {"emoji"}, type = CommandType.MISCELLANEOUS,
+    @Command(command = "emoji", description = "Obtenha informações sobre o emoji indicado", parameters = {"emoji"}, type = CommandType.MISCELLANEOUS,
             usage = "a!emoji :smiley:")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
