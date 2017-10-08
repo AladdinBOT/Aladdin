@@ -15,12 +15,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jsoup:jsoup:1.10.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: commons-io:commons-io:2.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.guava:guava:20.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.dv8tion:JDA:3.3.1_286" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.mashape.unirest:unirest-java:1.4.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.reflections:reflections:0.9.10" level="project" />
@@ -35,7 +33,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.squareup.okhttp3:okhttp:3.8.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_15" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.gson:gson:2.2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -54,6 +52,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.codehaus.woodstox:stax2-api:3.1.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.0.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.sedmelluq:lavaplayer-common:1.0.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jsoup:jsoup:1.10.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.iharder:base64:2.3.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.sedmelluq:udp-queue:1.0.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
@@ -64,12 +63,10 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.httpcomponents:httpcore-nio:4.4.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.hamcrest:hamcrest-core:1.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jsoup:jsoup:1.10.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-io:commons-io:2.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.guava:guava:20.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.dv8tion:JDA:3.3.1_286" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.mashape.unirest:unirest-java:1.4.9" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.reflections:reflections:0.9.10" level="project" />
@@ -84,7 +81,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.squareup.okhttp3:okhttp:3.8.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_15" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.gson:gson:2.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -103,6 +100,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.woodstox:stax2-api:3.1.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.0.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sedmelluq:lavaplayer-common:1.0.5" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jsoup:jsoup:1.10.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.iharder:base64:2.3.9" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sedmelluq:udp-queue:1.0.6" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
@@ -113,12 +111,10 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.httpcomponents:httpcore-nio:4.4.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.hamcrest:hamcrest-core:1.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.jsoup:jsoup:1.10.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: commons-io:commons-io:2.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:guava:20.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.dv8tion:JDA:3.3.1_286" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.mashape.unirest:unirest-java:1.4.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.reflections:reflections:0.9.10" level="project" />
@@ -133,7 +129,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.okhttp3:okhttp:3.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_15" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.gson:gson:2.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -152,6 +148,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.codehaus.woodstox:stax2-api:3.1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.sedmelluq:lavaplayer-common:1.0.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jsoup:jsoup:1.10.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.iharder:base64:2.3.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.sedmelluq:udp-queue:1.0.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
