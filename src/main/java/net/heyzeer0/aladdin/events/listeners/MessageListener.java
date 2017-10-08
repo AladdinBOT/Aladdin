@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
+import net.heyzeer0.aladdin.manager.custom.CrashManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.commands.ResponseProfile;
@@ -37,6 +38,10 @@ public class MessageListener {
         }
         if(e.getMessage().getContent().startsWith(GuildConfig.PREFIX.getDefault().toString()) && e.getMessage().getContent().length() > (GuildConfig.PREFIX.getDefault().toString().length() + 1)) {
             CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
+            return;
+        }
+
+        if(CrashManager.verifyCrash(e)) {
             return;
         }
 
