@@ -31,7 +31,7 @@ public class ChatClearCommand implements CommandExecutor {
                 });
 
                 if(msgs.size() <= 0) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, não há mensagens para deletar!");
+                    e.sendMessage(EmojiList.WORRIED + " Oops, parece não há mensagens para deletar!");
                 }else{
                     if(msgs.size() == 1) {
                         msgs.get(0).delete().queue();
