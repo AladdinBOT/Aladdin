@@ -75,6 +75,9 @@ public class CrashProfile {
         if(finallines.toLowerCase().contains("outofmemoryerror")) {
             auto_solve = "Seu jogo possui pouca memória alocada (" + memory + "), aumente essa quantidade e seu problema sera resolvido.";
         }
+        if(finallines.toLowerCase().contains("kihira.foxlib.client.TextureHelper$.getPlayerSkinAsBufferedImage".toLowerCase())) {
+            auto_solve = "Este crash ainda não possui nenhuma solução viável, é causado pelo foxlib e suas falhas são relacionadas a tentar pegar a skin do jogador, talvez relacionado a jogadores piratas.";
+        }
 
 
         if(finallines != null) {
