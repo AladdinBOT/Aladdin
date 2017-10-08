@@ -72,6 +72,9 @@ public class CrashProfile {
         if(finallines.toLowerCase().contains("could not get provider type for dimension")) {
             auto_solve = "Você encontra-se em uma dimensão invalida, para resolver peça a um administrador para te mover ao spawn.";
         }
+        if(finallines.toLowerCase().contains("outofmemoryerror")) {
+            auto_solve = "Seu jogo possui pouca memória alocada (" + memory + "), aumente essa quantidade e seu problema sera resolvido.";
+        }
 
 
         if(finallines != null) {
@@ -96,7 +99,7 @@ public class CrashProfile {
         b.setColor(Color.GREEN);
 
         b.addField("Versão do Minecraft", minecraft_version, true);
-        b.addField("Memória", memory, true);
+        b.addField("Memória (U/L/M)", memory, true);
         b.addField("Solução automatica", auto_solve, false);
         b.addField("Versão do Java", java_version, true);
         b.addField("Hastebin", hastebin_url, true);
