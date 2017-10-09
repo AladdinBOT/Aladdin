@@ -42,8 +42,6 @@ public class WarframeCommand implements CommandExecutor {
 
             WebhookProfile wbhook = new WebhookProfile("Ordis", "http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png", e.getChannel());
 
-            for(Guild g : e.getJDA().getGuilds()) { if(g.getId().equalsIgnoreCase("178878447614033921") || g.getId().equalsIgnoreCase("163106828274761728")) { continue; }try{ g.getDefaultChannel().sendMessage(":beginner: Olá, pera... algo de estranho aconteceu, acho que agora eu sou um menino?! Ao que parece meu criador decidiu me renomear para alguém que tivesse uma histórinha legal a ser contada, bom, recomendo você a dar uma explorada por aí, que tal usar ``a!help``? Se precisar de ajuda ou quiser perguntar alguma coisa você pode entrar em minha guilda https://discord.gg/ANVp6qv :yum: ").queue(); }catch (Exception ex) { ex.printStackTrace(); } }
-
             Utils.runAsync(() -> {
 
                 try{
