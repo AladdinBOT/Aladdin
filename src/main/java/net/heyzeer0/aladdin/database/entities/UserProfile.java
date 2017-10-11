@@ -99,12 +99,6 @@ public class UserProfile implements ManagedObject {
     }
 
     public boolean createPlaylist(String name) {
-        if(!userPremium()) {
-            if(playlist.size() >= 1) {
-                return false;
-            }
-        }
-
         if(playlist.containsKey(name)) {
             return false;
         }

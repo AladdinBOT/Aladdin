@@ -40,7 +40,7 @@ public class PlaylistCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            if(e.getUserProfile().getPlaylist().size() >= 1 && !e.getUserProfile().isPremiumActive()) {
+            if(e.getUserProfile().getPlaylist().size() >= 2 && !e.getUserProfile().isPremiumActive()) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, você excedeu a quantidade maxima de playlists, você pode evitar isso adquirindo chaves premium.");
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
@@ -78,6 +78,11 @@ public class PlaylistCommand implements CommandExecutor {
 
             if(!e.getUserProfile().getPlaylist().containsKey(args.get(1))) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, você não possui uma playlist com este nome!");
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
+
+            if(e.getUserProfile().getPlaylist().get(args.get(1)).size() >= 20 && !e.getUserProfile().isPremiumActive()) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, você excedeu a quantidade maxima de musicas dessa playlist, você pode evitar isso adquirindo chaves premium.");
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
