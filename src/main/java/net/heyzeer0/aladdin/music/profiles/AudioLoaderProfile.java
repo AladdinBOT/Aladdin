@@ -41,11 +41,11 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
     }
 
     public static void loadAndPlay(User user, Message msg, String search, boolean force) {
-        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, null, true));
+        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, "none", true));
     }
 
     public static void loadAndPlay(User user, Message msg, String search, boolean force, boolean send_msgs) {
-        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, null, send_msgs));
+        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, "none", send_msgs));
     }
 
     public static void addToPlaylist(User user, Message msg, String search, boolean force, String playlist) {
@@ -83,10 +83,9 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
             AudioTrack[] options = pl.getTracks().stream().limit(3).toArray(AudioTrack[]::new);
             for (AudioTrack track : options) {
                 ch.addOption(track.getInfo().title + " ``(" + AudioUtils.format(track.getDuration()) + ")``", () -> {
-                    if(playlist == null) {
+                    if(playlist.equalsIgnoreCase("none")) {
                         trackLoaded(track);
                     }else{
-
                         message.editMessage(EmojiList.CORRECT + " Você adicionou a música ``" + track.getInfo().title + "`` com sucesso a playlist ``" + playlist + "``").queue();
 
                         Main.getDatabase().getUserProfile(user).addTrackToPlaylist(playlist, track.getInfo().title, AudioUtils.format(track.getInfo().length), track.getInfo().uri);
