@@ -87,7 +87,7 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
                         trackLoaded(track);
                     }else{
 
-                        message.editMessage(EmojiList.CORRECT + " Você adicionou a música ``" + track.getInfo().title + "`` com sucesso a playlist ``" + playlist + "``");
+                        message.editMessage(EmojiList.CORRECT + " Você adicionou a música ``" + track.getInfo().title + "`` com sucesso a playlist ``" + playlist + "``").queue();
 
                         Main.getDatabase().getUserProfile(user).addTrackToPlaylist(playlist, track.getInfo().title, AudioUtils.format(track.getInfo().length), track.getInfo().uri);
 
