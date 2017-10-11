@@ -7,6 +7,7 @@ import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.rethinkdb.RethinkDB.r;
 
@@ -26,14 +27,14 @@ public class UserProfile implements ManagedObject {
     long premiumTime = 0;
     boolean autoRenew;
 
-    ArrayList<String> playlist;
+    HashMap<String, ArrayList<PlaylistTrackProfile>> playlist;
 
     public UserProfile(User u) {
-        this(u.getId(), 0, false, 0, false, new ArrayList<>());
+        this(u.getId(), 0, false, 0, false, new HashMap<>());
     }
 
     @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist"})
-    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, ArrayList<String> playlist) {
+    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist) {
         this.id = id;
         this.premiumKeys = premiumKeys;
         this.premiumActive = premiumActive;
@@ -95,6 +96,58 @@ public class UserProfile implements ManagedObject {
     public void addKeys(Integer amount) {
         premiumKeys+= amount;
         saveAsync();
+    }
+
+    public boolean createPlaylist(String name) {
+        if(!userPremium()) {
+            if(playlist.size() >= 1) {
+                return false;
+            }
+        }
+
+        if(playlist.containsKey(name)) {
+            return false;
+        }
+
+        playlist.put(name, new ArrayList<>());
+        saveAsync();
+        return true;
+    }
+
+    public boolean deletePlaylist(String name) {
+        if(!playlist.containsKey(name)) {
+            return false;
+        }
+
+        playlist.remove(name);
+        saveAsync();
+        return true;
+    }
+
+    public boolean addTrackToPlaylist(String playlistn, String name, String duration, String url) {
+        if(!playlist.containsKey(playlistn)) {
+            return false;
+        }
+        ArrayList<PlaylistTrackProfile> tracks = playlist.get(playlistn);
+        tracks.add(new PlaylistTrackProfile(name, duration, url));
+
+        playlist.put(playlistn, tracks);
+        saveAsync();
+        return true;
+    }
+
+    public boolean removeTrackFromPlaylist(String playlistn, int id) {
+        if(!playlist.containsKey(playlistn)) {
+            return false;
+        }
+
+        if(playlist.get(playlistn).size() < (id)) {
+            return false;
+        }
+
+        playlist.get(playlistn).remove((id));
+        saveAsync();
+        return true;
     }
 
     @Override

@@ -28,16 +28,28 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
     private Message message;
     private String search;
     private User user;
+    private String playlist;
+    private boolean send_msgs;
 
-    private AudioLoaderProfile(User user, Message message, String search, boolean force) {
+    private AudioLoaderProfile(User user, Message message, String search, boolean force, String playlist, boolean send_msgs) {
         this.user = user;
         this.message = message;
         this.search = search;
         this.force = force;
+        this.playlist = playlist;
+        this.send_msgs = true;
     }
 
     public static void loadAndPlay(User user, Message msg, String search, boolean force) {
-        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force));
+        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, null, true));
+    }
+
+    public static void loadAndPlay(User user, Message msg, String search, boolean force, boolean send_msgs) {
+        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, null, send_msgs));
+    }
+
+    public static void addToPlaylist(User user, Message msg, String search, boolean force, String playlist) {
+        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, playlist, true));
     }
 
     @Override
@@ -50,7 +62,12 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
         if (AudioUtils.connectChannel(message.getTextChannel(), member)) {
             GuildTrackProfile scheduler = MusicManager.getManager(message.getGuild());
             scheduler.offer(new PlayerContext(track, user, message.getTextChannel(), Main.getShard(user.getJDA().getShardInfo() == null ? 0 : user.getJDA().getShardInfo().getShardId())));
-            message.editMessage(":musical_note: " + user.getName() + " adicionou a musica `" + track.getInfo().title + "` na playlist! (`" + AudioUtils.format(track.getDuration()) + "`) [`" + scheduler.getQueue().size() + "`]").queue(msg -> msg.delete().queueAfter(30, TimeUnit.SECONDS));
+
+            if(send_msgs)
+                message.editMessage(":musical_note: " + user.getName() + " adicionou a musica `" + track.getInfo().title + "` na playlist! (`" + AudioUtils.format(track.getDuration()) + "`) [`" + scheduler.getQueue().size() + "`]").queue(msg -> msg.delete().queueAfter(30, TimeUnit.SECONDS));
+            else {
+                message.delete().queueAfter(30, TimeUnit.SECONDS);
+            }
         }
     }
 
@@ -65,7 +82,17 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
             Chooser ch = new Chooser(message, ":musical_note: Selecione o resultado:");
             AudioTrack[] options = pl.getTracks().stream().limit(3).toArray(AudioTrack[]::new);
             for (AudioTrack track : options) {
-                ch.addOption(track.getInfo().title + " ``(" + AudioUtils.format(track.getDuration()) + ")``", () -> trackLoaded(track));
+                ch.addOption(track.getInfo().title + " ``(" + AudioUtils.format(track.getDuration()) + ")``", () -> {
+                    if(playlist == null) {
+                        trackLoaded(track);
+                    }else{
+
+                        message.editMessage(EmojiList.CORRECT + " Você adicionou a música ``" + track.getInfo().title + "`` com sucesso a playlist ``" + playlist + "``");
+
+                        Main.getDatabase().getUserProfile(user).addTrackToPlaylist(playlist, track.getInfo().title, AudioUtils.format(track.getInfo().length), track.getInfo().uri);
+
+                    }
+                });
             }
 
             ch.start();

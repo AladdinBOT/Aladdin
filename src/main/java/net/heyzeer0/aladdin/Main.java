@@ -88,6 +88,7 @@ public class Main {
             CommandManager.registerCommand(new WeatherCommand());
 
             CommandManager.registerCommand(new PlayCommand());
+            CommandManager.registerCommand(new PlaylistCommand());
             CommandManager.registerCommand(new QueueCommand());
             CommandManager.registerCommand(new RepeatCommand());
             CommandManager.registerCommand(new SkipCommand());
