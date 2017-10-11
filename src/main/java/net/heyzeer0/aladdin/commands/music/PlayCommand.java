@@ -25,7 +25,7 @@ public class PlayCommand implements CommandExecutor {
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
 
-        e.getChannel().sendMessage(EmojiList.CORRECT + " Procurando por músicas com o seguinte argumento: ``" + args.getCompleteAfter(1) + "``").queue(msg -> AudioLoaderProfile.loadAndPlay(e.getAuthor(), msg, args.getCompleteAfter(0), false));
+        e.getChannel().sendMessage(EmojiList.CORRECT + " Procurando por músicas com o seguinte argumento: ``" + args.getCompleteAfter(0) + "``").queue(msg -> AudioLoaderProfile.loadAndPlay(e.getAuthor(), msg, args.getCompleteAfter(0), false));
 
         return new CommandResult((CommandResultEnum.SUCCESS));
     }
