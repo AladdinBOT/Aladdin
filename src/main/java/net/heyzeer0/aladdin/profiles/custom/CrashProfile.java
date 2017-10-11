@@ -78,6 +78,9 @@ public class CrashProfile {
         if(finallines.toLowerCase().contains("kihira.foxlib.client.TextureHelper$.getPlayerSkinAsBufferedImage".toLowerCase())) {
             auto_solve = "Este crash ainda não possui nenhuma solução viável, é causado pelo foxlib e suas falhas são relacionadas a tentar pegar a skin do jogador, talvez relacionado a jogadores piratas.";
         }
+        if(finallines.toLowerCase().contains("IndexOutOfBoundsException".toLowerCase())) {
+            auto_solve = "Este crash esta relacionado a cliques em slots invalidos, existem diversas causas geralmente resolvido só de abrir o jogo novamente.";
+        }
 
 
         if(finallines != null) {
