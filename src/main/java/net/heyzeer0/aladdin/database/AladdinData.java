@@ -23,6 +23,8 @@ public class AladdinData {
     public AladdinData() {
         conn = r.connection().hostname(MainConfig.rethink_ip).port(MainConfig.rethink_port).db(MainConfig.rethink_db).user(MainConfig.rethink_user, MainConfig.rethink_pass).connect();
 
+        r.tableDrop("users").runNoReply(conn);
+
         try { r.tableCreate("users").runNoReply(conn); r.tableCreate("guilds").runNoReply(conn); }catch (Exception ignored) {}
     }
 
