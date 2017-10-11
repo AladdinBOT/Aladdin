@@ -38,24 +38,24 @@ public class AudioUtils {
                 }
             }
             if (!tc.getGuild().getAudioManager().getConnectedChannel().equals(member.getVoiceState().getChannel())) {
-                tc.sendMessage(EmojiList.WORRIED + " Ooops, você não esta conectado ao canal a qual eu estou tocando!").queue();
+                tc.sendMessage(EmojiList.WORRIED + " Oops, você não esta conectado ao canal a qual eu estou tocando!").queue();
                 return false;
             }
             return true;
         }
 
         if (!member.getVoiceState().inVoiceChannel()) {
-            tc.sendMessage(EmojiList.WORRIED + " Ooops, você não esta conectado a um canal de voz!").queue();
+            tc.sendMessage(EmojiList.WORRIED + " Oops, você não esta conectado a um canal de voz!").queue();
             return false;
         }
 
 
         VoiceChannel vc = member.getVoiceState().getChannel();
         if (!tc.getGuild().getSelfMember().hasPermission(vc, Permission.VOICE_CONNECT)) {
-            tc.sendMessage(EmojiList.WORRIED + " Ooops, parece que eu não tenho permisssão para entrar no seu canal de audio!").queue();
+            tc.sendMessage(EmojiList.WORRIED + " Oops, parece que eu não tenho permisssão para entrar no seu canal de audio!").queue();
             return false;
         } else if (vc.getUserLimit() > 0 && vc.getMembers().size() > vc.getUserLimit() && !tc.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL)) {
-            tc.sendMessage(EmojiList.WORRIED + " Ooops, parece que eu não posso entrar no seu canal de audio já que o limite de usuários foi alcançado!").queue();
+            tc.sendMessage(EmojiList.WORRIED + " Oops, parece que eu não posso entrar no seu canal de audio já que o limite de usuários foi alcançado!").queue();
             return false;
         }
         tc.getGuild().getAudioManager().openAudioConnection(vc);

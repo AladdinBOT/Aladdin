@@ -114,7 +114,7 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
     public void noMatches() {
         if (!search.startsWith("ytsearch:")) {
             if(playlist.equalsIgnoreCase("none")) {
-                loadAndPlay(user, message, "ytsearch:" + search, force);
+                loadAndPlay(user, message, "ytsearch:" + search, force, send_msgs);
             }else{
                 addToPlaylist(user, message, "ytsearch:" + search, force, playlist);
             }

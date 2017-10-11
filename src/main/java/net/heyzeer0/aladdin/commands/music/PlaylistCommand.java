@@ -16,6 +16,7 @@ import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -121,6 +122,11 @@ public class PlaylistCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "play", "playlist");
             }
 
+            if (!e.getGuild().getMember(e.getAuthor()).getVoiceState().inVoiceChannel()) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, você não esta em um canal de voz! ");
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
+
             if(!e.getUserProfile().getPlaylist().containsKey(args.get(1))) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, você não possui uma playlist com este nome!");
                 return new CommandResult(CommandResultEnum.SUCCESS);
@@ -153,6 +159,7 @@ public class PlaylistCommand implements CommandExecutor {
 
                 b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
                 b.setTimestamp(e.getMessage().getCreationTime());
+                b.setColor(Color.GREEN);
 
                 e.sendMessage(b);
 
@@ -173,6 +180,7 @@ public class PlaylistCommand implements CommandExecutor {
 
                 b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
                 b.setTimestamp(e.getMessage().getCreationTime());
+                b.setColor(Color.GREEN);
 
                 e.sendMessage(b);
             }
