@@ -84,8 +84,10 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
             for (AudioTrack track : options) {
                 ch.addOption(track.getInfo().title + " ``(" + AudioUtils.format(track.getDuration()) + ")``", () -> {
                     if(playlist.equalsIgnoreCase("none")) {
+                        System.out.println("ata " + playlist);
                         trackLoaded(track);
                     }else{
+                        System.out.println("ata2");
                         message.editMessage(EmojiList.CORRECT + " Você adicionou a música ``" + track.getInfo().title + "`` com sucesso a playlist ``" + playlist + "``").queue();
 
                         Main.getDatabase().getUserProfile(user).addTrackToPlaylist(playlist, track.getInfo().title, AudioUtils.format(track.getInfo().length), track.getInfo().uri);
@@ -111,7 +113,11 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
     @Override
     public void noMatches() {
         if (!search.startsWith("ytsearch:")) {
-            loadAndPlay(user, message, "ytsearch:" + search, force);
+            if(playlist.equalsIgnoreCase("none")) {
+                loadAndPlay(user, message, "ytsearch:" + search, force);
+            }else{
+                addToPlaylist(user, message, "ytsearch:" + search, force, playlist);
+            }
             return;
         }
         message.editMessage(EmojiList.WORRIED + " Parece que eu não encontrei nada sobre ``" + (search.startsWith("ytsearch:") ? search.substring(9) : search).trim() + "``.").queue(msg -> msg.delete().queueAfter(30, TimeUnit.SECONDS));

@@ -13,11 +13,10 @@ public class MainConfig {
     public static String bot_token = "<insert-here>";
     public static String bot_game = "Tudo esta conectado";
     public static String rethink_ip = "<insert-here>";
-    public static Integer rethink_port = 28015;
+    public static int rethink_port = 28015;
     public static String rethink_user = "<insert-here>";
     public static String rethink_pass = "<insert-here>";
     public static String rethink_db = "<insert-here>";
     public static String bot_owner = "169904764048375809";
-    public static String update_dir = "<insert-here>";
 
 }

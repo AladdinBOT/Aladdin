@@ -1,10 +1,13 @@
 package net.heyzeer0.aladdin.commands.music;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
+import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.PlaylistTrackProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.profiles.AudioLoaderProfile;
@@ -21,8 +24,8 @@ import java.util.ArrayList;
  */
 public class PlaylistCommand implements CommandExecutor {
 
-    @Command(command = "playlist", description = "Crie playlists para auto-reprodução!", parameters = "criar/deletar/add/rem/play/list/user", type = CommandType.MUSIC,
-            usage = "a!playlist criar Chillhop\na!playlist deletar Chillhop\na!playlist add Chillhop Brock Berrigan - Point Pleasant\na!playlist rem Chillhop 0\na!playlist play Chillhop\na!playlist list\na!playlist list @HeyZeer0\na!playlist user Chillhop @HeyZeer0")
+    @Command(command = "playlist", description = "Crie playlists para auto-reprodução!", parameters = "criar/deletar/add/rem/play/list/info", type = CommandType.MUSIC,
+            usage = "a!playlist criar Chillhop\na!playlist deletar Chillhop\na!playlist add Chillhop Brock Berrigan - Point Pleasant\na!playlist rem Chillhop 0\na!playlist play Chillhop\na!playlist list\na!playlist list @HeyZeer0\na!playlist info Chillhop")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
         if(args.get(0).equalsIgnoreCase("criar")) {
@@ -138,6 +141,47 @@ public class PlaylistCommand implements CommandExecutor {
 
         if(args.get(0).equalsIgnoreCase("list")) {
 
+            if(e.getMessage().getMentionedUsers().size() >= 1) {
+
+                EmbedBuilder b = new EmbedBuilder();
+                b.setTitle(":musical_note: Listando todas as suas playlists");
+                b.setDescription("Para adicionar músicas use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "playlist add [nome] [musica]``");
+
+                for(String k : Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getPlaylist().keySet()) {
+                    b.addField(k, "Contem ``" + Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getPlaylist().get(k).size() + "`` musicas.", false);
+                }
+
+                b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+                b.setTimestamp(e.getMessage().getCreationTime());
+
+                e.sendMessage(b);
+
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
+
+
+            if(e.getUserProfile().getPlaylist().size() <= 0) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, você não possui playlists.");
+            }else{
+                EmbedBuilder b = new EmbedBuilder();
+                b.setTitle(":musical_note: Listando todas as suas playlists");
+                b.setDescription("Para adicionar músicas use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "playlist add [nome] [musica]``");
+
+                for(String k : e.getUserProfile().getPlaylist().keySet()) {
+                    b.addField(k, "Contem ``" + e.getUserProfile().getPlaylist().get(k).size() + "`` musicas.", false);
+                }
+
+                b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+                b.setTimestamp(e.getMessage().getCreationTime());
+
+                e.sendMessage(b);
+            }
+
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
+
+        if(args.get(0).equalsIgnoreCase("info")) {
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "list", "playlist");
             }
@@ -177,7 +221,7 @@ public class PlaylistCommand implements CommandExecutor {
             }
 
             ph.start();
-            return new CommandResult(CommandResultEnum.NOT_FOUND);
+            return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
         return new CommandResult(CommandResultEnum.NOT_FOUND);
