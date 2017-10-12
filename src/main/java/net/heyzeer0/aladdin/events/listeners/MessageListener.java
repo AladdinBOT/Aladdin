@@ -40,6 +40,11 @@ public class MessageListener {
             CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
             return;
         }
+        String id = "<@" + e.getJDA().getSelfUser().getId() + ">";
+        if(e.getMessage().getContent().startsWith(id) && e.getMessage().getRawContent().length() > (id.length() + 1)) {
+            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
+            return;
+        }
 
         if(CrashManager.verifyCrash(e)) {
             return;
