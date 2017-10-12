@@ -76,7 +76,6 @@ public class BotCommand implements CommandExecutor {
                     .addField(":musical_note: Canais de voz: ", e.getJDA().getVoiceChannels().size() + "", true)
                     .addField(":musical_keyboard: Players de musica: ", MusicManager.getManagers().size() + "", true)
                     .addField(":newspaper: Lavaplayer:", PlayerLibrary.VERSION, true)
-                    .addBlankField(true)
                     .setFooter("Aladdin - Version " + Main.version, e.getJDA().getSelfUser().getAvatarUrl())
 
                     .build())

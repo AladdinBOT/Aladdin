@@ -7,6 +7,8 @@ import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 import net.heyzeer0.aladdin.Main;
 
+import java.awt.*;
+
 /**
  * Created by HeyZeer0 on 22/09/2017.
  * Copyright © HeyZeer0 - 2016
@@ -31,6 +33,7 @@ public class GuildListener {
         }
 
         e.getJDA().getSelfUser().getManager().setName("Aladdin").queue();
+        Main.getLogger().embed(":house: Guild Join Event", "Guilda ``" + e.getGuild().getName() + "``\nUsers ``" + e.getGuild().getMembers().size() + "``", Color.GREEN);
 
 
         Main.getDatabase().getGuildProfile(e.getGuild());
@@ -38,6 +41,7 @@ public class GuildListener {
 
     public static void onGuildLeave(GuildLeaveEvent e) {
         Main.getDatabase().getGuildProfile(e.getGuild()).deleteAsync();
+        Main.getLogger().embed(":house: Guild Leave Event", "Guilda ``" + e.getGuild().getName() + "``\nUsers ``" + e.getGuild().getMembers().size() + "``", Color.GREEN);
     }
 
     public static void onMemberLeave(GuildMemberLeaveEvent e) {

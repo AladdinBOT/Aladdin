@@ -2,6 +2,7 @@ package net.heyzeer0.aladdin;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.commands.*;
 import net.heyzeer0.aladdin.commands.music.*;
@@ -149,5 +150,19 @@ public class Main {
         ArrayList<Guild> guilds = new ArrayList<>();
         Stream.of(getConnectedShards()).forEach(sp -> guilds.addAll(sp.getJDA().getMutualGuilds(user)));
         return guilds;
+    }
+
+    public static TextChannel getTextChannelById(String id) {
+        TextChannel ch = null;
+        for(ShardProfile shards : getConnectedShards()) {
+            if(ch != null) {
+                break;
+            }
+            if(shards.getJDA().getTextChannelById(id) != null) {
+                ch = shards.getJDA().getTextChannelById(id);
+            }
+        }
+
+        return ch;
     }
 }

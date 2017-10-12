@@ -18,5 +18,6 @@ public class MainConfig {
     public static String rethink_pass = "<insert-here>";
     public static String rethink_db = "<insert-here>";
     public static String bot_owner = "169904764048375809";
+    public static String bot_guildlog_id = "<insert-here>";
 
 }
