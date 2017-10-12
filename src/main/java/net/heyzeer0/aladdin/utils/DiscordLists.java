@@ -1,6 +1,7 @@
 package net.heyzeer0.aladdin.utils;
 
 import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
+import com.github.natanbc.discordbotsapi.PostingException;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
@@ -15,12 +16,19 @@ public class DiscordLists {
 
         }
 
-        for(ShardProfile shard : Main.getConnectedShards()) {
-            Utils.runAsync(() -> {
-                discordBots.postStats(shard.getShardId(), Main.getShards().length, shard.getJDA().getGuilds().size());
-            });
-        }
-
+        Utils.runAsync(() -> {
+            ShardProfile[] shards = Main.getShards();
+            int[] payload = new int[shards.length];
+            for(int i = 0; i < shards.length; i++) {
+                payload[i] = shards[i].getJDA().getGuilds().size();
+            }
+            try {
+                discordBots.postStats(shards[0].getJDA().getSelfUser().getIdLong(), payload);
+            } catch(PostingException e) {
+                Main.getLogger().warn("An error ocurred while trying to post status to discordbots.org");
+                e.printStackTrace();
+            }
+        });
     }
 
 }
