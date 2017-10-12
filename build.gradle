@@ -40,6 +40,13 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
 }
 
+shadowJar {
+    exclude("natives/darwin/**")
+    exclude("natives/win-x86/**")
+    exclude("natives/win-x86-64/**")
+    exclude("natives/linux-x86/**")
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '3.2'
 }
