@@ -182,6 +182,7 @@ public class CommandManager {
         ArrayList<String> split  = new ArrayList<>();
         String raw = rw;
         String beheaded = raw.replaceFirst(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString(), "");
+        beheaded = beheaded.replaceFirst(GuildConfig.PREFIX.getDefault().toString(), "");
         String[] splitBeheaded = beheaded.split(" ");
         Collections.addAll(split, splitBeheaded);
         String invoke = split.get(0);
