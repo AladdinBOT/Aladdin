@@ -23,6 +23,10 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HeyZeer0 on 14/01/2017.
@@ -32,23 +36,17 @@ public class Utils {
 
     public static Random r = new Random();
     private static final Map<String, String> regional = new HashMap<>();
-    private static Timer timer = new Timer("Main timer");
+    private static ScheduledExecutorService timers = Executors.newSingleThreadScheduledExecutor();
+    private static ScheduledExecutorService async = Executors.newSingleThreadScheduledExecutor();
 
     public static OkHttpClient httpclient = new OkHttpClient.Builder().build();
 
     public static void runAsync(Runnable r) {
-        new Thread(r::run).start();
+        async.execute(r);
     }
 
-    public static void runLater(Runnable r, long time) {
-        timer.schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        r.run();
-                        this.cancel();
-                    }
-                }, time);
+    public static void runLater(Runnable r, long time, TimeUnit unit) {
+        timers.schedule(r, time, unit);
     }
 
     public static String translateTempo(String entrada) {

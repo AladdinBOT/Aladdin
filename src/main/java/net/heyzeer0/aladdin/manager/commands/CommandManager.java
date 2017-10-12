@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HeyZeer0 on 14/01/2017.
@@ -143,7 +144,7 @@ public class CommandManager {
                 }
 
                 if(cmd.getAnnotation().deleteCountdown() >= 1) {
-                    Utils.runLater(e::deleteMessages, cmd.getAnnotation().deleteCountdown() * 1000);
+                    Utils.runLater(e::deleteMessages, cmd.getAnnotation().deleteCountdown(), TimeUnit.SECONDS);
                 }
 
             }catch (Exception ex) {

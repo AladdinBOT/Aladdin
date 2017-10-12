@@ -40,8 +40,6 @@ public class WarframeCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "warframe preço", "item");
             }
 
-            WebhookProfile wbhook = new WebhookProfile("Ordis", "http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png", e.getChannel());
-
             Utils.runAsync(() -> {
 
                 try{
@@ -49,7 +47,7 @@ public class WarframeCommand implements CommandExecutor {
                     List<PriceProfile> p = PriceManager.getPrices(item);
 
                     if (p == null || p.size() <= 0) {
-                        wbhook.sendMessage("Desculpe te decepcionar operador, não encontrei nada sobre " + item + ".");
+                        e.sendMessage("Desculpe te decepcionar operador, não encontrei nada sobre " + item + ".");
                         return;
                     }
 
@@ -67,9 +65,9 @@ public class WarframeCommand implements CommandExecutor {
                     b.setFooter("Warframe Status - Powered by Nexus-Stats", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                     b.setTimestamp(e.getMessage().getCreationTime());
 
-                    wbhook.sendMessage(b);
+                    e.sendMessage(b);
                 }catch (Exception ex) {
-                    wbhook.sendMessage("Aguarde um pouco enquanto analizo os dados. Erro ``" + ex.getMessage() + "``! O operador gostou deste deboche?");
+                    e.sendMessage("Aguarde um pouco enquanto analizo os dados. Erro ``" + ex.getMessage() + "``! O operador gostou deste deboche?");
                 }
             });
 
@@ -109,7 +107,6 @@ public class WarframeCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if (args.get(0).equalsIgnoreCase("alertas")) {
-            WebhookProfile wbhook = new WebhookProfile("Ordis", "http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png", (TextChannel)e.getChannel());
 
             Utils.runAsync(() -> {
 
@@ -137,7 +134,7 @@ public class WarframeCommand implements CommandExecutor {
                 b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                 b.setTimestamp(e.getMessage().getCreationTime());
 
-                wbhook.sendMessage(b);
+                e.sendMessage(b);
 
             });
             return new CommandResult(CommandResultEnum.SUCCESS);
