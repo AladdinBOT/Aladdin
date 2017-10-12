@@ -25,7 +25,7 @@ public class MathCommand implements CommandExecutor {
         BigDecimal answer;
 
         try{
-            answer = new Expression(conta).setPrecision(2).eval();
+            answer = new Expression(conta).eval();
         }catch (Exception ex) {
             e.sendMessage(EmojiList.WORRIED + " Oops, a expressão metemática inserida é invalida");
             return new CommandResult((CommandResultEnum.SUCCESS));
