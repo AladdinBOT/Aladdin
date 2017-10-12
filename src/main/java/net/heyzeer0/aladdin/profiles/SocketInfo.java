@@ -15,12 +15,11 @@ public class SocketInfo {
     public SocketInfo(int port, SocketMessage msg) throws Exception {
         DatagramSocket serverSocket = new DatagramSocket(port);
         this.msg = msg;
+        byte[] receiveData = new byte[1024];
+        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
         try{
             while(!shutdown) {
-                byte[] receiveData = new byte[8];
-
-                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 serverSocket.receive(receivePacket);
                 String sentence = new String( receivePacket.getData(), 0, receivePacket.getLength());
 

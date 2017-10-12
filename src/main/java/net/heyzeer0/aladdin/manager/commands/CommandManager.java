@@ -49,7 +49,7 @@ public class CommandManager {
                     NodeManager.getNode("command").addSubnode("command." + annotation.command() + "." + x);
                 }
             }
-            
+
             if(annotation.aliasses()[0] == null || annotation.aliasses()[0].equalsIgnoreCase("none")) {
                 continue;
             }

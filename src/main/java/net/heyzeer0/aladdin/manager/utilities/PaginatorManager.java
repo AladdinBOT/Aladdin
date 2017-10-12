@@ -4,6 +4,9 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HeyZeer0 on 12/06/2017.
@@ -12,7 +15,7 @@ import java.util.*;
 public class PaginatorManager {
 
     public static HashMap<String, Paginator> paginators = new HashMap<>();
-    private static Timer tr = new Timer("Paginators");
+    private static ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 
     public static void registerPaginator(Paginator pg) {
         paginators.put(pg.getActualId(), pg);
@@ -28,23 +31,17 @@ public class PaginatorManager {
     }
 
     public static void startCleanup() {
-        tr.schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        if(paginators.size() >= 1) {
-                            List<String> to_delete = new ArrayList<>();
-                            for(String ks : paginators.keySet()) {
-                                if(paginators.get(ks).clear()) {
-                                    to_delete.add(ks);
-                                }
-                            }
-                            to_delete.forEach(k -> paginators.remove(k));
-                            startCleanup();
-                        }
-                        this.cancel();
+        service.scheduleAtFixedRate(() -> {
+            if(paginators.size() >= 1) {
+                List<String> to_delete = new ArrayList<>();
+                for(String ks : paginators.keySet()) {
+                    if(paginators.get(ks).clear()) {
+                        to_delete.add(ks);
                     }
-        }, 8000);
+                }
+                to_delete.forEach(k -> paginators.remove(k));
+            }
+        }, 0, 15, TimeUnit.SECONDS);
     }
 
 }

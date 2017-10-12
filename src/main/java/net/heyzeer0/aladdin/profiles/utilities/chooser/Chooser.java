@@ -24,7 +24,7 @@ public class Chooser {
 
     HashMap<Integer, ActionProfile> actions = new HashMap<>();
 
-    long start = 0;
+    long last_action = 0;
 
     Message e;
 
@@ -44,7 +44,7 @@ public class Chooser {
     }
 
     public void clickAction(MessageReactionAddEvent e) {
-        if(start == 0) {
+        if(last_action == 0) {
             return;
         }
         if(e.getMember().getUser().isFake() || e.getMember().getUser().isBot()) {
@@ -55,6 +55,7 @@ public class Chooser {
                 try{
                     selected = true;
                     actions.get(Integer.valueOf(Utils.getRegional(e.getReactionEmote().getName()))).action.run();
+                    last_action = System.currentTimeMillis();
                     ChooserManager.choosers.remove(selector.getId());
                     selector.delete().queue(scs -> {}, flr -> {});
                 }catch (Exception ex) {
@@ -69,7 +70,7 @@ public class Chooser {
     }
 
     public void start() {
-        start = System.currentTimeMillis();
+        last_action = System.currentTimeMillis();
 
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
@@ -97,12 +98,16 @@ public class Chooser {
 
 
     public void clear() {
-        if(start != 0)
-            if(System.currentTimeMillis() - start >= 15000) {
+        if(last_action != 0)
+            if(System.currentTimeMillis() - last_action >= 15000) {
                 selected = true;
                 ChooserManager.choosers.remove(selector.getId());
                 selector.delete().queue();
         }
+    }
+
+    public long getLastAction() {
+        return last_action;
     }
 
 }
