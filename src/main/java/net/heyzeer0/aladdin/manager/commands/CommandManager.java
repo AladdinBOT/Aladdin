@@ -41,11 +41,11 @@ public class CommandManager {
             }
 
             commands.put(annotation.command().toLowerCase(), new CommandContainer(e, annotation));
+
+            NodeManager.getNode("command").addSubnode("command." + annotation.command());
             if(annotation.aliasses()[0] == null || annotation.aliasses()[0].equalsIgnoreCase("none")) {
                 continue;
             }
-
-            NodeManager.getNode("command").addSubnode("command." + annotation.command());
 
             if(!annotation.extra_perm()[0].equalsIgnoreCase("none")) {
                 for(String x : annotation.extra_perm()) {
