@@ -14,6 +14,7 @@ import net.heyzeer0.aladdin.events.listeners.GuildListener;
 import net.heyzeer0.aladdin.events.listeners.MessageListener;
 import net.heyzeer0.aladdin.events.listeners.VoiceListener;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;
+import net.heyzeer0.aladdin.utils.DiscordLists;
 
 /**
  * Created by HeyZeer0 on 19/09/2017.
@@ -24,22 +25,33 @@ public class EventControl implements EventListener {
     @Override
     public void onEvent(Event e) {
         if(e instanceof GuildMessageReceivedEvent) {
+            if(((GuildMessageReceivedEvent) e).getAuthor().isBot() || ((GuildMessageReceivedEvent) e).getAuthor().isFake()) {
+                return;
+            }
             MessageListener.onMessage((GuildMessageReceivedEvent)e);
             return;
         }
         if(e instanceof MessageReactionAddEvent) {
+            if(((MessageReactionAddEvent) e).getUser().isBot() || ((MessageReactionAddEvent) e).getUser().isFake()) {
+                return;
+            }
             MessageListener.onReact((MessageReactionAddEvent)e);
             return;
         }
         if(e instanceof GuildJoinEvent) {
+            DiscordLists.updateStatus();
             GuildListener.onGuildJoin((GuildJoinEvent)e);
             return;
         }
         if(e instanceof GuildLeaveEvent) {
+            DiscordLists.updateStatus();
             GuildListener.onGuildLeave((GuildLeaveEvent)e);
             return;
         }
         if(e instanceof GuildMemberLeaveEvent) {
+            if(((GuildMemberLeaveEvent) e).getUser().isBot() || ((GuildMemberLeaveEvent) e).getUser().isFake()) {
+                return;
+            }
             GuildListener.onMemberLeave((GuildMemberLeaveEvent)e);
             return;
         }

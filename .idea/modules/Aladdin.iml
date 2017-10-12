@@ -30,10 +30,10 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.sedmelluq:jda-nas:1.0.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.udojava:EvalEx:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.squareup.okhttp3:okhttp:3.8.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_15" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.natanbc:discordbots-api:1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -61,6 +61,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.httpcomponents:httpcore-nio:4.4.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.squareup.okhttp3:okhttp:3.9.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
@@ -78,10 +79,10 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sedmelluq:jda-nas:1.0.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.udojava:EvalEx:1.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.squareup.okhttp3:okhttp:3.8.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_15" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.natanbc:discordbots-api:1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -109,6 +110,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.httpcomponents:httpcore-nio:4.4.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.squareup.okhttp3:okhttp:3.9.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
@@ -126,10 +128,10 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.sedmelluq:jda-nas:1.0.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.udojava:EvalEx:1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.okhttp3:okhttp:3.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_15" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.github.natanbc:discordbots-api:1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -157,6 +159,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore-nio:4.4.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.okhttp3:okhttp:3.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.1" level="project" />
   </component>

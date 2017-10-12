@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin;
 
+import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -16,6 +17,7 @@ import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 import net.heyzeer0.aladdin.profiles.SocketInfo;
+import net.heyzeer0.aladdin.utils.DiscordLists;
 import net.heyzeer0.aladdin.utils.JDAUtils;
 
 import java.io.File;
@@ -106,6 +108,7 @@ public class Main {
 
             ChooserManager.startCleanup();
             PaginatorManager.startCleanup();
+            DiscordLists.updateStatus();
 
             new SocketInfo(9598, (l, i) -> {
                 if(l.equalsIgnoreCase("shutdown")) {

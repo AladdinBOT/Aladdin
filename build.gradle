@@ -38,6 +38,7 @@ dependencies {
     compile 'org.json:json:20170516'
     compile 'net.heyzeer0.papi:PaladinsAPI:+'
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.github.natanbc:discordbots-api:1.1'
 }
 
 shadowJar {
