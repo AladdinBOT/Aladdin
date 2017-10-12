@@ -180,16 +180,15 @@ public class CommandManager {
 
     public static CommandArgument parse(String rw, GuildMessageReceivedEvent e) {
         ArrayList<String> split  = new ArrayList<>();
-        String raw = rw;
-        String beheaded = raw.replaceFirst(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString(), "");
+        String beheaded = rw.replaceFirst(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString(), "");
         beheaded = beheaded.replaceFirst(GuildConfig.PREFIX.getDefault().toString(), "");
-        beheaded = beheaded.replaceFirst("<@" + e.getJDA().getSelfUser().getId() + ">", "");
+        beheaded = beheaded.replaceFirst("<@" + e.getJDA().getSelfUser().getId() + "> ", "");
         String[] splitBeheaded = beheaded.split(" ");
         Collections.addAll(split, splitBeheaded);
         String invoke = split.get(0);
         String[] args = new String[split.size() -1];
         split.subList(1, split.size()).toArray(args);
-        return new CommandArgument(raw, beheaded, splitBeheaded, invoke, args, e);
+        return new CommandArgument(rw, beheaded, splitBeheaded, invoke, args, e);
     }
 
 }
