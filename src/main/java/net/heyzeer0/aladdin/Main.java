@@ -150,6 +150,15 @@ public class Main {
         return getShard((int) ((guildId >> 22) % getShards().length));
     }
 
+    public static User getUserById(long id) {
+        for(ShardProfile pf : getConnectedShards()) {
+            if(pf.getJDA().getUserById(id) != null) {
+                return pf.getJDA().getUserById(id);
+            }
+        }
+        return null;
+    }
+
     public static List<Guild> getMutualGuilds(User user) {
         ArrayList<Guild> guilds = new ArrayList<>();
         Stream.of(getConnectedShards()).forEach(sp -> guilds.addAll(sp.getJDA().getMutualGuilds(user)));

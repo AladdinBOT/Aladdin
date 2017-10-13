@@ -2,8 +2,12 @@ package net.heyzeer0.aladdin.utils;
 
 import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import com.github.natanbc.discordbotsapi.PostingException;
+import com.github.natanbc.discordbotsapi.UpvoterInfo;
+import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.commands.UpvoteCommand;
 import net.heyzeer0.aladdin.configs.ApiKeysConfig;
+import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 
 import java.util.ArrayList;
@@ -45,6 +49,7 @@ public class DiscordLists {
     }
 
     public static void checkUpvoted() {
+        UpvoteCommand.detection_time = System.currentTimeMillis();
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             List<String> upvoters = new ArrayList<>();
             for(long id : discordBots.getUpvoterIds(Main.getShard(0).getJDA().getSelfUser().getIdLong())) {
@@ -52,6 +57,11 @@ public class DiscordLists {
                 if(!Main.getDatabase().getServer().isUserUpvoted(id + "")) {
                     Main.getDatabase().getUserProfile(id + "").activateTrialPremium();
                     Main.getDatabase().getServer().addUpvoted(id + "");
+
+                    User u = Main.getUserById(id);
+                    if(u != null) {
+                        u.openPrivateChannel().queue(pv -> pv.sendMessage(EmojiList.CORRECT + " Seu premium foi ativado com sucesso!").queue());
+                    }
                 }
             }
 

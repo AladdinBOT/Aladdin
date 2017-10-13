@@ -26,6 +26,7 @@ public class AladdinData {
 
         try { r.tableCreate("users").runNoReply(conn); }catch (Exception ignored) {}
         try { r.tableCreate("guilds").runNoReply(conn); }catch (Exception ignored) {}
+        try { r.tableCreate("server").runNoReply(conn); }catch (Exception ignored) {}
     }
 
     public GuildProfile getGuildProfile(Guild u) {
