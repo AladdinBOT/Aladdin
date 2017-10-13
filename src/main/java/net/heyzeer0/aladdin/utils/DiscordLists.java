@@ -2,10 +2,17 @@ package net.heyzeer0.aladdin.utils;
 
 import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import com.github.natanbc.discordbotsapi.PostingException;
+import com.github.natanbc.discordbotsapi.UpvoterInfo;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 
+import java.util.stream.Stream;
+
+/**
+ * Created by HeyZeer0 on 24/11/2016.
+ * Copyright © HeyZeer0 - 2016
+ */
 public class DiscordLists {
 
     public static DiscordBotsAPI discordBots;
@@ -13,7 +20,6 @@ public class DiscordLists {
     public static void updateStatus() {
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             discordBots = new DiscordBotsAPI(ApiKeysConfig.discord_bots_key);
-
         }
 
         Utils.runAsync(() -> {

@@ -183,6 +183,7 @@ public class CommandManager {
         String beheaded = rw.replaceFirst(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString(), "");
         beheaded = beheaded.replaceFirst(GuildConfig.PREFIX.getDefault().toString(), "");
         beheaded = beheaded.replaceFirst("<@" + e.getJDA().getSelfUser().getId() + "> ", "");
+        beheaded = beheaded.replaceFirst("<@!" + e.getJDA().getSelfUser().getId() + "> ", "");
         String[] splitBeheaded = beheaded.split(" ");
         Collections.addAll(split, splitBeheaded);
         String invoke = split.get(0);

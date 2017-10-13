@@ -41,7 +41,13 @@ public class MessageListener {
             return;
         }
         String id = "<@" + e.getJDA().getSelfUser().getId() + ">";
-        if(e.getMessage().getRawContent().startsWith(id) && e.getMessage().getRawContent().length() > (id.length() + 1)) {  ;
+        if(e.getMessage().getRawContent().startsWith(id) && e.getMessage().getRawContent().length() > (id.length() + 1)) {
+            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
+            return;
+        }
+
+        String id2 = "<@!" + e.getJDA().getSelfUser().getId() + ">";
+        if(e.getMessage().getRawContent().startsWith(id2) && e.getMessage().getRawContent().length() > (id2.length() + 1)) {
             CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
             return;
         }
