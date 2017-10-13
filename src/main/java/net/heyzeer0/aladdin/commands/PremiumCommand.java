@@ -35,6 +35,8 @@ public class PremiumCommand implements CommandExecutor {
                              ":three: Tempo de musica infinito na queue (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play``)\n" +
                              ":four: Tracks por playlist infinita na queue (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play``)\n" +
                              ":five: Acesso ao comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "volume``");
+            b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+            e.sendMessage(b);
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
