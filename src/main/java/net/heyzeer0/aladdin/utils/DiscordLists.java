@@ -24,7 +24,7 @@ public class DiscordLists {
             discordBots = new DiscordBotsAPI(ApiKeysConfig.discord_bots_key);
 
             if(!upvoteStarted) {
-                Utils.runTimer(DiscordLists::startUpvoted, 10, TimeUnit.MINUTES);
+                Utils.runTimer(DiscordLists::checkUpvoted, 10, TimeUnit.MINUTES);
                 upvoteStarted = true;
             }
         }
@@ -44,10 +44,10 @@ public class DiscordLists {
         });
     }
 
-    public static void startUpvoted() {
+    public static void checkUpvoted() {
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             List<String> upvoters = new ArrayList<>();
-            for(long id : discordBots.getUpvoterIds()) {
+            for(long id : discordBots.getUpvoterIds(Main.getShard(0).getJDA().getSelfUser().getIdLong())) {
                 upvoters.add(id + "");
                 if(!Main.getDatabase().getServer().isUserUpvoted(id + "")) {
                     Main.getDatabase().getUserProfile(id + "").activateTrialPremium();
