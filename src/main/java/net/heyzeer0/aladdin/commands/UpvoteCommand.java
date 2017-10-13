@@ -21,7 +21,6 @@ public class UpvoteCommand implements CommandExecutor {
     @Command(command = "upvote", description = "Vote e ganhe premium por 5 dias", type = CommandType.INFORMATIVE,
             usage = "a!upvote")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
-
         EmbedBuilder b = new EmbedBuilder();
         b.setTitle(":beginner: Como votar no Aladdin");
         b.setDescription(":one: Clique [aqui](https://discordbots.org/bot/321349548712656896) para ir até o site\n" +
@@ -31,6 +30,7 @@ public class UpvoteCommand implements CommandExecutor {
         b.setColor(Color.GREEN);
         b.setFooter("Powered by DiscordBots.org", "https://discordbots.org/images/logotrans.png");
 
+        e.sendMessage(b);
         return new CommandResult(CommandResultEnum.SUCCESS);
     }
 

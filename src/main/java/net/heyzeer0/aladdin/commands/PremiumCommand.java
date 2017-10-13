@@ -2,6 +2,7 @@ package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.database.entities.UserProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
@@ -26,6 +27,29 @@ public class PremiumCommand implements CommandExecutor {
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
         if(args.get(0).equalsIgnoreCase("info")) {
+
+            if(e.getMessage().getMentionedUsers().size() >= 1) {
+
+                UserProfile pf = Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0));
+
+                EmbedBuilder b = new EmbedBuilder();
+                b.setColor(Color.GREEN);
+                b.setTitle(":beginner: Informações da conta de " + e.getMessage().getMentionedUsers().get(0).getName());
+                b.setDescription("Para ativar uma chave use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium ativar``");
+                b.addField(":key2: | Chaves restantes ", "" + pf.getPremiumKeys(), false);
+
+                if(e.getUserProfile().userPremium()) {
+                    b.addField(":calendar_spiral: | Tempo restante ", "" + Utils.getTime((pf.getPremiumTime() - System.currentTimeMillis())), false);
+                    b.addField(":arrows_counterclockwise: | Auto renovação ", "" + pf.isAutoRenew(), false);
+                }
+
+                b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+
+                e.sendMessage(b);
+
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
+
             EmbedBuilder b = new EmbedBuilder();
             b.setColor(Color.GREEN);
             b.setTitle(":beginner: Informações da conta de " + e.getAuthor().getName());
