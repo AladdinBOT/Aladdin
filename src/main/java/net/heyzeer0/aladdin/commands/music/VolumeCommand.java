@@ -3,6 +3,7 @@ package net.heyzeer0.aladdin.commands.music;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.MusicManager;
@@ -32,12 +33,16 @@ public class VolumeCommand implements CommandExecutor {
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
 
-            if(!e.getMember().getVoiceState().inVoiceChannel() && !e.getGuild().getAudioManager().isConnected()) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, Você não esta conectado a um canal de voz!");
+            if (e.getGuild().getAudioManager().isConnected() && !e.getGuild().getAudioManager().getConnectedChannel().equals(e.getMember().getVoiceState().getChannel())) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, você não esta conectado ao meu canal de audio!");
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
-            if (e.getGuild().getAudioManager().isConnected() && !e.getGuild().getAudioManager().getConnectedChannel().equals(e.getMember().getVoiceState().getChannel())) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, Você não esta conectado ao meu canal de audio!");
+            if(!e.getGuild().getAudioManager().isConnected()) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, não ha nenhum player de musica ativo, use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play [nome]`` para adicionar algo a queue.");
+                return new CommandResult((CommandResultEnum.SUCCESS));
+            }
+            if(e.getMember().getVoiceState().inVoiceChannel()) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, você não esta conectado a um canal de voz!");
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
 
