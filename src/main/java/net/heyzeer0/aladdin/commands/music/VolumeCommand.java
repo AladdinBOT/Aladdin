@@ -48,7 +48,7 @@ public class VolumeCommand implements CommandExecutor {
 
             MusicManager.getManager(e.getGuild()).getAudioPlayer().setVolume(value);
 
-            e.sendMessage(EmojiList.CORRECT + " Oops, Você alterou o volume do player atual para ``" + value + "``");
+            e.sendMessage(EmojiList.CORRECT + " Você alterou o volume do player atual para ``" + value + "%``");
         }catch (Exception ex) {
             e.sendMessage(EmojiList.WORRIED + " Oops, o valor inserido é invalido, necessita ser um número de ``30`` a ``110``");
         }
