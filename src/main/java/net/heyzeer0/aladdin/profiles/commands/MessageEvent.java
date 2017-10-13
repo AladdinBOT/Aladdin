@@ -5,12 +5,14 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.requests.RestAction;
 import net.dv8tion.jda.webhook.WebhookClient;
 import net.dv8tion.jda.webhook.WebhookClientBuilder;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.GuildProfile;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
+import net.heyzeer0.aladdin.enums.EmojiList;
 
 import javax.xml.soap.Text;
 import java.util.ArrayList;
@@ -42,8 +44,9 @@ public class MessageEvent {
     public RestAction<Message> sendPureMessage(String msg) {
         return originEvent.getChannel().sendMessage(msg);
     }
+
     public void sendMessage(Message msg) {
-        originEvent.getChannel().sendMessage(msg).queue(newer -> sended.add(newer));
+        originEvent.getChannel().sendMessage(msg).queue(newer -> sended.add(newer), err -> {if(err instanceof InsufficientPermissionException) {sendMessage(EmojiList.WORRIED + " Oops, é necessário a permissao ``" + ((InsufficientPermissionException)err).getPermission().toString() + "`` para executar este comando.");}});
     }
 
     public RestAction<Message> sendPureMessage(Message msg) {
