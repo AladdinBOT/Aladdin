@@ -41,7 +41,7 @@ public class VolumeCommand implements CommandExecutor {
                 e.sendMessage(EmojiList.WORRIED + " Oops, não ha nenhum player de musica ativo, use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play [nome]`` para adicionar algo a queue.");
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
-            if(e.getMember().getVoiceState().inVoiceChannel()) {
+            if(!e.getMember().getVoiceState().inVoiceChannel()) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, você não esta conectado a um canal de voz!");
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
