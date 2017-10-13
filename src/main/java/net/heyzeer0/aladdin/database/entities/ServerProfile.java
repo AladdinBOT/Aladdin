@@ -1,9 +1,7 @@
 package net.heyzeer0.aladdin.database.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.security.ntlm.Server;
 import lombok.Getter;
-import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 
