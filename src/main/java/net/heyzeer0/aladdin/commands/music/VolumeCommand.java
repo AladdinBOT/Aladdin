@@ -32,23 +32,23 @@ public class VolumeCommand implements CommandExecutor {
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
 
-            if(e.getMember().getVoiceState().inVoiceChannel() && !e.getGuild().getAudioManager().isConnected()) {
-                e.sendMessage(EmojiList.WORRIED + " Você não esta conectado a um canal de voz!");
+            if(!e.getMember().getVoiceState().inVoiceChannel() && !e.getGuild().getAudioManager().isConnected()) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, Você não esta conectado a um canal de voz!");
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
             if (e.getGuild().getAudioManager().isConnected() && !e.getGuild().getAudioManager().getConnectedChannel().equals(e.getMember().getVoiceState().getChannel())) {
-                e.sendMessage(EmojiList.WORRIED + " Você não esta conectado ao meu canal de audio!");
+                e.sendMessage(EmojiList.WORRIED + " Oops, Você não esta conectado ao meu canal de audio!");
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
 
             MusicManager.getManager(e.getGuild()).getAudioPlayer().setVolume(value);
 
-            e.sendMessage(EmojiList.CORRECT + " Você alterou o volume do player atual para ``" + value + "``");
+            e.sendMessage(EmojiList.CORRECT + " Oops, Você alterou o volume do player atual para ``" + value + "``");
         }catch (Exception ex) {
             e.sendMessage(EmojiList.WORRIED + " Oops, o valor inserido é invalido, necessita ser um número de ``30`` a ``110``");
         }
 
-        return new CommandResult((CommandResultEnum.NOT_FOUND));
+        return new CommandResult((CommandResultEnum.SUCCESS));
     }
 
 }
