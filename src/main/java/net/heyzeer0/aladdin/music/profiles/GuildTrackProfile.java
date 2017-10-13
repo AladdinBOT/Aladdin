@@ -15,6 +15,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;
+import net.heyzeer0.aladdin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -192,7 +193,7 @@ public class GuildTrackProfile extends AudioEventAdapter {
     }
 
     private void onQueueEnd() {
-        getGuild().getAudioManager().closeAudioConnection();
+        Utils.runAsync(() -> getGuild().getAudioManager().closeAudioConnection());
         if (task != null) {
             task.cancel(true);
             task = null;

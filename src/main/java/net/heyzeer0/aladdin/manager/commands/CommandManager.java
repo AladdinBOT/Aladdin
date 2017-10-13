@@ -129,7 +129,7 @@ public class CommandManager {
                 }
 
                 if(r.getResult() == CommandResultEnum.NEED_PREMIUM) {
-                    e.sendMessage(EmojiList.BUY + " Para utilizar este comando é necessário uma conta premium, você pode ver as vantagens dde ser premium digitando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium features``.\nVocê também pode testar o premium de graça completando os passos do comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "upvote``");
+                    e.sendMessage(EmojiList.BUY + " Para utilizar este comando é necessário uma conta premium, você pode ver as vantagens de ser premium digitando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium features``.\nVocê também pode testar o premium de graça completando os passos do comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "upvote``");
                     return;
                 }
 
