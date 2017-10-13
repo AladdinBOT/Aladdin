@@ -49,6 +49,10 @@ public class Utils {
         timers.schedule(r, time, unit);
     }
 
+    public static void runTimer(Runnable r, long delay, TimeUnit unit) {
+        timers.scheduleAtFixedRate(r, 0, delay, unit);
+    }
+
     public static String translateTempo(String entrada) {
         if(entrada.equalsIgnoreCase("Mostly Cloudy")) {
             return "Predominantemente nublado";

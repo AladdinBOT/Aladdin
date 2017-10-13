@@ -5,6 +5,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.database.entities.GuildProfile;
+import net.heyzeer0.aladdin.database.entities.ServerProfile;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
 
 import java.util.concurrent.Executors;
@@ -35,6 +36,16 @@ public class AladdinData {
     public UserProfile getUserProfile(User u) {
         UserProfile data = r.table(UserProfile.DB_TABLE).get(u.getId()).run(conn, UserProfile.class);
         return data != null ? data : new UserProfile(u);
+    }
+
+    public UserProfile getUserProfile(String id) {
+        UserProfile data = r.table(UserProfile.DB_TABLE).get(id).run(conn, UserProfile.class);
+        return data != null ? data : new UserProfile(id);
+    }
+
+    public ServerProfile getServer() {
+        ServerProfile data = r.table(ServerProfile.DB_TABLE).get("main").run(conn, ServerProfile.class);
+        return data != null ? data : new ServerProfile();
     }
 
 

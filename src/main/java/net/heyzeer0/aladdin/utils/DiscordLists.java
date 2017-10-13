@@ -7,6 +7,9 @@ import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 /**
@@ -16,10 +19,16 @@ import java.util.stream.Stream;
 public class DiscordLists {
 
     public static DiscordBotsAPI discordBots;
+    private static boolean upvoteStarted = false;
 
     public static void updateStatus() {
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             discordBots = new DiscordBotsAPI(ApiKeysConfig.discord_bots_key);
+
+            if(!upvoteStarted) {
+                Utils.runTimer(DiscordLists::startUpvoted, 10, TimeUnit.MINUTES);
+                upvoteStarted = true;
+            }
         }
 
         Utils.runAsync(() -> {
@@ -35,6 +44,34 @@ public class DiscordLists {
                 e.printStackTrace();
             }
         });
+    }
+
+    public static void startUpvoted() {
+        if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
+            List<String> upvoters = new ArrayList<>();
+            for(UpvoterInfo u : discordBots.getUpvoters()) {
+                upvoters.add(u.getId() + "");
+                if(!Main.getDatabase().getServer().isUserUpvoted(u.getId() + "")) {
+                    Main.getDatabase().getUserProfile(u.getId() + "").activateTrialPremium();
+                }
+            }
+
+            List<String> non_active = new ArrayList<>();
+
+            for(String k : Main.getDatabase().getServer().getUsers_who_upvoted()) {
+                if(!upvoters.contains(k)) {
+                    non_active.add(k);
+                }
+            }
+
+            if(non_active.size() > 0) {
+                for(String id : non_active) {
+                    if(Main.getDatabase().getUserProfile(id).isTrialPremium()) {
+                        Main.getDatabase().getUserProfile(id).disablePremium();
+                    }
+                }
+            }
+        }
     }
 
 }

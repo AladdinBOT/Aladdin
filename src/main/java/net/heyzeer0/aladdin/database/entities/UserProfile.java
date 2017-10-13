@@ -26,21 +26,27 @@ public class UserProfile implements ManagedObject {
     boolean premiumActive = false;
     long premiumTime = 0;
     boolean autoRenew;
+    boolean trialPremium = false;
 
     HashMap<String, ArrayList<PlaylistTrackProfile>> playlist;
 
     public UserProfile(User u) {
-        this(u.getId(), 0, false, 0, false, new HashMap<>());
+        this(u.getId(), 0, false, 0, false, new HashMap<>(), false);
     }
 
-    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist"})
-    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist) {
+    public UserProfile(String id) {
+        this(id, 0, false, 0, false, new HashMap<>(), false);
+    }
+
+    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist", "trialPremium"})
+    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist, boolean trialPremium) {
         this.id = id;
         this.premiumKeys = premiumKeys;
         this.premiumActive = premiumActive;
         this.premiumTime = premiumTime;
         this.autoRenew = autoRenew;
         this.playlist = playlist;
+        this.trialPremium = trialPremium;
     }
 
     public boolean userPremium() {
@@ -57,6 +63,7 @@ public class UserProfile implements ManagedObject {
             premiumActive = false;
             premiumTime = 0;
             autoRenew = false;
+            trialPremium = false;
             saveAsync();
             return false;
         }
@@ -84,6 +91,34 @@ public class UserProfile implements ManagedObject {
 
         premiumTime = System.currentTimeMillis() + 2592000000L;
 
+        saveAsync();
+        return true;
+    }
+
+    public boolean activateTrialPremium() {
+        if(premiumActive) {
+           return false;
+        }
+        if(Main.getDatabase().getServer().isUserUpvoted(getId())) {
+            return false;
+        }
+        premiumActive = true;
+        premiumTime = System.currentTimeMillis() + 432000000;
+        trialPremium = true;
+
+        saveAsync();
+        return true;
+    }
+
+    public boolean disablePremium() {
+        if(!premiumActive) {
+            return false;
+        }
+
+        premiumActive = false;
+        premiumTime = 0;
+        autoRenew = false;
+        trialPremium = false;
         saveAsync();
         return true;
     }
