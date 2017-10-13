@@ -34,7 +34,8 @@ public class PremiumCommand implements CommandExecutor {
                              ":two: Quantidade infinita de musicas por playlist (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "playlist``)\n" +
                              ":three: Tempo de musica infinito na queue (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play``)\n" +
                              ":four: Tracks por playlist infinita na queue (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play``)\n" +
-                             ":five: Acesso ao comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "volume``");
+                             ":five: Acesso ao comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "volume``\n" +
+                             "Mais benefícios serão adicionados em breve");
             b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
             e.sendMessage(b);
             return new CommandResult(CommandResultEnum.SUCCESS);
