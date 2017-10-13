@@ -2,7 +2,6 @@ package net.heyzeer0.aladdin.utils;
 
 import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import com.github.natanbc.discordbotsapi.PostingException;
-import com.github.natanbc.discordbotsapi.UpvoterInfo;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
@@ -10,7 +9,6 @@ import net.heyzeer0.aladdin.profiles.ShardProfile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 /**
  * Created by HeyZeer0 on 24/11/2016.
@@ -49,11 +47,11 @@ public class DiscordLists {
     public static void startUpvoted() {
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             List<String> upvoters = new ArrayList<>();
-            for(UpvoterInfo u : discordBots.getUpvoters()) {
-                upvoters.add(u.getId() + "");
-                if(!Main.getDatabase().getServer().isUserUpvoted(u.getId() + "")) {
-                    Main.getDatabase().getUserProfile(u.getId() + "").activateTrialPremium();
-                    Main.getDatabase().getServer().addUpvoted(u.getId() + "");
+            for(long id : discordBots.getUpvoterIds()) {
+                upvoters.add(id + "");
+                if(!Main.getDatabase().getServer().isUserUpvoted(id + "")) {
+                    Main.getDatabase().getUserProfile(id + "").activateTrialPremium();
+                    Main.getDatabase().getServer().addUpvoted(id + "");
                 }
             }
 
