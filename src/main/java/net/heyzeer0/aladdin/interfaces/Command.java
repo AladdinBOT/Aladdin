@@ -24,5 +24,6 @@ public @interface Command {
     CommandType type();
     boolean manageWebhooks() default false;
     boolean isAllowedToDefault() default true;
+    boolean needPermission() default true;
 
 }

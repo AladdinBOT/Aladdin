@@ -6,6 +6,6 @@ package net.heyzeer0.aladdin.enums;
  */
 public enum CommandResultEnum {
 
-    SUCCESS, MISSING_ARGUMENT, NOT_FOUND, MISSING_PERMISSION;
+    SUCCESS, MISSING_ARGUMENT, NOT_FOUND, MISSING_PERMISSION, NEED_PREMIUM;
 
 }

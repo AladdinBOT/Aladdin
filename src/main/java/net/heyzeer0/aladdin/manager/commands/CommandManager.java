@@ -43,11 +43,12 @@ public class CommandManager {
 
             commands.put(annotation.command().toLowerCase(), new CommandContainer(e, annotation));
 
-            NodeManager.getNode("command").addSubnode("command." + annotation.command());
-
-            if(!annotation.extra_perm()[0].equalsIgnoreCase("none")) {
-                for(String x : annotation.extra_perm()) {
-                    NodeManager.getNode("command").addSubnode("command." + annotation.command() + "." + x);
+            if(annotation.needPermission()) {
+                NodeManager.getNode("command").addSubnode("command." + annotation.command());
+                if (!annotation.extra_perm()[0].equalsIgnoreCase("none")) {
+                    for (String x : annotation.extra_perm()) {
+                        NodeManager.getNode("command").addSubnode("command." + annotation.command() + "." + x);
+                    }
                 }
             }
 
@@ -89,7 +90,7 @@ public class CommandManager {
                 }
             }
 
-            if(!e.hasPermission("command." + cmd.getAnnotation().command())) {
+            if(cmd.getAnnotation().needPermission() && !e.hasPermission("command." + cmd.getAnnotation().command())) {
                 e.sendMessage(AladdinMessages.NO_PERMISSION.replaceMessage("command." + cmd.getAnnotation().command()));
                 return;
             }
@@ -124,6 +125,11 @@ public class CommandManager {
                     }
 
                     e.sendMessage(AladdinMessages.WITHOUT_PARAMS.replaceMessage(e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + arg.invoke, StringUtils.join(params, " ")));
+                    return;
+                }
+
+                if(r.getResult() == CommandResultEnum.NEED_PREMIUM) {
+                    e.sendMessage(EmojiList.BUY + " Para utilizar este comando é necessário uma conta premium, você pode ver as vantagens dde ser premium digitando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium features``.\nVocê também pode testar o premium de graça completando os passos do comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "upvote``");
                     return;
                 }
 

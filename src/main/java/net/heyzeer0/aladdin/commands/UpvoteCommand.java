@@ -21,7 +21,7 @@ public class UpvoteCommand implements CommandExecutor {
     public static long detection_time = System.currentTimeMillis();
 
     @Command(command = "upvote", description = "Vote e ganhe premium por 5 dias", type = CommandType.INFORMATIVE,
-            usage = "a!upvote")
+            usage = "a!upvote", needPermission = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         EmbedBuilder b = new EmbedBuilder();
         b.setTitle(":beginner: Como votar no Aladdin");

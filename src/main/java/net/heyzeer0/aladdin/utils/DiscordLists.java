@@ -60,7 +60,7 @@ public class DiscordLists {
 
                     User u = Main.getUserById(id);
                     if(u != null) {
-                        u.openPrivateChannel().queue(pv -> pv.sendMessage(EmojiList.CORRECT + " Seu premium foi ativado com sucesso!").queue());
+                        u.openPrivateChannel().queue(pv -> pv.sendMessage(EmojiList.CORRECT + " Seu trial-premium foi ativado com sucesso!").queue());
                     }
                 }
             }

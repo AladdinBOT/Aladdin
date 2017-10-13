@@ -19,7 +19,7 @@ import java.awt.*;
 public class InviteCommand implements CommandExecutor {
 
     @Command(command = "invite", description = "Me chame para sua guilda!", type = CommandType.INFORMATIVE,
-            usage = "a!invite")
+            usage = "a!invite", needPermission = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);

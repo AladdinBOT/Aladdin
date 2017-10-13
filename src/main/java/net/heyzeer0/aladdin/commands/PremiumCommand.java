@@ -22,9 +22,21 @@ import java.awt.*;
  */
 public class PremiumCommand implements CommandExecutor {
 
-    @Command(command = "premium", description = "Ative premium ou veja quantas chaves possui", parameters = {"info/ativar/dar/autorenew"}, type = CommandType.INFORMATIVE,
-            usage = "a!premium info\na!premium ativar\na!premium dar @HeyZeer0")
+    @Command(command = "premium", description = "Ative premium ou veja quantas chaves possui", parameters = {"info/ativar/dar/autorenew/features"}, type = CommandType.INFORMATIVE,
+            usage = "a!premium info\na!premium ativar\na!premium dar @HeyZeer0", needPermission = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+
+        if(args.get(0).equalsIgnoreCase("features")) {
+            EmbedBuilder b = new EmbedBuilder();
+            b.setColor(Color.GREEN);
+            b.setTitle(":key2: Mostrandos os beneficios premium");
+            b.setDescription(":one: Quantidade infinita de playlists (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "playlist``)\n" +
+                             ":two: Quantidade infinita de musicas por playlist (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "playlist``)\n" +
+                             ":three: Tempo de musica infinito na queue (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play``)\n" +
+                             ":four: Tracks por playlist infinita na queue (``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play``)\n" +
+                             ":five: Acesso ao comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "volume``");
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
 
         if(args.get(0).equalsIgnoreCase("info")) {
 

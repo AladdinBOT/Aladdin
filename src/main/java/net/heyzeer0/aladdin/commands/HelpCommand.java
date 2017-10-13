@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class HelpCommand implements CommandExecutor {
 
     @Command(command = "help", description = "Bom parece que você já sabe o que este comando faz :thinking:", aliasses = {"ajuda"}, type = CommandType.INFORMATIVE,
-            usage = "a!help\na!help group")
+            usage = "a!help\na!help group", needPermission = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.getSize() >= 1) {
             if(CommandManager.commands.containsKey(args.get(0))) {

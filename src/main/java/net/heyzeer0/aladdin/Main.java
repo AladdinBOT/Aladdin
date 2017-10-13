@@ -97,6 +97,7 @@ public class Main {
             CommandManager.registerCommand(new RepeatCommand());
             CommandManager.registerCommand(new SkipCommand());
             CommandManager.registerCommand(new StopCommand());
+            CommandManager.registerCommand(new VolumeCommand());
 
             logger.info("Comandos registrados em " + (System.currentTimeMillis() - commands) + "ms");
 
