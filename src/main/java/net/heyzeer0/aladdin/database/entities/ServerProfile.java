@@ -39,8 +39,8 @@ public class ServerProfile implements ManagedObject {
         return users_who_upvoted.contains(id);
     }
 
-    public void addUpvoted(User u) {
-        users_who_upvoted.add(u.getId());
+    public void addUpvoted(String u) {
+        users_who_upvoted.add(u);
         saveAsync();
     }
 

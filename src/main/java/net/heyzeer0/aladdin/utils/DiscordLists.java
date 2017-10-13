@@ -53,6 +53,7 @@ public class DiscordLists {
                 upvoters.add(u.getId() + "");
                 if(!Main.getDatabase().getServer().isUserUpvoted(u.getId() + "")) {
                     Main.getDatabase().getUserProfile(u.getId() + "").activateTrialPremium();
+                    Main.getDatabase().getServer().addUpvoted(u.getId() + "");
                 }
             }
 
