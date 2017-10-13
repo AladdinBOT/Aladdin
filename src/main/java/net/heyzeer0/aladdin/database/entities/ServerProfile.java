@@ -42,6 +42,11 @@ public class ServerProfile implements ManagedObject {
         saveAsync();
     }
 
+    public void removeUpvoted(String id) {
+        users_who_upvoted.remove(id);
+        saveAsync();
+    }
+
     @Override
     public void delete() { r.table(DB_TABLE).get(getId()).delete().runNoReply(Main.getDatabase().conn); }
 

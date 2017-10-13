@@ -103,7 +103,7 @@ public class UserProfile implements ManagedObject {
             return false;
         }
         premiumActive = true;
-        premiumTime = System.currentTimeMillis() + 432000000;
+        premiumTime = System.currentTimeMillis() + 432000000L;
         trialPremium = true;
 
         saveAsync();
