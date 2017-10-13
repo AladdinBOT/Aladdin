@@ -38,7 +38,7 @@ public class PremiumCommand implements CommandExecutor {
                 b.setDescription("Para ativar uma chave use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium ativar``");
                 b.addField(":key2: | Chaves restantes ", "" + pf.getPremiumKeys(), false);
 
-                if(e.getUserProfile().userPremium()) {
+                if(pf.userPremium()) {
                     b.addField(":calendar_spiral: | Tempo restante ", "" + Utils.getTime((pf.getPremiumTime() - System.currentTimeMillis())), false);
                     b.addField(":arrows_counterclockwise: | Auto renovação ", "" + pf.isAutoRenew(), false);
                 }
