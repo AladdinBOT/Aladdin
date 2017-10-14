@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin;
 
-import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;

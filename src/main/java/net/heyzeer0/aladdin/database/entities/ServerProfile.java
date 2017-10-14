@@ -14,6 +14,7 @@ import static com.rethinkdb.RethinkDB.r;
  * Created by HeyZeer0 on 19/09/2017.
  * Copyright © HeyZeer0 - 2016
  */
+
 @Getter
 public class ServerProfile implements ManagedObject {
 

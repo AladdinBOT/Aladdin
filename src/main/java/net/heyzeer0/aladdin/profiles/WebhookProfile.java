@@ -4,10 +4,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.Webhook;
 import net.dv8tion.jda.webhook.WebhookClient;
-import net.dv8tion.jda.webhook.WebhookClientBuilder;
-import net.dv8tion.jda.webhook.WebhookMessage;
 import net.dv8tion.jda.webhook.WebhookMessageBuilder;
-import net.heyzeer0.aladdin.profiles.utilities.chooser.TextChooser;
 import okhttp3.OkHttpClient;
 
 import java.util.concurrent.Executors;

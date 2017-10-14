@@ -7,14 +7,11 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.requests.RestAction;
-import net.dv8tion.jda.webhook.WebhookClient;
-import net.dv8tion.jda.webhook.WebhookClientBuilder;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.GuildProfile;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
 import net.heyzeer0.aladdin.enums.EmojiList;
 
-import javax.xml.soap.Text;
 import java.util.ArrayList;
 
 /**

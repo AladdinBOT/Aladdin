@@ -2,7 +2,6 @@ package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
-import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.GroupProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;

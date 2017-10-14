@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.profiles;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.JDA;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.MainConfig;
 

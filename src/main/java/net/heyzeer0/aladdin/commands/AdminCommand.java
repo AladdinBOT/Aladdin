@@ -2,7 +2,6 @@ package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.interfaces.Command;
@@ -10,13 +9,6 @@ import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.util.stream.Stream;
 
 /**
  * Created by HeyZeer0 on 22/06/2017.

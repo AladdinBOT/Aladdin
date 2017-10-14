@@ -3,7 +3,9 @@ package net.heyzeer0.aladdin.manager.utilities;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

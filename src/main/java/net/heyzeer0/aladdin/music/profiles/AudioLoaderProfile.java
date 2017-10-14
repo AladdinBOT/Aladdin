@@ -12,7 +12,6 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;
 import net.heyzeer0.aladdin.profiles.utilities.chooser.Chooser;
-import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
 
 import java.util.concurrent.TimeUnit;
 

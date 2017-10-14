@@ -5,8 +5,9 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.heyzeer0.aladdin.profiles.utilities.chooser.Chooser;
 import net.heyzeer0.aladdin.profiles.utilities.chooser.TextChooser;
 
-import java.util.*;
-import java.util.concurrent.Executor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

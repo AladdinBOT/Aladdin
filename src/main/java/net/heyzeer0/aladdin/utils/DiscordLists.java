@@ -2,7 +2,6 @@ package net.heyzeer0.aladdin.utils;
 
 import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import com.github.natanbc.discordbotsapi.PostingException;
-import com.github.natanbc.discordbotsapi.UpvoterInfo;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.UpvoteCommand;

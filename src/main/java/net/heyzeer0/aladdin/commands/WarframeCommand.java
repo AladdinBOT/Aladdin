@@ -1,9 +1,7 @@
 package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.ExceptionEvent;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;

@@ -16,7 +16,6 @@ import net.heyzeer0.aladdin.utils.Utils;
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 import static com.rethinkdb.RethinkDB.r;
 

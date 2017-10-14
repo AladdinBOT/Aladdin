@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.events.listeners;
 
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Icon;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;

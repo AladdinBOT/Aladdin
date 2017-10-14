@@ -4,11 +4,6 @@ import net.heyzeer0.aladdin.profiles.custom.OverwatchPlayer;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Scanner;
-
 /**
  * Created by HeyZeer0 on 30/09/2017.
  * Copyright © HeyZeer0 - 2016

@@ -2,7 +2,6 @@ package net.heyzeer0.aladdin.manager.commands;
 
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.MainConfig;

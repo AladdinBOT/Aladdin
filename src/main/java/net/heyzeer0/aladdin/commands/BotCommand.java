@@ -2,7 +2,6 @@ package net.heyzeer0.aladdin.commands;
 
 import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDAInfo;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
