@@ -52,7 +52,7 @@ public class GuildProfile implements ManagedObject {
         this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
     }
 
-    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands"})
+    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "starboards"})
     public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> starboards) {
         this.id = id;
         this.ownerId = ownerId;
