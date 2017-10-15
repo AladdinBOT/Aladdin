@@ -313,16 +313,16 @@ public class GuildProfile implements ManagedObject {
     }
 
     public void checkStarboardAdd(MessageReactionAddEvent e) {
-        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
-            if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addToStarboard(e)) {
+        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId()))) {
+            if(starboards.get(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId())).addToStarboard(e)) {
                 saveAsync();
             }
         }
     }
 
     public void checkStarboardRemove(MessageReactionRemoveEvent e) {
-        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
-            if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeFromStarboard(e)) {
+        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId()))) {
+            if(starboards.get(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId())).removeFromStarboard(e)) {
                 saveAsync();
             }
         }

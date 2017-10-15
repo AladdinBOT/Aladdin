@@ -41,7 +41,7 @@ public class StarboardProfile {
         if(!messages.containsKey(e.getMessageIdLong())) {
             return false;
         }
-        String emt = e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId();
+        String emt = e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId());
         if(emt.equals(emote)) {
             if (e.getReaction().getCount() < amount) {
                 TextChannel ch = e.getGuild().getTextChannelById(channel_id);
@@ -58,7 +58,7 @@ public class StarboardProfile {
     }
 
     public boolean addToStarboard(MessageReactionAddEvent e) {
-        String emt = e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId();
+        String emt = e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId());
         if(emt.equals(emote)) {
             if(e.getReaction().getCount() < amount) {
                 return false;

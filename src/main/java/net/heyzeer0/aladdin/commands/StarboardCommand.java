@@ -36,7 +36,7 @@ public class StarboardCommand implements CommandExecutor {
                 TextChannel ch = e.getMessage().getMentionedChannels().get(0);
 
                 new Reactioner(EmojiList.THINKING + " Adicione como reação nesta mensagem o emote que quer utilizar", e.getAuthor().getIdLong(), e.getChannel(), (v) -> {
-                    String emote = v.getReactionEmote().getName() + "|" + v.getReactionEmote().getId();
+                    String emote = v.getReactionEmote().getName() + "|" + (v.getReactionEmote().getId() == null ? "null" : v.getReactionEmote().getId());
                     if(e.getGuildProfile().getStarboards().containsKey(emote)) {
                         e.sendMessage(EmojiList.WORRIED + " Oops, o emote mencionado já pertence a outra starboard.");
                         return;
