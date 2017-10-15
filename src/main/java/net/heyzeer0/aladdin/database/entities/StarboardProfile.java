@@ -75,39 +75,45 @@ public class StarboardProfile {
 
             Message msg = e.getTextChannel().getMessageById(e.getMessageIdLong()).complete();
             if(msg == null) {
+                System.out.println("msg é null");
                 return false;
             }
 
             MessageReaction rc = Utils.findReaction(e.getReactionEmote().getName(), e.getReactionEmote().getId(), msg);
 
             if(rc == null) {
+                System.out.println("reaction é null");
                 return false;
             }
 
             if(rc.getCount() < amount) {
+                System.out.println("count insuficiente");
                 return false;
             }
 
             TextChannel ch = e.getGuild().getTextChannelById(channel_id);
             if(ch == null || !ch.canTalk()) {
+                System.out.println("channel é null");
                 return false;
             }
 
             if(!messages.containsKey(e.getMessageIdLong())) {
+                String emj;
                 if(e.getReactionEmote().getId() == null) {
-                    emote = e.getReactionEmote().getName();
+                    emj = e.getReactionEmote().getName();
                 }else{
-                    emote = "<:" + e.getReactionEmote().getName() + ":" + e.getReactionEmote().getId() + ">";
+                    emj = "<:" + e.getReactionEmote().getName() + ":" + e.getReactionEmote().getId() + ">";
                 }
 
                 User author = msg.getAuthor();
                 if(author == null) {
+                    System.out.println("author é null");
                     return false;
                 }
 
                 EmbedBuilder b = new EmbedBuilder();
                 b.setColor(Color.GREEN);
-                b.setAuthor(emote + " " + rc.getCount() + " | Enviada por " + author.getName(), null, author.getEffectiveAvatarUrl());
+                b.setAuthor(emj + " " + rc.getCount() + " | Enviada por " + author.getName(), null, author.getEffectiveAvatarUrl());
                 b.setDescription(msg.getContent());
 
                 if(msg.getAttachments().size() > 0) {
