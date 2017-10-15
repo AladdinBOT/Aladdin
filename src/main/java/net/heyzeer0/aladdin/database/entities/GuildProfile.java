@@ -313,6 +313,9 @@ public class GuildProfile implements ManagedObject {
     }
 
     public void checkStarboardAdd(MessageReactionAddEvent e) {
+        if(starboards == null) {
+            starboards = new HashMap<>();
+        }
         if(starboards.containsKey(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId()))) {
             if(starboards.get(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId())).addToStarboard(e)) {
                 saveAsync();
@@ -321,6 +324,9 @@ public class GuildProfile implements ManagedObject {
     }
 
     public void checkStarboardRemove(MessageReactionRemoveEvent e) {
+        if(starboards == null) {
+            starboards = new HashMap<>();
+        }
         if(starboards.containsKey(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId()))) {
             if(starboards.get(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId())).removeFromStarboard(e)) {
                 saveAsync();
