@@ -34,6 +34,7 @@ public class UpvoteCommand implements CommandExecutor {
         b.setColor(Color.GREEN);
         b.setFooter("Powered by DiscordBots.org", "https://discordbots.org/images/logotrans.png");
 
+
         e.sendMessage(b);
         return new CommandResult(CommandResultEnum.SUCCESS);
     }

@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 import net.heyzeer0.aladdin.events.listeners.GuildListener;
 import net.heyzeer0.aladdin.events.listeners.MessageListener;
@@ -35,7 +36,14 @@ public class EventControl implements EventListener {
             if(((MessageReactionAddEvent) e).getUser().isBot() || ((MessageReactionAddEvent) e).getUser().isFake()) {
                 return;
             }
-            MessageListener.onReact((MessageReactionAddEvent)e);
+            MessageListener.onReactAdd((MessageReactionAddEvent)e);
+            return;
+        }
+        if(e instanceof MessageReactionRemoveEvent) {
+            if(((MessageReactionRemoveEvent) e).getUser().isBot() || ((MessageReactionRemoveEvent) e).getUser().isFake()) {
+                return;
+            }
+            MessageListener.onReactRemove((MessageReactionRemoveEvent)e);
             return;
         }
         if(e instanceof GuildJoinEvent) {

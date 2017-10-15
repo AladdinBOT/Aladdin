@@ -3,12 +3,14 @@ package net.heyzeer0.aladdin.events.listeners;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import net.heyzeer0.aladdin.manager.custom.CrashManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
+import net.heyzeer0.aladdin.manager.utilities.ReactionerManager;
 import net.heyzeer0.aladdin.profiles.commands.ResponseProfile;
 
 import java.util.HashMap;
@@ -77,12 +79,21 @@ public class MessageListener {
 
     }
 
-    public static void onReact(MessageReactionAddEvent e) {
+    public static void onReactAdd(MessageReactionAddEvent e) {
         if(e.getMember().getUser().isBot() || e.getMember().getUser().isFake()) {
             return;
         }
+        Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardAdd(e);
         PaginatorManager.updatePaginator(e);
         ChooserManager.selectChooser(e);
+        ReactionerManager.updateReactioner(e);
+    }
+
+    public static void onReactRemove(MessageReactionRemoveEvent e) {
+        if(e.getMember().getUser().isBot() || e.getMember().getUser().isFake()) {
+            return;
+        }
+        Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardRemove(e);
     }
 
 }

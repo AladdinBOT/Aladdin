@@ -48,7 +48,6 @@ public class ConfigCommand implements CommandExecutor {
 
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
-
         if(args.get(0).equalsIgnoreCase("set")) {
             if(args.getSize() < 3) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "set", "nome", "valor");

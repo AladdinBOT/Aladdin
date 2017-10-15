@@ -6,6 +6,8 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
@@ -43,12 +45,15 @@ public class GuildProfile implements ManagedObject {
     //Commands
     HashMap<String, CustomCommand> commands = new HashMap<>();
 
+    //Starboards
+    HashMap<String, StarboardProfile> starboards = new HashMap<>();
+
     public GuildProfile(Guild u) {
-        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>());
+        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
     }
 
     @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands"})
-    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands) {
+    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> starboards) {
         this.id = id;
         this.ownerId = ownerId;
         this.configs = configs;
@@ -56,6 +61,7 @@ public class GuildProfile implements ManagedObject {
         this.user_group = user_group;
         this.user_overrides = user_overrides;
         this.commands = commands;
+        this.starboards = starboards;
     }
 
     @JsonIgnore
@@ -286,6 +292,40 @@ public class GuildProfile implements ManagedObject {
         user_overrides.remove(u.getId());
         user_group.remove(u.getId());
         saveAsync();
+    }
+
+    public boolean createStarboard(String emoji, int amount, long channel_id) {
+        if(starboards.containsKey(emoji)) {
+            return false;
+        }
+        starboards.put(emoji, new StarboardProfile(emoji, channel_id, amount));
+        saveAsync();
+        return true;
+    }
+
+    public boolean deleteStarboard(int id) {
+        if(starboards.size() < id) {
+            return false;
+        }
+        starboards.remove(id);
+        saveAsync();
+        return true;
+    }
+
+    public void checkStarboardAdd(MessageReactionAddEvent e) {
+        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
+            if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addToStarboard(e)) {
+                saveAsync();
+            }
+        }
+    }
+
+    public void checkStarboardRemove(MessageReactionRemoveEvent e) {
+        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
+            if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeFromStarboard(e)) {
+                saveAsync();
+            }
+        }
     }
 
     @Override
