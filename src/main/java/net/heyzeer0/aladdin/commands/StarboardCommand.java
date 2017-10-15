@@ -33,7 +33,7 @@ public class StarboardCommand implements CommandExecutor {
             try{
 
                 Integer amount = Integer.valueOf(args.get(1));
-                TextChannel ch = e.getMessage().getMentionedChannels().get(0);
+                long ch = e.getMessage().getMentionedChannels().get(0).getIdLong();
 
                 new Reactioner(EmojiList.THINKING + " Adicione como reação nesta mensagem o emote que quer utilizar", e.getAuthor().getIdLong(), e.getChannel(), (v) -> {
                     String emote = v.getReactionEmote().getName() + "|" + (v.getReactionEmote().getId() == null ? "null" : v.getReactionEmote().getId());
@@ -41,7 +41,7 @@ public class StarboardCommand implements CommandExecutor {
                         e.sendMessage(EmojiList.WORRIED + " Oops, o emote mencionado já pertence a outra starboard.");
                         return;
                     }
-                    e.getGuildProfile().createStarboard(emote, amount, ch.getIdLong());
+                    e.getGuildProfile().createStarboard(emote, amount, ch);
 
                     e.sendMessage(EmojiList.CORRECT + " Você criou com sucesso a starboard.");
                 });
