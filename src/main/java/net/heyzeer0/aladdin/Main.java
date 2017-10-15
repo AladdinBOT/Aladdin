@@ -85,6 +85,7 @@ public class Main {
             CommandManager.registerCommand(new OverwatchCommand());
             CommandManager.registerCommand(new PaladinsCommand());
             CommandManager.registerCommand(new PremiumCommand());
+            CommandManager.registerCommand(new StarboardCommand());
             CommandManager.registerCommand(new UpvoteCommand());
             CommandManager.registerCommand(new UserCommand());
             CommandManager.registerCommand(new WarframeCommand());

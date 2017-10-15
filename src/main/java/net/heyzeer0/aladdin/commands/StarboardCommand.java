@@ -5,6 +5,7 @@ import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
+import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -14,7 +15,7 @@ import net.heyzeer0.aladdin.profiles.utilities.Reactioner;
  * Created by HeyZeer0 on 12/06/2017.
  * Copyright © HeyZeer0 - 2016
  */
-public class StarboardCommand {
+public class StarboardCommand implements CommandExecutor {
 
     @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"criar/remover/list"}, type = CommandType.MISCELLANEOUS,
             usage = "a!starboard criar 3 #starboard\na!starboard remover 0\na!starboard list")
