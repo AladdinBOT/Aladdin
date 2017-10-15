@@ -3,10 +3,12 @@ package net.heyzeer0.aladdin.database.entities;
 import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
+import net.heyzeer0.aladdin.utils.Utils;
 
 import java.awt.*;
 import java.beans.ConstructorProperties;
@@ -42,15 +44,25 @@ public class StarboardProfile {
             return false;
         }
         String emt = e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId());
+
         if(emt.equals(emote)) {
-            if (e.getReaction().getCount() < amount) {
+
+            Message msg = e.getTextChannel().getMessageById(e.getMessageIdLong()).complete();
+            if(msg == null) {
+                messages.remove(e.getMessageIdLong());
+                return true;
+            }
+
+            MessageReaction rc = Utils.findReaction(e.getReactionEmote().getName(), e.getReactionEmote().getId(), msg);
+            
+            if (rc == null || rc.getCount() < amount) {
                 TextChannel ch = e.getGuild().getTextChannelById(channel_id);
                 if(ch == null || !ch.canTalk()) {
                     messages.remove(e.getMessageIdLong());
                     return true;
                 }
 
-                ch.getMessageById(messages.get(e.getMessageIdLong())).queue(msg -> msg.delete().queue());
+                ch.getMessageById(messages.get(e.getMessageIdLong())).queue(msg2 -> msg2.delete().queue());
                 return true;
             }
         }
@@ -60,7 +72,19 @@ public class StarboardProfile {
     public boolean addToStarboard(MessageReactionAddEvent e) {
         String emt = e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId());
         if(emt.equals(emote)) {
-            if(e.getReaction().getCount() < amount) {
+
+            Message msg = e.getTextChannel().getMessageById(e.getMessageIdLong()).complete();
+            if(msg == null) {
+                return false;
+            }
+
+            MessageReaction rc = Utils.findReaction(e.getReactionEmote().getName(), e.getReactionEmote().getId(), msg);
+
+            if(rc == null) {
+                return false;
+            }
+
+            if(rc.getCount() < amount) {
                 return false;
             }
 
@@ -70,18 +94,10 @@ public class StarboardProfile {
             }
 
             if(!messages.containsKey(e.getMessageIdLong())) {
-
-                String emote = "";
-
                 if(e.getReactionEmote().getId() == null) {
                     emote = e.getReactionEmote().getName();
                 }else{
                     emote = "<:" + e.getReactionEmote().getName() + ":" + e.getReactionEmote().getId() + ">";
-                }
-
-                Message msg = e.getTextChannel().getMessageById(e.getMessageIdLong()).complete();
-                if(msg == null) {
-                    return false;
                 }
 
                 User author = msg.getAuthor();
@@ -91,7 +107,7 @@ public class StarboardProfile {
 
                 EmbedBuilder b = new EmbedBuilder();
                 b.setColor(Color.GREEN);
-                b.setAuthor(emote + " " + e.getReaction().getCount() + " | Enviada por " + author.getName(), null, author.getEffectiveAvatarUrl());
+                b.setAuthor(emote + " " + rc.getCount() + " | Enviada por " + author.getName(), null, author.getEffectiveAvatarUrl());
                 b.setDescription(msg.getContent());
 
                 if(msg.getAttachments().size() > 0) {
@@ -121,7 +137,7 @@ public class StarboardProfile {
             }
 
             EmbedBuilder b = new EmbedBuilder(embed.getEmbeds().get(0));
-            b.setTitle(embed.getEmbeds().get(0).getTitle().replace((e.getReaction().getCount() - 1) + "", e.getReaction().getCount() + ""));
+            b.setTitle(embed.getEmbeds().get(0).getTitle().replace((rc.getCount() - 1) + "", rc.getCount() + ""));
 
             embed.editMessage(b.build()).queue();
             return true;

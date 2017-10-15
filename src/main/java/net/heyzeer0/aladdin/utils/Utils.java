@@ -1,6 +1,8 @@
 package net.heyzeer0.aladdin.utils;
 
 import com.google.gson.JsonParser;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageReaction;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.GroupProfile;
 import net.heyzeer0.aladdin.enums.GuildConfig;
@@ -237,6 +239,25 @@ public class Utils {
             values.put(guildConfig, guildConfig.getDefault());
         }
         return values;
+    }
+
+    public static MessageReaction findReaction(String emote, String id, Message msg) {
+        if(msg.getReactions().size() <= 0) {
+            return null;
+        }
+
+        for(MessageReaction rc : msg.getReactions()) {
+            if(rc.getEmote().getName().equals(emote)) {
+                if(id == null) {
+                    return rc;
+                }
+                if(rc.getEmote().getId().equals(id)) {
+                    return rc;
+                }
+            }
+        }
+
+        return null;
     }
 
     public static HashMap<String, GroupProfile> getDefaultGroup() {

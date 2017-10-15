@@ -33,8 +33,9 @@ public class Reactioner {
 
     public void onReaction(MessageReactionAddEvent e) {
         if(e.getMessageIdLong() == msg.getIdLong()) {
-            if(e.getUser().getIdLong() == author)
+            if(e.getUser().getIdLong() == author) {
                 result.onReactionAdd(e);
+            }
         }
     }
 

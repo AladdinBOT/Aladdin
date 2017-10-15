@@ -62,6 +62,10 @@ public class GuildProfile implements ManagedObject {
         this.user_overrides = user_overrides;
         this.commands = commands;
         this.starboards = starboards;
+
+        if(this.starboards == null) {
+            this.starboards = new HashMap<>();
+        }
     }
 
     @JsonIgnore
@@ -315,6 +319,8 @@ public class GuildProfile implements ManagedObject {
     public void checkStarboardAdd(MessageReactionAddEvent e) {
         if(starboards == null) {
             starboards = new HashMap<>();
+            saveAsync();
+            return;
         }
         if(starboards.containsKey(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId()))) {
             if(starboards.get(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId())).addToStarboard(e)) {
