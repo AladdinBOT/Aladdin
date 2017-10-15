@@ -41,7 +41,7 @@ public class StarboardCommand implements CommandExecutor {
                         e.sendMessage(EmojiList.WORRIED + " Oops, o emote mencionado já pertence a outra starboard.");
                         return;
                     }
-                    e.getGuildProfile().createStarboard(emote, amount, ch);
+                    e.getGuildProfile().createStarboard(emote, ch, amount);
 
                     e.sendMessage(EmojiList.CORRECT + " Você criou com sucesso a starboard.");
                 });
