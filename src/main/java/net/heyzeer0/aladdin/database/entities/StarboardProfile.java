@@ -93,7 +93,7 @@ public class StarboardProfile {
 
             TextChannel ch = e.getGuild().getTextChannelById(channel_id);
             if(ch == null || !ch.canTalk()) {
-                System.out.println("channel é null");
+                System.out.println("channel é null " + channel_id);
                 return false;
             }
 
