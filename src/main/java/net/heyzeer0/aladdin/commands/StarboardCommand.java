@@ -5,6 +5,7 @@ import net.heyzeer0.aladdin.database.entities.StarboardProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
@@ -64,7 +65,7 @@ public class StarboardCommand implements CommandExecutor {
 
             try{
                 Integer id = Integer.valueOf(args.get(1));
-                
+
                 if(id < 0) {
                     e.sendMessage(EmojiList.WORRIED + " Oops, o número precisa ser maior ou igual a zero");
                     return new CommandResult(CommandResultEnum.SUCCESS);
@@ -89,6 +90,11 @@ public class StarboardCommand implements CommandExecutor {
         if(args.get(0).equalsIgnoreCase("list")) {
 
             HashMap<String, StarboardProfile> starboards = e.getGuildProfile().getStarboards();
+
+            if(starboards.size() <= 0) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, parece que você não posssui uma starboard você pode criar uma utilizando o comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard criar``");
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
 
             Paginator ph = new Paginator(e, ":newspaper: Listando todas as starboads!");
 
