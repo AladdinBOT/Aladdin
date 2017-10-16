@@ -298,11 +298,11 @@ public class GuildProfile implements ManagedObject {
         saveAsync();
     }
 
-    public boolean createStarboard(String emoji, int amount, long channel_id) {
+    public boolean createStarboard(String emoji, int amount, String channel_id) {
         if(starboards.containsKey(emoji)) {
             return false;
         }
-        starboards.put(emoji, new StarboardProfile(emoji, channel_id, amount));
+        starboards.put(emoji, new StarboardProfile(emoji, amount, channel_id));
         saveAsync();
         return true;
     }
@@ -322,8 +322,13 @@ public class GuildProfile implements ManagedObject {
             saveAsync();
             return;
         }
-        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId()))) {
-            if(starboards.get(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId())).addToStarboard(e)) {
+        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
+            try{
+                if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addReaction(e)) {
+                    saveAsync();
+                }
+            }catch (Exception ex) {
+                starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
         }
@@ -333,8 +338,13 @@ public class GuildProfile implements ManagedObject {
         if(starboards == null) {
             starboards = new HashMap<>();
         }
-        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId()))) {
-            if(starboards.get(e.getReactionEmote().getName() + "|" + (e.getReactionEmote().getId() == null ? "null" : e.getReactionEmote().getId())).removeFromStarboard(e)) {
+        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
+            try{
+                if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeReaction(e)) {
+                    saveAsync();
+                }
+            }catch (Exception ex) {
+                starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
         }
