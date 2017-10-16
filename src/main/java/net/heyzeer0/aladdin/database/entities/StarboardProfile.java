@@ -144,7 +144,7 @@ public class StarboardProfile {
 
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
-        b.setTitle(emote + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
+        b.setTitle(emote + " " + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
         b.setDescription(msg.getContent());
 
         if(msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) {
