@@ -135,7 +135,7 @@ public class StarboardProfile {
             }
 
             EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-            b.setTitle(msg.getEmbeds().get(0).getTitle().replace((reaction.getCount() - 1) + "", reaction.getCount() + ""));
+            b.setTitle(m.getEmbeds().get(0).getTitle().replace((reaction.getCount() - 1) + "", reaction.getCount() + ""));
 
             m.editMessage(b.build()).queue();
 
