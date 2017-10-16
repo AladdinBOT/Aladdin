@@ -168,8 +168,8 @@ public class StarboardProfile {
             }
             if(m.group(0).contains("prntscr.com") || m.group(0).contains("prnt.sc")) {
                 try {
-
-                    Elements links = Jsoup.connect(m.group(0)).get().select("img");
+                    System.out.println(m.group(0));
+                    Elements links = Jsoup.connect(m.group(0)).get().getElementsByTag("img");
 
                     for (Element link : links) {
                         System.out.println(link.className());
