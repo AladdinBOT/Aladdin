@@ -16,7 +16,6 @@ public class Reactioner {
     long author;
     ReactionResult result;
 
-    long actual;
     Message msg;
 
     public Reactioner(String message, long author, TextChannel ch, ReactionResult result) {

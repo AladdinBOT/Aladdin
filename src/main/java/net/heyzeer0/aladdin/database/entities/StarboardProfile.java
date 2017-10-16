@@ -11,6 +11,8 @@ import java.awt.*;
 import java.beans.ConstructorProperties;
 import java.io.InvalidObjectException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by HeyZeer0 on 19/09/2017.
@@ -18,6 +20,8 @@ import java.util.HashMap;
  */
 @Getter
 public class StarboardProfile {
+
+    public static Pattern urlpattern = Pattern.compile("(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))");
 
     String emote;
     int amount;
@@ -148,6 +152,15 @@ public class StarboardProfile {
             return false;
         }
 
+        String url = null;
+        Matcher m = urlpattern.matcher(msg.getContent());
+
+        while(m.find()) {
+            if(m.group(0).contains(".png")) {
+                url = m.group(0);
+            }
+        }
+
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
         b.setTitle(emote + " " + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
@@ -155,6 +168,10 @@ public class StarboardProfile {
 
         if(msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) {
             b.setImage(msg.getAttachments().get(0).getUrl());
+        }else{
+            if(url != null) {
+                b.setImage(url);
+            }
         }
 
         b.setFooter("Enviada em #" + e.getChannel().getName(), msg.getAuthor().getEffectiveAvatarUrl());
