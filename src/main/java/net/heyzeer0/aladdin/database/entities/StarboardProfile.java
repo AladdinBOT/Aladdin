@@ -185,7 +185,7 @@ public class StarboardProfile {
                             break;
                         }
                     }
-                }catch (Exception ignored) { }
+                }catch (Exception ignored) { ignored.printStackTrace(); }
             }
         }
 
