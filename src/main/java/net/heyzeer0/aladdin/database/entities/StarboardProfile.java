@@ -38,6 +38,9 @@ public class StarboardProfile {
     }
 
     public boolean removeReaction(MessageReactionRemoveEvent e) throws InvalidObjectException {
+        if(e.getTextChannel().getId().equals(channel_id)) {
+            return false;
+        }
         String emote;
 
         if(e.getReactionEmote().getId() != null) {
@@ -90,13 +93,16 @@ public class StarboardProfile {
         }
 
         EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-        b.setTitle(m.getEmbeds().get(0).getTitle().replace((reaction.getCount() + 1) + "", reaction.getCount() + ""));
+        b.setTitle(emote + " " + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
 
         m.editMessage(b.build()).queue();
         return false;
     }
 
     public boolean addReaction(MessageReactionAddEvent e) throws InvalidObjectException {
+        if(e.getTextChannel().getId().equals(channel_id)) {
+            return false;
+        }
         String emote;
 
         if(e.getReactionEmote().getId() != null) {
@@ -135,7 +141,7 @@ public class StarboardProfile {
             }
 
             EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-            b.setTitle(m.getEmbeds().get(0).getTitle().replace((reaction.getCount() - 1) + "", reaction.getCount() + ""));
+            b.setTitle(emote + " " + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
 
             m.editMessage(b.build()).queue();
 
