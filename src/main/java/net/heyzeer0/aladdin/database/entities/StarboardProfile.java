@@ -166,22 +166,23 @@ public class StarboardProfile {
             if(m.group(0).contains(".png")) {
                 url = m.group(0);
             }
-            if(m.group(0).contains("prntscr.com")) {
+            if(m.group(0).contains("prntscr.com") || m.group(0).contains("prnt.sc")) {
                 try {
 
-                    Elements links = Jsoup.connect(m.group(0)).get().select(".g>.r>a");
+                    Elements links = Jsoup.connect(m.group(0)).get().select("img");
 
                     for (Element link : links) {
-                        String title = link.text();
-                        String ata = link.absUrl("src");
-                        url = URLDecoder.decode(url.substring(url.indexOf('=') + 1, url.indexOf('&')), StandardCharsets.UTF_8.displayName());
+                        if(link.hasClass("image__pic js-image-pic")) {
+                            String ata = link.absUrl("src");
+                            url = URLDecoder.decode(url.substring(url.indexOf('=') + 1, url.indexOf('&')), StandardCharsets.UTF_8.displayName());
 
-                        if (!ata.contains(".png")) {
-                            continue;
+                            if (!ata.contains(".png")) {
+                                continue;
+                            }
+
+                            url = ata;
+                            break;
                         }
-
-                        url = ata;
-
                     }
                 }catch (Exception ignored) { }
             }
