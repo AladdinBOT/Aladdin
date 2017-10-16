@@ -33,7 +33,7 @@ public class StarboardCommand implements CommandExecutor {
             try{
 
                 Integer amount = Integer.valueOf(args.get(1));
-                long ch = e.getMessage().getMentionedChannels().get(0).getIdLong();
+                String ch = e.getMessage().getMentionedChannels().get(0).getId();
 
                 new Reactioner(EmojiList.THINKING + " Adicione como reação nesta mensagem o emote que quer utilizar", e.getAuthor().getIdLong(), e.getChannel(), (v) -> {
                     String emote = v.getReactionEmote().getName() + "|" + (v.getReactionEmote().getId() == null ? "null" : v.getReactionEmote().getId());
