@@ -172,6 +172,7 @@ public class StarboardProfile {
                     Elements links = Jsoup.connect(m.group(0)).get().select("img");
 
                     for (Element link : links) {
+                        System.out.println(link.className());
                         if(link.hasClass("image__pic js-image-pic")) {
                             String ata = link.absUrl("src");
                             url = URLDecoder.decode(url.substring(url.indexOf('=') + 1, url.indexOf('&')), StandardCharsets.UTF_8.displayName());
