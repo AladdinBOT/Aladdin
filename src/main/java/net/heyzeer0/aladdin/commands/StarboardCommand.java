@@ -17,7 +17,7 @@ import net.heyzeer0.aladdin.profiles.utilities.Reactioner;
  */
 public class StarboardCommand implements CommandExecutor {
 
-    @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"criar/remover/list"}, type = CommandType.MISCELLANEOUS,
+    @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"criar/remover/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
             usage = "a!starboard criar 3 #starboard\na!starboard remover 0\na!starboard list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("criar")) {
