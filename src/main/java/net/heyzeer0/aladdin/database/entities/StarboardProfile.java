@@ -163,7 +163,7 @@ public class StarboardProfile {
         Matcher m = urlpattern.matcher(msg.getContent());
 
         while(m.find()) {
-            if(m.group(0).contains(".png")) {
+            if(m.group(0).contains(".png") || m.group(0).contains(".jpg")) {
                 url = m.group(0);
             }
             if(m.group(0).contains("prntscr.com") || m.group(0).contains("prnt.sc")) {

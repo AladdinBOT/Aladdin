@@ -43,6 +43,19 @@ public class GoogleUtils {
         return result;
     }
 
+    public static String search_image(String titulo) {
+        try{
+            Elements x = Jsoup.connect("https://www.google.com/search?ie=ISO-8859-1&hl=en&source=hp&tbm=isch&gbv=1&gs_l=img&q=" + titulo).userAgent("Aladdin-BOT").get().getElementsByTag("img");
+            for(Element y : x) {
+                System.out.println(y.absUrl("src"));
+                return y.absUrl("src");
+            }
+        }catch (Exception ex) {
+            return null;
+        }
+        return null;
+    }
+
     public static List<GoogleSearch> search_google(String titulo) {
         List<GoogleSearch> list = new ArrayList<>();
         try {
