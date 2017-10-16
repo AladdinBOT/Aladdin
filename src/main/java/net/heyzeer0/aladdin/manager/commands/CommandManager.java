@@ -154,6 +154,7 @@ public class CommandManager {
 
             }catch (Exception ex) {
                 e.sendMessage("Ooops, parece que ocorreu um erro ao tentar executar este comando, este erro foi notificado a meu supervisor.");
+                ex.printStackTrace();
 
                 e.getJDA().getUserById("169904764048375809").openPrivateChannel().queue(ch -> ch.sendMessage("Erro capturado: ```" + Utils.sendToHastebin(Utils.getStackTrace(ex)) + "```").queue());
             }
