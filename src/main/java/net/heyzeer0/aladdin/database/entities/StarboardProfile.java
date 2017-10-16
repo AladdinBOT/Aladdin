@@ -5,11 +5,18 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
+import net.heyzeer0.aladdin.profiles.custom.GoogleSearch;
 import net.heyzeer0.aladdin.utils.Utils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.awt.*;
 import java.beans.ConstructorProperties;
 import java.io.InvalidObjectException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -158,6 +165,25 @@ public class StarboardProfile {
         while(m.find()) {
             if(m.group(0).contains(".png")) {
                 url = m.group(0);
+            }
+            if(m.group(0).contains("prntscr.com")) {
+                try {
+
+                    Elements links = Jsoup.connect(m.group(0)).get().select(".g>.r>a");
+
+                    for (Element link : links) {
+                        String title = link.text();
+                        String ata = link.absUrl("src");
+                        url = URLDecoder.decode(url.substring(url.indexOf('=') + 1, url.indexOf('&')), StandardCharsets.UTF_8.displayName());
+
+                        if (!ata.contains(".png")) {
+                            continue;
+                        }
+
+                        url = ata;
+
+                    }
+                }catch (Exception ignored) { }
             }
         }
 
