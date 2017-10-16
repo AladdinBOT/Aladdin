@@ -52,6 +52,9 @@ public class StarboardCommand implements CommandExecutor {
 
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
+        if(args.get(0).equalsIgnoreCase("list")) {
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
         return new CommandResult(CommandResultEnum.NOT_FOUND);
     }
 

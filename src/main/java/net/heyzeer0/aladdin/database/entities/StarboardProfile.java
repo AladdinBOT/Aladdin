@@ -90,8 +90,7 @@ public class StarboardProfile {
         }
 
         EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-        MessageEmbed.AuthorInfo old = m.getEmbeds().get(0).getAuthor();
-        b.setAuthor(old.getName().replace((reaction.getCount() + 1) + "", reaction.getCount() + ""), null, old.getIconUrl());
+        b.setTitle(m.getEmbeds().get(0).getTitle().replace((reaction.getCount() + 1) + "", reaction.getCount() + ""));
 
         m.editMessage(b.build()).queue();
         return false;
@@ -136,8 +135,7 @@ public class StarboardProfile {
             }
 
             EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-            MessageEmbed.AuthorInfo old = m.getEmbeds().get(0).getAuthor();
-            b.setAuthor(old.getName().replace((reaction.getCount() - 1) + "", reaction.getCount() + ""), null, old.getIconUrl());
+            b.setTitle(msg.getEmbeds().get(0).getTitle().replace((reaction.getCount() - 1) + "", reaction.getCount() + ""));
 
             m.editMessage(b.build()).queue();
 
@@ -146,14 +144,14 @@ public class StarboardProfile {
 
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
-        b.setAuthor(emote + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName(), null, msg.getAuthor().getEffectiveAvatarUrl());
+        b.setTitle(emote + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
         b.setDescription(msg.getContent());
 
         if(msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) {
             b.setImage(msg.getAttachments().get(0).getUrl());
         }
 
-        b.setFooter("Enviada em #" + e.getChannel().getName(), null);
+        b.setFooter("Enviada em #" + e.getChannel().getName(), msg.getAuthor().getEffectiveAvatarUrl());
         b.setTimestamp(msg.getCreationTime());
 
         Message newm = ch.sendMessage(b.build()).complete();
