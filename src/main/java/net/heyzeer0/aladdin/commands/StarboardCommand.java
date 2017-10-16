@@ -14,7 +14,9 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 import net.heyzeer0.aladdin.profiles.utilities.Reactioner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by HeyZeer0 on 12/06/2017.
@@ -90,6 +92,7 @@ public class StarboardCommand implements CommandExecutor {
         if(args.get(0).equalsIgnoreCase("list")) {
 
             HashMap<String, StarboardProfile> starboards = e.getGuildProfile().getStarboards();
+            String[] keyset = starboards.keySet().toArray(new String[] {});
 
             if(starboards.size() <= 0) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, parece que você não posssui uma starboard você pode criar uma utilizando o comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard criar``");
@@ -113,9 +116,9 @@ public class StarboardCommand implements CommandExecutor {
                     }
                     actual++;
 
-                    String emote = starboards.get(p).getEmote().split("\\|")[0];
+                    String emote = starboards.get(keyset[p]).getEmote().split("\\|")[0];
 
-                    pg = pg + "ID " + p + " | Emote: " +  emote + "(" + starboards.get(p).getMessages().size() + ")\n";
+                    pg = pg + "ID " + p + " | Emote: " +  emote + "(" + starboards.get(keyset[p]).getMessages().size() + " mensagens)\n";
                 }
                 pactual++;
                 ph.addPage(pg);
