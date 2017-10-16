@@ -137,7 +137,7 @@ public class StarboardProfile {
 
             EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
             MessageEmbed.AuthorInfo old = m.getEmbeds().get(0).getAuthor();
-            b.setAuthor(old.getName().replace((reaction.getCount() - 1) + "", reaction.getCount() + ""), null, old.getUrl());
+            b.setAuthor(old.getName().replace((reaction.getCount() - 1) + "", reaction.getCount() + ""), null, old.getIconUrl());
 
             m.editMessage(b.build()).queue();
 
