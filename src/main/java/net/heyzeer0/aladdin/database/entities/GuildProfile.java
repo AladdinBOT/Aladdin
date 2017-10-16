@@ -16,6 +16,7 @@ import net.heyzeer0.aladdin.profiles.commands.CustomCommand;
 import net.heyzeer0.aladdin.utils.Utils;
 
 import java.beans.ConstructorProperties;
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -327,7 +328,7 @@ public class GuildProfile implements ManagedObject {
                 if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addReaction(e)) {
                     saveAsync();
                 }
-            }catch (Exception ex) {
+            }catch (InvalidObjectException ex) {
                 starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
@@ -343,7 +344,7 @@ public class GuildProfile implements ManagedObject {
                 if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeReaction(e)) {
                     saveAsync();
                 }
-            }catch (Exception ex) {
+            }catch (InvalidObjectException ex) {
                 starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
