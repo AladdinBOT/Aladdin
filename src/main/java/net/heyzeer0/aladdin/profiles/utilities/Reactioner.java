@@ -35,6 +35,7 @@ public class Reactioner {
         if(e.getMessageIdLong() == msg.getIdLong()) {
             if(e.getUser().getIdLong() == author) {
                 result.onReactionAdd(e);
+                ReactionerManager.reactioners.remove(msg.getIdLong());
             }
         }
     }
