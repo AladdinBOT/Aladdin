@@ -42,7 +42,7 @@ public class ReminderCommand implements CommandExecutor {
             long time = System.currentTimeMillis() + (minute ? (60000 * value) : (3600000 * value));
 
             Main.getDatabase().getServer().addReminder(new ReminderProfile(args.getCompleteAfter(1), time, e.getAuthor().getId()));
-            e.sendMessage(EmojiList.CORRECT + " Você definiu um lembre para daqui ``" + args.get(0) + "`` com o motivo de ``" + args.getCompleteAfter(1) + "``");
+            e.sendMessage(EmojiList.CORRECT + " Você definiu um lembrete para daqui ``" + args.get(0) + "`` com o motivo ``" + args.getCompleteAfter(1) + "``");
 
         }catch (Exception ex) { e.sendMessage(EmojiList.WORRIED + " Oops, parece que o tempo digitado é invalido.");}
 

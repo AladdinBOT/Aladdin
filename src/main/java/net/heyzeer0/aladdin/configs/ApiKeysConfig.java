@@ -13,5 +13,6 @@ public class ApiKeysConfig {
     public static String paladins_dev_key = "<insert-here>";
     public static String osu_api_key = "<insert-here>";
     public static String discord_bots_key = "<insert-here>";
+    public static String pixabay_api_key = "<insert-here>";
 
 }
