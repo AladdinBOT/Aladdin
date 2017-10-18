@@ -11,6 +11,7 @@ import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.database.AladdinData;
 import net.heyzeer0.aladdin.manager.ConfigManager;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
+import net.heyzeer0.aladdin.manager.custom.ReminderManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
@@ -86,6 +87,7 @@ public class Main {
             CommandManager.registerCommand(new OverwatchCommand());
             CommandManager.registerCommand(new PaladinsCommand());
             CommandManager.registerCommand(new PremiumCommand());
+            CommandManager.registerCommand(new ReminderCommand());
             CommandManager.registerCommand(new StarboardCommand());
             CommandManager.registerCommand(new UpvoteCommand());
             CommandManager.registerCommand(new UserCommand());
@@ -112,6 +114,7 @@ public class Main {
             ChooserManager.startCleanup();
             PaginatorManager.startCleanup();
             DiscordLists.updateStatus();
+            ReminderManager.startChecking();
 
             new SocketInfo(9598, (l, i) -> {
                 if(l.equalsIgnoreCase("shutdown")) {
@@ -153,6 +156,15 @@ public class Main {
     }
 
     public static User getUserById(long id) {
+        for(ShardProfile pf : getConnectedShards()) {
+            if(pf.getJDA().getUserById(id) != null) {
+                return pf.getJDA().getUserById(id);
+            }
+        }
+        return null;
+    }
+
+    public static User getUserById(String id) {
         for(ShardProfile pf : getConnectedShards()) {
             if(pf.getJDA().getUserById(id) != null) {
                 return pf.getJDA().getUserById(id);

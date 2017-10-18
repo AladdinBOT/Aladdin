@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
+import net.heyzeer0.aladdin.profiles.custom.ReminderProfile;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
@@ -21,16 +22,18 @@ public class ServerProfile implements ManagedObject {
     public static final String DB_TABLE = "server";
 
     ArrayList<String> users_who_upvoted = new ArrayList<>();
+    ArrayList<ReminderProfile> reminders = new ArrayList<>();
     String id;
 
     public ServerProfile() {
-        this("main", new ArrayList<>());
+        this("main", new ArrayList<>(), new ArrayList<>());
     }
 
-    @ConstructorProperties({"id", "users_who_upvoted"})
-    public ServerProfile(String id, ArrayList<String> users_who_upvoted) {
+    @ConstructorProperties({"id", "users_who_upvoted", "reminders"})
+    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders) {
         this.id = id;
         this.users_who_upvoted = users_who_upvoted;
+        this.reminders = reminders;
     }
 
     @JsonIgnore
@@ -45,6 +48,16 @@ public class ServerProfile implements ManagedObject {
 
     public void removeUpvoted(String id) {
         users_who_upvoted.remove(id);
+        saveAsync();
+    }
+
+    public void addReminder(ReminderProfile rp) {
+        reminders.add(rp);
+        saveAsync();
+    }
+
+    public void removeReminder(ReminderProfile rp) {
+        reminders.remove(rp);
         saveAsync();
     }
 
