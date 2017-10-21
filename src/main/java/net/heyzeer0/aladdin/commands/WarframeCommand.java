@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.TextChannel;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
@@ -10,7 +9,6 @@ import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.manager.custom.warframe.AlertManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.PriceManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.WikiManager;
-import net.heyzeer0.aladdin.profiles.WebhookProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -30,7 +28,7 @@ import java.util.List;
  */
 public class WarframeCommand implements CommandExecutor {
 
-    @Command(command = "warframe", description = "Informações sobre warframe", parameters = {"alertas/wiki/preço/armadura"}, sendTyping = false, type = CommandType.FUN, manageWebhooks = true,
+    @Command(command = "warframe", description = "Informações sobre warframe", parameters = {"alertas/wiki/preço/armadura"}, sendTyping = false, type = CommandType.FUN,
             usage = "a!warframe alertas\na!warframe wiki plastids\na!warframe preço Trinity Prime\na!warframe armadura 10\na!warframe armadura 10 5 10")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if (args.get(0).equalsIgnoreCase("preço") || args.get(0).equalsIgnoreCase("preco")) {
@@ -78,14 +76,12 @@ public class WarframeCommand implements CommandExecutor {
 
             String titulo = args.getCompleteAfter(1);
 
-            WebhookProfile wbhook = new WebhookProfile("Ordis", "http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png", (TextChannel)e.getChannel());
-
             Utils.runAsync(() -> {
 
                 WikiProfile p = WikiManager.getWikiArticle(titulo);
 
                 if (p == null) {
-                    wbhook.sendMessage("Desculpe te decepcionar operador, não encontrei nada sobre " + titulo + ".");
+                    e.sendMessage("Desculpe te decepcionar operador, não encontrei nada sobre " + titulo + ".");
                     return;
                 }
 
@@ -100,7 +96,7 @@ public class WarframeCommand implements CommandExecutor {
                 b.addField("Descrição:", p.getDescription(), false);
                 b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
 
-                wbhook.sendMessage(b);
+                e.sendMessage(b);
             });
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
@@ -147,8 +143,6 @@ public class WarframeCommand implements CommandExecutor {
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
-                WebhookProfile wbhook = new WebhookProfile("Ordis", "http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png", (TextChannel)e.getChannel());
-
                 ArmorProfile.ArmorInfo values = new ArmorProfile(Integer.valueOf(args.get(1))).simpleCalc();
                 EmbedBuilder b = new EmbedBuilder();
                 b.setColor(Color.CYAN);
@@ -160,7 +154,7 @@ public class WarframeCommand implements CommandExecutor {
                 b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                 b.setTimestamp(e.getMessage().getCreationTime());
 
-                wbhook.sendMessage(b);
+                e.sendMessage(b);
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
             if (args.getSize() == 4) {
@@ -168,8 +162,6 @@ public class WarframeCommand implements CommandExecutor {
                     e.sendPrivateMessage(EmojiList.WORRIED + " Oops, o número indicado é invalido.");
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
-
-                WebhookProfile wbhook = new WebhookProfile("Ordis", "http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png", (TextChannel)e.getChannel());
 
                 ArmorProfile.ArmorInfo values = new ArmorProfile(Integer.valueOf(args.get(1)), Integer.valueOf(args.get(2)), Integer.valueOf(args.get(3))).advancedCalc();
                 EmbedBuilder b = new EmbedBuilder();
@@ -183,7 +175,7 @@ public class WarframeCommand implements CommandExecutor {
                 b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                 b.setTimestamp(e.getMessage().getCreationTime());
 
-                wbhook.sendMessage(b);
+                e.sendMessage(b);
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
             return new CommandResult(CommandResultEnum.SUCCESS);

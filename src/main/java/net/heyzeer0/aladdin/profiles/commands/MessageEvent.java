@@ -12,6 +12,11 @@ import net.heyzeer0.aladdin.database.entities.GuildProfile;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
 import net.heyzeer0.aladdin.enums.EmojiList;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -36,6 +41,16 @@ public class MessageEvent {
 
     public void sendMessage(EmbedBuilder b) {
         sendMessage(new MessageBuilder().setEmbed(b.build()).build());
+    }
+
+    public void sendImage(BufferedImage img) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(img, "png", os);
+        } catch (Exception ex) { ex.printStackTrace();}
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
+
+        originEvent.getChannel().sendFile(is, "ata.png", null).queue();
     }
 
     public RestAction<Message> sendPureMessage(String msg) {
