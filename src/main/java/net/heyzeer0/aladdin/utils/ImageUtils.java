@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by HeyZeer0 on 19/10/2017.
@@ -30,9 +31,13 @@ public class ImageUtils {
             throw new IllegalArgumentException("input == null!");
         }
 
+        URLConnection cnc = input.openConnection();
+        cnc.setRequestProperty("User-Agent", "AladdinBOT");
+        cnc.connect();
+
         InputStream istream = null;
         try {
-            istream = input.openStream();
+            istream = cnc.getInputStream();
         } catch (IOException e) {
             throw new IIOException("Can't get input stream from URL!", e);
         }
