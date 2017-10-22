@@ -36,8 +36,6 @@ public class WarframeCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "warframe preço", "item");
             }
 
-            e.getGuild().getController().setMute(e.getGuild().getMemberById("254358053221040129"), true).queue();
-
             Utils.runAsync(() -> {
 
                 try{
