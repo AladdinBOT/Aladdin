@@ -31,6 +31,8 @@ import java.util.stream.Stream;
  * Copyright © HeyZeer0 - 2016
  */
 public class Main {
+    
+    //Ignore this
 
     private static LogProfile logger = new LogProfile("Main");
     private static ShardProfile[] shards;
