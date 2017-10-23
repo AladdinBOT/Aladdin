@@ -94,7 +94,7 @@ public class AkinatorProfile {
 
         g.dispose();
 
-        Message msg = e.sendImagePure(tempImage, EmojiList.THINKING + " Escolha a resposta desejada!");
+        Message msg = e.sendImagePure(tempImage, EmojiList.THINKING + " " + e.getAuthor().getName() + " escolha a resposta desejada!");
 
         if(msg != null) {
             msg.addReaction("1⃣").queue();
@@ -163,7 +163,7 @@ public class AkinatorProfile {
 
                 g.dispose();
 
-                Message msg = e.sendImagePure(tempImage, EmojiList.THINKING + " Escolha a resposta desejada!");
+                Message msg = e.sendImagePure(tempImage, EmojiList.THINKING + " " + e.getAuthor().getName() + " escolha a resposta desejada!");
 
                 if(msg != null) {
                     msg.addReaction("1⃣").complete();
@@ -219,7 +219,7 @@ public class AkinatorProfile {
                             .queryString("step", actual.getStepNum())
                             .queryString("element", guess.getId())
                             .asString();
-                    e.sendMessage(EmojiList.SMILE + " Ótimo ! Adivinhei certo mais uma vez.\n" + "Eu adorei jogar com você!");
+                    e.sendMessage(EmojiList.SMILE + " Ótimo ! Adivinhei certo mais uma vez.\n" + "Eu adorei jogar com você " + e.getAuthor().getName() + "!");
                     AkinatorCommand.akinators.remove(e.getAuthor().getId());
             } else if (answer == 1) {
                     Unirest.get(EXCLUSION_URL)
@@ -244,7 +244,7 @@ public class AkinatorProfile {
         actual = new AkinatorQuestion(json);
 
         if (actual.gameOver) {
-            e.sendMessage(EmojiList.SMILE + " Droga ! Parece que dessa vez não consegui adivinhar.\n" + "Eu adorei jogar com você!");
+            e.sendMessage(EmojiList.SMILE + " Droga ! Parece que dessa vez não consegui adivinhar.\n" + "Eu adorei jogar com você " + e.getAuthor().getName() + "!");
             AkinatorCommand.akinators.remove(e.getAuthor().getId());
             return;
         }
