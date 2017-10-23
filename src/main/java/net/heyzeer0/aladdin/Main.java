@@ -70,6 +70,7 @@ public class Main {
             long commands = System.currentTimeMillis();
 
             CommandManager.registerCommand(new AdminCommand());
+            CommandManager.registerCommand(new AkinatorCommand());
             CommandManager.registerCommand(new BotCommand());
             CommandManager.registerCommand(new ChatClearCommand());
             CommandManager.registerCommand(new CommandsCommand());

@@ -194,7 +194,7 @@ public class Utils {
             regional.put("1⃣", "1");
             regional.put("2⃣", "2");
             regional.put("3⃣", "3");
-            regional.put("4⃣", "4");
+            regional.put("3⃣", "4");
             regional.put("5⃣", "5");
             regional.put("6⃣", "6");
             regional.put("7⃣", "7");

@@ -11,7 +11,6 @@ import net.heyzeer0.aladdin.manager.utilities.ReactionerManager;
  */
 public class Reactioner {
 
-    String message;
     TextChannel ch;
     long author;
     ReactionResult result;
@@ -19,14 +18,24 @@ public class Reactioner {
     Message msg;
 
     public Reactioner(String message, long author, TextChannel ch, ReactionResult result) {
-        this.message = message;
         this.ch = ch;
         this.author = author;
         this.result = result;
 
         msg = ch.sendMessage(message).complete();
         if(msg != null) {
-            ReactionerManager.reactioners.put(msg.getIdLong(), this);
+            ReactionerManager.reactioners.put(msg.getId(), this);
+        }
+    }
+
+    public Reactioner(Message msg, long author, TextChannel ch, ReactionResult result) {
+        this.ch = ch;
+        this.author = author;
+        this.result = result;
+        this.msg = msg;
+
+        if(msg != null) {
+            ReactionerManager.reactioners.put(msg.getId(), this);
         }
     }
 
@@ -34,7 +43,7 @@ public class Reactioner {
         if(e.getMessageIdLong() == msg.getIdLong()) {
             if(e.getUser().getIdLong() == author) {
                 result.onReactionAdd(e);
-                ReactionerManager.reactioners.remove(msg.getIdLong());
+                ReactionerManager.reactioners.remove(msg.getId());
             }
         }
     }

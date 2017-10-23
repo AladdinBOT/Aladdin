@@ -9,6 +9,7 @@ import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
+import net.heyzeer0.aladdin.profiles.custom.AkinatorProfile;
 import net.heyzeer0.aladdin.utils.ImageUtils;
 
 import javax.imageio.ImageIO;
@@ -23,13 +24,21 @@ import java.io.*;
 public class AdminCommand implements CommandExecutor {
 
     @Command(command = "admin", description = "Comandos sobre o bot", type = CommandType.BOT_ADMIN, isAllowedToDefault = false,
-            usage = "")
+            usage = "", sendTyping = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("key")) {
             for(User u : e.getMessage().getMentionedUsers()) {
                 Main.getDatabase().getUserProfile(u).addKeys(2);
             }
             return new CommandResult(CommandResultEnum.SUCCESS);
+        }
+        if(args.get(0).equalsIgnoreCase("akinator")) {
+            try {
+                new AkinatorProfile(e);
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
         }
         if(args.get(0).equalsIgnoreCase("test")) {
             e.sendMessage("running the test");
@@ -65,7 +74,6 @@ public class AdminCommand implements CommandExecutor {
                 e.sendImage(tempImage);
 
             }catch (Exception ex) { ex.printStackTrace(); }
-
         }
         return new CommandResult(CommandResultEnum.SUCCESS);
     }

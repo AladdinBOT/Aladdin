@@ -11,11 +11,11 @@ import java.util.HashMap;
  */
 public class ReactionerManager {
 
-    public static HashMap<Long, Reactioner> reactioners = new HashMap<>();
+    public static HashMap<String, Reactioner> reactioners = new HashMap<>();
 
     public static void updateReactioner(MessageReactionAddEvent e) {
-        if(reactioners.containsKey(e.getMessageIdLong())) {
-            reactioners.get(e.getMessageIdLong()).onReaction(e);
+        if(reactioners.containsKey(e.getMessageId())) {
+            reactioners.get(e.getMessageId()).onReaction(e);
         }
     }
 
