@@ -28,11 +28,11 @@ import java.util.ArrayList;
  */
 public class AkinatorProfile {
 
-    private String NEW_SESSION_URL = "http://api-pt4.akinator.com/ws/new_session?partner=1";
-    private String ANSWER_URL = "http://api-pt4.akinator.com/ws/answer";
-    private String GET_GUESS_URL = "http://api-pt4.akinator.com/ws/list";
-    private String CHOICE_URL = "http://api-pt4.akinator.com/ws/choice";
-    private String EXCLUSION_URL = "http://api-pt4.akinator.com/ws/exclusion";
+    private String NEW_SESSION_URL = "http://api-pt3.akinator.com/ws/new_session?partner=1";
+    private String ANSWER_URL = "http://api-pt3.akinator.com/ws/answer";
+    private String GET_GUESS_URL = "http://api-pt3.akinator.com/ws/list";
+    private String CHOICE_URL = "http://api-pt3.akinator.com/ws/choice";
+    private String EXCLUSION_URL = "http://api-pt3.akinator.com/ws/exclusion";
 
     MessageEvent e;
     AkinatorQuestion actual;
@@ -52,11 +52,11 @@ public class AkinatorProfile {
         actual = new AkinatorQuestion(session);
         if(actual.isGameOver()) {
 
-            NEW_SESSION_URL = "http://api-pt3.akinator.com/ws/new_session?partner=1";
-            ANSWER_URL = "http://api-pt3.akinator.com/ws/answer";
-            GET_GUESS_URL = "http://api-pt3.akinator.com/ws/list";
-            CHOICE_URL = "http://api-pt3.akinator.com/ws/choice";
-            EXCLUSION_URL = "http://api-pt3.akinator.com/ws/exclusion";
+            NEW_SESSION_URL = "http://api-pt4.akinator.com/ws/new_session?partner=1";
+            ANSWER_URL = "http://api-pt4.akinator.com/ws/answer";
+            GET_GUESS_URL = "http://api-pt4.akinator.com/ws/list";
+            CHOICE_URL = "http://api-pt4.akinator.com/ws/choice";
+            EXCLUSION_URL = "http://api-pt4.akinator.com/ws/exclusion";
 
             session = Unirest.get(NEW_SESSION_URL).queryString("player", "AladdinBOTv1.0").asJson().getBody().getObject();
             actual = new AkinatorQuestion(session);
