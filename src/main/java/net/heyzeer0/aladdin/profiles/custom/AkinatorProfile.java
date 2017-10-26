@@ -142,6 +142,7 @@ public class AkinatorProfile {
                 g.setColor(Color.BLACK);
 
                 g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "Roboto-Thin.ttf")).deriveFont(25f));
+                g.drawString("Pergunta Nº " + questions, 100, 85);
 
                 ArrayList<String> strings = new ArrayList<>();
                 int index = 0;
