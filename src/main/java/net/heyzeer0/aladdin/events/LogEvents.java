@@ -7,6 +7,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.member.*;
+import net.dv8tion.jda.core.events.guild.voice.*;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -80,6 +81,7 @@ public class LogEvents implements EventListener {
                                 .setColor(Color.GREEN)
                                 .setDescription(ev.getUser().getAsMention() + " Acaba de entrar no servidor")
                                 .setFooter("ID: " + ev.getUser().getId(), null));
+                return;
 
             }
             if(e instanceof GuildMemberLeaveEvent) {
@@ -94,6 +96,7 @@ public class LogEvents implements EventListener {
                                 .setColor(Color.RED)
                                 .setDescription(ev.getUser().getName() + " Acaba de sair do servidor")
                                 .setFooter("ID: " + ev.getUser().getId(), null));
+                return;
             }
             if(e instanceof GuildMemberNickChangeEvent) {
                 if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.MEMBER_MODULE)) {
@@ -107,6 +110,7 @@ public class LogEvents implements EventListener {
                                 .setColor(Color.YELLOW)
                                 .setDescription(ev.getUser().getAsMention() + " Alterou seu nick de ```" + ev.getPrevNick() + "```para```" + ev.getNewNick() + "```")
                                 .setFooter("ID: " + ev.getUser().getId(), null));
+                return;
             }
             if(e instanceof GuildMemberRoleAddEvent) {
                 if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.ROLE_MODULE)) {
@@ -120,6 +124,7 @@ public class LogEvents implements EventListener {
                                 .setColor(Color.GREEN)
                                 .setDescription(ev.getUser().getAsMention() + " ganhou o cargo " + ev.getRoles().get(0).getAsMention())
                                 .setFooter("ID: " + ev.getUser().getId(), null));
+                return;
             }
             if(e instanceof GuildMemberRoleRemoveEvent) {
                 if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.ROLE_MODULE)) {
@@ -134,11 +139,57 @@ public class LogEvents implements EventListener {
                                 .setDescription(ev.getUser().getAsMention() + " perdeu o cargo " + ev.getRoles().get(0).getAsMention())
                                 .setFooter("ID: " + ev.getUser().getId(), null));
             }
+            return;
+        }
+        if(e instanceof GenericGuildVoiceEvent) {
+            if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.VOICE_MODULE)) {
+                return;
+            }
+            if(e instanceof GuildVoiceJoinEvent) {
+                GuildVoiceJoinEvent ev = (GuildVoiceJoinEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                                .setColor(Color.GREEN)
+                                .setDescription(ev.getMember().getUser().getAsMention() + " entrou no canal de audio " + ev.getChannelJoined().getName())
+                                .setFooter("ID: " + ev.getMember().getUser().getId(), null));
+                return;
+            }
+            if(e instanceof GuildVoiceLeaveEvent) {
+                GuildVoiceLeaveEvent ev = (GuildVoiceLeaveEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                                .setColor(Color.RED)
+                                .setDescription(ev.getMember().getUser().getAsMention() + " saiu do canal de audio " + ev.getChannelLeft().getName())
+                                .setFooter("ID: " + ev.getMember().getUser().getId(), null));
+                return;
+            }
+            if(e instanceof GuildVoiceMoveEvent) {
+                GuildVoiceMoveEvent ev = (GuildVoiceMoveEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                                .setColor(Color.YELLOW)
+                                .setDescription(ev.getMember().getUser().getAsMention() + " foi movido do canal ``" + ev.getChannelLeft().getName() + "`` para o canal ``" + ev.getChannelJoined().getName() + "``")
+                                .setFooter("ID: " + ev.getMember().getUser().getId(), null));
+                return;
+            }
+            if(e instanceof GuildVoiceMuteEvent) {
+                GuildVoiceMuteEvent ev = (GuildVoiceMuteEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                                .setColor(Color.YELLOW)
+                                .setDescription(ev.getMember().getUser().getAsMention() + " foi " + (ev.isMuted() ? "mutado" : "desmutado") + " dos canais de voz.")
+                                .setFooter("ID: " + ev.getMember().getUser().getId(), null));
+                return;
+            }
         }
     }
 
     public static boolean isModuleActive(Guild g, LogModules module) {
-        return Main.getDatabase().getGuildProfile(g).isLogModuleActive(module);
+        return Main.getDatabase().getGuildProfile(g).getGuild_log().getChannel_id() != null && Main.getDatabase().getGuildProfile(g).isLogModuleActive(module);
     }
 
 
