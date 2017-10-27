@@ -185,16 +185,6 @@ public class LogEvents implements EventListener {
                                 .setFooter("ID: " + ev.getMember().getUser().getId(), null));
                 return;
             }
-            if(e instanceof GuildVoiceMuteEvent) {
-                GuildVoiceMuteEvent ev = (GuildVoiceMuteEvent)e;
-
-                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
-                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getEffectiveAvatarUrl())
-                                .setColor((ev.isMuted() ? Color.RED : Color.GREEN))
-                                .setDescription(ev.getMember().getUser().getAsMention() + " foi " + (ev.isMuted() ? "mutado" : "desmutado") + " dos canais de voz.")
-                                .setFooter("ID: " + ev.getMember().getUser().getId(), null));
-                return;
-            }
         }
     }
 
