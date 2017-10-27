@@ -32,8 +32,9 @@ public class LogEvents implements EventListener {
                 return;
             }
             if(e instanceof GuildMessageReceivedEvent) {
+                System.out.print("adicionando");
                 GuildMessageReceivedEvent ev = (GuildMessageReceivedEvent)e;
-                messageCache.put(((GuildMessageReceivedEvent) e).getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContent(), ev.getAuthor().getName(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
+                messageCache.put(ev.getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContent(), ev.getAuthor().getName(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
                 return;
             }
             if(e instanceof GuildMessageDeleteEvent) {
@@ -41,7 +42,7 @@ public class LogEvents implements EventListener {
                 try{
                     CachedMessage cache = messageCache.get(ev.getMessageId(), Optional::empty).orElse(null);
 
-                    if(cache == null || cache.getMessage().isEmpty()) {
+                    if(cache != null && !cache.getMessage().isEmpty()) {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(cache.getAuthor_name(), null, cache.getAuthor_url())
                                         .setColor(Color.GREEN)
@@ -54,7 +55,7 @@ public class LogEvents implements EventListener {
                 try{
                     CachedMessage old_message = messageCache.get(ev.getMessageId(), Optional::empty).orElse(null);
 
-                    if(old_message == null || old_message.getMessage().isEmpty()) {
+                    if(old_message != null && !old_message.getMessage().isEmpty()) {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(ev.getAuthor().getName(), null, ev.getAuthor().getEffectiveAvatarUrl())
                                         .setColor(Color.GREEN)
