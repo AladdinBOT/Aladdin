@@ -45,7 +45,7 @@ public class LogEvents implements EventListener {
                     if(cache != null && !cache.getMessage().isEmpty()) {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(cache.getAuthor_name(), null, cache.getAuthor_url())
-                                        .setColor(Color.GREEN)
+                                        .setColor(Color.RED)
                                         .setDescription("O usuário " + cache.getAuthor_name() + " deletou sua mensagem ```" + cache.getMessage() + "```")
                                         .setFooter("ID: " + cache.getAuthor_id() + " #" + ev.getChannel().getName(), null)); }
                 }catch (Exception ignored) {}
@@ -58,7 +58,7 @@ public class LogEvents implements EventListener {
                     if(old_message != null && !old_message.getMessage().isEmpty()) {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(ev.getAuthor().getName(), null, ev.getAuthor().getEffectiveAvatarUrl())
-                                        .setColor(Color.GREEN)
+                                        .setColor(Color.YELLOW)
                                         .setDescription("O usuário " + ev.getAuthor().getName() + " alterou sua mensagem de ```" + old_message.getMessage() + "``` \npara ```" + ev.getMessage().getContent() + "```.")
                                         .setFooter("ID: " + ev.getAuthor().getId() + " #" + ev.getChannel().getName(), null).setTimestamp(ev.getMessage().getEditedTime())); }
                 }catch (Exception ignored) {}
