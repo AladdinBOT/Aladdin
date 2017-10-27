@@ -35,6 +35,9 @@ public class LogEvents implements EventListener {
             }
             if(e instanceof GuildMessageReceivedEvent) {
                 GuildMessageReceivedEvent ev = (GuildMessageReceivedEvent)e;
+                if(ev.getAuthor().isBot() || ev.getAuthor().isFake()) {
+                    return;
+                }
                 messageCache.put(ev.getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContent(), ev.getAuthor().getName(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
                 return;
             }
@@ -53,6 +56,9 @@ public class LogEvents implements EventListener {
             }
             if(e instanceof GuildMessageUpdateEvent) {
                 GuildMessageUpdateEvent ev = (GuildMessageUpdateEvent)e;
+                if(ev.getAuthor().isBot() || ev.getAuthor().isFake()) {
+                    return;
+                }
                 try{
                     CachedMessage old_message = messageCache.get(ev.getMessageId(), Optional::empty).orElse(null);
 
@@ -144,6 +150,11 @@ public class LogEvents implements EventListener {
             if(!isModuleActive(((GenericGuildVoiceEvent) e).getGuild(), LogModules.VOICE_MODULE)) {
                 return;
             }
+
+            if(((GenericGuildVoiceEvent) e).getMember().getUser().isBot() || ((GenericGuildVoiceEvent) e).getMember().getUser().isFake()) {
+                return;
+            }
+
             if(e instanceof GuildVoiceJoinEvent) {
                 GuildVoiceJoinEvent ev = (GuildVoiceJoinEvent)e;
 
