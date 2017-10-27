@@ -105,7 +105,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.YELLOW)
-                                .setDescription(ev.getUser().getName() + " Alterou seu nick de ```" + ev.getPrevNick() + "```para```" + ev.getNewNick() + "```")
+                                .setDescription(ev.getUser().getAsMention() + " Alterou seu nick de ```" + ev.getPrevNick() + "```para```" + ev.getNewNick() + "```")
                                 .setFooter("ID: " + ev.getUser().getName(), null));
             }
             if(e instanceof GuildMemberRoleAddEvent) {
@@ -118,7 +118,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.GREEN)
-                                .setDescription(ev.getUser().getName() + " ganhou o cargo " + ev.getRoles().get(0).getAsMention())
+                                .setDescription(ev.getUser().getAsMention() + " ganhou o cargo " + ev.getRoles().get(0).getAsMention())
                                 .setFooter("ID: " + ev.getUser().getName(), null));
             }
             if(e instanceof GuildMemberRoleRemoveEvent) {
@@ -131,7 +131,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.RED)
-                                .setDescription(ev.getUser().getName() + " perdeu o cargo " + ev.getRoles().get(0).getAsMention())
+                                .setDescription(ev.getUser().getAsMention() + " perdeu o cargo " + ev.getRoles().get(0).getAsMention())
                                 .setFooter("ID: " + ev.getUser().getName(), null));
             }
         }
