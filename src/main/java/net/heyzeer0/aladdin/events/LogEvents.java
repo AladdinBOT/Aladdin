@@ -179,7 +179,7 @@ public class LogEvents implements EventListener {
 
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getEffectiveAvatarUrl())
-                                .setColor(Color.YELLOW)
+                                .setColor((ev.isMuted() ? Color.RED : Color.GREEN))
                                 .setDescription(ev.getMember().getUser().getAsMention() + " foi " + (ev.isMuted() ? "mutado" : "desmutado") + " dos canais de voz.")
                                 .setFooter("ID: " + ev.getMember().getUser().getId(), null));
                 return;
