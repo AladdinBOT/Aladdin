@@ -59,7 +59,7 @@ public class LogEvents implements EventListener {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(ev.getAuthor().getName(), null, ev.getAuthor().getEffectiveAvatarUrl())
                                         .setColor(Color.YELLOW)
-                                        .setDescription("O usuário " + ev.getAuthor().getName() + " alterou sua mensagem de ```" + old_message.getMessage() + "``` \npara ```" + ev.getMessage().getContent() + "```.")
+                                        .setDescription("O usuário " + ev.getAuthor().getName() + " alterou sua mensagem de ```" + old_message.getMessage() + "``` \npara ```" + ev.getMessage().getContent() + "```")
                                         .setFooter("ID: " + ev.getAuthor().getId() + " #" + ev.getChannel().getName(), null).setTimestamp(ev.getMessage().getEditedTime())); }
                 }catch (Exception ignored) {}
             }

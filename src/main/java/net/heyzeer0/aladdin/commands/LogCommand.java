@@ -31,6 +31,10 @@ public class LogCommand implements CommandExecutor {
 
         if(args.get(0).equalsIgnoreCase("modulos")) {
 
+            if(args.getSize() < 2) {
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modulos", "ativar/desativar/list");
+            }
+
             if(args.get(1).equalsIgnoreCase("list")) {
                 Paginator ph = new Paginator(e, ":wrench: Lista de todos os modulos");
 
