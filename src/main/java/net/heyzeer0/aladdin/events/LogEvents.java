@@ -33,7 +33,7 @@ public class LogEvents implements EventListener {
             }
             if(e instanceof GuildMessageReceivedEvent) {
                 GuildMessageReceivedEvent ev = (GuildMessageReceivedEvent)e;
-                messageCache.put(((GuildMessageUpdateEvent) e).getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContent(), ev.getAuthor().getName(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
+                messageCache.put(((GuildMessageReceivedEvent) e).getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContent(), ev.getAuthor().getName(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
                 return;
             }
             if(e instanceof GuildMessageDeleteEvent) {
@@ -50,7 +50,7 @@ public class LogEvents implements EventListener {
                 }catch (Exception ignored) {}
             }
             if(e instanceof GuildMessageUpdateEvent) {
-                GuildMessageReceivedEvent ev = (GuildMessageReceivedEvent)e;
+                GuildMessageUpdateEvent ev = (GuildMessageUpdateEvent)e;
                 try{
                     CachedMessage old_message = messageCache.get(ev.getMessageId(), Optional::empty).orElse(null);
 
