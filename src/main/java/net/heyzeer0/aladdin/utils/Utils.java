@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.entities.MessageReaction;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.GroupProfile;
 import net.heyzeer0.aladdin.enums.GuildConfig;
+import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import okhttp3.OkHttpClient;
@@ -237,6 +238,14 @@ public class Utils {
         HashMap<GuildConfig, Object> values = new HashMap<>();
         for (GuildConfig guildConfig : GuildConfig.values()) {
             values.put(guildConfig, guildConfig.getDefault());
+        }
+        return values;
+    }
+
+    public static HashMap<LogModules, Boolean> getLogDefaults() {
+        HashMap<LogModules, Boolean> values = new HashMap<>();
+        for (LogModules guildConfig : LogModules.values()) {
+            values.put(guildConfig, guildConfig.isActive());
         }
         return values;
     }

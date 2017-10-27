@@ -84,6 +84,7 @@ public class Main {
             CommandManager.registerCommand(new ImageCommand());
             CommandManager.registerCommand(new InviteCommand());
             CommandManager.registerCommand(new JavaCommand());
+            CommandManager.registerCommand(new LogCommand());
             CommandManager.registerCommand(new MathCommand());
             CommandManager.registerCommand(new MinecraftCommand());
             CommandManager.registerCommand(new OsuCommand());

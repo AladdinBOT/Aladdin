@@ -8,6 +8,7 @@ import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.events.EventControl;
+import net.heyzeer0.aladdin.events.LogEvents;
 
 import javax.security.auth.login.LoginException;
 
@@ -36,7 +37,7 @@ public class ShardProfile {
                 .setAudioEnabled(true)
                 .setAudioSendFactory(new NativeAudioSendFactory())
                 .setGame(Game.of("a!help | " + MainConfig.bot_game + " [" + (shardid + 1) + "]"))
-                .addEventListener(new EventControl())
+                .addEventListener(new EventControl(), new LogEvents())
                 .setCorePoolSize(10);
 
         if(totalshards > 1) {

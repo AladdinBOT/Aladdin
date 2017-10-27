@@ -2,16 +2,16 @@ package net.heyzeer0.aladdin.database.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 import net.heyzeer0.aladdin.enums.GuildConfig;
+import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.profiles.commands.CustomCommand;
 import net.heyzeer0.aladdin.utils.Utils;
 
@@ -49,12 +49,15 @@ public class GuildProfile implements ManagedObject {
     //Starboards
     HashMap<String, StarboardProfile> starboards = new HashMap<>();
 
+    //Log
+    LogProfile guild_log;
+
     public GuildProfile(Guild u) {
-        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
+        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null));
     }
 
-    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "starboards"})
-    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> starboards) {
+    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "starboards", "guild_log"})
+    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> starboards, LogProfile guild_log) {
         this.id = id;
         this.ownerId = ownerId;
         this.configs = configs;
@@ -63,10 +66,10 @@ public class GuildProfile implements ManagedObject {
         this.user_overrides = user_overrides;
         this.commands = commands;
         this.starboards = starboards;
+        this.guild_log = guild_log;
 
-        if(this.starboards == null) {
-            this.starboards = new HashMap<>();
-        }
+        if(this.starboards == null) { this.starboards = new HashMap<>(); }
+        if(this.guild_log == null) { this.guild_log = new LogProfile(null); }
     }
 
     @JsonIgnore
@@ -161,6 +164,34 @@ public class GuildProfile implements ManagedObject {
     @JsonIgnore
     public GroupProfile getGroupByName(String x) {
         return groups.getOrDefault(x, null);
+    }
+
+    @JsonIgnore
+    public boolean isLogModuleActive(LogModules module) {
+        return guild_log.getLogModuleStatus(module);
+    }
+
+    public void sendLogMessage(Guild g, EmbedBuilder b) {
+        if(guild_log.getChannel_id() != null) {
+            TextChannel ch = g.getTextChannelById(guild_log.getChannel_id());
+            if(ch == null) {
+                guild_log.changeChannelID(null);
+                saveAsync();
+                return;
+            }
+
+            ch.sendMessage(b.build()).queue();
+        }
+    }
+
+    public void changeLogModuleStatus(LogModules cfg, boolean value) {
+        guild_log.changeModuleStatus(cfg, value);
+        saveAsync();
+    }
+
+    public void changeLogChannel(String channel_id) {
+        guild_log.changeChannelID(channel_id);
+        saveAsync();
     }
 
     public boolean addUserOverride(User u, String x) {
