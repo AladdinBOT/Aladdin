@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.guild.member.*;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -59,11 +60,80 @@ public class LogEvents implements EventListener {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(ev.getAuthor().getName(), null, ev.getAuthor().getEffectiveAvatarUrl())
                                         .setColor(Color.YELLOW)
-                                        .setDescription("O usuário " + ev.getAuthor().getName() + " alterou sua mensagem de ```" + old_message.getMessage() + "``` \npara ```" + ev.getMessage().getContent() + "```")
-                                        .setFooter("ID: " + ev.getAuthor().getId() + " #" + ev.getChannel().getName(), null).setTimestamp(ev.getMessage().getEditedTime())); }
+                                        .setDescription("O usuário " + ev.getAuthor().getName() + " alterou sua mensagem de ```" + old_message.getMessage() + "```para```" + ev.getMessage().getContent() + "```")
+                                        .setFooter("ID: " + ev.getAuthor().getId() + " #" + ev.getChannel().getName(), null).setTimestamp(ev.getMessage().getEditedTime()));
+                    }
                 }catch (Exception ignored) {}
             }
             return;
+        }
+        if(e instanceof GenericGuildMemberEvent) {
+            if(e instanceof GuildMemberJoinEvent) {
+                if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.MEMBER_MODULE)) {
+                    return;
+                }
+
+                GenericGuildMemberEvent ev = (GenericGuildMemberEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                .setColor(Color.GREEN)
+                                .setDescription(ev.getUser().getAsMention() + " Acaba de entrar no servidor")
+                                .setFooter("ID: " + ev.getUser().getName(), null));
+
+            }
+            if(e instanceof GuildMemberLeaveEvent) {
+                if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.MEMBER_MODULE)) {
+                    return;
+                }
+
+                GuildMemberLeaveEvent ev = (GuildMemberLeaveEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                .setColor(Color.RED)
+                                .setDescription(ev.getUser().getName() + " Acaba de sair do servidor")
+                                .setFooter("ID: " + ev.getUser().getName(), null));
+            }
+            if(e instanceof GuildMemberNickChangeEvent) {
+                if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.MEMBER_MODULE)) {
+                    return;
+                }
+
+                GuildMemberNickChangeEvent ev = (GuildMemberNickChangeEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription(ev.getUser().getName() + " Alterou seu nick de ```" + ev.getPrevNick() + "```para```" + ev.getNewNick() + "```")
+                                .setFooter("ID: " + ev.getUser().getName(), null));
+            }
+            if(e instanceof GuildMemberRoleAddEvent) {
+                if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.ROLE_MODULE)) {
+                    return;
+                }
+
+                GuildMemberRoleAddEvent ev = (GuildMemberRoleAddEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                .setColor(Color.GREEN)
+                                .setDescription(ev.getUser().getName() + " ganhou o cargo " + ev.getRoles().get(0).getAsMention())
+                                .setFooter("ID: " + ev.getUser().getName(), null));
+            }
+            if(e instanceof GuildMemberRoleRemoveEvent) {
+                if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.ROLE_MODULE)) {
+                    return;
+                }
+
+                GuildMemberRoleRemoveEvent ev = (GuildMemberRoleRemoveEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                .setColor(Color.RED)
+                                .setDescription(ev.getUser().getName() + " perdeu o cargo " + ev.getRoles().get(0).getAsMention())
+                                .setFooter("ID: " + ev.getUser().getName(), null));
+            }
         }
     }
 
