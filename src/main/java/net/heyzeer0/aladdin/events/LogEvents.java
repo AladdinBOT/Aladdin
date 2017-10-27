@@ -79,7 +79,7 @@ public class LogEvents implements EventListener {
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.GREEN)
                                 .setDescription(ev.getUser().getAsMention() + " Acaba de entrar no servidor")
-                                .setFooter("ID: " + ev.getUser().getName(), null));
+                                .setFooter("ID: " + ev.getUser().getId(), null));
 
             }
             if(e instanceof GuildMemberLeaveEvent) {
@@ -93,7 +93,7 @@ public class LogEvents implements EventListener {
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.RED)
                                 .setDescription(ev.getUser().getName() + " Acaba de sair do servidor")
-                                .setFooter("ID: " + ev.getUser().getName(), null));
+                                .setFooter("ID: " + ev.getUser().getId(), null));
             }
             if(e instanceof GuildMemberNickChangeEvent) {
                 if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.MEMBER_MODULE)) {
@@ -106,7 +106,7 @@ public class LogEvents implements EventListener {
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.YELLOW)
                                 .setDescription(ev.getUser().getAsMention() + " Alterou seu nick de ```" + ev.getPrevNick() + "```para```" + ev.getNewNick() + "```")
-                                .setFooter("ID: " + ev.getUser().getName(), null));
+                                .setFooter("ID: " + ev.getUser().getId(), null));
             }
             if(e instanceof GuildMemberRoleAddEvent) {
                 if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.ROLE_MODULE)) {
@@ -119,7 +119,7 @@ public class LogEvents implements EventListener {
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.GREEN)
                                 .setDescription(ev.getUser().getAsMention() + " ganhou o cargo " + ev.getRoles().get(0).getAsMention())
-                                .setFooter("ID: " + ev.getUser().getName(), null));
+                                .setFooter("ID: " + ev.getUser().getId(), null));
             }
             if(e instanceof GuildMemberRoleRemoveEvent) {
                 if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.ROLE_MODULE)) {
@@ -132,7 +132,7 @@ public class LogEvents implements EventListener {
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.RED)
                                 .setDescription(ev.getUser().getAsMention() + " perdeu o cargo " + ev.getRoles().get(0).getAsMention())
-                                .setFooter("ID: " + ev.getUser().getName(), null));
+                                .setFooter("ID: " + ev.getUser().getId(), null));
             }
         }
     }
