@@ -34,7 +34,6 @@ public class LogEvents implements EventListener {
                 return;
             }
             if(e instanceof GuildMessageReceivedEvent) {
-                System.out.print("adicionando");
                 GuildMessageReceivedEvent ev = (GuildMessageReceivedEvent)e;
                 messageCache.put(ev.getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContent(), ev.getAuthor().getName(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
                 return;
@@ -149,7 +148,7 @@ public class LogEvents implements EventListener {
                 GuildVoiceJoinEvent ev = (GuildVoiceJoinEvent)e;
 
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
-                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.GREEN)
                                 .setDescription(ev.getMember().getUser().getAsMention() + " entrou no canal de audio " + ev.getChannelJoined().getName())
                                 .setFooter("ID: " + ev.getMember().getUser().getId(), null));
@@ -159,7 +158,7 @@ public class LogEvents implements EventListener {
                 GuildVoiceLeaveEvent ev = (GuildVoiceLeaveEvent)e;
 
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
-                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.RED)
                                 .setDescription(ev.getMember().getUser().getAsMention() + " saiu do canal de audio " + ev.getChannelLeft().getName())
                                 .setFooter("ID: " + ev.getMember().getUser().getId(), null));
@@ -169,7 +168,7 @@ public class LogEvents implements EventListener {
                 GuildVoiceMoveEvent ev = (GuildVoiceMoveEvent)e;
 
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
-                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.YELLOW)
                                 .setDescription(ev.getMember().getUser().getAsMention() + " foi movido do canal ``" + ev.getChannelLeft().getName() + "`` para o canal ``" + ev.getChannelJoined().getName() + "``")
                                 .setFooter("ID: " + ev.getMember().getUser().getId(), null));
@@ -179,7 +178,7 @@ public class LogEvents implements EventListener {
                 GuildVoiceMuteEvent ev = (GuildVoiceMuteEvent)e;
 
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
-                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getName())
+                        new EmbedBuilder().setAuthor(ev.getMember().getUser().getName(), null, ev.getMember().getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.YELLOW)
                                 .setDescription(ev.getMember().getUser().getAsMention() + " foi " + (ev.isMuted() ? "mutado" : "desmutado") + " dos canais de voz.")
                                 .setFooter("ID: " + ev.getMember().getUser().getId(), null));
