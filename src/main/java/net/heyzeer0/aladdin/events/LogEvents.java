@@ -142,7 +142,7 @@ public class LogEvents implements EventListener {
             return;
         }
         if(e instanceof GenericGuildVoiceEvent) {
-            if(!isModuleActive(((GenericGuildMemberEvent) e).getGuild(), LogModules.VOICE_MODULE)) {
+            if(!isModuleActive(((GenericGuildVoiceEvent) e).getGuild(), LogModules.VOICE_MODULE)) {
                 return;
             }
             if(e instanceof GuildVoiceJoinEvent) {
