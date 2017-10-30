@@ -58,7 +58,7 @@ public class AkinatorProfile {
             CHOICE_URL = "http://api-pt4.akinator.com/ws/choice";
             EXCLUSION_URL = "http://api-pt4.akinator.com/ws/exclusion";
 
-            session = Unirest.get(NEW_SESSION_URL).queryString("player", "AladdinBOTv1.0").asJson().getBody().getObject();
+            session = Unirest.get(NEW_SESSION_URL).queryString("player", "AladdinBOT").asJson().getBody().getObject();
             actual = new AkinatorQuestion(session);
 
             if(actual.isGameOver()) {

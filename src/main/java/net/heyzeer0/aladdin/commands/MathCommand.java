@@ -34,5 +34,4 @@ public class MathCommand implements CommandExecutor {
         e.sendMessage(EmojiList.CORRECT + " **Resposta**: `" + answer.doubleValue() + "`");
         return new CommandResult((CommandResultEnum.SUCCESS));
     }
-
 }
