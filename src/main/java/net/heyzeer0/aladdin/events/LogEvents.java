@@ -6,6 +6,24 @@ import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.channel.category.CategoryCreateEvent;
+import net.dv8tion.jda.core.events.channel.category.CategoryDeleteEvent;
+import net.dv8tion.jda.core.events.channel.category.GenericCategoryEvent;
+import net.dv8tion.jda.core.events.channel.category.update.CategoryUpdateNameEvent;
+import net.dv8tion.jda.core.events.channel.category.update.GenericCategoryUpdateEvent;
+import net.dv8tion.jda.core.events.channel.text.GenericTextChannelEvent;
+import net.dv8tion.jda.core.events.channel.text.TextChannelCreateEvent;
+import net.dv8tion.jda.core.events.channel.text.TextChannelDeleteEvent;
+import net.dv8tion.jda.core.events.channel.text.update.GenericTextChannelUpdateEvent;
+import net.dv8tion.jda.core.events.channel.text.update.TextChannelUpdateNameEvent;
+import net.dv8tion.jda.core.events.channel.text.update.TextChannelUpdatePositionEvent;
+import net.dv8tion.jda.core.events.channel.voice.GenericVoiceChannelEvent;
+import net.dv8tion.jda.core.events.channel.voice.VoiceChannelCreateEvent;
+import net.dv8tion.jda.core.events.channel.voice.VoiceChannelDeleteEvent;
+import net.dv8tion.jda.core.events.channel.voice.update.*;
+import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
+import net.dv8tion.jda.core.events.guild.GuildBanEvent;
+import net.dv8tion.jda.core.events.guild.GuildUnbanEvent;
 import net.dv8tion.jda.core.events.guild.member.*;
 import net.dv8tion.jda.core.events.guild.voice.*;
 import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
@@ -183,6 +201,191 @@ public class LogEvents implements EventListener {
                                 .setColor(Color.YELLOW)
                                 .setDescription(ev.getMember().getUser().getAsMention() + " foi movido do canal ``" + ev.getChannelLeft().getName() + "`` para o canal ``" + ev.getChannelJoined().getName() + "``")
                                 .setFooter("ID: " + ev.getMember().getUser().getId(), null));
+                return;
+            }
+        }
+        if(e instanceof GenericTextChannelEvent) {
+            if(!isModuleActive(((GenericTextChannelEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
+                return;
+            }
+            if(e instanceof TextChannelCreateEvent) {
+                TextChannelCreateEvent ev = (TextChannelCreateEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.GREEN)
+                                .setDescription("O canal " + ev.getChannel().getAsMention() + " acaba de ser criado.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+            if(e instanceof TextChannelDeleteEvent) {
+                TextChannelDeleteEvent ev = (TextChannelDeleteEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.RED)
+                                .setDescription("O canal " + ev.getChannel().getAsMention() + " acaba de ser deletado.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+        }
+        if(e instanceof GenericTextChannelUpdateEvent) {
+            if(!isModuleActive(((GenericTextChannelUpdateEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
+                return;
+            }
+            if(e instanceof TextChannelUpdateNameEvent) {
+                TextChannelUpdateNameEvent ev = (TextChannelUpdateNameEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription("O canal " + ev.getChannel().getAsMention() + " acaba de ser renomeado de ``" + ev.getOldName() + "``.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+            if(e instanceof TextChannelUpdatePositionEvent) {
+                TextChannelUpdatePositionEvent ev = (TextChannelUpdatePositionEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription("O canal " + ev.getChannel().getAsMention() + " acaba de ser movido de posição.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+        }
+        if(e instanceof GenericCategoryEvent) {
+            if (!isModuleActive(((GenericCategoryEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
+                return;
+            }
+            if(e instanceof CategoryCreateEvent) {
+                CategoryCreateEvent ev = (CategoryCreateEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.GREEN)
+                                .setDescription("A categoria " + ev.getCategory().getName() + " acaba de ser criada.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+            if(e instanceof CategoryDeleteEvent) {
+                CategoryDeleteEvent ev = (CategoryDeleteEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.RED)
+                                .setDescription("A categoria " + ev.getCategory().getName() + " acaba de ser deletada.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+        }
+        if(e instanceof GenericCategoryUpdateEvent) {
+            if (!isModuleActive(((GenericCategoryUpdateEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
+                return;
+            }
+            if(e instanceof CategoryUpdateNameEvent) {
+                CategoryUpdateNameEvent ev = (CategoryUpdateNameEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription("A categoria " + ev.getCategory().getName() + " acaba de ser renomeada de ``" + ev.getOldName() + "``.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+        }
+        if(e instanceof GenericVoiceChannelEvent) {
+            if (!isModuleActive(((GenericVoiceChannelEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
+                return;
+            }
+            if(e instanceof VoiceChannelCreateEvent) {
+                VoiceChannelCreateEvent ev = (VoiceChannelCreateEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.GREEN)
+                                .setDescription("O canal de voz " + ev.getChannel().getName() + " acaba de ser criado.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+            if(e instanceof VoiceChannelDeleteEvent) {
+                VoiceChannelDeleteEvent ev = (VoiceChannelDeleteEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.RED)
+                                .setDescription("O canal de voz " + ev.getChannel().getName() + " acaba de ser deletado.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+        }
+        if(e instanceof GenericVoiceChannelUpdateEvent) {
+            if (!isModuleActive(((GenericVoiceChannelUpdateEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
+                return;
+            }
+            if(e instanceof VoiceChannelUpdateNameEvent) {
+                VoiceChannelUpdateNameEvent ev = (VoiceChannelUpdateNameEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription("O canal de voz " + ev.getChannel().getName() + " acaba de ser renomeado de ``" + ev.getOldName() + "``.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+            if(e instanceof VoiceChannelUpdateBitrateEvent) {
+                VoiceChannelUpdateBitrateEvent ev = (VoiceChannelUpdateBitrateEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription("O bitrate do canal de voz " + ev.getChannel().getName() + " acaba de ser trocado de ``" + ev.getOldBitrate() + "`` para ``" + ((VoiceChannelUpdateBitrateEvent) e).getChannel().getBitrate() + "``.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+            if(e instanceof VoiceChannelUpdateUserLimitEvent) {
+                VoiceChannelUpdateUserLimitEvent ev = (VoiceChannelUpdateUserLimitEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription("O do canal de voz " + ev.getChannel().getName() + " teve o limite de usuários alterado de ``" + ev.getOldUserLimit() + "`` para ``" + ev.getChannel().getUserLimit() + "``")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+            if(e instanceof VoiceChannelUpdatePositionEvent) {
+                VoiceChannelUpdatePositionEvent ev = (VoiceChannelUpdatePositionEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
+                                .setColor(Color.YELLOW)
+                                .setDescription("O do canal de voz " + ev.getChannel().getName() + " teve sua posição alterada.")
+                                .setFooter("ID: " + ev.getGuild().getId(), null));
+                return;
+            }
+        }
+        if(e instanceof GenericGuildEvent) {
+            if (!isModuleActive(((GenericGuildEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
+                return;
+            }
+            if(e instanceof GuildBanEvent) {
+                GuildBanEvent ev = (GuildBanEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                .setColor(Color.RED)
+                                .setDescription("O usuário " + ev.getUser().getName() + " acaba de ser banido.")
+                                .setFooter("ID: " + ev.getUser().getId(), null));
+                return;
+            }
+            if(e instanceof GuildUnbanEvent) {
+                GuildUnbanEvent ev = (GuildUnbanEvent)e;
+
+                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
+                        new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                .setColor(Color.GREEN)
+                                .setDescription("O usuário " + ev.getUser().getName() + " acaba de ser desbanido.")
+                                .setFooter("ID: " + ev.getUser().getId(), null));
                 return;
             }
         }
