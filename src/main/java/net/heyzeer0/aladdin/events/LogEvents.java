@@ -224,7 +224,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.RED)
-                                .setDescription("O canal " + ev.getChannel().getAsMention() + " acaba de ser deletado.")
+                                .setDescription("O canal " + ev.getChannel().getName() + " acaba de ser deletado.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -264,7 +264,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.GREEN)
-                                .setDescription("A categoria " + ev.getCategory().getName() + " acaba de ser criada.")
+                                .setDescription("A categoria ``" + ev.getCategory().getName() + "`` acaba de ser criada.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -274,7 +274,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.RED)
-                                .setDescription("A categoria " + ev.getCategory().getName() + " acaba de ser deletada.")
+                                .setDescription("A categoria ``" + ev.getCategory().getName() + "`` acaba de ser deletada.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -289,7 +289,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.YELLOW)
-                                .setDescription("A categoria " + ev.getCategory().getName() + " acaba de ser renomeada de ``" + ev.getOldName() + "``.")
+                                .setDescription("A categoria ``" + ev.getCategory().getName() + "`` acaba de ser renomeada de ``" + ev.getOldName() + "``.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -304,7 +304,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.GREEN)
-                                .setDescription("O canal de voz " + ev.getChannel().getName() + " acaba de ser criado.")
+                                .setDescription("O canal de voz ``" + ev.getChannel().getName() + "`` acaba de ser criado.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -314,7 +314,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.RED)
-                                .setDescription("O canal de voz " + ev.getChannel().getName() + " acaba de ser deletado.")
+                                .setDescription("O canal de voz ``" + ev.getChannel().getName() + "`` acaba de ser deletado.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -329,7 +329,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.YELLOW)
-                                .setDescription("O canal de voz " + ev.getChannel().getName() + " acaba de ser renomeado de ``" + ev.getOldName() + "``.")
+                                .setDescription("O canal de voz ``" + ev.getChannel().getName() + "`` acaba de ser renomeado de ``" + ev.getOldName() + "``.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -339,7 +339,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.YELLOW)
-                                .setDescription("O bitrate do canal de voz " + ev.getChannel().getName() + " acaba de ser trocado de ``" + ev.getOldBitrate() + "`` para ``" + ((VoiceChannelUpdateBitrateEvent) e).getChannel().getBitrate() + "``.")
+                                .setDescription("O bitrate do canal de voz ``" + ev.getChannel().getName() + "`` acaba de ser trocado de ``" + (ev.getOldBitrate()/1000) + "k`` para ``" + (ev.getChannel().getBitrate()/1000) + "k``.")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -349,17 +349,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
                                 .setColor(Color.YELLOW)
-                                .setDescription("O do canal de voz " + ev.getChannel().getName() + " teve o limite de usuários alterado de ``" + ev.getOldUserLimit() + "`` para ``" + ev.getChannel().getUserLimit() + "``")
-                                .setFooter("ID: " + ev.getGuild().getId(), null));
-                return;
-            }
-            if(e instanceof VoiceChannelUpdatePositionEvent) {
-                VoiceChannelUpdatePositionEvent ev = (VoiceChannelUpdatePositionEvent)e;
-
-                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
-                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
-                                .setColor(Color.YELLOW)
-                                .setDescription("O do canal de voz " + ev.getChannel().getName() + " teve sua posição alterada.")
+                                .setDescription("O do canal de voz ``" + ev.getChannel().getName() + "`` teve o limite de usuários alterado de ``" + ev.getOldUserLimit() + "`` para ``" + ev.getChannel().getUserLimit() + "``")
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
@@ -374,7 +364,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.RED)
-                                .setDescription("O usuário " + ev.getUser().getName() + " acaba de ser banido.")
+                                .setDescription("O usuário ``" + ev.getUser().getName() + "`` acaba de ser banido.")
                                 .setFooter("ID: " + ev.getUser().getId(), null));
                 return;
             }
@@ -384,7 +374,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.GREEN)
-                                .setDescription("O usuário " + ev.getUser().getName() + " acaba de ser desbanido.")
+                                .setDescription("O usuário ``" + ev.getUser().getName() + "`` acaba de ser desbanido.")
                                 .setFooter("ID: " + ev.getUser().getId(), null));
                 return;
             }
