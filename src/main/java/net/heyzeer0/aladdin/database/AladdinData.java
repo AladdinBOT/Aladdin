@@ -20,6 +20,7 @@ public class AladdinData {
 
     public Connection conn;
     public static ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+    boolean ready = false;
 
     public AladdinData() {
         conn = r.connection().hostname(MainConfig.rethink_ip).port(MainConfig.rethink_port).db(MainConfig.rethink_db).user(MainConfig.rethink_user, MainConfig.rethink_pass).connect();
@@ -27,6 +28,8 @@ public class AladdinData {
         try { r.tableCreate("users").runNoReply(conn); }catch (Exception ignored) {}
         try { r.tableCreate("guilds").runNoReply(conn); }catch (Exception ignored) {}
         try { r.tableCreate("server").runNoReply(conn); }catch (Exception ignored) {}
+
+        ready = true;
     }
 
     public GuildProfile getGuildProfile(Guild u) {
@@ -47,6 +50,10 @@ public class AladdinData {
     public ServerProfile getServer() {
         ServerProfile data = r.table(ServerProfile.DB_TABLE).get("main").run(conn, ServerProfile.class);
         return data != null ? data : new ServerProfile();
+    }
+
+    public boolean isReady() {
+        return ready;
     }
 
 

@@ -47,6 +47,10 @@ public class LogEvents implements EventListener {
 
     @Override
     public void onEvent(Event e) {
+        if(!Main.getDatabase().isReady()) {
+            return;
+        }
+
         if(e instanceof GenericGuildMessageEvent) {
             if(!isModuleActive(((GenericGuildMessageEvent) e).getGuild(), LogModules.MESSAGE_MODULE)) {
                 return;
