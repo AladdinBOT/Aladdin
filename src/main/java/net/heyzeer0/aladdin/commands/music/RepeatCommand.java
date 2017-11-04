@@ -27,10 +27,6 @@ public class RepeatCommand implements CommandExecutor {
             }
         }
 
-        if(args.getSize() < 2) {
-            return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "repeat", "song/queue/none");
-        }
-
         if(args.get(1).equalsIgnoreCase("stop") || args.get(1).equalsIgnoreCase("s")) {
             e.sendMessage(EmojiList.CORRECT + " O player de musica não ira repetir mais nada.");
             MusicManager.getManager(e.getGuild()).setRepeatMode(null);

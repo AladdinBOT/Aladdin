@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.commands.music;
 
+import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
@@ -28,9 +29,11 @@ public class VolumeCommand implements CommandExecutor {
         try{
             Integer value = Integer.valueOf(args.get(0));
 
-            if(value < 30 || value > 110) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, o valor necessita ser maior que ``30`` e menor que ``110``");
-                return new CommandResult((CommandResultEnum.SUCCESS));
+            if(!e.getAuthor().getId().equals(MainConfig.bot_owner)) {
+                if(value < 30 || value > 110) {
+                    e.sendMessage(EmojiList.WORRIED + " Oops, o valor necessita ser maior que ``30`` e menor que ``110``");
+                    return new CommandResult((CommandResultEnum.SUCCESS));
+                }
             }
 
             if (e.getGuild().getAudioManager().isConnected() && !e.getGuild().getAudioManager().getConnectedChannel().equals(e.getMember().getVoiceState().getChannel())) {
