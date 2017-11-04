@@ -27,17 +27,17 @@ public class RepeatCommand implements CommandExecutor {
             }
         }
 
-        if(args.get(1).equalsIgnoreCase("stop") || args.get(1).equalsIgnoreCase("s")) {
+        if(args.get(0).equalsIgnoreCase("stop") || args.get(0).equalsIgnoreCase("s")) {
             e.sendMessage(EmojiList.CORRECT + " O player de musica não ira repetir mais nada.");
             MusicManager.getManager(e.getGuild()).setRepeatMode(null);
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
-        if(args.get(1).equalsIgnoreCase("musica") || args.get(1).equalsIgnoreCase("m")) {
+        if(args.get(0).equalsIgnoreCase("musica") || args.get(0).equalsIgnoreCase("m")) {
             e.sendMessage(EmojiList.CORRECT + " O player de musica ira repetir a musica atual.");
             MusicManager.getManager(e.getGuild()).setRepeatMode(GuildTrackProfile.RepeatMode.SONG);
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
-        if(args.get(1).equalsIgnoreCase("playlist") || args.get(1).equalsIgnoreCase("p")) {
+        if(args.get(0).equalsIgnoreCase("playlist") || args.get(0).equalsIgnoreCase("p")) {
             e.sendMessage(EmojiList.CORRECT + " O player de musica ira repetir a playlist atual.");
             MusicManager.getManager(e.getGuild()).setRepeatMode(GuildTrackProfile.RepeatMode.QUEUE);
             return new CommandResult((CommandResultEnum.SUCCESS));
