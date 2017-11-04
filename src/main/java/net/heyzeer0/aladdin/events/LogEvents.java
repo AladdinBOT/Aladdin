@@ -297,16 +297,6 @@ public class LogEvents implements EventListener {
                                 .setFooter("ID: " + ev.getGuild().getId(), null));
                 return;
             }
-            if(e instanceof TextChannelUpdatePositionEvent) {
-                TextChannelUpdatePositionEvent ev = (TextChannelUpdatePositionEvent)e;
-
-                Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
-                        new EmbedBuilder().setAuthor(ev.getGuild().getName(), null, ev.getGuild().getIconUrl())
-                                .setColor(Color.YELLOW)
-                                .setDescription("O canal " + ev.getChannel().getAsMention() + " acaba de ser movido de posição.")
-                                .setFooter("ID: " + ev.getGuild().getId(), null));
-                return;
-            }
         }
         if(e instanceof GenericCategoryEvent) {
             if (!isModuleActive(((GenericCategoryEvent) e).getGuild(), LogModules.ACTION_MODULE)) {
