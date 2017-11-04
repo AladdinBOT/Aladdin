@@ -140,7 +140,7 @@ public class LogEvents implements EventListener {
                         }
 
 
-                    }catch (Exception ex) {}
+                    }catch (Exception ex) { ex.printStackTrace();}
                 });
 
             }
