@@ -129,6 +129,7 @@ public class LogEvents implements EventListener {
                         g.dispose();
                         for(Guild g2 : Main.getMutualGuilds(ev.getUser())) {
                             if(!isModuleActive(g2, LogModules.MEMBER_MODULE)) {
+                                System.out.println("Log module disabled " + g2.getName());
                                 return;
                             }
 
