@@ -30,11 +30,20 @@ import net.dv8tion.jda.core.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
+import net.dv8tion.jda.core.events.user.GenericUserEvent;
+import net.dv8tion.jda.core.events.user.UserAvatarUpdateEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.LogModules;
+import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
+import net.heyzeer0.aladdin.utils.ImageUtils;
+import net.heyzeer0.aladdin.utils.Utils;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Optional;
 
 /**
@@ -47,7 +56,7 @@ public class LogEvents implements EventListener {
 
     @Override
     public void onEvent(Event e) {
-        if(!Main.getDatabase().isReady()) {
+        if(Main.getDatabase() == null || !Main.getDatabase().isReady()) {
             return;
         }
 
@@ -94,6 +103,40 @@ public class LogEvents implements EventListener {
                 }catch (Exception ignored) {}
             }
             return;
+        }
+        if(e instanceof GenericUserEvent) {
+            if(e instanceof UserAvatarUpdateEvent) {
+                UserAvatarUpdateEvent ev = (UserAvatarUpdateEvent)e;
+
+                Utils.runAsync(() -> {
+                    try{
+                        BufferedImage inputImage = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "update_avatar.png")));
+                        BufferedImage before = ImageUtils.getImageFromUrl(ev.getPreviousAvatarUrl());
+                        BufferedImage actual = ImageUtils.getImageFromUrl(ev.getUser().getEffectiveAvatarUrl());
+
+                        Graphics g = inputImage.createGraphics();
+                        g.drawImage(inputImage,0,0,null);
+                        g.drawImage(before,11,8, null);
+                        g.drawImage(actual,290,8, null);
+
+                        g.dispose();
+                        for(Guild g2 : Main.getMutualGuilds(ev.getUser())) {
+                            if(!isModuleActive(g2, LogModules.MEMBER_MODULE)) {
+                                return;
+                            }
+
+                            Main.getDatabase().getGuildProfile(g2).sendLogMessage(g2, inputImage,
+                                    new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
+                                            .setColor(Color.GREEN)
+                                            .setDescription(ev.getUser().getAsMention() + " Acaba de atualizar seu avatar")
+                                            .setFooter("ID: " + ev.getUser().getId(), null));
+                        }
+
+
+                    }catch (Exception ex) {ex.printStackTrace();}
+                });
+
+            }
         }
         if(e instanceof GenericGuildMemberEvent) {
             if(e instanceof GuildMemberJoinEvent) {

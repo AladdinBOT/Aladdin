@@ -3,19 +3,27 @@ package net.heyzeer0.aladdin.database.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
+import net.heyzeer0.aladdin.database.entities.profiles.LogProfile;
+import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.profiles.commands.CustomCommand;
 import net.heyzeer0.aladdin.utils.Utils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.beans.ConstructorProperties;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -181,6 +189,27 @@ public class GuildProfile implements ManagedObject {
             }
 
             ch.sendMessage(b.build()).queue();
+        }
+    }
+
+    public void sendLogMessage(Guild g, BufferedImage img, EmbedBuilder b) {
+        if(guild_log.getChannel_id() != null) {
+            TextChannel ch = g.getTextChannelById(guild_log.getChannel_id());
+            if(ch == null) {
+                guild_log.changeChannelID(null);
+                saveAsync();
+                return;
+            }
+
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(img, "png", os);
+            } catch (Exception ex) { ex.printStackTrace();}
+            InputStream is = new ByteArrayInputStream(os.toByteArray());
+
+            b.setImage("attachment://embed.png");
+
+            ch.sendFile(is, "embed.png", new MessageBuilder().setEmbed(b.build()).build()).queue();
         }
     }
 

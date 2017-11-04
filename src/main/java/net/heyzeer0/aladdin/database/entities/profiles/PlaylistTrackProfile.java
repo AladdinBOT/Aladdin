@@ -1,4 +1,4 @@
-package net.heyzeer0.aladdin.database.entities;
+package net.heyzeer0.aladdin.database.entities.profiles;
 
 import lombok.Getter;
 

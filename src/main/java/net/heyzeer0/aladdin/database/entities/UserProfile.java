@@ -3,6 +3,7 @@ package net.heyzeer0.aladdin.database.entities;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.database.entities.profiles.PlaylistTrackProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 
 import java.beans.ConstructorProperties;

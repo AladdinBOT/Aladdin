@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
@@ -39,6 +40,23 @@ public class AdminCommand implements CommandExecutor {
                 ex.printStackTrace();
             }
 
+        }
+        if(args.get(0).equalsIgnoreCase("updateavatar")) {
+            try{
+                BufferedImage inputImage = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "update_avatar.png")));
+                BufferedImage author = ImageUtils.getImageFromUrl(e.getAuthor().getEffectiveAvatarUrl());
+
+                Graphics g = inputImage.createGraphics();
+                g.drawImage(inputImage,0,0,null);
+                g.drawImage(author,11,8, null);
+                g.drawImage(author,290,8, null);
+
+                g.dispose();
+                e.sendImageWithEmbed(inputImage, new EmbedBuilder().setColor(Color.GREEN));
+
+            }catch (Exception ex) {ex.printStackTrace();}
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equalsIgnoreCase("test")) {
             e.sendMessage("running the test");

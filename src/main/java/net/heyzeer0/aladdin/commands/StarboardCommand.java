@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.heyzeer0.aladdin.database.entities.StarboardProfile;
+import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
@@ -14,9 +13,7 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 import net.heyzeer0.aladdin.profiles.utilities.Reactioner;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 /**
  * Created by HeyZeer0 on 12/06/2017.

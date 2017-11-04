@@ -1,4 +1,4 @@
-package net.heyzeer0.aladdin.database.entities;
+package net.heyzeer0.aladdin.database.entities.profiles;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class GroupProfile {
 
     String id;
-    ArrayList<String> permissions = new ArrayList<>();
+    public ArrayList<String> permissions = new ArrayList<>();
 
     @Setter
     boolean isDefault;

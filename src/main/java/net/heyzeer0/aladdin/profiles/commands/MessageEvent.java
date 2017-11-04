@@ -53,6 +53,18 @@ public class MessageEvent {
         originEvent.getChannel().sendFile(is, "ata.png", null).queue();
     }
 
+    public void sendImageWithEmbed(BufferedImage img, EmbedBuilder b) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(img, "png", os);
+        } catch (Exception ex) { ex.printStackTrace();}
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
+
+        b.setImage("attachment://embed.png");
+
+        originEvent.getChannel().sendFile(is, "embed.png", new MessageBuilder().setEmbed(b.build()).build()).queue();
+    }
+
     public Message sendImagePure(BufferedImage img, String msg) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {

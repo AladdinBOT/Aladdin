@@ -3,7 +3,7 @@ package net.heyzeer0.aladdin.commands.music;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.database.entities.PlaylistTrackProfile;
+import net.heyzeer0.aladdin.database.entities.profiles.PlaylistTrackProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
