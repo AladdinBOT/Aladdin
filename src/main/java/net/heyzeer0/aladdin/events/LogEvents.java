@@ -129,11 +129,8 @@ public class LogEvents implements EventListener {
                         g.dispose();
                         for(Guild g2 : Main.getMutualGuilds(ev.getUser())) {
                             if(!isModuleActive(g2, LogModules.MEMBER_MODULE)) {
-                                System.out.println("Log module disabled " + g2.getName());
                                 continue;
                             }
-
-                            System.out.println("Valid guild " + g2.getName());
 
                             Main.getDatabase().getGuildProfile(g2).sendLogMessage(g2, inputImage,
                                     new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
