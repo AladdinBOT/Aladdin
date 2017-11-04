@@ -132,6 +132,8 @@ public class LogEvents implements EventListener {
                                 return;
                             }
 
+                            System.out.println("Valid guild " + g2.getName());
+
                             Main.getDatabase().getGuildProfile(g2).sendLogMessage(g2, inputImage,
                                     new EmbedBuilder().setAuthor(ev.getUser().getName(), null, ev.getUser().getEffectiveAvatarUrl())
                                             .setColor(Color.GREEN)
