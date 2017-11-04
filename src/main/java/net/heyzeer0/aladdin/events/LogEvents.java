@@ -111,8 +111,7 @@ public class LogEvents implements EventListener {
                 Utils.runAsync(() -> {
                     try{
                         BufferedImage inputImage = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "update_avatar.png")));
-                        System.out.println(ev.getPreviousAvatarUrl());
-                        BufferedImage before = ImageUtils.getImageFromUrl(ev.getPreviousAvatarUrl());
+                        BufferedImage before = ImageUtils.getImageFromUrl(ev.getPreviousAvatarUrl().replace("jpg", "png"));
                         BufferedImage actual = ImageUtils.getImageFromUrl(ev.getUser().getEffectiveAvatarUrl());
 
                         Graphics g = inputImage.createGraphics();
