@@ -140,6 +140,10 @@ public class StarboardProfile {
 
         TextChannel ch = e.getGuild().getTextChannelById(channel_id);
 
+        if(e.getTextChannel().isNSFW() && !ch.isNSFW()) {
+            return false;
+        }
+
         if(ch == null) {
             throw new InvalidObjectException("The main channnel is invalid, delete this starboard now.");
         }
