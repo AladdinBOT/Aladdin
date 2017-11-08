@@ -36,7 +36,7 @@ public class Main {
     private static ShardProfile[] shards;
     private static AladdinData data;
 
-    public static String version = "1.0";
+    public static String version = "1.2";
 
     public static void main(String args[]) {
         try{
