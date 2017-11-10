@@ -13,6 +13,7 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ import java.util.List;
  * Copyright © HeyZeer0 - 2016
  */
 public class ChatClearCommand implements CommandExecutor {
+
+    public static HashMap<String, Long> last_deletion = new HashMap<>();
 
     @Command(command = "chatclear", description = "Limpe as mensagens do chat", parameters = {"quantidade"}, aliasses = {"clearchat", "cc"}, sendTyping = false, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
             usage = "a!chatclear 10\na!chatclear -bots")
@@ -57,6 +60,7 @@ public class ChatClearCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
+        last_deletion.put(e.getGuild().getId(), System.currentTimeMillis());
         e.getChannel().getHistory().retrievePast(Integer.valueOf(args.get(0)) + 1).queue(msg -> e.getOriginEvent().getChannel().deleteMessages(msg).queue());
         return new CommandResult(CommandResultEnum.SUCCESS);
     }

@@ -34,6 +34,7 @@ import net.dv8tion.jda.core.events.user.GenericUserEvent;
 import net.dv8tion.jda.core.events.user.UserAvatarUpdateEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.commands.ChatClearCommand;
 import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.utils.ImageUtils;
@@ -74,6 +75,11 @@ public class LogEvents implements EventListener {
             }
             if(e instanceof GuildMessageDeleteEvent) {
                 GuildMessageDeleteEvent ev = (GuildMessageDeleteEvent)e;
+
+                if(System.currentTimeMillis() - ChatClearCommand.last_deletion.getOrDefault(ev.getGuild().getId(), 0L) < 2000) {
+                   return;
+                }
+
                 try{
                     CachedMessage cache = messageCache.get(ev.getMessageId(), Optional::empty).orElse(null);
 
