@@ -16,7 +16,8 @@ import net.heyzeer0.aladdin.utils.ImageUtils;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
 
 /**
  * Created by HeyZeer0 on 22/06/2017.

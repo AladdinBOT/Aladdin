@@ -6,7 +6,6 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.MusicManager;
-import net.heyzeer0.aladdin.music.profiles.AudioLoaderProfile;
 import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
 import net.heyzeer0.aladdin.music.profiles.PlayerContext;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;

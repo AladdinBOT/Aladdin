@@ -36,8 +36,8 @@ public class Utils {
 
     public static Random r = new Random();
     private static final Map<String, String> regional = new HashMap<>();
-    private static ScheduledExecutorService timers = Executors.newSingleThreadScheduledExecutor();
     private static ScheduledExecutorService async = Executors.newSingleThreadScheduledExecutor();
+    private static ScheduledExecutorService timers = Executors.newSingleThreadScheduledExecutor();
 
     public static OkHttpClient httpclient = new OkHttpClient.Builder().build();
 

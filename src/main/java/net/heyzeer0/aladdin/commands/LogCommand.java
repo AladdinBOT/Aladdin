@@ -1,6 +1,9 @@
 package net.heyzeer0.aladdin.commands;
 
-import net.heyzeer0.aladdin.enums.*;
+import net.heyzeer0.aladdin.enums.CommandResultEnum;
+import net.heyzeer0.aladdin.enums.CommandType;
+import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
