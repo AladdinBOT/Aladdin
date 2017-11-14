@@ -1,0 +1,29 @@
+package net.heyzeer0.aladdin.database.entities.profiles;
+
+import lombok.Getter;
+
+import java.beans.ConstructorProperties;
+
+/**
+ * Created by HeyZeer0 on 14/11/2017.
+ * Copyright © HeyZeer0 - 2016
+ */
+
+@Getter
+public class GivewayProfile {
+
+    String messageID;
+    String channelID;
+    String guildID;
+    String description;
+    String authorName;
+    String authorAvatar;
+    long endTime;
+    int winnerAmount;
+
+    @ConstructorProperties({"messageID", "channelID", "guildID", "description", "authorName", "authorAvatar", "endTime", "winnerAmount"})
+    public GivewayProfile(String messageID, String channelID, String guildID, String description, String authorName, String authorAvatar, long endTime, int winnerAmount) {
+        this.messageID = messageID; this.channelID = channelID; this.guildID = guildID; this.description = description; this.authorName = authorName; this.authorName = authorName; this.endTime = endTime; this.winnerAmount = winnerAmount;
+    }
+
+}

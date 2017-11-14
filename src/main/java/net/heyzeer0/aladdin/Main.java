@@ -11,6 +11,7 @@ import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.database.AladdinData;
 import net.heyzeer0.aladdin.manager.ConfigManager;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
+import net.heyzeer0.aladdin.manager.custom.GiveawayManager;
 import net.heyzeer0.aladdin.manager.custom.ReminderManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
@@ -76,6 +77,7 @@ public class Main {
             CommandManager.registerCommand(new CommandsCommand());
             CommandManager.registerCommand(new ConfigCommand());
             CommandManager.registerCommand(new EmojiCommand());
+            CommandManager.registerCommand(new GiveawayCommand());
             CommandManager.registerCommand(new GoogleCommand());
             CommandManager.registerCommand(new GroupCommand());
             CommandManager.registerCommand(new HelpCommand());
@@ -117,6 +119,7 @@ public class Main {
             PaginatorManager.startCleanup();
             DiscordLists.updateStatus();
             ReminderManager.startChecking();
+            GiveawayManager.startUpdating();
 
             new SocketInfo(9598, (l, i) -> {
                 if(l.equalsIgnoreCase("shutdown")) {
@@ -147,6 +150,15 @@ public class Main {
 
     public static ShardProfile[] getConnectedShards() {
         return Stream.of(shards).filter(shard -> shard.getJDA().getStatus() == JDA.Status.CONNECTED).toArray(ShardProfile[]::new);
+    }
+
+    public static Guild getGuildById(String id) {
+        for(ShardProfile s : getConnectedShards()) {
+            if(s.getJDA().getGuildById(id) != null) {
+                return s.getJDA().getGuildById(id);
+            }
+        }
+        return null;
     }
 
     public static ShardProfile getShard(int id) {

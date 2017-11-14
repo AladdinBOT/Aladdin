@@ -3,11 +3,13 @@ package net.heyzeer0.aladdin.database.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.database.entities.profiles.GivewayProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 import net.heyzeer0.aladdin.profiles.custom.ReminderProfile;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.rethinkdb.RethinkDB.r;
 
@@ -25,20 +27,35 @@ public class ServerProfile implements ManagedObject {
     ArrayList<ReminderProfile> reminders = new ArrayList<>();
     String id;
 
+    //Giveways
+    //o motivo disso estar aqui é que é muito melhor puxar o dado apenas uma vez doq simplesmente puxar por guilda.
+    HashMap<String, GivewayProfile> giveways = new HashMap<>();
+
     public ServerProfile() {
-        this("main", new ArrayList<>(), new ArrayList<>());
+        this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>());
     }
 
-    @ConstructorProperties({"id", "users_who_upvoted", "reminders"})
-    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders) {
+    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveways"})
+    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GivewayProfile> giveways) {
         this.id = id;
         this.users_who_upvoted = users_who_upvoted;
         this.reminders = reminders;
+
+        if(giveways == null) {
+            this.giveways = new HashMap<>();
+        }else{
+            this.giveways = giveways;
+        }
     }
 
     @JsonIgnore
     public boolean isUserUpvoted(String id) {
         return users_who_upvoted.contains(id);
+    }
+
+    @JsonIgnore
+    public HashMap<String, GivewayProfile> getGiveways() {
+        return giveways;
     }
 
     public void addUpvoted(String u) {
@@ -58,6 +75,11 @@ public class ServerProfile implements ManagedObject {
 
     public void removeReminder(ReminderProfile rp) {
         reminders.remove(rp);
+        saveAsync();
+    }
+
+    public void updateGiveways(HashMap<String, GivewayProfile> giveways) {
+        this.giveways = giveways;
         saveAsync();
     }
 
