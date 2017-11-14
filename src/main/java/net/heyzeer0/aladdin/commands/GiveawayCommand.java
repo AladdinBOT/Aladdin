@@ -30,7 +30,7 @@ public class GiveawayCommand implements CommandExecutor {
 
             try{
 
-                Integer value = Integer.valueOf(args.get(0).replace("m", "").replace("h", ""));
+                Integer value = Integer.valueOf(args.get(1).replace("m", "").replace("h", ""));
 
                 if(!minute && !e.getUserProfile().isPremiumActive()) {
                     if(value > 24) {
