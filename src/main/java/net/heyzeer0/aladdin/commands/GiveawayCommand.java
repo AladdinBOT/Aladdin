@@ -26,7 +26,7 @@ public class GiveawayCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "criar", "tempo(m/h)", "quantidade de ganhadores", "descrição");
             }
 
-            boolean minute = args.get(0).contains("m");
+            boolean minute = args.get(1).contains("m");
 
             try{
 
