@@ -39,8 +39,9 @@ public class GiveawayManager {
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
         b.setAuthor("Sorteio iniciado por " + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), null, e.getAuthor().getEffectiveAvatarUrl());
-        b.setDescription("Para participar clique na reação :white_check_mark:\n\n" + description);
-        b.addField(":alarm_clock: Tempo restante ", Utils.getTime(time - System.currentTimeMillis()), true);
+        b.setDescription("Para participar clique na reação :white_check_mark:");
+        b.addField(":notepad_spiral: Descrição", description, false);
+        b.addField(":stopwatch: Tempo restante ", Utils.getTime(time - System.currentTimeMillis()), false);
         b.setFooter(winnerAmount + (winnerAmount > 1 ? " Vencedores" : " Vencedor"), null);
 
         Message msg = e.sendPureMessage(new MessageBuilder().setEmbed(b.build()).build()).complete();
@@ -109,8 +110,9 @@ public class GiveawayManager {
                             EmbedBuilder b = new EmbedBuilder();
                             b.setColor(Color.RED);
                             b.setAuthor("Sorteio iniciado por " + g.getAuthorName(), null, g.getAuthorAvatar());
-                            b.setDescription("Sorteio finalizado\n\n" + g.getDescription());
-                            b.addField(":trophy: Vencedores ", winner_mention, true);
+                            b.setDescription("Sorteio Finalizado");
+                            b.addField(":notepad_spiral: Descrição", g.getDescription(), false);
+                            b.addField(":trophy: Vencedores ", winner_mention.length() >= 1 ? winner_mention : "Não houve vencedores", true);
                             b.setFooter(g.getWinnerAmount() + (g.getWinnerAmount() > 1 ? " Vencedores" : " Vencedor"), null);
 
                             msg.editMessage(b.build()).queue();
@@ -121,7 +123,8 @@ public class GiveawayManager {
                             EmbedBuilder b = new EmbedBuilder();
                             b.setColor(Color.GREEN);
                             b.setAuthor("Sorteio iniciado por " + g.getAuthorName(), null, g.getAuthorAvatar());
-                            b.setDescription("Para participar clique na reação :white_check_mark:\n\n" + g.getDescription());
+                            b.setDescription("Para participar clique na reação :white_check_mark:");
+                            b.addField(":notepad_spiral: Descrição", g.getDescription(), false);
                             b.addField(":stopwatch: Tempo restante ", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), true);
                             b.setFooter(g.getWinnerAmount() + (g.getWinnerAmount() > 1 ? " Vencedores" : " Vencedor"), null);
 

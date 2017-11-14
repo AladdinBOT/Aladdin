@@ -15,7 +15,7 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
  * Created by HeyZeer0 on 14/11/2017.
  * Copyright © HeyZeer0 - 2016
  */
-public class GiveawayCommand implements CommandExecutor {
+public class    GiveawayCommand implements CommandExecutor {
 
     @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"criar"}, type = CommandType.MISCELLANEOUS,
             usage = "a!giveaway criar 1h 1 Boné dahora\n", isAllowedToDefault = false)
@@ -48,7 +48,7 @@ public class GiveawayCommand implements CommandExecutor {
                 long time = System.currentTimeMillis() + (minute ? (60000 * value) : (3600000 * value));
 
                 GiveawayManager.createGiveway(args.getCompleteAfter(3), time, Integer.valueOf(args.get(2)), e);
-                e.deleteMessage();
+                e.getMessage().delete().queue();
 
             }catch (Exception ex) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, a quantidade de ganhadores inserida ou o tempo é invalido");
