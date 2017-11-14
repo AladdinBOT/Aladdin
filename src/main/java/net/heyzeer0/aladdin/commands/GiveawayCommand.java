@@ -21,7 +21,7 @@ public class    GiveawayCommand implements CommandExecutor {
             usage = "a!giveaway criar 1h 1 Boné dahora\n", isAllowedToDefault = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
-        if(args.get(0).equalsIgnoreCase("ata")) {
+        if(args.get(0).equalsIgnoreCase("criar")) {
             if(args.getSize() < 4) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "criar", "tempo(m/h)", "quantidade de ganhadores", "descrição");
             }
