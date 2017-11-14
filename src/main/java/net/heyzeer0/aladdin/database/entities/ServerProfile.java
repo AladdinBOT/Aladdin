@@ -43,6 +43,7 @@ public class ServerProfile implements ManagedObject {
 
         if(giveways == null) {
             this.giveways = new HashMap<>();
+            saveAsync();
         }else{
             this.giveways = giveways;
         }
