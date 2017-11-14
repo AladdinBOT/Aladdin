@@ -3,7 +3,7 @@ package net.heyzeer0.aladdin.database.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.database.entities.profiles.GivewayProfile;
+import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 import net.heyzeer0.aladdin.profiles.custom.ReminderProfile;
 
@@ -26,26 +26,23 @@ public class ServerProfile implements ManagedObject {
     ArrayList<String> users_who_upvoted = new ArrayList<>();
     ArrayList<ReminderProfile> reminders = new ArrayList<>();
     String id;
-
-    //Giveways
-    //o motivo disso estar aqui é que é muito melhor puxar o dado apenas uma vez doq simplesmente puxar por guilda.
-    HashMap<String, GivewayProfile> giveways = new HashMap<>();
+    HashMap<String, GiveawayProfile> giveaways = new HashMap<>();
 
     public ServerProfile() {
         this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>());
     }
 
-    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveways"})
-    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GivewayProfile> giveways) {
+    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveaways"})
+    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GiveawayProfile> giveaways) {
         this.id = id;
         this.users_who_upvoted = users_who_upvoted;
         this.reminders = reminders;
 
-        if(giveways == null) {
-            this.giveways = new HashMap<>();
+        if(giveaways == null) {
+            this.giveaways = new HashMap<>();
             saveAsync();
         }else{
-            this.giveways = giveways;
+            this.giveaways = giveaways;
         }
     }
 
@@ -55,8 +52,8 @@ public class ServerProfile implements ManagedObject {
     }
 
     @JsonIgnore
-    public HashMap<String, GivewayProfile> getGiveways() {
-        return giveways;
+    public HashMap<String, GiveawayProfile> getGiveways() {
+        return giveaways;
     }
 
     public void addUpvoted(String u) {
@@ -79,8 +76,8 @@ public class ServerProfile implements ManagedObject {
         saveAsync();
     }
 
-    public void updateGiveways(HashMap<String, GivewayProfile> giveways) {
-        this.giveways = giveways;
+    public void updateGiveways(HashMap<String, GiveawayProfile> giveways) {
+        this.giveaways = giveways;
         saveAsync();
     }
 

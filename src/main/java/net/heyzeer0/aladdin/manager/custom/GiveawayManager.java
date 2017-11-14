@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.database.entities.profiles.GivewayProfile;
+import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class GiveawayManager {
 
-    public static HashMap<String, GivewayProfile> giveways = new HashMap<>();
+    public static HashMap<String, GiveawayProfile> giveways = new HashMap<>();
     public static boolean already_requested = false;
 
     private static ScheduledExecutorService giveTimer = Executors.newSingleThreadScheduledExecutor();
@@ -48,7 +48,7 @@ public class GiveawayManager {
 
         if(msg != null) {
             msg.addReaction("✅").complete();
-            giveways.put(msg.getId(), new GivewayProfile(msg.getId(), msg.getChannel().getId(), msg.getGuild().getId(), description, e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl(), time, winnerAmount));
+            giveways.put(msg.getId(), new GiveawayProfile(msg.getId(), msg.getChannel().getId(), msg.getGuild().getId(), description, e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl(), time, winnerAmount));
             Main.getDatabase().getServer().updateGiveways(giveways);
         }
     }
@@ -67,7 +67,7 @@ public class GiveawayManager {
 
                 for(String id : giveways.keySet()) {
 
-                    GivewayProfile g = giveways.get(id);
+                    GiveawayProfile g = giveways.get(id);
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
                     if(ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {

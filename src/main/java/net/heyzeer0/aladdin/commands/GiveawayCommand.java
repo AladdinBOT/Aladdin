@@ -21,7 +21,7 @@ public class    GiveawayCommand implements CommandExecutor {
             usage = "a!giveaway criar 1h 1 Boné dahora\n", isAllowedToDefault = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
-        if(args.get(0).equalsIgnoreCase("criar")) {
+        if(args.get(0).equalsIgnoreCase("ata")) {
             if(args.getSize() < 4) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "criar", "tempo(m/h)", "quantidade de ganhadores", "descrição");
             }
@@ -51,6 +51,7 @@ public class    GiveawayCommand implements CommandExecutor {
                 e.getMessage().delete().queue();
 
             }catch (Exception ex) {
+                ex.printStackTrace();
                 e.sendMessage(EmojiList.WORRIED + " Oops, a quantidade de ganhadores inserida ou o tempo é invalido");
             }
 

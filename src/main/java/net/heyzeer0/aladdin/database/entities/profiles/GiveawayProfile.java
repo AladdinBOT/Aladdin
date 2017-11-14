@@ -10,7 +10,7 @@ import java.beans.ConstructorProperties;
  */
 
 @Getter
-public class GivewayProfile {
+public class GiveawayProfile {
 
     String messageID;
     String channelID;
@@ -22,7 +22,7 @@ public class GivewayProfile {
     int winnerAmount;
 
     @ConstructorProperties({"messageID", "channelID", "guildID", "description", "authorName", "authorAvatar", "endTime", "winnerAmount"})
-    public GivewayProfile(String messageID, String channelID, String guildID, String description, String authorName, String authorAvatar, long endTime, int winnerAmount) {
+    public GiveawayProfile(String messageID, String channelID, String guildID, String description, String authorName, String authorAvatar, long endTime, int winnerAmount) {
         this.messageID = messageID; this.channelID = channelID; this.guildID = guildID; this.description = description; this.authorName = authorName; this.authorAvatar = authorAvatar; this.endTime = endTime; this.winnerAmount = winnerAmount;
     }
 
