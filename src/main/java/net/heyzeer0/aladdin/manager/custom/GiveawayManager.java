@@ -46,6 +46,7 @@ public class GiveawayManager {
         Message msg = e.sendPureMessage(new MessageBuilder().setEmbed(b.build()).build()).complete();
 
         if(msg != null) {
+            msg.addReaction("✅").complete();
             giveways.put(msg.getId(), new GivewayProfile(msg.getId(), msg.getChannel().getId(), msg.getGuild().getId(), description, e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl(), time, winnerAmount));
             Main.getDatabase().getServer().updateGiveways(giveways);
         }
@@ -137,7 +138,7 @@ public class GiveawayManager {
 
             }
 
-        }, 0, 1, TimeUnit.SECONDS);
+        }, 0, 20, TimeUnit.SECONDS);
     }
 
 }

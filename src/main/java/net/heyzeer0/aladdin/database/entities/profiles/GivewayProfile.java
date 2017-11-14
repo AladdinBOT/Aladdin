@@ -23,7 +23,7 @@ public class GivewayProfile {
 
     @ConstructorProperties({"messageID", "channelID", "guildID", "description", "authorName", "authorAvatar", "endTime", "winnerAmount"})
     public GivewayProfile(String messageID, String channelID, String guildID, String description, String authorName, String authorAvatar, long endTime, int winnerAmount) {
-        this.messageID = messageID; this.channelID = channelID; this.guildID = guildID; this.description = description; this.authorName = authorName; this.authorName = authorName; this.endTime = endTime; this.winnerAmount = winnerAmount;
+        this.messageID = messageID; this.channelID = channelID; this.guildID = guildID; this.description = description; this.authorName = authorName; this.authorAvatar = authorAvatar; this.endTime = endTime; this.winnerAmount = winnerAmount;
     }
 
 }
