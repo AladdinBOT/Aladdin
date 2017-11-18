@@ -62,16 +62,19 @@ public class GiveawayManager {
     public static void startUpdating() {
         giveTimer.scheduleAtFixedRate(() -> {
             if(giveways.size() <= 0) {
+                System.out.println("ok");
                 if(!already_requested) {
+                    System.out.println("dando request");
                     giveways = Main.getDatabase().getServer().getGiveways();
                     already_requested = true;
                 }
             }else{
+                System.out.println("tudo certo");
                 ArrayList<String> toCleanup = new ArrayList<>();
 
                 for(String id : giveways.keySet()) {
-                    System.out.println(id);
                     GiveawayProfile g = giveways.get(id);
+                    System.out.println(g.getTitle() + " | " + g.getAuthorName() + " | " + g.getMessageID());
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
                     if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {

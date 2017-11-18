@@ -126,6 +126,12 @@ public class UserCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
+            if(args.get(1).toLowerCase().equalsIgnoreCase("unset")) {
+                e.getGuildProfile().removeUserGroup(u);
+                e.sendMessage(EmojiList.CORRECT + " Você removeu o grupo do usuário com sucesso.");
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
+
             GroupProfile pf = e.getGuildProfile().getGroupByName(args.get(1).toLowerCase());
 
             if(pf == null) {
