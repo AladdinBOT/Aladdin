@@ -38,9 +38,7 @@ public class ImageUtils {
         InputStream istream = null;
         try {
             istream = cnc.getInputStream();
-        } catch (IOException e) {
-            throw new IIOException("Can't get input stream from URL!", e);
-        }
+        } catch (IOException ignored) {}
         BufferedImage bi = ImageIO.read(istream);
         return bi;
     }
