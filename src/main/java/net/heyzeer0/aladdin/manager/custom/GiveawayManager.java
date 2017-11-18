@@ -61,19 +61,16 @@ public class GiveawayManager {
 
     public static void startUpdating() {
         giveTimer.scheduleAtFixedRate(() -> {
-
-            if(giveways.size() < 0) {
-                System.out.println("Giveaways menor q 0");
+            if(giveways.size() <= 0) {
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveways();
                     already_requested = true;
                 }
             }else{
-
                 ArrayList<String> toCleanup = new ArrayList<>();
 
                 for(String id : giveways.keySet()) {
-
+                    System.out.println(id);
                     GiveawayProfile g = giveways.get(id);
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
