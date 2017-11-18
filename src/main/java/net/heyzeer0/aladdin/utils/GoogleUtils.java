@@ -47,7 +47,6 @@ public class GoogleUtils {
         try{
             Elements x = Jsoup.connect("https://www.google.com/search?ie=ISO-8859-1&hl=en&source=hp&tbm=isch&gbv=1&gs_l=img&q=" + titulo).userAgent("Aladdin-BOT").get().getElementsByTag("img");
             for(Element y : x) {
-                System.out.println(y.absUrl("src"));
                 return y.absUrl("src");
             }
         }catch (Exception ex) {

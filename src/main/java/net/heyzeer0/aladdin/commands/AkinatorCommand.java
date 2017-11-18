@@ -28,7 +28,6 @@ public class AkinatorCommand implements CommandExecutor {
             long atual = akinators.get(e.getAuthor().getId());
             if((System.currentTimeMillis() - atual) >= 15000) {
                 akinators.remove(e.getAuthor().getId());
-                System.out.println("timedout");
             }else{
                 e.sendMessage(EmojiList.WORRIED + " Oops, você já esta em um akinator!");
                 return new CommandResult((CommandResultEnum.SUCCESS));

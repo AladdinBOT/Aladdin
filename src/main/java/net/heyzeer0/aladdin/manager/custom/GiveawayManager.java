@@ -54,7 +54,7 @@ public class GiveawayManager {
 
         if(msg != null) {
             msg.addReaction("✅").complete();
-            giveways.put(msg.getId(), new GiveawayProfile("", b.getCh().getId(), b.getCh().getGuild().getId(), b.getE().getAuthor().getName(), b.getE().getAuthor().getEffectiveAvatarUrl(), b.getName(), b.getPrizes(), System.currentTimeMillis() + b.getEnd_time()));
+            giveways.put(msg.getId(), new GiveawayProfile(msg.getId(), b.getCh().getId(), b.getCh().getGuild().getId(), b.getE().getAuthor().getName(), b.getE().getAuthor().getEffectiveAvatarUrl(), b.getName(), b.getPrizes(), System.currentTimeMillis() + b.getEnd_time()));
             Main.getDatabase().getServer().updateGiveways(giveways);
         }
     }
@@ -62,19 +62,15 @@ public class GiveawayManager {
     public static void startUpdating() {
         giveTimer.scheduleAtFixedRate(() -> {
             if(giveways.size() <= 0) {
-                System.out.println("ok");
                 if(!already_requested) {
-                    System.out.println("dando request");
                     giveways = Main.getDatabase().getServer().getGiveways();
                     already_requested = true;
                 }
             }else{
-                System.out.println("tudo certo");
                 ArrayList<String> toCleanup = new ArrayList<>();
 
                 for(String id : giveways.keySet()) {
                     GiveawayProfile g = giveways.get(id);
-                    System.out.println(g.getTitle() + " | " + g.getAuthorName() + " | " + g.getMessageID());
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
                     if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {

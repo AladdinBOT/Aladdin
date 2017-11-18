@@ -83,10 +83,8 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
             for (AudioTrack track : options) {
                 ch.addOption(track.getInfo().title + " ``(" + AudioUtils.format(track.getDuration()) + ")``", () -> {
                     if(playlist.equalsIgnoreCase("none")) {
-                        System.out.println("ata " + playlist);
                         trackLoaded(track);
                     }else{
-                        System.out.println("ata2");
                         message.editMessage(EmojiList.CORRECT + " Você adicionou a música ``" + track.getInfo().title + "`` com sucesso a playlist ``" + playlist + "``").queue();
 
                         Main.getDatabase().getUserProfile(user).addTrackToPlaylist(playlist, track.getInfo().title, AudioUtils.format(track.getInfo().length), track.getInfo().uri);

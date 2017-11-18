@@ -7,6 +7,8 @@ import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
+import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -65,6 +67,13 @@ public class StarboardProfile {
         }
 
         MessageReaction reaction = Utils.findReaction(e.getReactionEmote().getName(), e.getReactionEmote().getId(), msg);
+        long size = reaction.getCount();
+
+        if(!Boolean.valueOf(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.STARBOARD_SELFREACT).toString())) {
+            if(reaction.getUsers().complete().contains(msg.getAuthor())) {
+                size--;
+            }
+        }
 
         TextChannel ch = e.getGuild().getTextChannelById(channel_id);
 
@@ -84,7 +93,7 @@ public class StarboardProfile {
             return false;
         }
 
-        if(reaction.getCount() < amount) {
+        if(size < amount) {
             if(messages.containsKey(e.getMessageId())) {
                 Message from = ch.getMessageById(messages.get(e.getMessageId())).complete();
                 if(from != null)
@@ -102,7 +111,7 @@ public class StarboardProfile {
         }
 
         EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-        b.setTitle(emote + " " + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
+        b.setTitle(emote + " " + size + " | Enviada por " + msg.getAuthor().getName());
 
         m.editMessage(b.build()).queue();
         return false;
@@ -127,12 +136,19 @@ public class StarboardProfile {
         }
 
         MessageReaction reaction = Utils.findReaction(e.getReactionEmote().getName(), e.getReactionEmote().getId(), msg);
+        long size = reaction.getCount();
+
+        if(!Boolean.valueOf(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.STARBOARD_SELFREACT).toString())) {
+            if(reaction.getUsers().complete().contains(msg.getAuthor())) {
+                size--;
+            }
+        }
 
         if(reaction == null) {
             return false;
         }
 
-        if(reaction.getCount() < amount) {
+        if(size < amount) {
             return false;
         }
 
@@ -154,7 +170,7 @@ public class StarboardProfile {
             }
 
             EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-            b.setTitle(emote + " " + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
+            b.setTitle(emote + " " + size + " | Enviada por " + msg.getAuthor().getName());
 
             m.editMessage(b.build()).queue();
 
@@ -190,7 +206,7 @@ public class StarboardProfile {
 
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
-        b.setTitle(emote + " " + reaction.getCount() + " | Enviada por " + msg.getAuthor().getName());
+        b.setTitle(emote + " " + size + " | Enviada por " + msg.getAuthor().getName());
         b.setDescription(msg.getContent());
 
         if(msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) {
