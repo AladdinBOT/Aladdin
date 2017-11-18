@@ -26,7 +26,7 @@ public enum EmojiList {
     BUY(":inbox_tray:", "\uD83D\uDCE5"),
     SELL(":outbox_tray:", "\uD83D\uDCE4"),
     MARKET(":shopping_car:", "\uD83D\uDED2"),
-    MONEY(":money_bag:", "\uD83D\uDCB0"),
+    MONEY(":moneybag:", "\uD83D\uDCB0"),
     PENCIL(":pencil:", "\uD83D\uDCDD"),
     SMILE(":smile:", "\uD83D\uDE04"),
     PICK(":pick:", "\u26cf"),

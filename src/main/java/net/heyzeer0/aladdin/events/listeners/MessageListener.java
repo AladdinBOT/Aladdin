@@ -12,6 +12,7 @@ import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.manager.utilities.ReactionerManager;
 import net.heyzeer0.aladdin.profiles.commands.ResponseProfile;
+import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -27,6 +28,10 @@ public class MessageListener {
 
     public static void onMessage(GuildMessageReceivedEvent e) {
         if(!e.getGuild().getSelfMember().hasPermission(e.getChannel(), Permission.MESSAGE_WRITE)) {
+            return;
+        }
+
+        if(GiveawayBuilder.checkMessages(e)) {
             return;
         }
 
@@ -87,6 +92,7 @@ public class MessageListener {
         PaginatorManager.updatePaginator(e);
         ChooserManager.selectChooser(e);
         ReactionerManager.updateReactioner(e);
+        GiveawayBuilder.checkReaction(e);
     }
 
     public static void onReactRemove(MessageReactionRemoveEvent e) {

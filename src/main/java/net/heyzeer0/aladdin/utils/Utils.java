@@ -144,14 +144,28 @@ public class Utils {
                 hours = duration / 3600000L % 24,
                 minutes = duration / 60000L % 60,
                 seconds = duration / 1000L % 60;
-        String uptime = (years == 0 ? "" : years + " Anos, ") + (months == 0 ? "" : months + " Meses, ")
-                + (days == 0 ? "" : days + " Dias, ") + (hours == 0 ? "" : hours + " Horas, ")
-                + (minutes == 0 ? "" : minutes + " Minutos, ") + (seconds == 0 ? "" : seconds + " Segundos, ");
+        String uptime = (years == 0 ? "" : years + " Ano" + cS(years) + ", ") + (months == 0 ? "" : months + " Mes" + cS(months, true) + ", ")
+                + (days == 0 ? "" : days + " Dia" + cS(days) + ", ") + (hours == 0 ? "" : hours + " Hora" + cS(hours) + ", ")
+                + (minutes == 0 ? "" : minutes + " Minuto" + cS(minutes) + ", ") + (seconds == 0 ? "" : seconds + " Segundo" + cS(seconds) + ", ");
 
         uptime = replaceLast(uptime, ", ", "");
         uptime = replaceLast(uptime, ",", " e");
 
         return uptime;
+    }
+
+    public static String cS(long value) {
+        if(value == 1) {
+            return "";
+        }
+        return "s";
+    }
+
+    public static String cS(long value, boolean e) {
+        if(value == 1) {
+            return "";
+        }
+        return e ? "es" : "s";
     }
 
 

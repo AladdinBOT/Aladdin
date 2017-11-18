@@ -115,11 +115,11 @@ public class Main {
                     "/_/  |_/_/\\__,_/\\__,_/\\__,_/_/_/ /_/ \n" +
                     "                         v" + version);
 
+            GiveawayManager.startUpdating();
             ChooserManager.startCleanup();
             PaginatorManager.startCleanup();
             DiscordLists.updateStatus();
             ReminderManager.startChecking();
-            GiveawayManager.startUpdating();
 
             new SocketInfo(9598, (l, i) -> {
                 if(l.equalsIgnoreCase("shutdown")) {

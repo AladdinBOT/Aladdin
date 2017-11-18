@@ -1,16 +1,16 @@
 package net.heyzeer0.aladdin.manager.custom;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
-import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
+import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.utils.Utils;
-import org.apache.commons.lang3.StringUtils;
+import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
+import net.heyzeer0.aladdin.utils.builders.Prize;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,24 +31,30 @@ public class GiveawayManager {
 
     private static ScheduledExecutorService giveTimer = Executors.newSingleThreadScheduledExecutor();
 
-    public static void createGiveway(String description, long time, int winnerAmount, MessageEvent e) {
-        if(!e.getChannel().canTalk()) {
+    public static void createGiveway(GiveawayBuilder b) {
+        if(!b.getCh().canTalk()) {
             return;
         }
 
-        EmbedBuilder b = new EmbedBuilder();
-        b.setColor(Color.GREEN);
-        b.setAuthor("Sorteio iniciado por " + e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), null, e.getAuthor().getEffectiveAvatarUrl());
-        b.setDescription("Para participar clique na reação :white_check_mark:");
-        b.addField(":notepad_spiral: Descrição", description, false);
-        b.addField(":stopwatch: Tempo restante ", Utils.getTime(time - System.currentTimeMillis()), false);
-        b.setFooter(winnerAmount + (winnerAmount > 1 ? " Vencedores" : " Vencedor"), null);
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setColor(Color.GREEN);
+        eb.setTitle(EmojiList.MONEY + " " + b.getName());
+        eb.setDescription("Para participar clique na reação :white_check_mark:");
+        eb.setFooter("Iniciado por " + b.getE().getAuthor().getName(), b.getE().getAuthor().getEffectiveAvatarUrl());
+        String premios = "";
 
-        Message msg = e.sendPureMessage(new MessageBuilder().setEmbed(b.build()).build()).complete();
+        for(Prize p : b.getPrizes()) {
+            premios = premios + " - " + p.getName() + "\n";
+        }
+
+        eb.addField(":tada: Premios", premios, false);
+        eb.addField(":stopwatch: Tempo restante", Utils.getTime(b.getEnd_time()), false);
+
+        Message msg = b.getCh().sendMessage(eb.build()).complete();
 
         if(msg != null) {
             msg.addReaction("✅").complete();
-            giveways.put(msg.getId(), new GiveawayProfile(msg.getId(), msg.getChannel().getId(), msg.getGuild().getId(), description, e.getAuthor().getName() + "#" + e.getAuthor().getDiscriminator(), e.getAuthor().getEffectiveAvatarUrl(), time, winnerAmount));
+            giveways.put(msg.getId(), new GiveawayProfile("", b.getCh().getId(), b.getCh().getGuild().getId(), b.getE().getAuthor().getName(), b.getE().getAuthor().getEffectiveAvatarUrl(), b.getName(), b.getPrizes(), System.currentTimeMillis() + b.getEnd_time()));
             Main.getDatabase().getServer().updateGiveways(giveways);
         }
     }
@@ -57,6 +63,7 @@ public class GiveawayManager {
         giveTimer.scheduleAtFixedRate(() -> {
 
             if(giveways.size() < 0) {
+                System.out.println("Giveaways menor q 0");
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveways();
                     already_requested = true;
@@ -70,67 +77,82 @@ public class GiveawayManager {
                     GiveawayProfile g = giveways.get(id);
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
-                    if(ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {
+                    if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {
                         toCleanup.add(id);
-                    }else {
-                        if(g.getEndTime() - System.currentTimeMillis() <= 0) {
+                    }else{
 
+                        if(g.getEndTime() - System.currentTimeMillis() <= 0) {
                             Message msg = ch.getMessageById(g.getMessageID()).complete();
 
-                            ArrayList<String> winners_mention = new ArrayList<>();
+                            HashMap<User, Prize> winners = new HashMap<>();
 
                             for(MessageReaction rc : msg.getReactions()) {
                                 if(rc.getEmote().getName().equalsIgnoreCase("✅")) {
                                     List<User> usr = rc.getUsers().complete();
                                     Integer count = 0;
-                                    if(usr.size() <= g.getWinnerAmount()) {
+                                    if(usr.size() <= g.getPrizes().size()) {
                                         for(User u : usr) {
                                             if(!u.isBot() && !u.isFake()) {
-                                                winners_mention.add(u.getAsMention());
+                                                winners.put(u, g.getPrizes().get(count));
+                                                count++;
                                             }
                                         }
                                         break;
                                     }
-                                    while(count < g.getWinnerAmount()) {
+                                    while(count < g.getPrizes().size()) {
                                         User u = usr.get(Utils.r.nextInt(usr.size()));
                                         if(u.isBot() || u.isFake()) {
                                             continue;
                                         }
-                                        if(winners_mention.contains(u.getAsMention())) {
+                                        if(winners.containsKey(u)) {
                                             continue;
                                         }
+                                        winners.put(u, g.getPrizes().get(count));
                                         count++;
-                                        winners_mention.add(u.getAsMention());
                                     }
                                 }
                             }
 
-                            String winner_mention = StringUtils.join(winners_mention, ", ");
+                            EmbedBuilder eb = new EmbedBuilder();
+                            eb.setColor(Color.RED);
+                            eb.setTitle(EmojiList.MONEY + " " + g.getTitle());
+                            eb.setDescription("Sorteio finalizado");
+                            eb.setFooter("Iniciado por " + g.getAuthorName(), g.getAuthorAvatar());
+                            String premios = "";
 
-                            EmbedBuilder b = new EmbedBuilder();
-                            b.setColor(Color.RED);
-                            b.setAuthor("Sorteio iniciado por " + g.getAuthorName(), null, g.getAuthorAvatar());
-                            b.setDescription("Sorteio Finalizado");
-                            b.addField(":notepad_spiral: Descrição", g.getDescription(), false);
-                            b.addField(":trophy: Vencedores ", winner_mention.length() >= 1 ? winner_mention : "Não houve vencedores", true);
-                            b.setFooter(g.getWinnerAmount() + (g.getWinnerAmount() > 1 ? " Vencedores" : " Vencedor"), null);
+                            for(User u : winners.keySet()) {
+                                Prize p = winners.get(u);
+                                premios = premios + " - " + u.getName() + " | " + p.getName() + "\n";
 
-                            msg.editMessage(b.build()).queue();
+                                if(p.getDmMessage().equalsIgnoreCase("Não definido")) {
+                                    continue;
+                                }
+
+                                u.openPrivateChannel().queue(pc -> pc.sendMessage(p.getDmMessage()).queue());
+                            }
+
+                            eb.addField(":trophy: Ganhadores", premios ,false);
+
+                            msg.editMessage(eb.build()).queue();
 
                             toCleanup.add(id);
                         }else{
+                            EmbedBuilder eb = new EmbedBuilder();
+                            eb.setColor(Color.GREEN);
+                            eb.setTitle(EmojiList.MONEY + " " + g.getTitle());
+                            eb.setDescription("Para participar clique na reação :white_check_mark:");
+                            eb.setFooter("Iniciado por " + g.getAuthorName(), g.getAuthorAvatar());
+                            String premios = "";
 
-                            EmbedBuilder b = new EmbedBuilder();
-                            b.setColor(Color.GREEN);
-                            b.setAuthor("Sorteio iniciado por " + g.getAuthorName(), null, g.getAuthorAvatar());
-                            b.setDescription("Para participar clique na reação :white_check_mark:");
-                            b.addField(":notepad_spiral: Descrição", g.getDescription(), false);
-                            b.addField(":stopwatch: Tempo restante ", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), true);
-                            b.setFooter(g.getWinnerAmount() + (g.getWinnerAmount() > 1 ? " Vencedores" : " Vencedor"), null);
+                            for(Prize p : g.getPrizes()) {
+                                premios = premios + " - " + p.getName() + "\n";
+                            }
 
-                            ch.getMessageById(g.getMessageID()).queue(msg -> msg.editMessage(b.build()).queue());
+                            eb.addField(":tada: Premios", premios, false);
+                            eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), false);
+
+                            ch.getMessageById(g.getMessageID()).queue(msg -> msg.editMessage(eb.build()).queue());
                         }
-
                     }
                 }
 
