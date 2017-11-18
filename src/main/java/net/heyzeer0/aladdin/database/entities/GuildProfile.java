@@ -372,7 +372,7 @@ public class GuildProfile implements ManagedObject {
         if(starboards.size() < id) {
             return false;
         }
-        starboards.remove(id);
+        starboards.remove(starboards.keySet().toArray(new String[] {})[id]);
         saveAsync();
         return true;
     }
