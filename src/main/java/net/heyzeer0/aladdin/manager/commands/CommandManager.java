@@ -114,7 +114,7 @@ public class CommandManager {
 
             comandos_executados++;
             try{
-                CommandResult r = cmd.getExecutor().onCommand(new ArgumentProfile(arg.args, cmd.getAnnotation().parameters()), e);
+                CommandResult r = cmd.getExecutor().onCommand(new ArgumentProfile(arg.args), e);
 
                 if(r.getResult() == CommandResultEnum.NOT_FOUND) {
                     List<String> params = new ArrayList<>();
@@ -161,7 +161,7 @@ public class CommandManager {
             return;
         }
         if(aliases.containsKey(arg.invoke)) {
-            CommandArgument b = new CommandArgument(arg.raw, arg.beheaded, arg.splitBeheaded, aliases.get(arg.invoke).getAnnotation().command(), arg.args, arg.event);
+            CommandArgument b = new CommandArgument(arg.raw, arg.beheaded, aliases.get(arg.invoke).getAnnotation().command(), arg.args, arg.event);
             handleCommand(b);
             return;
         }
@@ -185,17 +185,42 @@ public class CommandManager {
     }
 
     public static CommandArgument parse(String rw, GuildMessageReceivedEvent e) {
-        ArrayList<String> split  = new ArrayList<>();
         String beheaded = rw.replaceFirst(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString(), "");
         beheaded = beheaded.replaceFirst(GuildConfig.PREFIX.getDefault().toString(), "");
         beheaded = beheaded.replaceFirst("<@" + e.getJDA().getSelfUser().getId() + "> ", "");
         beheaded = beheaded.replaceFirst("<@!" + e.getJDA().getSelfUser().getId() + "> ", "");
-        String[] splitBeheaded = beheaded.split(" ");
-        Collections.addAll(split, splitBeheaded);
+
+        ArrayList<String> split = new ArrayList<>();
+
+        boolean searching = false;
+        String to_add = "";
+        for(String x : beheaded.split(" ")) {
+            if(x.endsWith("\"") && searching) {
+                searching = false;
+                to_add = to_add + x.replace("\"", "");
+                split.add(to_add);
+                to_add = "";
+                continue;
+            }
+
+            if(searching) {
+                to_add = to_add + x + " ";
+                continue;
+            }
+
+            if(x.startsWith("\"")) {
+                to_add = x.replace("\"", "") + " ";
+                searching = true;
+                continue;
+            }
+
+            split.add(x);
+        }
+
         String invoke = split.get(0);
         String[] args = new String[split.size() -1];
         split.subList(1, split.size()).toArray(args);
-        return new CommandArgument(rw, beheaded, splitBeheaded, invoke, args, e);
+        return new CommandArgument(rw, beheaded, invoke, args, e);
     }
 
 }

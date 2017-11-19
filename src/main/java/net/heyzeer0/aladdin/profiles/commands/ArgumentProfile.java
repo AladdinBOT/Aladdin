@@ -12,15 +12,12 @@ import java.util.HashMap;
 public class ArgumentProfile {
 
     String[] raw;
-    HashMap<String, String> arguments = new HashMap<>();
 
-    public ArgumentProfile(String[] base, String[] parameters) {
+    public ArgumentProfile(String[] base) {
         raw = base;
-        if(!parameters[0].equalsIgnoreCase("none")) {
-            for(int i = 0; i < parameters.length; i++) {
-                arguments.put(parameters[i], raw[i]);
-            }
-        }
+
+        String total = "";
+        for(String x : raw) { total = total + x + " ";}
     }
 
     public int getSize() {
@@ -37,10 +34,6 @@ public class ArgumentProfile {
 
     public String get(int i) {
         return raw[i];
-    }
-
-    public String get(String parameter) {
-        return arguments.get(parameter);
     }
 
     public String getComplete() {
