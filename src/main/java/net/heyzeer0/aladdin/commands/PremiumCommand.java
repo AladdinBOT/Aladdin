@@ -2,6 +2,7 @@ package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.configs.MainConfig;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
@@ -56,8 +57,13 @@ public class PremiumCommand implements CommandExecutor {
                 b.addField(":key2: | Chaves restantes ", "" + pf.getPremiumKeys(), false);
 
                 if(pf.userPremium()) {
-                    b.addField(":calendar_spiral: | Tempo restante ", "" + Utils.getTime((pf.getPremiumTime() - System.currentTimeMillis())), false);
-                    b.addField(":arrows_counterclockwise: | Auto renovação ", "" + pf.isAutoRenew(), false);
+                    if(MainConfig.bot_owner.equals(pf.getId())) {
+                        b.addField(":calendar_spiral: | Tempo restante ", "∞", false);
+                        b.addField(":arrows_counterclockwise: | Auto renovação ", "" + pf.isAutoRenew(), false);
+                    }else {
+                        b.addField(":calendar_spiral: | Tempo restante ", "" + Utils.getTime((pf.getPremiumTime() - System.currentTimeMillis())), false);
+                        b.addField(":arrows_counterclockwise: | Auto renovação ", "" + pf.isAutoRenew(), false);
+                    }
                 }
 
                 b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
@@ -74,8 +80,13 @@ public class PremiumCommand implements CommandExecutor {
             b.addField(":key2: | Chaves restantes ", "" + e.getUserProfile().getPremiumKeys(), false);
 
             if(e.getUserProfile().userPremium()) {
-                b.addField(":calendar_spiral: | Tempo restante ", "" + Utils.getTime((e.getUserProfile().getPremiumTime() - System.currentTimeMillis())), false);
-                b.addField(":arrows_counterclockwise: | Auto renovação ", "" + e.getUserProfile().isAutoRenew(), false);
+                if(MainConfig.bot_owner.equals(e.getAuthor().getId())) {
+                    b.addField(":calendar_spiral: | Tempo restante ", "∞", false);
+                    b.addField(":arrows_counterclockwise: | Auto renovação ", "" + e.getUserProfile().isAutoRenew(), false);
+                }else {
+                    b.addField(":calendar_spiral: | Tempo restante ", "" + Utils.getTime((e.getUserProfile().getPremiumTime() - System.currentTimeMillis())), false);
+                    b.addField(":arrows_counterclockwise: | Auto renovação ", "" + e.getUserProfile().isAutoRenew(), false);
+                }
             }
 
             b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
