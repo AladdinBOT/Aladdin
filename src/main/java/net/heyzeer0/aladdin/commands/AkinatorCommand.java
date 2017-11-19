@@ -19,6 +19,8 @@ import java.util.HashMap;
  */
 public class AkinatorCommand implements CommandExecutor {
 
+    //ata
+
     public static HashMap<String, Long> akinators = new HashMap<>();
 
     @Command(command = "akinator", description = "Pense em um um personagem e um gênio adivinhara quem é", type = CommandType.FUN,
