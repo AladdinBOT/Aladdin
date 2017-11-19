@@ -32,7 +32,7 @@ public class GuildListener {
         }
 
         e.getJDA().getSelfUser().getManager().setName("Aladdin").queue();
-        Main.getLogger().embed(":house: Guild Join Event", "Guilda ``" + e.getGuild().getName() + "``\nUsers ``" + e.getGuild().getMembers().size() + "``", Color.GREEN);
+        Main.getLogger().embed(":house: Guild Join Event", "Guilda ``" + e.getGuild().getName() + "``\nUsers ``" + e.getGuild().getMembers().size() + "``\nDono ``" + e.getGuild().getOwner().getUser().getName() + "#" + e.getGuild().getOwner().getUser().getDiscriminator() + "``", Color.GREEN);
 
 
         Main.getDatabase().getGuildProfile(e.getGuild());
