@@ -155,14 +155,25 @@ public class GuildProfile implements ManagedObject {
 
         }
 
-        return getGroupByName(getDefaultGroup()).permissions.contains(permission);
+        return getGroupByName(getDefaultGroupName()).permissions.contains(permission);
     }
 
     @JsonIgnore
-    public String getDefaultGroup() {
+    public String getDefaultGroupName() {
         for(String x : groups.keySet()) {
             if(groups.get(x).isDefault()) {
                 return x;
+            }
+        }
+
+        return null;
+    }
+
+    @JsonIgnore
+    public GroupProfile getDefaultGroup() {
+        for(String x : groups.keySet()) {
+            if(groups.get(x).isDefault()) {
+                return groups.get(x);
             }
         }
 

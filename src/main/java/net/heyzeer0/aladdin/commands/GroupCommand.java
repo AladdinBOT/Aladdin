@@ -8,13 +8,16 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import net.heyzeer0.aladdin.manager.permissions.NodeManager;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
+import net.heyzeer0.aladdin.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by HeyZeer0 on 21/09/2017.
@@ -36,7 +39,7 @@ public class GroupCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            e.getGuildProfile().createGroup(new GroupProfile(args.get(1).toLowerCase(), Boolean.valueOf(args.get(2))));
+            e.getGuildProfile().createGroup(new GroupProfile(args.get(1).toLowerCase(), e.getGuildProfile().getDefaultGroup().getPermissions(), Boolean.valueOf(args.get(2))));
 
             e.sendMessage(EmojiList.CORRECT + " Você criou com sucesso o grupo ``" + args.get(1).toLowerCase() + "`` e definiu a propriedade ``default`` para ``" + Boolean.valueOf(args.get(2)) + "``");
             e.sendMessage(":interrobang: Para adicionar um membro ao grupo use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "user addgroup " + args.get(1).toLowerCase() + "``");
