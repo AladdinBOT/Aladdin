@@ -94,9 +94,15 @@ public class StarboardProfile {
         }
 
         MessageReaction reaction = Utils.findReaction(e.getReactionEmote().getName(), e.getReactionEmote().getId(), msg);
-        long size = reaction.getCount();
+        long size;
+        try{
+            size = reaction.getCount();
+        }catch (Exception ex) {
+            size = 0;
+        }
 
-        if(!Boolean.valueOf(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.STARBOARD_SELFREACT).toString())) {
+
+        if(!Boolean.valueOf(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.STARBOARD_SELFREACT).toString()) && size != 0) {
             if(reaction.getUsers().complete().contains(msg.getAuthor())) {
                 size--;
             }
