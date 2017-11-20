@@ -178,7 +178,7 @@ public class StarboardProfile {
         }
 
         String url = null;
-        Matcher m = urlpattern.matcher(msg.getContent());
+        Matcher m = urlpattern.matcher(msg.getRawContent());
 
         while(m.find()) {
             if(m.group(0).contains(".png") || m.group(0).contains(".jpg")) {
@@ -207,7 +207,7 @@ public class StarboardProfile {
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
         b.setTitle(emote + " " + size + " | Enviada por " + msg.getAuthor().getName());
-        b.setDescription(msg.getContent());
+        b.setDescription(msg.getRawContent());
 
         if(msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) {
             b.setImage(msg.getAttachments().get(0).getUrl());
