@@ -41,7 +41,7 @@ public class StarboardCommand implements CommandExecutor {
 
                 new Reactioner(EmojiList.THINKING + " Adicione como reação nesta mensagem o emote que quer utilizar", e.getAuthor().getIdLong(), e.getChannel(), (v) -> {
                     String emote = v.getReactionEmote().getName() + "|" + (v.getReactionEmote().getId() == null ? "null" : v.getReactionEmote().getId());
-                    if(e.getGuildProfile().getStarboards().containsKey(emote)) {
+                    if(e.getGuildProfile().getGuild_starboards().containsKey(emote)) {
                         e.sendMessage(EmojiList.WORRIED + " Oops, o emote mencionado já pertence a outra starboard.");
                         return;
                     }
@@ -164,7 +164,7 @@ public class StarboardCommand implements CommandExecutor {
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
-                if(e.getGuildProfile().getStarboards().size() < id) {
+                if(e.getGuildProfile().getGuild_starboards().size() < id) {
                     e.sendMessage(EmojiList.WORRIED + " Oops, a starboard com a id inserida não existe");
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
