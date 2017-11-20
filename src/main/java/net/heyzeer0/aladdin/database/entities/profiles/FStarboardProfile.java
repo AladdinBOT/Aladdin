@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  * Copyright © HeyZeer0 - 2016
  */
 @Getter
-public class StarboardProfile {
+public class FStarboardProfile {
 
     public static Pattern urlpattern = Pattern.compile("(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))");
 
@@ -35,42 +35,17 @@ public class StarboardProfile {
     String channel_id;
 
     HashMap<String, String> messages = new HashMap<>();
-    HashMap<String, String> blocked_channels = new HashMap<>();
 
-    public StarboardProfile(FStarboardProfile old) {
-        this(old.getEmote(), old.getAmount(), old.getChannel_id(), old.getMessages(), new HashMap<>());
+    public FStarboardProfile(String emote, int amount, String channel_id) {
+        this(emote, amount, channel_id, new HashMap<>());
     }
 
-    public StarboardProfile(String emote, int amount, String channel_id) {
-        this(emote, amount, channel_id, new HashMap<>(), new HashMap<>());
-    }
-
-    @ConstructorProperties({"emote", "amount", "channel_id", "messages", "blocked_channels"})
-    public StarboardProfile(String emote, int amount, String channel_id, HashMap<String, String> messages, HashMap<String, String> blocked_channels) {
+    @ConstructorProperties({"emote", "amount", "channel_id", "messages"})
+    public FStarboardProfile(String emote, int amount, String channel_id, HashMap<String, String> messages) {
         this.emote = emote;
         this.amount = amount;
         this.channel_id = channel_id;
         this.messages = messages;
-        this.blocked_channels = blocked_channels;
-
-        if(blocked_channels == null)
-            this.blocked_channels = new HashMap<>();
-    }
-
-    public boolean addBlockedChannel(TextChannel ch) {
-        if(blocked_channels.containsKey(ch.getId())) {
-            return false;
-        }
-        blocked_channels.put(ch.getId(), ch.getName());
-        return true;
-    }
-
-    public boolean removeBlockedChannel(TextChannel ch) {
-        if(!blocked_channels.containsKey(ch.getId())) {
-            return false;
-        }
-        blocked_channels.remove(ch.getId(), ch.getName());
-        return true;
     }
 
     public boolean removeReaction(MessageReactionRemoveEvent e) throws InvalidObjectException {

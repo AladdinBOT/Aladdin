@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.database;
 
+import com.rethinkdb.gen.ast.ReqlFunction0;
 import com.rethinkdb.net.Connection;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;

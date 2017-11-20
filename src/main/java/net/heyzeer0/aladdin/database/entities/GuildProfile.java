@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.database.entities.profiles.FStarboardProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.LogProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
@@ -55,17 +56,18 @@ public class GuildProfile implements ManagedObject {
     HashMap<String, CustomCommand> commands = new HashMap<>();
 
     //Starboards
-    HashMap<String, StarboardProfile> starboards = new HashMap<>();
+    HashMap<String, FStarboardProfile> starboards = new HashMap<>();
+    HashMap<String, StarboardProfile> guild_starboards = new HashMap<>();
 
     //Log
     LogProfile guild_log;
 
     public GuildProfile(Guild u) {
-        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null));
+        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null));
     }
 
-    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "starboards", "guild_log"})
-    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> starboards, LogProfile guild_log) {
+    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "starboards", "guild_starboards", "guild_log"})
+    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, FStarboardProfile> starboards, HashMap<String, StarboardProfile> guild_starboards, LogProfile guild_log) {
         this.id = id;
         this.ownerId = ownerId;
         this.configs = configs;
@@ -74,9 +76,18 @@ public class GuildProfile implements ManagedObject {
         this.user_overrides = user_overrides;
         this.commands = commands;
         this.starboards = starboards;
+        this.guild_starboards = guild_starboards;
         this.guild_log = guild_log;
 
-        if(this.starboards == null) { this.starboards = new HashMap<>(); }
+        if(this.starboards != null && this.starboards.size() >= 0) {
+            for(String st : this.starboards.keySet()) {
+                this.guild_starboards.put(st, new StarboardProfile(this.starboards.get(st)));
+            }
+
+            this.starboards = new HashMap<>();
+            saveAsync();
+        }
+
         if(this.guild_log == null) { this.guild_log = new LogProfile(null); }
     }
 
@@ -371,52 +382,52 @@ public class GuildProfile implements ManagedObject {
     }
 
     public boolean createStarboard(String emoji, int amount, String channel_id) {
-        if(starboards.containsKey(emoji)) {
+        if(guild_starboards.containsKey(emoji)) {
             return false;
         }
-        starboards.put(emoji, new StarboardProfile(emoji, amount, channel_id));
+        guild_starboards.put(emoji, new StarboardProfile(emoji, amount, channel_id));
         saveAsync();
         return true;
     }
 
     public boolean deleteStarboard(int id) {
-        if(starboards.size() < id) {
+        if(guild_starboards.size() < id) {
             return false;
         }
-        starboards.remove(starboards.keySet().toArray(new String[] {})[id]);
+        guild_starboards.remove(guild_starboards.keySet().toArray(new String[] {})[id]);
         saveAsync();
         return true;
     }
 
     public void checkStarboardAdd(MessageReactionAddEvent e) {
-        if(starboards == null) {
-            starboards = new HashMap<>();
+        if(guild_starboards == null) {
+            guild_starboards = new HashMap<>();
             saveAsync();
             return;
         }
-        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
+        if(guild_starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
             try{
-                if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addReaction(e)) {
+                if(guild_starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addReaction(e)) {
                     saveAsync();
                 }
             }catch (InvalidObjectException ex) {
-                starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
+                guild_starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
         }
     }
 
     public void checkStarboardRemove(MessageReactionRemoveEvent e) {
-        if(starboards == null) {
-            starboards = new HashMap<>();
+        if(guild_starboards == null) {
+            guild_starboards = new HashMap<>();
         }
-        if(starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
+        if(guild_starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
             try{
-                if(starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeReaction(e)) {
+                if(guild_starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeReaction(e)) {
                     saveAsync();
                 }
             }catch (InvalidObjectException ex) {
-                starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
+                guild_starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
         }
