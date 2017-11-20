@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class StarboardCommand implements CommandExecutor {
 
     @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"criar/config/remover/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
-            usage = "a!starboard criar 3 #starboard\na!starboard config 0 info\na!starboard config 0 amount 3\na!starboard config 0 ignorechannel #testes\na!starboard remover 0\na!starboard list")
+            usage = "a!starboard criar 3 #starboard\na!starboard config 0 info\na!starboard config 0 setamount 3\na!starboard config 0 ignorechannel #testes\na!starboard remover 0\na!starboard list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("criar")) {
             if(args.getSize() < 3) {
@@ -97,9 +97,9 @@ public class StarboardCommand implements CommandExecutor {
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
-                if(args.get(2).equalsIgnoreCase("amount")) {
+                if(args.get(2).equalsIgnoreCase("setamount")) {
                     if(args.getSize() < 4) {
-                        return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "amount", "quantidade");
+                        return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "setamount", "quantidade");
                     }
 
                     try{
