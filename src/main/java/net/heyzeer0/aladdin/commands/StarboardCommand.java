@@ -88,7 +88,7 @@ public class StarboardCommand implements CommandExecutor {
 
         if(args.get(0).equalsIgnoreCase("list")) {
 
-            HashMap<String, StarboardProfile> starboards = e.getGuildProfile().getStarboards();
+            HashMap<String, StarboardProfile> starboards = e.getGuildProfile().getGuild_starboards();
             String[] keyset = starboards.keySet().toArray(new String[] {});
 
             if(starboards.size() <= 0) {
