@@ -46,7 +46,7 @@ public class GoogleCommand implements CommandExecutor {
         List<GoogleSearch> resultados = GoogleUtils.search_google(titulo);
 
         if(resultados == null || resultados.size() <= 0) {
-            e.sendMessage(EmojiList.WORRIED + " Oops, mão foi encontrado um resultado com o item pesquisado.");
+            e.sendMessage(EmojiList.WORRIED + " Oops, não foi encontrado um resultado com o item pesquisado.");
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
