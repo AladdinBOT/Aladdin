@@ -81,12 +81,18 @@ public class StarboardCommand implements CommandExecutor {
                     Paginator ph = new Paginator(e, ":tools: Configurações da starboard " + id);
                     ph.addPage("Emoji: " + pf.getEmote().split("\\|")[0] + "\nQuantidade necessária: " + pf.getAmount() + "\n Mensages: " + pf.getMessages().size());
 
-                    String x = "";
-                    for(String k : pf.getBlocked_channels().keySet()) {
-                        x = x + "#" + pf.getBlocked_channels().get(k) + " (" + k + ")\n";
+                    String x = "Canais Ingorados:\n";
+
+                    if(pf.getBlocked_channels().size() >= 1) {
+                        for(String k : pf.getBlocked_channels().keySet()) {
+                            x = x + "#" + pf.getBlocked_channels().get(k) + " (" + k + ")\n";
+                        }
+
+                        ph.addPage(x);
+                    }else{
+                        ph.addPage("Não há canais a serem ignorados\npara adicionar utilize " + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard config " + id + " ignorechannel #canal");
                     }
 
-                    ph.addPage(x);
                     ph.start();
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
