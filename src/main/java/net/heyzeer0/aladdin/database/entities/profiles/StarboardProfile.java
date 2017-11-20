@@ -1,6 +1,7 @@
 package net.heyzeer0.aladdin.database.entities.profiles;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
@@ -31,6 +32,7 @@ public class StarboardProfile {
     public static Pattern urlpattern = Pattern.compile("(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))");
 
     String emote;
+    @Setter
     int amount;
     String channel_id;
 
@@ -74,7 +76,7 @@ public class StarboardProfile {
     }
 
     public boolean removeReaction(MessageReactionRemoveEvent e) throws InvalidObjectException {
-        if(e.getTextChannel().getId().equals(channel_id)) {
+        if(e.getTextChannel().getId().equals(channel_id) || blocked_channels.containsKey(e.getTextChannel().getId())) {
             return false;
         }
         String emote;
@@ -143,7 +145,7 @@ public class StarboardProfile {
     }
 
     public boolean addReaction(MessageReactionAddEvent e) throws InvalidObjectException {
-        if(e.getTextChannel().getId().equals(channel_id)) {
+        if(e.getTextChannel().getId().equals(channel_id) || blocked_channels.containsKey(e.getTextChannel().getId())) {
             return false;
         }
         String emote;

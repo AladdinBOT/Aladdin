@@ -28,6 +28,8 @@ import java.io.InputStream;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import static com.rethinkdb.RethinkDB.r;
 
@@ -431,6 +433,44 @@ public class GuildProfile implements ManagedObject {
                 saveAsync();
             }
         }
+    }
+
+    public boolean isBlockedChannel(int id, TextChannel ch) {
+        return guild_starboards.get(guild_starboards.keySet().toArray(new String[] {})[id]).getBlocked_channels().containsKey(ch.getId());
+    }
+
+    public boolean addBlockedChannelToStarboard(TextChannel ch, int id) {
+        if(guild_starboards.size() < id) {
+            return false;
+        }
+        if(guild_starboards.get(guild_starboards.keySet().toArray(new String[] {})[id]).addBlockedChannel(ch)) {
+            saveAsync();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeBlockedChannelToStarboard(TextChannel ch, int id) {
+        if(guild_starboards.size() < id) {
+            return false;
+        }
+        if(guild_starboards.get(guild_starboards.keySet().toArray(new String[] {})[id]).removeBlockedChannel(ch)) {
+            saveAsync();
+            return true;
+        }
+        return false;
+    }
+
+    public void changeStarboardAmount(int id, int amount) {
+        if(guild_starboards.size() < id) {
+            return;
+        }
+        guild_starboards.get(guild_starboards.keySet().toArray(new String[] {})[id]).setAmount(amount);
+        saveAsync();
+    }
+
+    public StarboardProfile getStarboardById(int id) {
+        return guild_starboards.get(guild_starboards.keySet().toArray(new String[] {})[id]);
     }
 
     @Override

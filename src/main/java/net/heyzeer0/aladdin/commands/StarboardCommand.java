@@ -21,8 +21,8 @@ import java.util.HashMap;
  */
 public class StarboardCommand implements CommandExecutor {
 
-    @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"criar/remover/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
-            usage = "a!starboard criar 3 #starboard\na!starboard remover 0\na!starboard list")
+    @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"criar/config/remover/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
+            usage = "a!starboard criar 3 #starboard\na!starboard config 0 info\na!starboard config 0 amount 3\na!starboard config 0 ignorechannel #testes\na!starboard remover 0\na!starboard list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("criar")) {
             if(args.getSize() < 3) {
@@ -52,6 +52,94 @@ public class StarboardCommand implements CommandExecutor {
 
             }catch (Exception ex) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, a quantidade inserida é invalida");
+            }
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
+
+        if(args.get(0).equalsIgnoreCase("config")) {
+            if(args.getSize() < 3) {
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "amount/ignorechannel/info");
+            }
+
+            try{
+                Integer id = Integer.valueOf(args.get(1));
+
+                if(id < 0) {
+                    e.sendMessage(EmojiList.WORRIED + " Oops, o número precisa ser maior ou igual a zero");
+                    return new CommandResult(CommandResultEnum.SUCCESS);
+                }
+
+                if(e.getGuildProfile().getStarboards().size() < id) {
+                    e.sendMessage(EmojiList.WORRIED + " Oops, a starboard com a id inserida não existe");
+                    return new CommandResult(CommandResultEnum.SUCCESS);
+                }
+
+                if(args.get(2).equalsIgnoreCase("info")) {
+                    StarboardProfile pf = e.getGuildProfile().getStarboardById(id);
+
+                    Paginator ph = new Paginator(e, ":tools: Configurações da starboard " + id);
+                    ph.addPage("Emoji: " + pf.getEmote().split("\\|")[0] + "\nQuantidade necessária: " + pf.getAmount() + "\n Mensages: " + pf.getMessages().size());
+
+                    String x = "";
+                    for(String k : pf.getBlocked_channels().keySet()) {
+                        x = x + "#" + pf.getBlocked_channels().get(k) + " (" + k + ")\n";
+                    }
+
+                    ph.addPage(x);
+                    ph.start();
+                    return new CommandResult(CommandResultEnum.SUCCESS);
+                }
+
+                if(args.get(2).equalsIgnoreCase("amount")) {
+                    if(args.getSize() < 4) {
+                        return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "amount", "quantidade");
+                    }
+
+                    try{
+
+                        Integer amount = Integer.valueOf(args.get(3));
+
+                        if(amount <= 0) {
+                            e.sendMessage(EmojiList.WORRIED + " Oops, o valor inserido é invalido");
+                            return new CommandResult(CommandResultEnum.SUCCESS);
+                        }
+
+                        e.getGuildProfile().changeStarboardAmount(id, amount);
+                        e.sendMessage(EmojiList.CORRECT + " Você alterou a quantidade necessária de emojis da starboard ``" + id + "`` para ``" + amount + "``");
+                    }catch (Exception ex) {
+                        e.sendMessage(EmojiList.WORRIED + " Oops, o valor inserido é invalido");
+                    }
+
+                    return new CommandResult(CommandResultEnum.SUCCESS);
+                }
+
+                if(args.get(2).equalsIgnoreCase("ignorechannel")) {
+                    if(args.getSize() < 4) {
+                        return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "ignorechannel", "#canal");
+                    }
+
+                    if(e.getMessage().getMentionedChannels().size() <= 0) {
+                        e.sendMessage(EmojiList.WORRIED + " Oops, você esqueceu de mencionar um canal.");
+                        return new CommandResult(CommandResultEnum.SUCCESS);
+                    }
+
+                    if(e.getGuildProfile().isBlockedChannel(id, e.getMessage().getMentionedChannels().get(0))) {
+                        e.getGuildProfile().removeBlockedChannelToStarboard(e.getMessage().getMentionedChannels().get(0), id);
+
+                        e.sendMessage(EmojiList.CORRECT + " Você deixou de ignorar com sucesso o canal " + e.getMessage().getMentionedChannels().get(0).getAsMention() + " da starboard ``" + id + "``");
+                    }else{
+                        e.getGuildProfile().addBlockedChannelToStarboard(e.getMessage().getMentionedChannels().get(0), id);
+                        e.sendMessage(EmojiList.CORRECT + " Você ignorou com sucesso o canal " + e.getMessage().getMentionedChannels().get(0).getAsMention() + " da starboard ``" + id + "``");
+                    }
+
+                    return new CommandResult(CommandResultEnum.SUCCESS);
+                }
+
+
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "amount/ignorechannel");
+            }catch (Exception ex) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, a id inserida é invalida");
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);
