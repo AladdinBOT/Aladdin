@@ -59,7 +59,7 @@ public class StarboardCommand implements CommandExecutor {
 
         if(args.get(0).equalsIgnoreCase("config")) {
             if(args.getSize() < 3) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "amount/ignorechannel/info");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "setamount/ignorechannel/info");
             }
 
             try{
