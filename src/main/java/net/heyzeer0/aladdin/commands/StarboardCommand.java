@@ -70,7 +70,7 @@ public class StarboardCommand implements CommandExecutor {
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
-                if(e.getGuildProfile().getStarboards().size() < id) {
+                if(e.getGuildProfile().getGuild_starboards().size() < id) {
                     e.sendMessage(EmojiList.WORRIED + " Oops, a starboard com a id inserida não existe");
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
