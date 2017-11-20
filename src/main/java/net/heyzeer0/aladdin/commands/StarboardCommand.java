@@ -79,7 +79,7 @@ public class StarboardCommand implements CommandExecutor {
                     StarboardProfile pf = e.getGuildProfile().getStarboardById(id);
 
                     Paginator ph = new Paginator(e, ":tools: Configurações da starboard " + id);
-                    ph.addPage("Emoji: " + pf.getEmote().split("\\|")[0] + "\nQuantidade necessária: " + pf.getAmount() + "\n Mensages: " + pf.getMessages().size());
+                    ph.addPage("Emoji: " + pf.getEmote().split("\\|")[0] + "\nQuantidade necessária: " + pf.getAmount() + "\nMensages: " + pf.getMessages().size());
 
                     String x = "Canais Ingorados:\n";
 
@@ -90,7 +90,7 @@ public class StarboardCommand implements CommandExecutor {
 
                         ph.addPage(x);
                     }else{
-                        ph.addPage("Não há canais a serem ignorados\npara adicionar utilize " + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard config " + id + " ignorechannel #canal");
+                        ph.addPage("Não há canais a serem ignorados para adicionar utilize \n" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard config " + id + " ignorechannel #canal");
                     }
 
                     ph.start();
