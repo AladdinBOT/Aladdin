@@ -9,7 +9,6 @@ import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.MainConfig;
-import net.heyzeer0.aladdin.database.entities.profiles.FStarboardProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.LogProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
@@ -58,18 +57,17 @@ public class GuildProfile implements ManagedObject {
     HashMap<String, CustomCommand> commands = new HashMap<>();
 
     //Starboards
-    HashMap<String, FStarboardProfile> starboards = new HashMap<>();
     HashMap<String, StarboardProfile> guild_starboards = new HashMap<>();
 
     //Log
     LogProfile guild_log;
 
     public GuildProfile(Guild u) {
-        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null));
+        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null));
     }
 
-    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "starboards", "guild_starboards", "guild_log"})
-    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, FStarboardProfile> starboards, HashMap<String, StarboardProfile> guild_starboards, LogProfile guild_log) {
+    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "guild_starboards", "guild_log"})
+    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> guild_starboards, LogProfile guild_log) {
         this.id = id;
         this.ownerId = ownerId;
         this.configs = configs;
@@ -77,18 +75,8 @@ public class GuildProfile implements ManagedObject {
         this.user_group = user_group;
         this.user_overrides = user_overrides;
         this.commands = commands;
-        this.starboards = starboards;
         this.guild_starboards = guild_starboards;
         this.guild_log = guild_log;
-
-        if(this.starboards != null && this.starboards.size() >= 0) {
-            for(String st : this.starboards.keySet()) {
-                this.guild_starboards.put(st, new StarboardProfile(this.starboards.get(st)));
-            }
-
-            this.starboards = new HashMap<>();
-            saveAsync();
-        }
 
         if(this.guild_log == null) { this.guild_log = new LogProfile(null); }
     }
