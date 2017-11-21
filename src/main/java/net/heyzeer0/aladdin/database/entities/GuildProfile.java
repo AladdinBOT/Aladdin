@@ -403,20 +403,16 @@ public class GuildProfile implements ManagedObject {
 
     public void checkStarboardAdd(MessageReactionAddEvent e) {
         if(guild_starboards == null) {
-            System.out.println("null");
             guild_starboards = new HashMap<>();
             saveAsync();
             return;
         }
         if(guild_starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
-            System.out.println("contnem");
             try{
                 if(guild_starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addReaction(e)) {
-                    System.out.println("adicionou");
                     saveAsync();
                 }
             }catch (InvalidObjectException ex) {
-                System.out.println("invnalido " + ex.getMessage());
                 guild_starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
@@ -425,18 +421,14 @@ public class GuildProfile implements ManagedObject {
 
     public void checkStarboardRemove(MessageReactionRemoveEvent e) {
         if(guild_starboards == null) {
-            System.out.println("null");
             guild_starboards = new HashMap<>();
         }
         if(guild_starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
-            System.out.println("contnem");
             try{
                 if(guild_starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeReaction(e)) {
-                    System.out.println("removeu");
                     saveAsync();
                 }
             }catch (InvalidObjectException ex) {
-                System.out.println("invnalido " + ex.getMessage());
                 guild_starboards.remove(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId());
                 saveAsync();
             }
