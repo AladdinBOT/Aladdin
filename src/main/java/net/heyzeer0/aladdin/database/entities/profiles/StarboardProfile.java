@@ -39,10 +39,6 @@ public class StarboardProfile {
     HashMap<String, String> messages = new HashMap<>();
     HashMap<String, String> blocked_channels = new HashMap<>();
 
-    public StarboardProfile(FStarboardProfile old) {
-        this(old.getEmote(), old.getAmount(), old.getChannel_id(), old.getMessages(), new HashMap<>());
-    }
-
     public StarboardProfile(String emote, int amount, String channel_id) {
         this(emote, amount, channel_id, new HashMap<>(), new HashMap<>());
     }
