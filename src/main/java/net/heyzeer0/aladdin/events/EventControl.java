@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.core.events.guild.update.GuildUpdateOwnerEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
@@ -61,6 +62,10 @@ public class EventControl implements EventListener {
                 return;
             }
             GuildListener.onMemberLeave((GuildMemberLeaveEvent)e);
+            return;
+        }
+        if(e instanceof GuildUpdateOwnerEvent) {
+            GuildListener.onOwnerUpdate((GuildUpdateOwnerEvent)e);
             return;
         }
         if(e instanceof GuildVoiceJoinEvent) {

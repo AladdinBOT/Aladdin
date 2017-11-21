@@ -371,6 +371,11 @@ public class GuildProfile implements ManagedObject {
         saveAsync();
     }
 
+    public void updateGuildOwner(String id) {
+        this.ownerId = id;
+        saveAsync();
+    }
+
     public boolean createStarboard(String emoji, int amount, String channel_id) {
         if(guild_starboards.containsKey(emoji)) {
             return false;

@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.core.events.guild.update.GuildUpdateOwnerEvent;
 import net.heyzeer0.aladdin.Main;
 
 import java.awt.*;
@@ -45,6 +46,10 @@ public class GuildListener {
 
     public static void onMemberLeave(GuildMemberLeaveEvent e) {
         Main.getDatabase().getGuildProfile(e.getGuild()).cleanUserData(e.getMember().getUser());
+    }
+
+    public static void onOwnerUpdate(GuildUpdateOwnerEvent e) {
+        Main.getDatabase().getGuildProfile(e.getGuild()).updateGuildOwner(e.getGuild().getOwner().getUser().getId());
     }
 
 }
