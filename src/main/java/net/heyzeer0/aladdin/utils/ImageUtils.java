@@ -28,7 +28,7 @@ public class ImageUtils {
         System.setProperty("http.agent", "AladdinBOT");
         URL input = new URL(url);
         if (input == null) {
-            throw new IllegalArgumentException("input == null!");
+            return null;
         }
 
         URLConnection cnc = input.openConnection();
