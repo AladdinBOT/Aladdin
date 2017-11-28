@@ -18,8 +18,8 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class ConfigCommand implements CommandExecutor {
 
-    @Command(command = "config", description = "Altere as configurações de sua guilda", parameters = {"list/info/set"}, aliasses = {"cfg"}, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
-            usage = "a!config list\na!config info prefix\na!config set prefix !!")
+    @Command(command = "config", description = "Altere as configurações de sua guilda", parameters = {"list/set"}, aliasses = {"cfg"}, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
+            usage = "a!config list\na!config set prefix !!")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
         if(args.get(0).equalsIgnoreCase("list")) {
@@ -34,20 +34,6 @@ public class ConfigCommand implements CommandExecutor {
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
 
-        if(args.get(0).equalsIgnoreCase("info")) {
-            if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "info", "nome");
-            }
-            try{
-                GuildConfig cfg = GuildConfig.valueOf(args.get(1).toUpperCase());
-
-                e.sendMessage(EmojiList.CORRECT + " A configuração ``" + cfg.toString() + "`` possui a seguinte descrição ``" + cfg.getDescription() + "``");
-            }catch (Exception ex) {
-                e.sendMessage(EmojiList.BEGINNER + " O nome inserido é invalido. ");
-            }
-
-            return new CommandResult((CommandResultEnum.SUCCESS));
-        }
         if(args.get(0).equalsIgnoreCase("set")) {
             if(args.getSize() < 3) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "set", "nome", "valor");
