@@ -301,13 +301,4 @@ public class Utils {
         return gp;
     }
 
-    public static ArrayList<String> getTest() {
-        ArrayList<String> ata = new ArrayList<>();
-
-        ata.add("puta");
-        ata.add("q pariu em");
-
-        return ata;
-    }
-
 }
