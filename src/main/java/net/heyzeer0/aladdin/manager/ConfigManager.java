@@ -5,7 +5,7 @@ import net.heyzeer0.aladdin.configs.yaml.file.YamlConfiguration;
 import net.heyzeer0.aladdin.interfaces.annotation.YamlConfig;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.lang.reflect.Field;
 
 /**
@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  */
 public class ConfigManager {
 
-    public static void lockAndLoad(Class<?> x) throws IllegalAccessException, IOException {
+    public static void lockAndLoad(Class<?> x) throws Exception {
         YamlConfig ann = x.getAnnotation(YamlConfig.class);
         if(ann != null) {
             if(!Main.getDataFolder().exists()) {
@@ -47,9 +47,7 @@ public class ConfigManager {
             if(newconfig) {
                 for(Field fd : x.getFields()) {
                     Object obj = fd.get(null);
-                    if(obj.getClass() == String.class) {
-                        config.set(fd.getName(), obj);
-                    }
+                    config.set(fd.getName(), obj);
                 }
                 config.save(config_file);
                 return;
@@ -62,20 +60,22 @@ public class ConfigManager {
                     config.set(fd.getName(), fd.get(null));
                     save = true;
                 }
-                if(fd.get(null).getClass() == String.class) {
+                Object j = config.get(fd.getName());
+
+                if(fd.get(null).getClass() == j.getClass()) {
+                    fd.set(null, j);
+                }else if(fd.get(null).getClass() == String.class){
                     fd.set(null, config.getString(fd.getName()));
+                }else{
+                    throw new InvalidObjectException("Config value " + fd.getName() + " has an invalid object at " + (ann.folder().equalsIgnoreCase("none") ? ann.name() : ann.folder() + "/" + ann.name()) + ".yml");
                 }
-                if(fd.get(null).getClass() == int.class) {
-                    fd.set(null, config.getInt(fd.getName()));
-                }
-                if(fd.get(null).getClass() == Integer.class) {
-                    fd.set(null, config.getInt(fd.getName()));
-                }
+
             }
             if(save) {
                 config.save(config_file);
             }
         }
+
     }
 
 }

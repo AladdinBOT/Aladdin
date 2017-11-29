@@ -41,6 +41,9 @@ public class Main {
 
     public static void main(String args[]) {
         try{
+
+            long configs = System.currentTimeMillis();
+
             ConfigManager.lockAndLoad(MainConfig.class);
             ConfigManager.lockAndLoad(ApiKeysConfig.class);
 
@@ -52,6 +55,8 @@ public class Main {
                 logger.warn("Para iniciar o bot você precisa definir a configuração da database.");
                 return;
             }
+
+            logger.info("Configs iniciadas em " + (System.currentTimeMillis() - configs) + "ms");
 
             long shard = System.currentTimeMillis();
 
