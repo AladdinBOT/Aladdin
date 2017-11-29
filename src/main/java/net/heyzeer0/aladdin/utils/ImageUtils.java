@@ -38,7 +38,7 @@ public class ImageUtils {
         InputStream istream = null;
         try {
             istream = cnc.getInputStream();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) { return null; }
         BufferedImage bi = ImageIO.read(istream);
         return bi;
     }

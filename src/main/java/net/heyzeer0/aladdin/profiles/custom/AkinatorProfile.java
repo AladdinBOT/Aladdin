@@ -81,7 +81,7 @@ public class AkinatorProfile {
 
         BufferedImage inputImage = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "akinator_guess.png")));
         BufferedImage tempImage = new BufferedImage(inputImage.getWidth(),inputImage.getHeight(),BufferedImage.TYPE_INT_ARGB);
-        BufferedImage guessImage = ImageUtils.scale(ImageUtils.getImageFromUrl(guess.getImgPath()), 300, 300);
+        BufferedImage img = ImageUtils.getImageFromUrl(guess.getImgPath());
 
 
         Graphics g = tempImage.createGraphics();
@@ -90,7 +90,11 @@ public class AkinatorProfile {
         g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "Roboto-Thin.ttf")).deriveFont(25f));
         g.drawString(guess.getName(), 100, 85);
 
-        g.drawImage(guessImage, 120, 100, null);
+        if(img != null) {
+            BufferedImage guessImage = ImageUtils.scale(img, 300, 300);
+            g.drawImage(guessImage, 120, 100, null);
+        }
+
 
         g.dispose();
 

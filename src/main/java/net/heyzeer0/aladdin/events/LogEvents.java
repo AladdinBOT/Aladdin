@@ -125,11 +125,21 @@ public class LogEvents implements EventListener {
                         BufferedImage before;
                         try{
                             before = ImageUtils.getImageFromUrl(ev.getPreviousAvatarUrl().replace("jpg", "png"));
+
                         }catch (Exception ex) {
                             before = ImageUtils.getImageFromUrl(ev.getPreviousAvatarUrl());
                         }
 
+                        if(before == null) {
+                            return;
+                        }
+
                         BufferedImage actual = ImageUtils.getImageFromUrl(ev.getUser().getEffectiveAvatarUrl());
+
+
+                        if(actual == null) {
+                            return;
+                        }
 
                         Graphics g = inputImage.createGraphics();
                         g.drawImage(inputImage,0,0,null);
