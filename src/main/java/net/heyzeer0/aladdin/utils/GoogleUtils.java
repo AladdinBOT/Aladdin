@@ -60,7 +60,7 @@ public class GoogleUtils {
         try {
 
             Elements links = Jsoup.connect(
-                    String.format("http://www.google.com/search?q=%s", URLEncoder.encode(titulo, StandardCharsets.UTF_8.displayName())))
+                    String.format("http://www.google.com/search?q=%s&safe=active", URLEncoder.encode(titulo, StandardCharsets.UTF_8.displayName())))
                     .userAgent("Aladdin-BOT").get().select(".g>.r>a");
 
             for (Element link : links) {
