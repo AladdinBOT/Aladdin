@@ -98,6 +98,7 @@ public class Main {
             CommandManager.registerCommand(new PremiumCommand());
             CommandManager.registerCommand(new ReminderCommand());
             CommandManager.registerCommand(new StarboardCommand());
+            CommandManager.registerCommand(new SteamCommand());
             CommandManager.registerCommand(new UpvoteCommand());
             CommandManager.registerCommand(new UserCommand());
             CommandManager.registerCommand(new WarframeCommand());

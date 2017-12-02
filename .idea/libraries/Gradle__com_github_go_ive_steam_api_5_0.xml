@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.go-ive:steam-api:5.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.go-ive/steam-api/5.0/e27ae0a730d67eca2f98e66c2f96625a7bc17da3/steam-api-5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.go-ive/steam-api/5.0/a138375c5a114c786ffe549b07960efb7f1cef1e/steam-api-5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
