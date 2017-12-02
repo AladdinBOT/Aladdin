@@ -63,11 +63,11 @@ public class SteamCommand implements CommandExecutor {
             String plataform = "";
 
             if(app.isAvailableForWindows())
-                plataform = plataform + "<:windows:386493142582689793> ";
+                plataform = plataform + "<:windows:386519185515216907> ";
             if(app.isAvailableForMac())
-                plataform = plataform + "<:mac:386492925963403265> ";
+                plataform = plataform + "<:mac:386519189290221568> ";
             if(app.isAvailableForLinux())
-                plataform = plataform + "<:linux:386492926739480577> ";
+                plataform = plataform + "<:linux:386519188207960064> ";
 
 
             EmbedBuilder b = new EmbedBuilder();

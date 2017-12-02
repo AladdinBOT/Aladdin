@@ -15,7 +15,7 @@ import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
  * Created by HeyZeer0 on 14/11/2017.
  * Copyright © HeyZeer0 - 2016
  */
-public class    GiveawayCommand implements CommandExecutor {
+public class GiveawayCommand implements CommandExecutor {
 
     @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"criar"}, type = CommandType.MISCELLANEOUS,
             usage = "a!giveaway criar 1h 1 Boné dahora\n", isAllowedToDefault = false)
