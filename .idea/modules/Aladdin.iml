@@ -33,7 +33,7 @@
     <orderEntry type="library" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_16" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.natanbc:discordbots-api:1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.natanbc:discordbots-api:1.4.1" level="project" />
     <orderEntry type="library" name="Gradle: com.github.go-ive:steam-api:5.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />

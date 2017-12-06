@@ -69,7 +69,6 @@ public class SteamCommand implements CommandExecutor {
             if(app.isAvailableForLinux())
                 plataform = plataform + "<:linux:386519188207960064> ";
 
-
             EmbedBuilder b = new EmbedBuilder();
             b.setImage(app.getHeaderImage());
             b.setTitle("<:steam:386492331794235432> " + app.getName() + " " + plataform + (app.getRequiredAge() >= 18 ? " | <:18:386500850597494794>" : ""), app.getWebsite());

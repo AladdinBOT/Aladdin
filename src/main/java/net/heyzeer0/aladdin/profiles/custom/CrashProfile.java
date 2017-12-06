@@ -64,22 +64,22 @@ public class CrashProfile {
         }catch (Exception e) {}finally {file.delete();}
 
         if(finallines.toLowerCase().contains("pixel format not accelerated")) {
-            auto_solve = "Os drivers da sua placa de vídeo podem estar desatualizados, atualize-os e tente novamente, caso não funcione sua placa de vídeo não possui suporte ao OpenGL requisitado.";
+            auto_solve = "Os drivers da sua placa de vídeo podem estar desatualizados. Atualize-os e tente novamente — caso não funcione, sua placa de vídeo não possui suporte ao OpenGL requisitado.";
         }
         if(finallines.toLowerCase().contains("already tesselating!")) {
-            auto_solve = "Este erro ocorre quando algo sobrepoem a renderização de outra coisa, normalmente não é necessário fazer nada apenas reabrir seu jogo. Caso o problema persista contate moderadores.";
+            auto_solve = "Este erro ocorre quando algo sobrepõe uma renderização. Normalmente não é necessário fazer nada, apenas reabrir seu jogo. Caso o problema persista, contate os moderadores.";
         }
         if(finallines.toLowerCase().contains("could not get provider type for dimension")) {
-            auto_solve = "Você encontra-se em uma dimensão invalida, para resolver peça a um administrador para te mover ao spawn.";
+            auto_solve = "Você encontra-se em uma dimensão inválida.  Para resolver, peça para um administrador te mover ao spawn.";
         }
         if(finallines.toLowerCase().contains("outofmemoryerror")) {
-            auto_solve = "Seu jogo possui pouca memória alocada (" + memory + "), aumente essa quantidade e seu problema sera resolvido.";
+            auto_solve = "Seu jogo possui pouca memória alocada (" + memory + "). Aumente essa quantidade e seu problema será resolvido.";
         }
         if(finallines.toLowerCase().contains("kihira.foxlib.client.TextureHelper$.getPlayerSkinAsBufferedImage".toLowerCase())) {
-            auto_solve = "Este crash ainda não possui nenhuma solução viável, é causado pelo foxlib e suas falhas são relacionadas a tentar pegar a skin do jogador, talvez relacionado a jogadores piratas.";
+            auto_solve = "Este crash ainda não possui nenhuma solução viável. É causado pelo foxlib, e suas falhas são relacionadas a tentar pegar a skin do jogador (talvez relacionado a jogadores piratas).";
         }
         if(finallines.toLowerCase().contains("IndexOutOfBoundsException".toLowerCase())) {
-            auto_solve = "Este crash esta relacionado a cliques em slots invalidos, existem diversas causas geralmente resolvido só de abrir o jogo novamente.";
+            auto_solve = "Este crash está relacionado a cliques em slots inválidos. Existem diversas causas, mas é geralmente resolvido só de abrir o jogo novamente.";
         }
 
 

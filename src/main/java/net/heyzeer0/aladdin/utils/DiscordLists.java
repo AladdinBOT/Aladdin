@@ -39,7 +39,7 @@ public class DiscordLists {
                 payload[i] = shards[i].getJDA().getGuilds().size();
             }
             try {
-                discordBots.postStats(shards[0].getJDA().getSelfUser().getIdLong(), payload);
+                discordBots.postStats(payload);
             } catch(PostingException e) {
                 Main.getLogger().warn("An error ocurred while trying to post status to discordbots.org");
                 e.printStackTrace();
@@ -51,7 +51,7 @@ public class DiscordLists {
         UpvoteCommand.detection_time = System.currentTimeMillis();
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             List<String> upvoters = new ArrayList<>();
-            for(long id : discordBots.getUpvoterIds(Main.getShard(0).getJDA().getSelfUser().getIdLong())) {
+            for(long id : discordBots.getUpvoterIds()) {
                 upvoters.add(id + "");
                 if(!Main.getDatabase().getServer().isUserUpvoted(id + "")) {
                     Main.getDatabase().getUserProfile(id + "").activateTrialPremium();
