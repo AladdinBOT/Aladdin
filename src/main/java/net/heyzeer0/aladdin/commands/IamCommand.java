@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Role;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
@@ -25,6 +26,11 @@ public class IamCommand implements CommandExecutor {
     @Command(command = "iam", description = "Permite que membros assumam cargos por conta própria", extra_perm = {"manage"}, parameters = {"role/list/create/addrole/remrole/delete"}, type = CommandType.ADMNISTRATIVE,
             usage = "a!iam nsfw\na!iam create nsfw\na!iam addrole nsfw NSFW\na!iam remrole nsfw NSFW\na!iam delete nsfw\na!iam list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+
+        if(!e.getGuild().getMemberById(e.getJDA().getSelfUser().getId()).hasPermission(Permission.MANAGE_PERMISSIONS)) {
+            e.sendMessage(EmojiList.WORRIED + " Oops, para executar este comando preciso da permissão de controle de cargos.");
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
 
         if(args.get(0).equalsIgnoreCase("create")) {
             if(!e.hasPermission("command.iam.manage")) {
