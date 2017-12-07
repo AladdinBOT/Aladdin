@@ -10,8 +10,10 @@ import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
+import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -89,8 +91,8 @@ public class IamCommand implements CommandExecutor {
 
             if(e.getMessage().getMentionedRoles().size() >= 1) {
                 role = e.getMessage().getMentionedRoles().get(0);
-            }else if (e.getGuild().getRolesByName(args.getCompleteAfter(2), false).size() >= 1){
-                role = e.getGuild().getRolesByName(args.getCompleteAfter(2), false).get(0);
+            }else if (e.getGuild().getRolesByName(args.getCompleteAfter(2), true).size() >= 1){
+                role = e.getGuild().getRolesByName(args.getCompleteAfter(2), true).get(0);
             }else if (e.getGuild().getRoleById(args.get(2)) != null) {
                 role = e.getGuild().getRoleById(args.get(2));
             }
@@ -158,6 +160,33 @@ public class IamCommand implements CommandExecutor {
 
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
+        if(args.get(0).equalsIgnoreCase("list")) {
+            if(e.getGuildProfile().getIam_profiles().size() <= 0) {
+                e.sendMessage(EmojiList.WORRIED + " Oops, esta guilda não possui nenhum cargo publico.");
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
+
+            Paginator pg = new Paginator(e, ":wrench: Listando os cargos publicos da guilda");
+
+            HashMap<String, ArrayList<String>> iams = e.getGuildProfile().getIam_profiles();
+
+
+            for(String k : iams.keySet()) {
+                String roles = "";
+                for(String id : iams.get(k)) {
+                    Role r = e.getGuild().getRoleById(id);
+                    if(r != null) {
+                        roles = roles + r.getName() + ", ";
+                    }
+                }
+
+                pg.addPage("Nome: " + k + "\nCargos: " + roles.substring(0, roles.length() - 1).replaceAll("([,]$)", "."));
+            }
+
+            pg.start();
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
 
         if(e.getGuildProfile().iamExists(args.getCompleteAfter(0))) {
             List<Role> roles = new ArrayList<>();
@@ -183,17 +212,16 @@ public class IamCommand implements CommandExecutor {
 
             for (Role rl : roles) {
                 if(e.getMember().getRoles().contains(rl)) {
-                    e.getGuild().getController().removeRolesFromMember(e.getMember(), rl).queue();
                     remove = true;
-                }else{
-                    e.getGuild().getController().addRolesToMember(e.getMember(), rl).queue();
                 }
             }
 
             if(remove) {
-                e.sendMessage(EmojiList.CORRECT + " Agora você não faz parte do iam ``" + args.getCompleteAfter(0) + "``");
+                e.getGuild().getController().removeRolesFromMember(e.getMember(), roles).queue();
+                e.sendMessage(EmojiList.CORRECT + " Agora você não faz parte de ``" + args.getCompleteAfter(0) + "``");
             }else{
-                e.sendMessage(EmojiList.CORRECT + " Agora você faz parte do iam ``" + args.getCompleteAfter(0) + "``");
+                e.getGuild().getController().addRolesToMember(e.getMember(), roles).queue();
+                e.sendMessage(EmojiList.CORRECT + " Agora você faz parte de ``" + args.getCompleteAfter(0) + "``");
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);
