@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Role;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
@@ -13,6 +14,7 @@ import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -172,7 +174,11 @@ public class IamCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            Paginator pg = new Paginator(e, ":wrench: Listando os cargos publicos da guilda");
+            EmbedBuilder b = new EmbedBuilder();
+            b.setTitle(":notepad_spiral: Cargos publicos disponíveis");
+            b.setColor(Color.GREEN);
+            b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+            b.setDescription("Para entrar em um cargo utilize ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "iam nomedocargo``");
 
             HashMap<String, ArrayList<String>> iams = e.getGuildProfile().getIam_profiles();
 
@@ -180,16 +186,13 @@ public class IamCommand implements CommandExecutor {
             for(String k : iams.keySet()) {
                 String roles = "";
                 for(String id : iams.get(k)) {
-                    Role r = e.getGuild().getRoleById(id);
-                    if(r != null) {
-                        roles = roles + r.getName() + ", ";
-                    }
+                    roles = roles + "<@" + id + "> ";
                 }
 
-                pg.addPage("Nome: " + k + "\nCargos: " + roles.substring(0, roles.length() - 1).replaceAll("([,]$)", "."));
+                b.addField(k, roles, false);
             }
 
-            pg.start();
+            e.sendMessage(b);
 
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
