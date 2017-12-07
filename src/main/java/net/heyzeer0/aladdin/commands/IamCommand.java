@@ -189,7 +189,7 @@ public class IamCommand implements CommandExecutor {
                     roles = roles + "<@&" + id + "> ";
                 }
 
-                b.addField("Cargos para **" + k + "**", roles, false);
+                b.addField(k, roles, false);
             }
 
             e.sendMessage(b);
