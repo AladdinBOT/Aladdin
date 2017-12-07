@@ -27,7 +27,7 @@ public class IamCommand implements CommandExecutor {
             usage = "a!iam nsfw\na!iam create nsfw\na!iam addrole nsfw NSFW\na!iam remrole nsfw NSFW\na!iam delete nsfw\na!iam list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
-        if(!e.getGuild().getMemberById(e.getJDA().getSelfUser().getId()).hasPermission(Permission.MANAGE_PERMISSIONS)) {
+        if(!e.getGuild().getMemberById(e.getJDA().getSelfUser().getId()).hasPermission(Permission.MANAGE_ROLES)) {
             e.sendMessage(EmojiList.WORRIED + " Oops, para executar este comando preciso da permissão de controle de cargos.");
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
