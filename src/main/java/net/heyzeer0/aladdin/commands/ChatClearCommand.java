@@ -24,7 +24,7 @@ public class ChatClearCommand implements CommandExecutor {
 
     public static HashMap<String, Long> last_deletion = new HashMap<>();
 
-    @Command(command = "chatclear", description = "Limpe as mensagens do chat", parameters = {"quantidade"}, aliasses = {"clearchat", "cc"}, sendTyping = false, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
+    @Command(command = "chatclear", description = "Limpe as mensagens do chat", parameters = {"quantidade ou -bots"}, aliasses = {"clearchat", "cc"}, sendTyping = false, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!chatclear 10\na!chatclear -bots")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("-bots")) {

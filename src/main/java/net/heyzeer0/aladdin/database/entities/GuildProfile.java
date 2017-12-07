@@ -28,7 +28,6 @@ import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import static com.rethinkdb.RethinkDB.r;
 
@@ -62,12 +61,15 @@ public class GuildProfile implements ManagedObject {
     //Log
     LogProfile guild_log;
 
+    //Iam
+    HashMap<String, ArrayList<String>> iam_profiles = new HashMap<>();
+
     public GuildProfile(Guild u) {
-        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null));
+        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null), new HashMap<>());
     }
 
-    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "guild_starboards", "guild_log"})
-    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> guild_starboards, LogProfile guild_log) {
+    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "guild_starboards", "guild_log", "iam_profiles"})
+    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> guild_starboards, LogProfile guild_log, HashMap<String, ArrayList<String>> iam_profiles) {
         this.id = id;
         this.ownerId = ownerId;
         this.configs = configs;
@@ -77,6 +79,7 @@ public class GuildProfile implements ManagedObject {
         this.commands = commands;
         this.guild_starboards = guild_starboards;
         this.guild_log = guild_log;
+        this.iam_profiles = iam_profiles;
 
         if(this.guild_log == null) { this.guild_log = new LogProfile(null); }
     }
@@ -189,6 +192,16 @@ public class GuildProfile implements ManagedObject {
     @JsonIgnore
     public boolean isLogModuleActive(LogModules module) {
         return guild_log.getLogModuleStatus(module);
+    }
+
+    @JsonIgnore
+    public List<String> getIamRoles(String iam) {
+        return iam_profiles.getOrDefault(iam, new ArrayList<>());
+    }
+
+    @JsonIgnore
+    public boolean iamExists(String iam) {
+        return iam_profiles.containsKey(iam);
     }
 
     public void sendLogMessage(Guild g, EmbedBuilder b) {
@@ -464,6 +477,42 @@ public class GuildProfile implements ManagedObject {
 
     public StarboardProfile getStarboardById(int id) {
         return guild_starboards.get(guild_starboards.keySet().toArray(new String[] {})[id]);
+    }
+
+    public boolean createIam(String name) {
+        if(iam_profiles.containsKey(name)) {
+            return false;
+        }
+        iam_profiles.put(name, new ArrayList<>());
+        saveAsync();
+        return true;
+    }
+
+    public boolean deleteIam(String name) {
+        if(!iam_profiles.containsKey(name)) {
+            return false;
+        }
+        iam_profiles.remove(name);
+        saveAsync();
+        return true;
+    }
+
+    public boolean addRoleToIam(String iam, String roleID) {
+        if(!iam_profiles.containsKey(iam) || iam_profiles.get(iam).contains(roleID)) {
+            return false;
+        }
+        iam_profiles.get(iam).add(roleID);
+        saveAsync();
+        return true;
+    }
+
+    public boolean removeRoleFromIam(String iam, String roleID) {
+        if(!iam_profiles.containsKey(iam) || !iam_profiles.get(iam).contains(roleID)) {
+            return false;
+        }
+        iam_profiles.get(iam).remove(roleID);
+        saveAsync();
+        return true;
     }
 
     @Override

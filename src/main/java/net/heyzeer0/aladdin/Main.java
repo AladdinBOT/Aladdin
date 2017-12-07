@@ -87,6 +87,7 @@ public class Main {
             CommandManager.registerCommand(new GoogleCommand());
             CommandManager.registerCommand(new GroupCommand());
             CommandManager.registerCommand(new HelpCommand());
+            CommandManager.registerCommand(new IamCommand());
             CommandManager.registerCommand(new ImageCommand());
             CommandManager.registerCommand(new InviteCommand());
             CommandManager.registerCommand(new JavaCommand());

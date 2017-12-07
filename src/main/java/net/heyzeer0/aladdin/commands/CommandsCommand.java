@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class CommandsCommand implements CommandExecutor {
 
-    @Command(command = "commands", description = "Crie comandos customizaveis", extra_perm = {"overpass"}, aliasses = {"cmds"}, parameters = {"create/delete/listargs/list/import/raw"}, type = CommandType.ADMINISTRATION,
+    @Command(command = "commands", description = "Crie comandos customizaveis", extra_perm = {"overpass"}, aliasses = {"cmds"}, parameters = {"create/delete/listargs/list/import/raw"}, type = CommandType.ADMNISTRATIVE,
             usage = "a!commands listargs\na!commands list\na!commands create ata Você é #random[feio,bonito]\na!commands import ata\na!commands delete ata\na!commands raw ata")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("listargs")) {

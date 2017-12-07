@@ -17,7 +17,7 @@ import net.heyzeer0.aladdin.profiles.utilities.Paginator;
  */
 public class LogCommand implements CommandExecutor {
 
-    @Command(command = "log", description = "Configure o log da sua guilda", parameters = {"setchannel/modulos"}, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
+    @Command(command = "log", description = "Configure o log da sua guilda", parameters = {"setchannel/modulos"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!log setchannel #log\na!log setchannel\na!log modulos ativar MESSAGE_MODULE\na!log modulos desativar MESSAGE_MODULE\na!log modulos list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("setchannel")) {

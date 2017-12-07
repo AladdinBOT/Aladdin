@@ -18,7 +18,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class ConfigCommand implements CommandExecutor {
 
-    @Command(command = "config", description = "Altere as configurações de sua guilda", parameters = {"list/set"}, aliasses = {"cfg"}, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
+    @Command(command = "config", description = "Altere as configurações de sua guilda", parameters = {"list/set"}, aliasses = {"cfg"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!config list\na!config set prefix !!")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 

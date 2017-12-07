@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class UserCommand implements CommandExecutor {
 
-    @Command(command = "user", description = "Defina grupos ou permissões a membros\n\nPermissões com ``*`` são aceitáveis, exemplo ``command.*``\nPermissões com ``-`` retirarão acesso a ela, exemplo ``-command.music``", parameters = {"setgroup/addperm/remperm/info"}, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
+    @Command(command = "user", description = "Defina grupos ou permissões a membros\n\nPermissões com ``*`` são aceitáveis, exemplo ``command.*``\nPermissões com ``-`` retirarão acesso a ela, exemplo ``-command.music``", parameters = {"setgroup/addperm/remperm/info"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!user setgroup admin\na!user addperm command.* @HeyZeer0\na!user addperm -command.music @HeyZeer0\na!user remperm command.* @HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 

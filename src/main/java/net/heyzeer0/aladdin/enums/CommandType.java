@@ -6,7 +6,7 @@ package net.heyzeer0.aladdin.enums;
  */
 public enum CommandType {
 
-    FUN("Diversão", EmojiList.COOKIE), INFORMATIVE("Informativo", EmojiList.BOOKMARK), ADMINISTRATION("Administrativo", EmojiList.LOCK), MUSIC("Musica", EmojiList.MUSIC), MISCELLANEOUS("Diversos", EmojiList.DIAMOND), BOT_ADMIN("", null);
+    FUN("Diversão", EmojiList.COOKIE), INFORMATIVE("Informativo", EmojiList.BOOKMARK), ADMNISTRATIVE("Administrativo", EmojiList.LOCK), MUSIC("Musica", EmojiList.MUSIC), MISCELLANEOUS("Diversos", EmojiList.DIAMOND), BOT_ADMIN("", null);
 
     String x;
     EmojiList e;

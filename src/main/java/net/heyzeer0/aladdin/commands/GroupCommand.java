@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class GroupCommand implements CommandExecutor {
 
 
-    @Command(command = "group", aliasses = {"gp"}, description = "Crie grupos e adicione permissões.\n\nGrupos com nome de cargos serão automaticamente conectados.\nPermissões com ``*`` são aceitáveis, exemplo ``command.*``", parameters = {"create/delete/addperm/remperm/info/list/nodes"}, type = CommandType.ADMINISTRATION, isAllowedToDefault = false,
+    @Command(command = "group", aliasses = {"gp"}, description = "Crie grupos e adicione permissões.\n\nGrupos com nome de cargos serão automaticamente conectados.\nPermissões com ``*`` são aceitáveis, exemplo ``command.*``", parameters = {"create/delete/addperm/remperm/info/list/nodes"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!group create admin\na!group delete admin\na!group addperm admin command.*\na!group remperm admin command.*\na!group info admin\na!group list\na!group nodes")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("create")) {
