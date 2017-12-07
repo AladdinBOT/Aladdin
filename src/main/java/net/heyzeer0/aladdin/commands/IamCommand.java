@@ -186,7 +186,7 @@ public class IamCommand implements CommandExecutor {
             for(String k : iams.keySet()) {
                 String roles = "";
                 for(String id : iams.get(k)) {
-                    roles = roles + "<&" + id + "> ";
+                    roles = roles + "<@&" + id + "> ";
                 }
 
                 b.addField("Cargos de " + k, roles, false);
