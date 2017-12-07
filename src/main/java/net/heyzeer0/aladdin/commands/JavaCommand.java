@@ -24,11 +24,6 @@ public class JavaCommand implements CommandExecutor {
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         String toEval = args.getComplete();
 
-        if(toEval.contains("Runtime") || toEval.contains("exit")) {
-            e.sendMessage("Vai se fuder frani");
-            return new CommandResult(CommandResultEnum.SUCCESS);
-        }
-
         if(toEval.startsWith("-cl")) {
             toEval = toEval.replace("-cl ", "");
             e.sendMessage("**Resultado**:\n```" + JavaEvaluation.eval(toEval, e) + "```");
