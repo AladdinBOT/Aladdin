@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
+import net.dv8tion.jda.core.entities.Message;
 import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
@@ -193,7 +194,6 @@ public class StarboardCommand implements CommandExecutor {
             Paginator ph = new Paginator(e, ":newspaper: Listando todas as starboads!");
 
             int pages = (starboards.size() + (10 + 1)) / 10;
-
 
             Integer actual = 0;
             Integer pactual = 1;

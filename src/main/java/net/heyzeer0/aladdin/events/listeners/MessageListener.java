@@ -27,6 +27,7 @@ public class MessageListener {
 
     public static HashMap<String, ResponseProfile> waiting_response = new HashMap<>();
     private static long cooldown_jogo = 0L;
+    public static HashMap<String, Long> star_timeout = new HashMap<>();
 
     public static void onMessage(GuildMessageReceivedEvent e) {
         if(!e.getGuild().getSelfMember().hasPermission(e.getChannel(), Permission.MESSAGE_WRITE)) {
@@ -90,7 +91,16 @@ public class MessageListener {
         if(e.getMember().getUser().isBot() || e.getMember().getUser().isFake()) {
             return;
         }
-        Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardAdd(e);
+
+        if(star_timeout.containsKey(e.getMessageId())) {
+            if(System.currentTimeMillis() - star_timeout.get(e.getMessageId()) >= 500) {
+                Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardAdd(e);
+                star_timeout.remove(e.getMessageId());
+            }
+        }else{
+            Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardAdd(e);
+            star_timeout.put(e.getMessageId(), System.currentTimeMillis());
+        }
         PaginatorManager.updatePaginator(e);
         ChooserManager.selectChooser(e);
         ReactionerManager.updateReactioner(e);
