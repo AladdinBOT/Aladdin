@@ -44,6 +44,9 @@ public class ServerProfile implements ManagedObject {
         }else{
             this.giveaways = giveaways;
         }
+
+        giveaways.remove("394493498834944000");
+        saveAsync();
     }
 
     @JsonIgnore

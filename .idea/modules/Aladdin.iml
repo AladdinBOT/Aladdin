@@ -19,7 +19,7 @@
     <orderEntry type="library" name="Gradle: commons-io:commons-io:2.5" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:20.0" level="project" />
-    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.3.1_308" level="project" />
+    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.4.0_318" level="project" />
     <orderEntry type="library" name="Gradle: com.mashape.unirest:unirest-java:1.4.9" level="project" />
     <orderEntry type="library" name="Gradle: org.reflections:reflections:0.9.10" level="project" />
     <orderEntry type="library" name="Gradle: com.rethinkdb:rethinkdb-driver:2.3.3" level="project" />
