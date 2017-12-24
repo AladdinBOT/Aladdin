@@ -72,10 +72,14 @@ public class GiveawayManager {
             }else{
                 ArrayList<String> toCleanup = new ArrayList<>();
 
+                System.out.println("starting to check ");
                 for(String id : giveways.keySet()) {
+                    System.out.println("cheking " + id);
                     GiveawayProfile g = giveways.get(id);
+                    System.out.println("generating channel for " + id);
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
+                    System.out.println("verifications" + id);
                     if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {
                         System.out.println("removendo " + id);
                         toCleanup.add(id);
