@@ -64,34 +64,21 @@ public class GiveawayManager {
             if(giveways.size() <= 0) {
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveways();
-                    System.out.println("requerindo ");
                     already_requested = true;
-                }else{
-                    System.out.println("low amount ");
                 }
             }else{
                 ArrayList<String> toCleanup = new ArrayList<>();
 
-                System.out.println("starting to check ");
                 for(String id : giveways.keySet()) {
-                    System.out.println("cheking " + id);
                     GiveawayProfile g = giveways.get(id);
-                    System.out.println("generating channel for " + id);
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
-                    System.out.println("generating message " + id);
-
-                    Message msg = ch.getMessageById(g.getMessageID()).complete();
-
-                    System.out.println("checking if it is not null" + id);
-
-                    if (ch == null || msg == null) {
-                        System.out.println("removendo " + id);
+                    if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {
                         toCleanup.add(id);
                     }else{
-                        System.out.println("100% right  " + id);
+
                         if(g.getEndTime() - System.currentTimeMillis() <= 0) {
-                            System.out.println("finalizando " + id);
+                            Message msg = ch.getMessageById(g.getMessageID()).complete();
 
                             HashMap<User, Prize> winners = new HashMap<>();
 
@@ -146,7 +133,6 @@ public class GiveawayManager {
 
                             toCleanup.add(id);
                         }else{
-                            System.out.println("atualizando " + id);
                             EmbedBuilder eb = new EmbedBuilder();
                             eb.setColor(Color.GREEN);
                             eb.setTitle(EmojiList.MONEY + " " + g.getTitle());
@@ -161,8 +147,7 @@ public class GiveawayManager {
                             eb.addField(":tada: Premios", premios, false);
                             eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), false);
 
-                            ch.getMessageById(g.getMessageID()).queue(msg2 -> msg2.editMessage(eb.build()).queue());
-                            System.out.println("atualização completa " + id);
+                            ch.getMessageById(g.getMessageID()).queue(msg -> msg.editMessage(eb.build()).queue());
                         }
                     }
                 }
