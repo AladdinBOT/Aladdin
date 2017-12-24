@@ -66,6 +66,8 @@ public class GiveawayManager {
                     giveways = Main.getDatabase().getServer().getGiveways();
                     System.out.println("requerindo ");
                     already_requested = true;
+                }else{
+                    System.out.println("low amount ");
                 }
             }else{
                 ArrayList<String> toCleanup = new ArrayList<>();
