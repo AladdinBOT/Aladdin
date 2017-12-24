@@ -79,15 +79,19 @@ public class GiveawayManager {
                     System.out.println("generating channel for " + id);
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
-                    System.out.println("verifications" + id);
-                    if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {
+                    System.out.println("generating message " + id);
+
+                    Message msg = ch.getMessageById(g.getMessageID()).complete();
+
+                    System.out.println("checking if it is not null" + id);
+
+                    if (ch == null || msg == null) {
                         System.out.println("removendo " + id);
                         toCleanup.add(id);
                     }else{
-
+                        System.out.println("100% right  " + id);
                         if(g.getEndTime() - System.currentTimeMillis() <= 0) {
                             System.out.println("finalizando " + id);
-                            Message msg = ch.getMessageById(g.getMessageID()).complete();
 
                             HashMap<User, Prize> winners = new HashMap<>();
 
@@ -157,7 +161,7 @@ public class GiveawayManager {
                             eb.addField(":tada: Premios", premios, false);
                             eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), false);
 
-                            ch.getMessageById(g.getMessageID()).queue(msg -> msg.editMessage(eb.build()).queue());
+                            ch.getMessageById(g.getMessageID()).queue(msg2 -> msg2.editMessage(eb.build()).queue());
                             System.out.println("atualização completa " + id);
                         }
                     }
