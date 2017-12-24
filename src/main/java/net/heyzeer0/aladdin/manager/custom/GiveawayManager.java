@@ -64,6 +64,7 @@ public class GiveawayManager {
             if(giveways.size() <= 0) {
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveways();
+                    System.out.println("requerindo ");
                     already_requested = true;
                 }
             }else{
@@ -74,10 +75,12 @@ public class GiveawayManager {
                     TextChannel ch = Main.getGuildById(g.getGuildID()).getTextChannelById(g.getChannelID());
 
                     if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {
+                        System.out.println("removendo " + id);
                         toCleanup.add(id);
                     }else{
 
                         if(g.getEndTime() - System.currentTimeMillis() <= 0) {
+                            System.out.println("finalizando " + id);
                             Message msg = ch.getMessageById(g.getMessageID()).complete();
 
                             HashMap<User, Prize> winners = new HashMap<>();
@@ -133,6 +136,7 @@ public class GiveawayManager {
 
                             toCleanup.add(id);
                         }else{
+                            System.out.println("atualizando " + id);
                             EmbedBuilder eb = new EmbedBuilder();
                             eb.setColor(Color.GREEN);
                             eb.setTitle(EmojiList.MONEY + " " + g.getTitle());
@@ -148,6 +152,7 @@ public class GiveawayManager {
                             eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), false);
 
                             ch.getMessageById(g.getMessageID()).queue(msg -> msg.editMessage(eb.build()).queue());
+                            System.out.println("atualização completa " + id);
                         }
                     }
                 }
