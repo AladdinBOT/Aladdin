@@ -83,7 +83,7 @@ public class GiveawayManager {
                             HashMap<User, Prize> winners = new HashMap<>();
 
                             for(MessageReaction rc : msg.getReactions()) {
-                                if(rc.getEmote().getName().equalsIgnoreCase("✅")) {
+                                if(rc.getReactionEmote().getName().equalsIgnoreCase("✅")) {
                                     List<User> usr = rc.getUsers().complete();
                                     Integer count = 0;
                                     if(usr.size() <= g.getPrizes().size()) {
