@@ -18,7 +18,7 @@ import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
 public class GiveawayCommand implements CommandExecutor {
 
     @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"criar"}, type = CommandType.MISCELLANEOUS,
-            usage = "a!giveaway criar 1h 1 Boné dahora\n", isAllowedToDefault = false)
+            usage = "a!giveaway criar", isAllowedToDefault = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("criar")) {
             if(GiveawayManager.giveways.containsKey(e.getAuthor().getId())) {
