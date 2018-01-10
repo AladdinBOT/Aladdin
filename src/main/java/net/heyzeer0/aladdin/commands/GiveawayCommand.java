@@ -17,7 +17,7 @@ import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
  */
 public class GiveawayCommand implements CommandExecutor {
 
-    @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"criar"}, type = CommandType.MISCELLANEOUS,
+    @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"criar"}, extra_perm = {"takewinner"}, type = CommandType.MISCELLANEOUS,
             usage = "a!giveaway criar", isAllowedToDefault = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("criar")) {

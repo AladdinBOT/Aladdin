@@ -83,6 +83,18 @@ public class GiveawayManager {
                             HashMap<User, Prize> winners = new HashMap<>();
 
                             for(MessageReaction rc : msg.getReactions()) {
+                                if(rc.getReactionEmote().getName().equalsIgnoreCase("⏭")) {
+                                    List<User> usr = rc.getUsers().complete();
+
+                                    for(User u : usr) {
+                                        if(!Main.getDatabase().getGuildProfile(ch.getGuild()).hasPermission(ch.getGuild().getMember(u), "command.giveaway.takewinner")) {
+                                            continue;
+                                        }
+                                        g.endNow();
+                                    }
+
+                                    continue;
+                                }
                                 if(rc.getReactionEmote().getName().equalsIgnoreCase("✅")) {
                                     List<User> usr = rc.getUsers().complete();
                                     Integer count = 0;
