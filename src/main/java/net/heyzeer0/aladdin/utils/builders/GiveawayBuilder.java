@@ -275,7 +275,7 @@ public class GiveawayBuilder {
             return;
         }
 
-        if(ev.getMessage().getContent().equalsIgnoreCase("cancelar")) {
+        if(ev.getMessage().getContentDisplay().equalsIgnoreCase("cancelar")) {
             if(phase == ActualPhase.WAITING_FOR_PRIZE_NAME || phase == ActualPhase.WAITING_FOR_PRIZE_DM) {
                 phase = ActualPhase.ADDING_PRIZE;
             }else{
@@ -299,25 +299,25 @@ public class GiveawayBuilder {
             return;
         }
         if(phase == ActualPhase.WAITING_FOR_PRIZE_DM) {
-            addPrize.setDmMessage(ev.getMessage().getRawContent());
+            addPrize.setDmMessage(ev.getMessage().getContentRaw());
             phase = ActualPhase.ADDING_PRIZE;
 
             updateMessage(ev);
             return;
         }
         if(phase == ActualPhase.WAITING_FOR_PRIZE_NAME) {
-            addPrize.setName(ev.getMessage().getRawContent());
+            addPrize.setName(ev.getMessage().getContentRaw());
             phase = ActualPhase.ADDING_PRIZE;
 
             updateMessage(ev);
             return;
         }
         if(phase == ActualPhase.WAITING_FOR_TIME) {
-            boolean minute = ev.getMessage().getContent().contains("m");
+            boolean minute = ev.getMessage().getContentDisplay().contains("m");
 
             try{
 
-                Integer value = Integer.valueOf(ev.getMessage().getContent().replace("m", "").replace("h", ""));
+                Integer value = Integer.valueOf(ev.getMessage().getContentDisplay().replace("m", "").replace("h", ""));
 
                 if(!minute && !ev.getUserProfile().isPremiumActive()) {
                     if(value > 24) {
@@ -345,7 +345,7 @@ public class GiveawayBuilder {
             return;
         }
         if(phase == ActualPhase.WAITING_FOR_TITLE) {
-            name = ev.getMessage().getRawContent();
+            name = ev.getMessage().getContentRaw();
             phase = ActualPhase.MAIN_FRAME;
 
             updateMessage(ev);

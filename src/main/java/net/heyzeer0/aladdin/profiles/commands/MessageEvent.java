@@ -109,7 +109,7 @@ public class MessageEvent {
     }
 
     public String getMessageContent() {
-        return originEvent.getMessage().getContent();
+        return originEvent.getMessage().getContentDisplay();
     }
 
     public User getAuthor() {

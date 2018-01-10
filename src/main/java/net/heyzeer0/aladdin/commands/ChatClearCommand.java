@@ -33,7 +33,7 @@ public class ChatClearCommand implements CommandExecutor {
             e.getChannel().getHistory().retrievePast(100).queue(msg -> {
                 List<Message> msgs = new ArrayList<>();
                 msg.forEach(bot -> {
-                    if(bot.getAuthor().isBot() || bot.getRawContent().startsWith(e.getGuildProfile().getConfigValue(GuildConfig.PREFIX).toString())) {
+                    if(bot.getAuthor().isBot() || bot.getContentRaw().startsWith(e.getGuildProfile().getConfigValue(GuildConfig.PREFIX).toString())) {
                         msgs.add(bot);
                     }
                 });

@@ -270,11 +270,11 @@ public class Utils {
         }
 
         for(MessageReaction rc : msg.getReactions()) {
-            if(rc.getEmote().getName().equals(emote)) {
+            if(rc.getReactionEmote().getName().equals(emote)) {
                 if(id == null) {
                     return rc;
                 }
-                if(rc.getEmote().getId().equals(id)) {
+                if(rc.getReactionEmote().getId().equals(id)) {
                     return rc;
                 }
             }

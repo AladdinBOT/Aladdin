@@ -74,7 +74,7 @@ public class LogEvents implements EventListener {
                 if(ev.getAuthor().isBot() || ev.getAuthor().isFake()) {
                     return;
                 }
-                messageCache.put(ev.getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContent(), ev.getAuthor().getName() + "#" + ev.getAuthor().getDiscriminator(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
+                messageCache.put(ev.getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContentDisplay(), ev.getAuthor().getName() + "#" + ev.getAuthor().getDiscriminator(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
                 return;
             }
             if(e instanceof GuildMessageDeleteEvent) {
@@ -107,7 +107,7 @@ public class LogEvents implements EventListener {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(ev.getAuthor().getName() + "#" + ev.getAuthor().getDiscriminator(), null, ev.getAuthor().getEffectiveAvatarUrl())
                                         .setColor(Color.YELLOW)
-                                        .setDescription("O usuário " + ev.getAuthor().getAsMention() + " alterou sua mensagem de ```" + old_message.getMessage() + "```para```" + ev.getMessage().getContent() + "```")
+                                        .setDescription("O usuário " + ev.getAuthor().getAsMention() + " alterou sua mensagem de ```" + old_message.getMessage() + "```para```" + ev.getMessage().getContentDisplay() + "```")
                                         .setFooter("ID: " + ev.getAuthor().getId() + " #" + ev.getChannel().getName(), null).setTimestamp(ev.getMessage().getEditedTime()));
                     }
                 }catch (Exception ignored) {}

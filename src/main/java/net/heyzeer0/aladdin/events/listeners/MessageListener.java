@@ -42,23 +42,23 @@ public class MessageListener {
             return;
         }
 
-        if(e.getMessage().getContent().startsWith(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString()) && e.getMessage().getContent().length() > (Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString().length() + 1)) {
-            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
+        if(e.getMessage().getContentDisplay().startsWith(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString()) && e.getMessage().getContentDisplay().length() > (Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString().length() + 1)) {
+            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
-        if(e.getMessage().getContent().startsWith(GuildConfig.PREFIX.getDefault().toString()) && e.getMessage().getContent().length() > (GuildConfig.PREFIX.getDefault().toString().length() + 1)) {
-            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
+        if(e.getMessage().getContentDisplay().startsWith(GuildConfig.PREFIX.getDefault().toString()) && e.getMessage().getContentDisplay().length() > (GuildConfig.PREFIX.getDefault().toString().length() + 1)) {
+            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
         String id = "<@" + e.getJDA().getSelfUser().getId() + ">";
-        if(e.getMessage().getRawContent().startsWith(id) && e.getMessage().getRawContent().length() > (id.length() + 1)) {
-            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
+        if(e.getMessage().getContentRaw().startsWith(id) && e.getMessage().getContentRaw().length() > (id.length() + 1)) {
+            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
 
         String id2 = "<@!" + e.getJDA().getSelfUser().getId() + ">";
-        if(e.getMessage().getRawContent().startsWith(id2) && e.getMessage().getRawContent().length() > (id2.length() + 1)) {
-            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getRawContent(), e));
+        if(e.getMessage().getContentRaw().startsWith(id2) && e.getMessage().getContentRaw().length() > (id2.length() + 1)) {
+            CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
 
@@ -66,7 +66,7 @@ public class MessageListener {
             return;
         }
 
-        if(e.getMessage().getContent().equalsIgnoreCase("sim") || e.getMessage().getContent().equalsIgnoreCase("s")) {
+        if(e.getMessage().getContentDisplay().equalsIgnoreCase("sim") || e.getMessage().getContentDisplay().equalsIgnoreCase("s")) {
             if(waiting_response.containsKey(e.getAuthor().getId())) {
                 if(waiting_response.get(e.getAuthor().getId()).getTime() >= System.currentTimeMillis()) {
                     CommandManager.handleCommand(CommandManager.parse(waiting_response.get(e.getAuthor().getId()).getCommand(), e));
@@ -78,7 +78,7 @@ public class MessageListener {
             }
         }
 
-        if(Pattern.compile("(o jogo|perdi)").matcher(e.getMessage().getContent()).find() && Boolean.valueOf(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.THE_GAME).toString())) {
+        if(Pattern.compile("(o jogo|perdi)").matcher(e.getMessage().getContentDisplay()).find() && Boolean.valueOf(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.THE_GAME).toString())) {
             if(System.currentTimeMillis() > cooldown_jogo) {
                 cooldown_jogo = System.currentTimeMillis() + 600000;
                 e.getChannel().sendMessage("Perdi!").queue();
