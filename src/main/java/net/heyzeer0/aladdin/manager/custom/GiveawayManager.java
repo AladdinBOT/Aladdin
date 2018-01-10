@@ -83,18 +83,6 @@ public class GiveawayManager {
                             HashMap<User, Prize> winners = new HashMap<>();
 
                             for(MessageReaction rc : msg.getReactions()) {
-                                if(rc.getReactionEmote().getName().equalsIgnoreCase("⏭")) {
-                                    List<User> usr = rc.getUsers().complete();
-
-                                    for(User u : usr) {
-                                        if(!Main.getDatabase().getGuildProfile(ch.getGuild()).hasPermission(ch.getGuild().getMember(u), "command.giveaway.takewinner")) {
-                                            continue;
-                                        }
-                                        g.endNow();
-                                    }
-
-                                    continue;
-                                }
                                 if(rc.getReactionEmote().getName().equalsIgnoreCase("✅")) {
                                     List<User> usr = rc.getUsers().complete();
                                     Integer count = 0;
@@ -145,6 +133,22 @@ public class GiveawayManager {
 
                             toCleanup.add(id);
                         }else{
+
+                            Message msg = ch.getMessageById(g.getMessageID()).complete();
+
+                            for(MessageReaction rc : msg.getReactions()) {
+                                if(rc.getReactionEmote().getName().equalsIgnoreCase("⏭")) {
+                                    List<User> usr = rc.getUsers().complete();
+
+                                    for(User u : usr) {
+                                        if(!Main.getDatabase().getGuildProfile(ch.getGuild()).hasPermission(ch.getGuild().getMember(u), "command.giveaway.takewinner")) {
+                                            continue;
+                                        }
+                                        g.endNow();
+                                    }
+                                }
+                            }
+
                             EmbedBuilder eb = new EmbedBuilder();
                             eb.setColor(Color.GREEN);
                             eb.setTitle(EmojiList.MONEY + " " + g.getTitle());
@@ -159,7 +163,7 @@ public class GiveawayManager {
                             eb.addField(":tada: Premios", premios, false);
                             eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), false);
 
-                            ch.getMessageById(g.getMessageID()).queue(msg -> msg.editMessage(eb.build()).queue());
+                            msg.editMessage(eb.build()).queue();
                         }
                     }
                 }
