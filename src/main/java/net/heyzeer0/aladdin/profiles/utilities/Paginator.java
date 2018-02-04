@@ -81,7 +81,7 @@ public class Paginator {
 
     public void changePage(MessageReactionAddEvent e) {
         if(e.getMessageId().equals(actual_id) && e.getMember().getUser().getId().equals(owner)) {
-            if(e.getReaction().getEmote().getName().equals(NEXT) && actual != pamount) {
+            if(e.getReaction().getReactionEmote().getName().equals(NEXT) && actual != pamount) {
                 e.getChannel().getMessageById(actual_id).complete().delete().complete();
                 actual++;
                 Message m = e.getChannel().sendMessage(getEmbed()).complete();
@@ -104,7 +104,7 @@ public class Paginator {
                 }
                 return;
             }
-            if(e.getReaction().getEmote().getName().equals(BACK) && actual != 1) {
+            if(e.getReaction().getReactionEmote().getName().equals(BACK) && actual != 1) {
                 e.getChannel().getMessageById(actual_id).complete().delete().complete();
                 actual--;
                 Message m = e.getChannel().sendMessage(getEmbed()).complete();
@@ -126,7 +126,7 @@ public class Paginator {
                 }
                 return;
             }
-            if(e.getReaction().getEmote().getName().equals(FIRST)) {
+            if(e.getReaction().getReactionEmote().getName().equals(FIRST)) {
                 e.getChannel().getMessageById(actual_id).complete().delete().complete();
                 actual = 1;
                 Message m = e.getChannel().sendMessage(getEmbed()).complete();
@@ -143,7 +143,7 @@ public class Paginator {
                 return;
             }
 
-            if(e.getReaction().getEmote().getName().equals(END)) {
+            if(e.getReaction().getReactionEmote().getName().equals(END)) {
                 e.getChannel().getMessageById(actual_id).complete().delete().complete();
                 actual = pamount;
                 Message m = e.getChannel().sendMessage(getEmbed()).complete();
@@ -159,7 +159,7 @@ public class Paginator {
                 }
                 return;
             }
-            if(e.getReaction().getEmote().getName().equals(STOP)) {
+            if(e.getReaction().getReactionEmote().getName().equals(STOP)) {
                 PaginatorManager.paginators.remove(getActualId());
                 e.getChannel().getMessageById(getActualId()).complete().delete().complete();
             }

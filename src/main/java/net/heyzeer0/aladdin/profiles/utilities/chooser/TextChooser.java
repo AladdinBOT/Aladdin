@@ -58,9 +58,9 @@ public class TextChooser {
             return false;
         }
 
-        if(NumberUtils.isCreatable(evt.getMessage().getRawContent())) {
-            if(options.keySet().contains(Integer.valueOf(evt.getMessage().getRawContent()))) {
-                options.get(Integer.valueOf(evt.getMessage().getRawContent())).action.run();
+        if(NumberUtils.isCreatable(evt.getMessage().getContentRaw())) {
+            if(options.keySet().contains(Integer.valueOf(evt.getMessage().getContentRaw()))) {
+                options.get(Integer.valueOf(evt.getMessage().getContentRaw())).action.run();
                 ChooserManager.textchooser.remove(e.getMessage().getAuthor().getId());
             }
         }

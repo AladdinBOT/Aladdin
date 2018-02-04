@@ -36,7 +36,7 @@ public class ShardProfile {
                 .setAutoReconnect(true)
                 .setAudioEnabled(true)
                 .setAudioSendFactory(new NativeAudioSendFactory())
-                .setGame(Game.of("a!help | " + MainConfig.bot_game + " [" + (shardid + 1) + "]"))
+                .setGame(Game.of(Game.GameType.DEFAULT, "a!help | " + MainConfig.bot_game + " [" + (shardid + 1) + "]"))
                 .addEventListener(new EventControl(), new LogEvents())
                 .setCorePoolSize(10);
 
@@ -57,11 +57,6 @@ public class ShardProfile {
 
                     init_uptime = System.currentTimeMillis();
                     break;
-                }catch (RateLimitedException e) {
-                    e.printStackTrace();
-                    try{
-                        Thread.sleep(e.getRetryAfter());
-                    }catch (Exception ex) {}
                 }catch (LoginException e) {
                     logger.warn("Credenciais invalidas, irei desligar...");
                     System.exit(0);

@@ -28,6 +28,7 @@ public class HelpCommand implements CommandExecutor {
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.getSize() >= 1) {
             if(CommandManager.commands.containsKey(args.get(0))) {
+
                 EmbedBuilder b = new EmbedBuilder();
                 b.setColor(Color.GREEN);
                 b.setThumbnail("https://media.tenor.com/images/9a5178a7b636e201da025b7e41f8e2a2/tenor.gif");

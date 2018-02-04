@@ -28,4 +28,8 @@ public class GiveawayProfile {
         this.messageID = messageID; this.channelID = channelID; this.guildID = guildID; this.authorName = authorName; this.authorAvatar = authorAvatar; this.title = title; this.prizes = prizes; this.endTime = endTime;
     }
 
+    public void endNow() {
+        endTime = System.currentTimeMillis() + 60000;
+    }
+
 }
