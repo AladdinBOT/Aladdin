@@ -40,9 +40,11 @@ public class UserCommand implements CommandExecutor {
                 if(user.size() >= 1) {
                     u = user.get(0).getUser();
                 }else{
-                    if(e.getGuild().getMemberById(args.get(2)) != null) {
-                        u = e.getGuild().getMemberById(args.get(2)).getUser();
-                    }
+                    try{
+                        if(e.getGuild().getMemberById(args.get(2)) != null) {
+                            u = e.getGuild().getMemberById(args.get(2)).getUser();
+                        }
+                    }catch (Exception ex) {}
                 }
             }
 
@@ -80,9 +82,11 @@ public class UserCommand implements CommandExecutor {
                 if(user.size() >= 1) {
                     u = user.get(0).getUser();
                 }else{
-                    if(e.getGuild().getMemberById(args.get(2)) != null) {
-                        u = e.getGuild().getMemberById(args.get(2)).getUser();
-                    }
+                    try{
+                        if(e.getGuild().getMemberById(args.get(2)) != null) {
+                            u = e.getGuild().getMemberById(args.get(2)).getUser();
+                        }
+                    }catch (Exception ex) {}
                 }
             }
 
@@ -115,9 +119,11 @@ public class UserCommand implements CommandExecutor {
                 if(user.size() >= 1) {
                     u = user.get(0).getUser();
                 }else{
-                    if(e.getGuild().getMemberById(args.get(2)) != null) {
-                        u = e.getGuild().getMemberById(args.get(2)).getUser();
-                    }
+                    try{
+                        if(e.getGuild().getMemberById(args.get(2)) != null) {
+                            u = e.getGuild().getMemberById(args.get(2)).getUser();
+                        }
+                    }catch (Exception ex) {}
                 }
             }
 
