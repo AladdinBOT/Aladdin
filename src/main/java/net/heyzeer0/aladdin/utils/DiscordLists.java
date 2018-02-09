@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.utils;
 
 import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
-import com.github.natanbc.discordbotsapi.PostingException;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.UpvoteCommand;
@@ -38,12 +37,7 @@ public class DiscordLists {
             for(int i = 0; i < shards.length; i++) {
                 payload[i] = shards[i].getJDA().getGuilds().size();
             }
-            try {
-                discordBots.postStats(payload);
-            } catch(PostingException e) {
-                Main.getLogger().warn("An error ocurred while trying to post status to discordbots.org");
-                e.printStackTrace();
-            }
+            discordBots.postStats(payload).async();
         });
     }
 
@@ -51,7 +45,8 @@ public class DiscordLists {
         UpvoteCommand.detection_time = System.currentTimeMillis();
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             List<String> upvoters = new ArrayList<>();
-            for(long id : discordBots.getUpvoterIds()) {
+            long[] ids = discordBots.getUpvoterIds().execute();
+            for(long id : ids) {
                 upvoters.add(id + "");
                 if(!Main.getDatabase().getServer().isUserUpvoted(id + "")) {
                     Main.getDatabase().getUserProfile(id + "").activateTrialPremium();
