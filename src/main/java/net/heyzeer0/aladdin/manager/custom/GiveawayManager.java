@@ -63,7 +63,7 @@ public class GiveawayManager {
         giveTimer.scheduleAtFixedRate(() -> {
             if(giveways.size() <= 0) {
                 if(!already_requested) {
-                    giveways = Main.getDatabase().getServer().getGiveways();
+                    giveways = Main.getDatabase().getServer().getGiveaways();
                     already_requested = true;
                 }
             }else{

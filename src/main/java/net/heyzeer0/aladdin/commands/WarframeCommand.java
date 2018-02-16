@@ -8,6 +8,7 @@ import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.manager.custom.warframe.AlertManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.PriceManager;
+import net.heyzeer0.aladdin.manager.custom.warframe.SubscriptionManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.WikiManager;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
@@ -28,9 +29,21 @@ import java.util.List;
  */
 public class WarframeCommand implements CommandExecutor {
 
-    @Command(command = "warframe", description = "Informações sobre warframe", parameters = {"alertas/wiki/preço/armadura"}, sendTyping = false, type = CommandType.FUN,
+    @Command(command = "warframe", description = "Informações sobre warframe", parameters = {"alertas/wiki/preço/armadura/subscription"}, sendTyping = false, type = CommandType.FUN,
             usage = "a!warframe alertas\na!warframe wiki plastids\na!warframe preço Trinity Prime\na!warframe armadura 10\na!warframe armadura 10 5 10")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+        if(args.get(0).equalsIgnoreCase("subscription")) {
+
+            if(SubscriptionManager.subscriptions.containsKey(e.getAuthor().getId())) {
+                SubscriptionManager.removeSubscriptor(e.getAuthor());
+                e.sendMessage(EmojiList.CORRECT + " Você agora não recebera mais notificações do jogo");
+            }else{
+                SubscriptionManager.addSubscriptor(e.getAuthor());
+                e.sendMessage(EmojiList.THINKING + " Tentei te registrar no programa, se você recebeu uma mensagem no privado significa que foi um sucesso ^0^\ncaso contrario cheque se eu posso te enviar mensagens privadas!");
+            }
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
         if (args.get(0).equalsIgnoreCase("preço") || args.get(0).equalsIgnoreCase("preco")) {
             if (args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "warframe preço", "item");

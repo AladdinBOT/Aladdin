@@ -6,6 +6,7 @@ import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 import net.heyzeer0.aladdin.profiles.custom.ReminderProfile;
+import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
@@ -27,33 +28,36 @@ public class ServerProfile implements ManagedObject {
     ArrayList<ReminderProfile> reminders = new ArrayList<>();
     String id;
     HashMap<String, GiveawayProfile> giveaways = new HashMap<>();
+    HashMap<String, SubscriptionProfile> subscriptions = new HashMap<>();
 
     public ServerProfile() {
-        this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+        this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
     }
 
-    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveaways"})
-    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GiveawayProfile> giveaways) {
+    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveaways", "subscriptions"})
+    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GiveawayProfile> giveaways, HashMap<String, SubscriptionProfile> subscriptions) {
         this.id = id;
         this.users_who_upvoted = users_who_upvoted;
         this.reminders = reminders;
 
+        boolean save = false;
+
         if(giveaways == null) {
             this.giveaways = new HashMap<>();
+            save = true;
+        }else{ this.giveaways = giveaways; }
+        if(subscriptions == null) {
+            this.subscriptions = new HashMap<>();
+            save = true;
+        }else { this.subscriptions = subscriptions; }
+
+        if(save)
             saveAsync();
-        }else{
-            this.giveaways = giveaways;
-        }
     }
 
     @JsonIgnore
     public boolean isUserUpvoted(String id) {
         return users_who_upvoted.contains(id);
-    }
-
-    @JsonIgnore
-    public HashMap<String, GiveawayProfile> getGiveways() {
-        return giveaways;
     }
 
     public void addUpvoted(String u) {
@@ -78,6 +82,11 @@ public class ServerProfile implements ManagedObject {
 
     public void updateGiveways(HashMap<String, GiveawayProfile> giveways) {
         this.giveaways = giveways;
+        saveAsync();
+    }
+
+    public void updateSubscriptions(HashMap<String, SubscriptionProfile> subscriptions) {
+        this.subscriptions = subscriptions;
         saveAsync();
     }
 

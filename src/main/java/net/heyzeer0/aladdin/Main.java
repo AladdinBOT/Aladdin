@@ -13,11 +13,13 @@ import net.heyzeer0.aladdin.manager.ConfigManager;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import net.heyzeer0.aladdin.manager.custom.GiveawayManager;
 import net.heyzeer0.aladdin.manager.custom.ReminderManager;
+import net.heyzeer0.aladdin.manager.custom.warframe.SubscriptionManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 import net.heyzeer0.aladdin.profiles.SocketInfo;
+import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
 import net.heyzeer0.aladdin.utils.DiscordLists;
 import net.heyzeer0.aladdin.utils.JDAUtils;
 
@@ -123,6 +125,7 @@ public class Main {
                     "                         v" + version);
 
             GiveawayManager.startUpdating();
+            SubscriptionManager.startUpdating();
             ChooserManager.startCleanup();
             PaginatorManager.startCleanup();
             DiscordLists.updateStatus();
