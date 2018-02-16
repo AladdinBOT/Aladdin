@@ -36,7 +36,7 @@ public class WarframeCommand implements CommandExecutor {
 
             if(SubscriptionManager.subscriptions.containsKey(e.getAuthor().getId())) {
                 SubscriptionManager.removeSubscriptor(e.getAuthor());
-                e.sendMessage(EmojiList.CORRECT + " Você agora não recebera mais notificações do jogo");
+                e.sendMessage(EmojiList.CORRECT + " Você agora não receberá mais notificações do jogo");
             }else{
                 SubscriptionManager.addSubscriptor(e.getAuthor());
                 e.sendMessage(EmojiList.THINKING + " Tentei te registrar no programa, se você recebeu uma mensagem no privado significa que foi um sucesso, caso contrario cheque se eu posso te enviar mensagens privadas! ^O^");
