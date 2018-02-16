@@ -60,9 +60,11 @@ public class SubscriptionManager {
                     List<AlertProfile> selectedAlerts = new ArrayList<>();
 
                     for(AlertProfile alert : alerts) {
-                        if(!sendedAlerts.contains(alert) && alert.hasLoot() && alert.getRewordID().getName().toLowerCase().contains("orokin")) {
-                            selectedAlerts.add(alert);
-                            sendedAlerts.add(alert.getId());
+                        if(!sendedAlerts.contains(alert.getId()) && alert.hasLoot()) {
+                            if(alert.getRewordID().getName().toLowerCase().contains("orokin") || alert.getRewordID().getName().contains("forma")) {
+                                selectedAlerts.add(alert);
+                                sendedAlerts.add(alert.getId());
+                            }
                         }
                     }
 
