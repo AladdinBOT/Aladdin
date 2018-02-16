@@ -10,6 +10,7 @@ import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -76,10 +77,10 @@ public class SubscriptionManager {
                                 if(sendNight || u.getId().equalsIgnoreCase("169904764048375809")) {
                                     EmbedBuilder b = new EmbedBuilder();
                                     b.setTitle("<:level:363725048881610753> Status das planícies");
-                                    b.setDescription("É noite nas planícies!");
-                                    b.addField(":timer: Tempo restante", cycle.getString("timeLeft"), true);
+                                    b.setDescription("É noite nas planícies!\nTempo restante: ``" + cycle.getString("timeLeft") + "``");
                                     b.setFooter("Requerido por " + u.getName(), u.getEffectiveAvatarUrl());
                                     b.setTimestamp(LocalDateTime.now());
+                                    b.setColor(Color.GREEN);
 
                                     u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
                                 }
