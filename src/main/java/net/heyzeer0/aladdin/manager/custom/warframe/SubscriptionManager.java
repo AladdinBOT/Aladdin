@@ -71,9 +71,10 @@ public class SubscriptionManager {
                 int amount = subscriptions.size();
 
                 try{
-                    JSONObject cycle = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/cetusCycle"));
-                    JSONObject baro = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/voidTrader"));
-                    JSONObject darvo = new JSONArray(Utils.readWebsite("https://api.warframestat.us/pc/dailyDeals")).getJSONObject(0);
+                    JSONObject main = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc"));
+                    JSONObject cycle = main.getJSONObject("cetusCycle");
+                    JSONObject baro = main.getJSONObject("voidTrader");
+                    JSONObject darvo = main.getJSONArray("dailyDeals").getJSONObject(0);
 
                     List<AlertProfile> alerts = AlertManager.getAlerts();
                     List<AlertProfile> selectedAlerts = new ArrayList<>();
