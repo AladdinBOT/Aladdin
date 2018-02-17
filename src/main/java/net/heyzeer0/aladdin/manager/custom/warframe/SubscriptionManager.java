@@ -9,11 +9,11 @@ import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.profiles.custom.warframe.AlertProfile;
 import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
 import net.heyzeer0.aladdin.utils.Utils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,7 +130,7 @@ public class SubscriptionManager {
                                             "<:platinum:364483112702443522> Preço: " + darvo.getInt("salePrice") + " (**" + Math.round(Math.round(percent)) + "%** off)",
                                             true);
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
-                                    b.setTimestamp(LocalDateTime.now());
+                                    b.setTimestamp(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
                                     b.setColor(Color.CYAN);
 
                                     u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
@@ -141,7 +141,7 @@ public class SubscriptionManager {
                                     b.setTitle("<:level:363725048881610753> Status do jogo");
                                     b.setDescription("O comerciante do void voltou!\nTempo restante ``" + baro.getString("endString") + "``");
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
-                                    b.setTimestamp(LocalDateTime.now());
+                                    b.setTimestamp(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
                                     b.setColor(Color.CYAN);
 
                                     u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
@@ -152,7 +152,7 @@ public class SubscriptionManager {
                                     b.setTitle("<:level:363725048881610753> Status das planícies");
                                     b.setDescription("É noite nas planícies!\nTempo restante ``" + cycle.getString("timeLeft") + "``");
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
-                                    b.setTimestamp(LocalDateTime.now());
+                                    b.setTimestamp(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
                                     b.setColor(Color.CYAN);
 
                                     u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
@@ -170,7 +170,7 @@ public class SubscriptionManager {
                                     }
                                     b.setThumbnail("http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png/revision/latest?cb=20140823050147");
                                     b.setDescription("Listando todos os alertas raros disponíveis");
-                                    b.setTimestamp(LocalDateTime.now());
+                                    b.setTimestamp(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 
                                     Integer alertas = 0;
                                     for (AlertProfile p : selectedAlerts) {
