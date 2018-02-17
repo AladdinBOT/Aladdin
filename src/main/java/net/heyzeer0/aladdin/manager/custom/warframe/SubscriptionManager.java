@@ -88,7 +88,7 @@ public class SubscriptionManager {
                         }
                     }
 
-                    if(!cycle.getBoolean("isDay") && !sendedIds.contains(cycle.getString("id"))) {
+                    if(!cycle.getString("id").toLowerCase().contains("nan") && !cycle.getBoolean("isDay") && !sendedIds.contains(cycle.getString("id"))) {
                         addSendedId(cycle.getString("id"));
                         sendNight = true;
                     }
