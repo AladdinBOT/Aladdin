@@ -112,6 +112,7 @@ public class SubscriptionManager {
                                     }
                                     b.setThumbnail("http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png/revision/latest?cb=20140823050147");
                                     b.setDescription("Listando todos os alertas raros disponíveis");
+                                    b.setTimestamp(LocalDateTime.now());
 
                                     Integer alertas = 0;
                                     for (AlertProfile p : selectedAlerts) {
