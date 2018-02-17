@@ -9,6 +9,7 @@ import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.profiles.custom.warframe.AlertProfile;
 import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
 import net.heyzeer0.aladdin.utils.Utils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.*;
@@ -72,7 +73,7 @@ public class SubscriptionManager {
                 try{
                     JSONObject cycle = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/cetusCycle"));
                     JSONObject baro = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/voidTrader"));
-                    JSONObject darvo = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/dailyDeals"));
+                    JSONObject darvo = new JSONArray(Utils.readWebsite("https://api.warframestat.us/pc/dailyDeals")).getJSONObject(0);
 
                     List<AlertProfile> alerts = AlertManager.getAlerts();
                     List<AlertProfile> selectedAlerts = new ArrayList<>();
