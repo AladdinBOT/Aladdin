@@ -72,7 +72,9 @@ public class SubscriptionManager {
 
                 try{
                     JSONObject cycle = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/cetusCycle"));
-                    JSONObject baro = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/voidTrader"));
+                    String voidTrader = Utils.readWebsite("https://api.warframestat.us/pc/voidTrader");
+                    System.out.println(voidTrader);
+                    JSONObject baro = new JSONObject(voidTrader);
                     JSONObject darvo = new JSONArray(Utils.readWebsite("https://api.warframestat.us/pc/dailyDeals")).getJSONObject(0);
 
                     List<AlertProfile> alerts = AlertManager.getAlerts();
