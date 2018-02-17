@@ -56,7 +56,7 @@ public class WarframeCommand implements CommandExecutor {
                     List<PriceProfile> p = PriceManager.getPrices(item);
 
                     if (p == null || p.size() <= 0) {
-                        e.sendMessage("Desculpe te decepcionar operador, não encontrei nada sobre " + item + ".");
+                        e.sendMessage("<:ordis:414221819516682253> -> Desculpe te decepcionar operador, não encontrei nada sobre " + item + ".");
                         return;
                     }
 
@@ -76,7 +76,7 @@ public class WarframeCommand implements CommandExecutor {
 
                     e.sendMessage(b);
                 }catch (Exception ex) {
-                    e.sendMessage("Aguarde um pouco enquanto analizo os dados. Erro ``" + ex.getMessage() + "``! O operador gostou deste deboche?");
+                    e.sendMessage("<:ordis:414221819516682253> -> Aguarde um pouco enquanto analizo os dados. Erro ``" + ex.getMessage() + "``! O operador gostou deste deboche?");
                 }
             });
 
@@ -94,7 +94,7 @@ public class WarframeCommand implements CommandExecutor {
                 WikiProfile p = WikiManager.getWikiArticle(titulo);
 
                 if (p == null) {
-                    e.sendMessage("Desculpe te decepcionar operador, não encontrei nada sobre " + titulo + ".");
+                    e.sendMessage("<:ordis:414221819516682253> -> Desculpe te decepcionar operador, não encontrei nada sobre " + titulo + ".");
                     return;
                 }
 
