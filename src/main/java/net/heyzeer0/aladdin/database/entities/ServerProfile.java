@@ -29,13 +29,14 @@ public class ServerProfile implements ManagedObject {
     String id;
     HashMap<String, GiveawayProfile> giveaways = new HashMap<>();
     HashMap<String, SubscriptionProfile> subscriptions = new HashMap<>();
+    ArrayList<String> sendedIds = new ArrayList<>();
 
     public ServerProfile() {
-        this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+        this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new ArrayList<>());
     }
 
-    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveaways", "subscriptions"})
-    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GiveawayProfile> giveaways, HashMap<String, SubscriptionProfile> subscriptions) {
+    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveaways", "subscriptions", "sendedIds"})
+    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GiveawayProfile> giveaways, HashMap<String, SubscriptionProfile> subscriptions, ArrayList<String> sendedIds) {
         this.id = id;
         this.users_who_upvoted = users_who_upvoted;
         this.reminders = reminders;
@@ -50,6 +51,10 @@ public class ServerProfile implements ManagedObject {
             this.subscriptions = new HashMap<>();
             save = true;
         }else { this.subscriptions = subscriptions; }
+        if(sendedIds == null) {
+            this.sendedIds = new ArrayList<>();
+            save = true;
+        }else { this.sendedIds = sendedIds; }
 
         if(save)
             saveAsync();
@@ -87,6 +92,11 @@ public class ServerProfile implements ManagedObject {
 
     public void updateSubscriptions(HashMap<String, SubscriptionProfile> subscriptions) {
         this.subscriptions = subscriptions;
+        saveAsync();
+    }
+
+    public void updateSendedIds(ArrayList<String> sendedIds) {
+        this.sendedIds = sendedIds;
         saveAsync();
     }
 

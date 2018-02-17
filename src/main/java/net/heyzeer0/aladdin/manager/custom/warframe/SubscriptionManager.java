@@ -27,8 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class SubscriptionManager {
 
     public static HashMap<String, SubscriptionProfile> subscriptions = null;
-    public static boolean acceptNight = true;
-    public static ArrayList<String> sendedAlerts = new ArrayList<>();
+    public static ArrayList<String> sendedIds = new ArrayList<>();
 
     private static ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
 
@@ -45,36 +44,66 @@ public class SubscriptionManager {
         Main.getDatabase().getServer().updateSubscriptions(subscriptions);
     }
 
+    public static void addSendedId(String x) {
+        if(sendedIds.size() >= 1000) {
+            sendedIds.remove(sendedIds.size() - 1);
+        }
+        sendedIds.add(x);
+        Main.getDatabase().getServer().updateSendedIds(sendedIds);
+    }
+
     public static void startUpdating() {
         timer.scheduleAtFixedRate(() -> {
             if(subscriptions == null) {
                 subscriptions = Main.getDatabase().getServer().getSubscriptions();
+                sendedIds = Main.getDatabase().getServer().getSendedIds();
             }else{
 
                 boolean sendNight = false;
+                boolean sendBaro = false;
+
+                boolean sendDarvo = false;
+                double atual;
+                double original;
+                double percent = 0;
+
                 int amount = subscriptions.size();
 
                 try{
                     JSONObject cycle = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/cetusCycle"));
+                    JSONObject baro = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/voidTrader"));
+                    JSONObject darvo = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/dailyDeals"));
+
                     List<AlertProfile> alerts = AlertManager.getAlerts();
                     List<AlertProfile> selectedAlerts = new ArrayList<>();
 
                     for(AlertProfile alert : alerts) {
-                        if(!sendedAlerts.contains(alert.getId()) && alert.hasLoot()) {
+                        if(!sendedIds.contains(alert.getId()) && alert.hasLoot()) {
                             if(alert.getRewordID().getName().toLowerCase().contains("orokin") || alert.getRewordID().getName().contains("forma")) {
                                 selectedAlerts.add(alert);
-                                sendedAlerts.add(alert.getId());
+                                addSendedId(alert.getId());
                             }
                         }
                     }
 
-                    if(!cycle.getBoolean("isDay")) {
-                        if(acceptNight) {
-                            acceptNight = false;
-                            sendNight = true;
-                        }
-                    }else{
-                        acceptNight = true;
+                    if(!cycle.getBoolean("isDay") && !sendedIds.contains(cycle.getString("id"))) {
+                        addSendedId(cycle.getString("id"));
+                        sendNight = true;
+                    }
+
+                    if(!sendedIds.contains(darvo.getString("id"))) {
+                        addSendedId(darvo.getString("id"));
+                        sendDarvo = true;
+
+                        atual = darvo.getInt("salePrice");
+                        original = darvo.getInt("originalPrice");
+
+                        percent = (atual / original) * 100;
+                    }
+
+                    if(baro.getBoolean("active") && !sendedIds.contains(baro.getString("id"))) {
+                        addSendedId(baro.getString("id"));
+                        sendBaro = true;
                     }
 
                     for(String userId : subscriptions.keySet()) {
@@ -89,7 +118,34 @@ public class SubscriptionManager {
 
                             if(m.getOnlineStatus() == OnlineStatus.ONLINE) {
 
-                                if(sendNight && pf.isNightCycle()) {
+                                if(sendDarvo && pf.getValue("darvoAlerts")) {
+
+                                    EmbedBuilder b = new EmbedBuilder();
+                                    b.setTitle("<:level:363725048881610753> Status do jogo");
+                                    b.setDescription("Um novo item esta em promoção no Darvo!");
+                                    b.addField("<:lotus:363726000871309312> " + darvo.getString("item") + " | :clock1: " + darvo.getString("eta") + " restantes",
+                                            "<:credits:363725076845035541> Estoque: " + darvo.getInt("sold") + "/" + darvo.getInt("sold") + "\n" +
+                                            "<:platinum:364483112702443522> Preço: " + darvo.getInt("salePrice") + "(**" + Math.round(Math.round(percent)) + "%** off)",
+                                            true);
+                                    b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
+                                    b.setTimestamp(LocalDateTime.now());
+                                    b.setColor(Color.CYAN);
+
+                                    u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
+                                }
+
+                                if(sendBaro && pf.getValue("baroAlerts")) {
+                                    EmbedBuilder b = new EmbedBuilder();
+                                    b.setTitle("<:level:363725048881610753> Status do jogo");
+                                    b.setDescription("O comerciante do void voltou!\nTempo restante ``" + baro.getString("endString") + "``");
+                                    b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
+                                    b.setTimestamp(LocalDateTime.now());
+                                    b.setColor(Color.CYAN);
+
+                                    u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
+                                }
+
+                                if(sendNight && pf.getValue("nightAlerts")) {
                                     EmbedBuilder b = new EmbedBuilder();
                                     b.setTitle("<:level:363725048881610753> Status das planícies");
                                     b.setDescription("É noite nas planícies!\nTempo restante ``" + cycle.getString("timeLeft") + "``");
@@ -100,7 +156,7 @@ public class SubscriptionManager {
                                     u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
                                 }
 
-                                if(selectedAlerts.size() > 0 && pf.isRareAlerts()) {
+                                if(selectedAlerts.size() > 0 && pf.getValue("rareAlerts")) {
 
                                     EmbedBuilder b = new EmbedBuilder();
                                     b.setColor(Color.CYAN);

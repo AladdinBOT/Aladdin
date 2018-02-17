@@ -1,9 +1,11 @@
 package net.heyzeer0.aladdin.profiles.custom.warframe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.beans.ConstructorProperties;
+import java.util.HashMap;
 
 /**
  * Created by HeyZeer0 on 16/02/2018.
@@ -14,19 +16,31 @@ import java.beans.ConstructorProperties;
 @Setter
 public class SubscriptionProfile {
 
-    boolean rareAlerts = true;
-    boolean nightCycle = true;
-    boolean rareInvasions = true;
+    HashMap<String, Boolean> values = new HashMap<>();
 
     public SubscriptionProfile() {
-        this(true, true, true);
+        this(new HashMap<>());
     }
 
-    @ConstructorProperties({"rareAlerts", "nightCycle", "rareInvasions"})
-    public SubscriptionProfile(boolean rareAlerts, boolean nightCycle, boolean rareInvasions) {
-        this.rareAlerts = rareAlerts;
-        this.nightCycle = nightCycle;
-        this.rareInvasions = rareInvasions;
+    @ConstructorProperties({"values"})
+    public SubscriptionProfile(HashMap<String, Boolean> values) {
+        this.values = values;
+
+        if(!values.containsKey("nightAlerts"))
+            values.put("nightAlerts", true);
+        if(!values.containsKey("rareAlerts"))
+            values.put("rareAlerts", true);
+        if(!values.containsKey("baroAlerts"))
+            values.put("baroAlerts", true);
+        if(!values.containsKey("invasionAlerts"))
+            values.put("invasionAlerts", true);
+        if(!values.containsKey("darvoAlerts"))
+            values.put("darvoAlerts", true);
+    }
+
+    @JsonIgnore
+    public boolean getValue(String key) {
+        return values.getOrDefault(key, true);
     }
 
 }
