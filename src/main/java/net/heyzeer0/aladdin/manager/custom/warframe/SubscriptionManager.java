@@ -72,9 +72,7 @@ public class SubscriptionManager {
 
                 try{
                     JSONObject cycle = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/cetusCycle"));
-                    String voidTrader = Utils.readWebsite("https://api.warframestat.us/pc/voidTrader");
-                    System.out.println(voidTrader);
-                    JSONObject baro = new JSONObject(voidTrader);
+                    JSONObject baro = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc/voidTrader"));
                     JSONObject darvo = new JSONArray(Utils.readWebsite("https://api.warframestat.us/pc/dailyDeals")).getJSONObject(0);
 
                     List<AlertProfile> alerts = AlertManager.getAlerts();
@@ -127,8 +125,8 @@ public class SubscriptionManager {
                                     b.setTitle("<:level:363725048881610753> Status do jogo");
                                     b.setDescription("Um novo item esta em promoção no Darvo!");
                                     b.addField("<:lotus:363726000871309312> " + darvo.getString("item") + " | :clock1: " + darvo.getString("eta") + " restantes",
-                                            "<:credits:363725076845035541> Estoque: " + darvo.getInt("sold") + "/" + darvo.getInt("sold") + "\n" +
-                                            "<:platinum:364483112702443522> Preço: " + darvo.getInt("salePrice") + "(**" + Math.round(Math.round(percent)) + "%** off)",
+                                            "<:credits:363725076845035541> Estoque: " + (darvo.getInt("total") - darvo.getInt("sold")) + "/" + darvo.getInt("total") + "\n" +
+                                            "<:platinum:364483112702443522> Preço: " + darvo.getInt("salePrice") + " (**" + Math.round(Math.round(percent)) + "%** off)",
                                             true);
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                                     b.setTimestamp(LocalDateTime.now());
