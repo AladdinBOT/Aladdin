@@ -118,7 +118,7 @@ public class SubscriptionManager {
                         }else{
                             Member m = mutual.get(0).getMember(u);
 
-                            if(m.getOnlineStatus() == OnlineStatus.ONLINE) {
+                            if(m.getOnlineStatus() == OnlineStatus.ONLINE || m.getOnlineStatus() == OnlineStatus.DO_NOT_DISTURB) {
 
                                 if(sendDarvo && pf.getValue("darvoAlerts")) {
 
