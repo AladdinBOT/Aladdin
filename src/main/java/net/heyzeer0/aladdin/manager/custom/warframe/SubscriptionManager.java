@@ -80,6 +80,7 @@ public class SubscriptionManager {
                     for(String userId : subscriptions.keySet()) {
                         User u = Main.getUserById(userId);
                         List<Guild> mutual = Main.getMutualGuilds(u);
+                        SubscriptionProfile pf = subscriptions.get(userId);
 
                         if(mutual.size() <= 0) {
                             subscriptions.remove(userId);
@@ -88,26 +89,26 @@ public class SubscriptionManager {
 
                             if(m.getOnlineStatus() == OnlineStatus.ONLINE) {
 
-                                if(sendNight) {
+                                if(sendNight && pf.isNightCycle()) {
                                     EmbedBuilder b = new EmbedBuilder();
                                     b.setTitle("<:level:363725048881610753> Status das planícies");
                                     b.setDescription("É noite nas planícies!\nTempo restante ``" + cycle.getString("timeLeft") + "``");
-                                    b.setFooter("Requerido por " + u.getName(), u.getEffectiveAvatarUrl());
+                                    b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                                     b.setTimestamp(LocalDateTime.now());
-                                    b.setColor(Color.GREEN);
+                                    b.setColor(Color.CYAN);
 
                                     u.openPrivateChannel().queue((success) -> success.sendMessage(b.build()).queue(), (failure) -> subscriptions.remove(userId));
                                 }
 
-                                if(selectedAlerts.size() > 0) {
+                                if(selectedAlerts.size() > 0 && pf.isRareAlerts()) {
 
                                     EmbedBuilder b = new EmbedBuilder();
                                     b.setColor(Color.CYAN);
 
                                     if(selectedAlerts.size() >= 2) {
-                                        b.setTitle("Alertas raros disponíveis", null);
+                                        b.setTitle("<:level:363725048881610753> Alertas raros disponíveis", null);
                                     }else{
-                                        b.setTitle("Alerta raro disponível", null);
+                                        b.setTitle("<:level:363725048881610753> Alerta raro disponível", null);
                                     }
                                     b.setThumbnail("http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png/revision/latest?cb=20140823050147");
                                     b.setDescription("Listando todos os alertas raros disponíveis");
