@@ -138,7 +138,7 @@ public class LeagueOfLegendsCommand implements CommandExecutor {
                 }
             }catch (Exception ex) { }
 
-            String kdr = (kills >= 0 && deaths >= 0 ? "" + (kills / deaths) : "0");
+            String kdr = (kills > 0 && deaths > 0 ? "" + (kills / deaths) : "0");
 
 
             if (league != null) {
