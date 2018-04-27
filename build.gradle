@@ -16,6 +16,7 @@ mainClassName = "net.heyzeer0.aladdin.Main"
 repositories {
     mavenCentral()
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -40,6 +41,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.github.natanbc:discordbots-api:+'
     compile 'com.github.go-ive:steam-api:+'
+    compile 'com.github.taycaldwell:riot-api-java:+'
 }
 
 shadowJar {

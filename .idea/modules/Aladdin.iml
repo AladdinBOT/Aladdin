@@ -18,13 +18,13 @@
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.5" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:20.0" level="project" />
-    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.5.0_336" level="project" />
+    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.6.0_356" level="project" />
     <orderEntry type="library" name="Gradle: com.mashape.unirest:unirest-java:1.4.9" level="project" />
     <orderEntry type="library" name="Gradle: org.reflections:reflections:0.9.10" level="project" />
     <orderEntry type="library" name="Gradle: com.rethinkdb:rethinkdb-driver:2.3.3" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1" level="project" />
     <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
-    <orderEntry type="library" name="Gradle: com.sedmelluq:lavaplayer:1.2.47" level="project" />
+    <orderEntry type="library" name="Gradle: com.sedmelluq:lavaplayer:1.2.63" level="project" />
     <orderEntry type="library" name="Gradle: net.sf.trove4j:trove4j:3.0.3" level="project" />
     <orderEntry type="library" name="Gradle: com.sedmelluq:jda-nas:1.0.5" level="project" />
     <orderEntry type="library" name="Gradle: com.github.fedy2:yahoo-weather-java-api:2.0.2" level="project" />
@@ -32,8 +32,9 @@
     <orderEntry type="library" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_16" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.natanbc:discordbots-api:2.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.natanbc:discordbots-api:3.3.3" level="project" />
     <orderEntry type="library" name="Gradle: com.github.go-ive:steam-api:5.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.taycaldwell:riot-api-java:4.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -48,12 +49,13 @@
     <orderEntry type="library" name="Gradle: org.codehaus.woodstox:stax2-api:3.1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.woodstox:woodstox-core:5.0.3" level="project" />
     <orderEntry type="library" name="Gradle: com.sedmelluq:lavaplayer-common:1.0.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.sedmelluq:lavaplayer-natives:1.2.55" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.11.2" level="project" />
     <orderEntry type="library" name="Gradle: net.iharder:base64:2.3.9" level="project" />
     <orderEntry type="library" name="Gradle: com.sedmelluq:udp-queue:1.0.6" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.13.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.natanbc:reliqua:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.natanbc:reliqua:2.3.1" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpcore-nio:4.4.4" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.taycaldwell:riot-api-java:4.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.taycaldwell/riot-api-java/4.0.1/4df7c743d325716d176c921cbb6f433a8db071fd/riot-api-java-4.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.taycaldwell/riot-api-java/4.0.1/a5fe014462bfe40a90162eae84c2ae4e5e9cba09/riot-api-java-4.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

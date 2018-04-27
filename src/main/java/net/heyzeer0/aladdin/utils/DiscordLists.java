@@ -22,23 +22,7 @@ public class DiscordLists {
     private static boolean upvoteStarted = false;
 
     public static void updateStatus() {
-        if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
-            discordBots = new DiscordBotsAPI(ApiKeysConfig.discord_bots_key);
 
-            if(!upvoteStarted) {
-                Utils.runTimer(DiscordLists::checkUpvoted, 10, TimeUnit.MINUTES);
-                upvoteStarted = true;
-            }
-        }
-
-        Utils.runAsync(() -> {
-            ShardProfile[] shards = Main.getShards();
-            int[] payload = new int[shards.length];
-            for(int i = 0; i < shards.length; i++) {
-                payload[i] = shards[i].getJDA().getGuilds().size();
-            }
-            discordBots.postStats(payload).async();
-        });
     }
 
     public static void checkUpvoted() {
