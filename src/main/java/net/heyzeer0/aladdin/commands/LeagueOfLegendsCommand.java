@@ -14,6 +14,10 @@ import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.endpoints.champion_mastery.dto.ChampionMastery;
 import net.rithms.riot.api.endpoints.league.dto.LeaguePosition;
+import net.rithms.riot.api.endpoints.match.dto.Match;
+import net.rithms.riot.api.endpoints.match.dto.MatchList;
+import net.rithms.riot.api.endpoints.match.dto.MatchReference;
+import net.rithms.riot.api.endpoints.match.dto.Participant;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
 import net.rithms.riot.api.endpoints.spectator.dto.Mastery;
@@ -22,8 +26,10 @@ import net.rithms.riot.api.endpoints.static_data.dto.ChampionList;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -102,6 +108,7 @@ public class LeagueOfLegendsCommand implements CommandExecutor {
 
         String id = ids == 10 ? "10" : "0" + ids;
 
+
         boolean onFire = false;
         String elo = "Unranked";
         try{
@@ -115,25 +122,45 @@ public class LeagueOfLegendsCommand implements CommandExecutor {
                 }
             }
 
+            int kills = 0;
+            int deaths = 0;
+
+            try{
+                List<MatchReference> last20Matches = apiClient.getRecentMatchListByAccountId(Platform.BR, participant.getSummonerId()).getMatches();
+
+                for(MatchReference mc : last20Matches) {
+                    if(mc.getChampion() == participant.getChampionId()) {
+                        Match match = apiClient.getMatch(Platform.BR, mc.getGameId());
+                        Participant p = match.getParticipantByAccountId(participant.getSummonerId());
+                        kills+= p.getStats().getKills();
+                        deaths+= p.getStats().getKills();
+                    }
+                }
+            }catch (Exception ex) { }
+
+            String kdr = (kills >= 0 && deaths >= 0 ? "" + (kills / deaths) : "0");
+
+
             if (league != null) {
                 elo = league.getTier() + " " + league.getRank() + " - " + league.getWins() + "W " + league.getLosses() + "L " + league.getLeaguePoints()  + "pdl";
 
                 onFire = league.isHotStreak();
             }
 
+
+            ChampionMastery mastery = null;
+            try{
+                mastery = apiClient.getChampionMasteriesBySummonerByChampion(Platform.BR, participant.getSummonerId(), participant.getChampionId());
+            }catch (Exception ex) { }
+
+
+            message = message + "\n\n";
+            message = message + " [" + id + "]  > " + championsById.get(participant.getChampionId()).getName()  + (onFire ? " \uD83D\uDD25" : "");
+            message = message + "\n          Maestria: " + (mastery != null ? mastery.getChampionLevel() : "0");
+            message = message + "\n          Elo: " + elo;
+            message = message + "\n          Invocador: " + participant.getSummonerName();
+            message = message + "\n          KDR: " + kdr;
         }catch (Exception ex) { }
-
-        ChampionMastery mastery = null;
-        try{
-            mastery = apiClient.getChampionMasteriesBySummonerByChampion(Platform.BR, participant.getSummonerId(), participant.getChampionId());
-        }catch (Exception ex) { }
-
-
-        message = message + "\n\n";
-        message = message + " [" + id + "]  > " + championsById.get(participant.getChampionId()).getName()  + (onFire ? " \uD83D\uDD25" : "");
-        message = message + "\n          Maestria: " + (mastery != null ? mastery.getChampionLevel() : "0");
-        message = message + "\n          Elo: " + elo;
-        message = message + "\n          Invocador: " + participant.getSummonerName();
 
         return message;
     }
