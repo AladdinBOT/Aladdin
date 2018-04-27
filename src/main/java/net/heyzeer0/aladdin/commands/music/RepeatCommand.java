@@ -18,8 +18,8 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
  */
 public class RepeatCommand implements CommandExecutor {
 
-    @Command(command = "repeat", description = "Altere o modo de repetição", aliasses = {"r"}, parameters = {"musica, playlist ou parar"}, extra_perm = {"overpass"}, type = CommandType.MUSIC,
-            usage = "a!repeat musica\na!repeat playlist\na!repeat parar")
+    @Command(command = "repeat", description = "Altere o modo de repetição", aliasses = {"r"}, parameters = {"music/playlist/stop"}, extra_perm = {"overpass"}, type = CommandType.MUSIC,
+            usage = "a!repeat music\na!repeat playlist\na!repeat stop")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(!Boolean.valueOf(e.getGuildProfile().getConfigValue(GuildConfig.MEMBER_CAN_REPEAT).toString())) {
             if(!e.hasPermission("command.repeat.overpass")) {
@@ -32,7 +32,7 @@ public class RepeatCommand implements CommandExecutor {
             MusicManager.getManager(e.getGuild()).setRepeatMode(null);
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
-        if(args.get(0).equalsIgnoreCase("musica") || args.get(0).equalsIgnoreCase("m")) {
+        if(args.get(0).equalsIgnoreCase("music") || args.get(0).equalsIgnoreCase("m")) {
             e.sendMessage(EmojiList.CORRECT + " O player de musica ira repetir a musica atual.");
             MusicManager.getManager(e.getGuild()).setRepeatMode(GuildTrackProfile.RepeatMode.SONG);
             return new CommandResult((CommandResultEnum.SUCCESS));
