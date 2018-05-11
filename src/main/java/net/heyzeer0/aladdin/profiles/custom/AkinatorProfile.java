@@ -52,7 +52,7 @@ public class AkinatorProfile {
         actual = new AkinatorQuestion(session);
         if(actual.isGameOver()) {
 
-            NEW_SESSION_URL = "http://api-pt4.akinator.com/ws/new_session?partner=1";
+            NEW_SESSION_URL = "http://api-pt4.akinator.com/ws/new_session?partner=0&premium=1";
             ANSWER_URL = "http://api-pt4.akinator.com/ws/answer";
             GET_GUESS_URL = "http://api-pt4.akinator.com/ws/list";
             CHOICE_URL = "http://api-pt4.akinator.com/ws/choice";
