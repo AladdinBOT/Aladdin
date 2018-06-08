@@ -64,6 +64,14 @@ public class GiveawayManager {
             if(giveways.size() <= 0) {
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveaways();
+                    giveways.remove("451827296299384832");
+                    giveways.remove("451828123328053258");
+                    giveways.remove("451829527136567298");
+                    giveways.remove("451949849646989313");
+                    giveways.remove("452251098472775681");
+                    giveways.remove("452251098472775681");
+
+                    Main.getDatabase().getServer().updateGiveways(giveways);
                     already_requested = true;
                 }
             }else{
