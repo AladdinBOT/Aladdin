@@ -40,7 +40,7 @@ public class LeagueOfLegendsCommand implements CommandExecutor {
     public static ChampionList champions = null;
     public static HashMap<Integer, Champion> championsById = new HashMap<>();
 
-    @Command(command = "leagueoflegends", description = "Emule funções em java.", aliasses = {"lol"}, parameters = {"subscribe/activeGame"}, type = CommandType.FUN,
+    @Command(command = "leagueoflegends", description = "Emule funções em java.", aliasses = {"lol"}, parameters = {"activeGame"}, type = CommandType.FUN,
             usage = "a!lol subscribe Zer0Master")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(champions == null) {
@@ -59,7 +59,7 @@ public class LeagueOfLegendsCommand implements CommandExecutor {
             }
 
             Utils.runAsync(() -> {
-                String player = args.get(1);
+                String player = args.getCompleteAfter(1);
                 try{
                     Summoner user = apiClient.getSummonerByName(Platform.BR, player);
 

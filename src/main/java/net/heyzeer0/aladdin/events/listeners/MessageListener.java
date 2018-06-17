@@ -30,6 +30,7 @@ public class MessageListener {
     public static HashMap<String, Long> star_timeout = new HashMap<>();
 
     public static void onMessage(GuildMessageReceivedEvent e) {
+        Main.checkThreads();
         if(!e.getGuild().getSelfMember().hasPermission(e.getChannel(), Permission.MESSAGE_WRITE)) {
             return;
         }

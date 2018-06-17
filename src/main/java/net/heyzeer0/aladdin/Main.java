@@ -125,12 +125,11 @@ public class Main {
                     "/_/  |_/_/\\__,_/\\__,_/\\__,_/_/_/ /_/ \n" +
                     "                         v" + version);
 
-            GiveawayManager.startUpdating();
-            SubscriptionManager.startUpdating();
+
+            checkThreads();
             ChooserManager.startCleanup();
             PaginatorManager.startCleanup();
             DiscordLists.updateStatus();
-            ReminderManager.startChecking();
 
             new SocketInfo(9598, (l, i) -> {
                 if(l.equalsIgnoreCase("shutdown")) {
@@ -143,6 +142,12 @@ public class Main {
         }catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static void checkThreads() {
+        GiveawayManager.startUpdating();
+        SubscriptionManager.startUpdating();
+        ReminderManager.startChecking();
     }
 
     public static File getDataFolder() {

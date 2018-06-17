@@ -8,6 +8,7 @@ import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.profiles.utilities.ActiveThread;
 import net.heyzeer0.aladdin.utils.Utils;
 import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
 import net.heyzeer0.aladdin.utils.builders.Prize;
@@ -29,7 +30,7 @@ public class GiveawayManager {
     public static HashMap<String, GiveawayProfile> giveways = new HashMap<>();
     public static boolean already_requested = false;
 
-    private static ScheduledExecutorService giveTimer = Executors.newSingleThreadScheduledExecutor();
+    private static ActiveThread thread;
 
     public static void createGiveway(GiveawayBuilder b) {
         if(!b.getCh().canTalk()) {
@@ -60,18 +61,16 @@ public class GiveawayManager {
     }
 
     public static void startUpdating() {
-        giveTimer.scheduleAtFixedRate(() -> {
+        if(thread != null && !thread.isRunning()){
+            thread.startRunning();
+            return;
+        }
+
+        thread = new ActiveThread("Giveaways", 20000, () -> {
             if(giveways.size() <= 0) {
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveaways();
-                    giveways.remove("451827296299384832");
-                    giveways.remove("451828123328053258");
-                    giveways.remove("451829527136567298");
-                    giveways.remove("451949849646989313");
-                    giveways.remove("452251098472775681");
-                    giveways.remove("452251098472775681");
 
-                    Main.getDatabase().getServer().updateGiveways(giveways);
                     already_requested = true;
                 }
             }else{
@@ -182,8 +181,7 @@ public class GiveawayManager {
                 }
 
             }
-
-        }, 0, 20, TimeUnit.SECONDS);
+        }).startRunning();
     }
     
 }
