@@ -6,9 +6,10 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
 import net.heyzeer0.aladdin.profiles.custom.warframe.AlertProfile;
 import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
-import net.heyzeer0.aladdin.profiles.utilities.ActiveThread;
+import net.heyzeer0.aladdin.profiles.utilities.ScheduledExecutor;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.json.JSONObject;
 
@@ -18,10 +19,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by HeyZeer0 on 16/02/2018.
  * Copyright © HeyZeer0 - 2016
@@ -30,8 +27,6 @@ public class SubscriptionManager {
 
     public static HashMap<String, SubscriptionProfile> subscriptions = null;
     public static ArrayList<String> sendedIds = new ArrayList<>();
-
-    private static ActiveThread thread;
 
     public static void addSubscriptor(User u) {
         u.openPrivateChannel().queue(sc -> sc.sendMessage(":white_check_mark: Você agora recebera noticias sobre o jogo").queue(scc -> {
@@ -55,12 +50,7 @@ public class SubscriptionManager {
     }
 
     public static void startUpdating() {
-        if(thread != null && !thread.isRunning()) {
-            thread.startRunning();
-            return;
-        }
-
-        thread = new ActiveThread("Warframe Subscription", 60000, () -> {
+        ThreadManager.registerScheduledExecutor(new ScheduledExecutor(60000, () -> {
             if(subscriptions == null) {
                 subscriptions = Main.getDatabase().getServer().getSubscriptions();
                 sendedIds = Main.getDatabase().getServer().getSendedIds();
@@ -204,7 +194,7 @@ public class SubscriptionManager {
                 if(amount != subscriptions.size())
                     Main.getDatabase().getServer().updateSubscriptions(subscriptions);
             }
-        }).startRunning();
+        }));
     }
 
 }

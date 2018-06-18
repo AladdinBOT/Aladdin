@@ -8,7 +8,8 @@ import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.enums.EmojiList;
-import net.heyzeer0.aladdin.profiles.utilities.ActiveThread;
+import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
+import net.heyzeer0.aladdin.profiles.utilities.ScheduledExecutor;
 import net.heyzeer0.aladdin.utils.Utils;
 import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
 import net.heyzeer0.aladdin.utils.builders.Prize;
@@ -17,9 +18,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HeyZeer0 on 14/11/2017.
@@ -29,8 +27,6 @@ public class GiveawayManager {
 
     public static HashMap<String, GiveawayProfile> giveways = new HashMap<>();
     public static boolean already_requested = false;
-
-    private static ActiveThread thread;
 
     public static void createGiveway(GiveawayBuilder b) {
         if(!b.getCh().canTalk()) {
@@ -61,12 +57,7 @@ public class GiveawayManager {
     }
 
     public static void startUpdating() {
-        if(thread != null && !thread.isRunning()){
-            thread.startRunning();
-            return;
-        }
-
-        thread = new ActiveThread("Giveaways", 20000, () -> {
+        ThreadManager.registerScheduledExecutor(new ScheduledExecutor(20000, () -> {
             if(giveways.size() <= 0) {
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveaways();
@@ -181,7 +172,7 @@ public class GiveawayManager {
                 }
 
             }
-        }).startRunning();
+        }));
     }
     
 }
