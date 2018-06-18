@@ -35,8 +35,8 @@ public class OsuCommand implements CommandExecutor {
     static {
         try {
             italic = Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Exo2-Italic.otf"));
-            bold = Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Exo2-Bold.ttf"));
-            regular = Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Exo2-Regular.ttf"));
+            bold = Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Exo2-Bold.otf"));
+            regular = Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Exo2-Regular.otf"));
         }catch (Exception ex) { ex.printStackTrace(); }
     }
 
