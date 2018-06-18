@@ -31,10 +31,10 @@ public class ConcurrentArrayList<T> {
         }
     }
 
-    public void get(int index) {
+    public T get(int index) {
         readLock.lock();
         try {
-            list.get(index);
+            return list.get(index);
         } finally {
             readLock.unlock();
         }
@@ -48,7 +48,6 @@ public class ConcurrentArrayList<T> {
         readLock.lock();
         try {
             return new ArrayList<T>(list).iterator();
-            //^ we iterate over an snapshot of our list
         } finally {
             readLock.unlock();
         }

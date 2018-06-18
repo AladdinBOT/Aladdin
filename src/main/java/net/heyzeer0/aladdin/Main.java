@@ -19,7 +19,6 @@ import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 import net.heyzeer0.aladdin.profiles.SocketInfo;
-import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
 import net.heyzeer0.aladdin.utils.DiscordLists;
 import net.heyzeer0.aladdin.utils.JDAUtils;
 
@@ -85,7 +84,6 @@ public class Main {
             CommandManager.registerCommand(new ConfigCommand());
             CommandManager.registerCommand(new EmojiCommand());
             CommandManager.registerCommand(new GiveawayCommand());
-            CommandManager.registerCommand(new GoogleCommand());
             CommandManager.registerCommand(new GroupCommand());
             CommandManager.registerCommand(new HelpCommand());
             CommandManager.registerCommand(new IamCommand());

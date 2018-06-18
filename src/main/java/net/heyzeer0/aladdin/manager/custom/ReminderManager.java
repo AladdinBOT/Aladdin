@@ -7,6 +7,8 @@ import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
 import net.heyzeer0.aladdin.profiles.custom.ReminderProfile;
 import net.heyzeer0.aladdin.profiles.utilities.ScheduledExecutor;
 
+import java.util.Iterator;
+
 /**
  * Created by HeyZeer0 on 18/10/2017.
  * Copyright © HeyZeer0 - 2016
@@ -17,10 +19,13 @@ public class ReminderManager {
         ThreadManager.registerScheduledExecutor(new ScheduledExecutor(60000, () -> {
             ServerProfile pf = Main.getDatabase().getServer();
             if(pf.getReminders().size() > 0) {
-                for(ReminderProfile rp : pf.getReminders()) {
+                Iterator<ReminderProfile> reminders = pf.getReminders().iterator();
+                ReminderProfile rp;
+                while(reminders.hasNext() && (rp = reminders.next()) != null) {
                     if(System.currentTimeMillis() > rp.getDuration()) {
                         try{
-                            Main.getUserById(rp.getUserId()).openPrivateChannel().queue(ch -> ch.sendMessage(EmojiList.STOPWATCH + " Você pediu para eu te lembrar de ``" + rp.getReminder() + "`` agora ^-^").queue());
+                            String reminder = rp.getReminder();
+                            Main.getUserById(rp.getUserId()).openPrivateChannel().queue(ch -> ch.sendMessage(EmojiList.STOPWATCH + " Você pediu para eu te lembrar de ``" + reminder + "`` agora ^-^").queue());
                             pf.removeReminder(rp);
                         }catch (Exception ignored) { }
                     }

@@ -1,4 +1,4 @@
-package net.heyzeer0.aladdin.profiles.custom;
+package net.heyzeer0.aladdin.profiles.custom.osu;
 
 import lombok.Getter;
 
@@ -24,6 +24,8 @@ public class OsuPlayerProfile {
     public String count_rank_ss;
     public String count_rank_s;
     public String count_rank_a;
+    public String count_rank_ssh;
+    public String count_rank_sh;
     public String country;
     public String pp_raw;
     public String country_rank;

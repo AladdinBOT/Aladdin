@@ -1,9 +1,14 @@
 package net.heyzeer0.aladdin.manager.custom;
 
 import net.heyzeer0.aladdin.configs.ApiKeysConfig;
-import net.heyzeer0.aladdin.profiles.custom.OsuPlayerProfile;
+import net.heyzeer0.aladdin.profiles.custom.osu.OsuBeatmapProfile;
+import net.heyzeer0.aladdin.profiles.custom.osu.OsuMatchProfile;
+import net.heyzeer0.aladdin.profiles.custom.osu.OsuPlayerProfile;
 import net.heyzeer0.aladdin.utils.Utils;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by HeyZeer0 on 19/12/2016.
@@ -33,11 +38,64 @@ public class OsuManager {
         profile.country = json.getString("country");
         profile.country_rank = json.getString("pp_country_rank");
         profile.pp_raw = json.getString("pp_raw");
+        profile.count_rank_sh = json.getString("count_rank_sh");
+        profile.count_rank_ssh = json.getString("count_rank_ssh");
 
         profile.exist = true;
 
         return profile;
     }
 
+    public static ArrayList<OsuMatchProfile> getTop10FromPlayer(String user) throws Exception {
+        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&u=" + user);
+        ArrayList<OsuMatchProfile> matches = new ArrayList<>();
+
+        JSONArray c = new JSONArray(website);
+        for(int i = 0; i < c.length(); i++) {
+            JSONObject obj = c.getJSONObject(i);
+
+            matches.add(
+                    new OsuMatchProfile(obj.getString("beatmap_id"), obj.getString("score"), obj.getString("maxcombo"), obj.getString("count300")
+                    , obj.getString("count100"), obj.getString("count50"), obj.getString("countmiss"), obj.getString("countkatu"), obj.getString("countgeki")
+                    , obj.getString("perfect"), obj.getString("enabled_mods"), obj.getString("user_id"), obj.getString("date"), obj.getString("rank"), obj.getString("pp"))
+            );
+        }
+
+        return matches;
+    }
+
+    public static OsuBeatmapProfile getBeatmap(String id) throws Exception {
+        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_beatmaps?k=" + ApiKeysConfig.osu_api_key + "&b=" + id);
+
+        JSONObject c = new JSONArray(website).getJSONObject(0);
+
+        return new OsuBeatmapProfile(c.getString("beatmapset_id"),
+                c.getString("beatmap_id"),
+                c.getString("approved"),
+                c.getString("total_length"),
+                c.getString("hit_length"),
+                c.getString("version"),
+                c.getString("file_md5"),
+                c.getString("diff_size"),
+                c.getString("diff_overall"),
+                c.getString("diff_approach"),
+                c.getString("diff_drain"),
+                c.getString("mode"),
+                c.getString("approved_date"),
+                c.getString("last_update"),
+                c.getString("artist"),
+                c.getString("title"),
+                c.getString("creator"),
+                c.getString("bpm"),
+                c.getString("source"),
+                c.getString("tags"),
+                c.getString("genre_id"),
+                c.getString("language_id"),
+                c.getString("favourite_count"),
+                c.getString("playcount"),
+                c.getString("passcount"),
+                c.getString("max_combo"),
+                c.getString("difficultyrating"));
+    }
 
 }
