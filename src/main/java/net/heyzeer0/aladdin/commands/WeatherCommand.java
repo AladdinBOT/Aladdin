@@ -23,8 +23,8 @@ import java.util.List;
  */
 public class WeatherCommand implements CommandExecutor {
 
-    @Command(command = "tempo", description = "Informações sobre o tempo", aliasses = {"weather"}, parameters = {"cidade"}, type = CommandType.INFORMATIVE,
-            usage = "a!tempo São Paulo")
+    @Command(command = "weather", description = "Informações sobre o tempo", aliasses = {"weather"}, parameters = {"city"}, type = CommandType.INFORMATIVE,
+            usage = "a!weather São Paulo")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         Utils.runAsync(() -> {
             try{

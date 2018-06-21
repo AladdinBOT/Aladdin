@@ -4,7 +4,7 @@ import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.enums.*;
 import net.heyzeer0.aladdin.events.listeners.MessageListener;
 import net.heyzeer0.aladdin.interfaces.Command;
@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -83,7 +82,7 @@ public class CommandManager {
             }
 
             if(cmd.getAnnotation().type() == CommandType.BOT_ADMIN) {
-                if(!e.getAuthor().getId().equals(MainConfig.bot_owner)) {
+                if(!e.getAuthor().getId().equals(BotConfig.bot_owner)) {
                     e.sendMessage(AladdinMessages.NO_PERMISSION.replaceMessage("BOT_OWNER"));
                     return;
                 }

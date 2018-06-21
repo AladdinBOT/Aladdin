@@ -1,17 +1,16 @@
-package net.heyzeer0.aladdin.interfaces.annotation;
+package net.heyzeer0.aladdin.configs.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Created by HeyZeer0 on 19/09/2017.
+ * Created by HeyZeer0 on 08/06/2018.
  * Copyright © HeyZeer0 - 2016
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface YamlConfig {
+public @interface Config {
 
     String name();
-    String folder() default "none";
 
 }

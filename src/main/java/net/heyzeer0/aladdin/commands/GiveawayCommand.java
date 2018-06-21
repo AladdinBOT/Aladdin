@@ -17,10 +17,10 @@ import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
  */
 public class GiveawayCommand implements CommandExecutor {
 
-    @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"criar"}, extra_perm = {"takewinner"}, type = CommandType.MISCELLANEOUS,
-            usage = "a!giveaway criar", isAllowedToDefault = false)
+    @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"create"}, extra_perm = {"takewinner"}, type = CommandType.MISCELLANEOUS,
+            usage = "a!giveaway create", isAllowedToDefault = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
-        if(args.get(0).equalsIgnoreCase("criar")) {
+        if(args.get(0).equalsIgnoreCase("create")) {
             if(GiveawayManager.giveways.containsKey(e.getAuthor().getId())) {
                 e.sendMessage(EmojiList.WORRIED + " Você já esta criando um giveaway!");
                 return new CommandResult((CommandResultEnum.SUCCESS));

@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.commands;
 
-import net.dv8tion.jda.core.entities.Message;
 import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
@@ -22,10 +21,10 @@ import java.util.HashMap;
  */
 public class StarboardCommand implements CommandExecutor {
 
-    @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"criar/config/remover/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
-            usage = "a!starboard criar 3 #starboard\na!starboard config 0 info\na!starboard config 0 setamount 3\na!starboard config 0 ignorechannel #testes\na!starboard remover 0\na!starboard list")
+    @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"create/config/remove/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
+            usage = "a!starboard create 3 #starboard\na!starboard config 0 info\na!starboard config 0 setamount 3\na!starboard config 0 ignorechannel #testes\na!starboard remove 0\na!starboard list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
-        if(args.get(0).equalsIgnoreCase("criar")) {
+        if(args.get(0).equalsIgnoreCase("create")) {
             if(args.getSize() < 3) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "criar", "quantidade necessária de emotes", "#canal");
             }
@@ -152,7 +151,7 @@ public class StarboardCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
-        if(args.get(0).equalsIgnoreCase("remover")) {
+        if(args.get(0).equalsIgnoreCase("remove")) {
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "deletar", "id");
             }

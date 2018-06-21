@@ -1,6 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
-import net.heyzeer0.aladdin.configs.ApiKeysConfig;
+import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
@@ -14,13 +14,8 @@ import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.endpoints.champion_mastery.dto.ChampionMastery;
 import net.rithms.riot.api.endpoints.league.dto.LeaguePosition;
-import net.rithms.riot.api.endpoints.match.dto.Match;
-import net.rithms.riot.api.endpoints.match.dto.MatchList;
-import net.rithms.riot.api.endpoints.match.dto.MatchReference;
-import net.rithms.riot.api.endpoints.match.dto.Participant;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
-import net.rithms.riot.api.endpoints.spectator.dto.Mastery;
 import net.rithms.riot.api.endpoints.static_data.dto.Champion;
 import net.rithms.riot.api.endpoints.static_data.dto.ChampionList;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
@@ -28,7 +23,6 @@ import net.rithms.riot.constant.Platform;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by HeyZeer0 on 17/04/2018.
@@ -40,8 +34,8 @@ public class LeagueOfLegendsCommand implements CommandExecutor {
     public static ChampionList champions = null;
     public static HashMap<Integer, Champion> championsById = new HashMap<>();
 
-    @Command(command = "leagueoflegends", description = "Emule funções em java.", aliasses = {"lol"}, parameters = {"activeGame"}, type = CommandType.FUN,
-            usage = "a!lol subscribe Zer0Master")
+    @Command(command = "leagueoflegends", description = "Comandos Relacionados a League of Legends", aliasses = {"lol"}, parameters = {"activeGame"}, type = CommandType.FUN,
+            usage = "a!lol activeGame Zer0Master")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(champions == null) {
             try{

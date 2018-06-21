@@ -8,7 +8,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.LogProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
@@ -101,7 +101,7 @@ public class GuildProfile implements ManagedObject {
 
     @JsonIgnore
     public boolean hasPermission(Member u, String permission) {
-        if(u.getUser().getId().equals(MainConfig.bot_owner)) {
+        if(u.getUser().getId().equals(BotConfig.bot_owner)) {
             return true;
         }
         if(u.getUser().getId().equals(ownerId)) {

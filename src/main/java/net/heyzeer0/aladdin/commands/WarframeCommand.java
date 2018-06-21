@@ -29,8 +29,8 @@ import java.util.List;
  */
 public class WarframeCommand implements CommandExecutor {
 
-    @Command(command = "warframe", description = "Informações sobre warframe", parameters = {"alertas/wiki/preço/armadura/subscription"}, sendTyping = false, type = CommandType.FUN,
-            usage = "a!warframe alertas\na!warframe wiki plastids\na!warframe preço Trinity Prime\na!warframe armadura 10\na!warframe armadura 10 5 10")
+    @Command(command = "warframe", description = "Informações sobre warframe", parameters = {"alerts/wiki/price/armor/subscription"}, sendTyping = false, type = CommandType.FUN,
+            usage = "a!warframe alerts\na!warframe wiki plastids\na!warframe price Trinity Prime\na!warframe armor 10\na!warframe armor 10 5 10")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("subscription")) {
 
@@ -44,7 +44,7 @@ public class WarframeCommand implements CommandExecutor {
 
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
-        if (args.get(0).equalsIgnoreCase("preço") || args.get(0).equalsIgnoreCase("preco")) {
+        if (args.get(0).equalsIgnoreCase("price")) {
             if (args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "warframe preço", "item");
             }
@@ -113,7 +113,7 @@ public class WarframeCommand implements CommandExecutor {
             });
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
-        if (args.get(0).equalsIgnoreCase("alertas")) {
+        if (args.get(0).equalsIgnoreCase("alerts")) {
 
             Utils.runAsync(() -> {
 
@@ -146,7 +146,7 @@ public class WarframeCommand implements CommandExecutor {
             });
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
-        if (args.get(0).equalsIgnoreCase("armadura") || args.get(0).equalsIgnoreCase("armor")) {
+        if (args.get(0).equalsIgnoreCase("armor")) {
             if (args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "warframe armadura", "[quantidade] ou [armadura base] [nível base] [nível atual]");
             }

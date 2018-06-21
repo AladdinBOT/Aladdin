@@ -1,7 +1,7 @@
 package net.heyzeer0.aladdin.utils;
 
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import org.apache.commons.io.IOUtils;
 
@@ -80,7 +80,7 @@ public class JavaEvaluation {
                 }
                 if (o == null || o.toString().isEmpty())
                     o = "Executado sem erros e sem retorno!";
-                o = o.toString().replace(MainConfig.bot_token, "<BOT TOKEN>");
+                o = o.toString().replace(BotConfig.bot_token, "<BOT TOKEN>");
                 f.delete();
                 out.delete();
                 folder.delete();

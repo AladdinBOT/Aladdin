@@ -1,6 +1,6 @@
 package net.heyzeer0.aladdin.manager.custom;
 
-import net.heyzeer0.aladdin.configs.ApiKeysConfig;
+import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.custom.PixaBayProfile;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.json.JSONArray;

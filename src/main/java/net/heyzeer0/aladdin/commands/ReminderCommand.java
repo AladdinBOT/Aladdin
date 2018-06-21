@@ -18,8 +18,8 @@ import net.heyzeer0.aladdin.profiles.custom.ReminderProfile;
  */
 public class ReminderCommand implements CommandExecutor {
 
-    @Command(command = "lembrar", description = "Defina lembretes para mais tarde", aliasses = {"lembrete"}, parameters = {"tempo(m/h)", "mensagem"}, type = CommandType.MISCELLANEOUS,
-            usage = "a!lembrar 1m Dar upvote no aladdin\na!lembrar 1h Dar upvote no aladdin", needPermission = false)
+    @Command(command = "remindme", description = "Defina lembretes para mais tarde", aliasses = {"remind"}, parameters = {"tempo(m/h)", "mensagem"}, type = CommandType.MISCELLANEOUS,
+            usage = "a!remindme 1m Dar upvote no aladdin\na!lembrar 1h Dar upvote no aladdin", needPermission = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         boolean minute = args.get(0).contains("m");
 

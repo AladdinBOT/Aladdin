@@ -2,7 +2,7 @@ package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
@@ -23,8 +23,8 @@ import java.awt.*;
  */
 public class PremiumCommand implements CommandExecutor {
 
-    @Command(command = "premium", description = "Ative premium ou veja quantas chaves possui", parameters = {"info/ativar/dar/autorenew/features"}, type = CommandType.INFORMATIVE,
-            usage = "a!premium info\na!premium ativar\na!premium dar @HeyZeer0", needPermission = false)
+    @Command(command = "premium", description = "Ative premium ou veja quantas chaves possui", parameters = {"info/activate/give/autorenew/features"}, type = CommandType.INFORMATIVE,
+            usage = "a!premium info\na!premium activate\na!premium give @HeyZeer0", needPermission = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
         if(args.get(0).equalsIgnoreCase("features")) {
@@ -57,7 +57,7 @@ public class PremiumCommand implements CommandExecutor {
                 b.addField(":key2: | Chaves restantes ", "" + pf.getPremiumKeys(), false);
 
                 if(pf.userPremium()) {
-                    if(MainConfig.bot_owner.equals(pf.getId())) {
+                    if(BotConfig.bot_owner.equals(pf.getId())) {
                         b.addField(":calendar_spiral: | Tempo restante ", "∞", false);
                         b.addField(":arrows_counterclockwise: | Auto renovação ", "" + pf.isAutoRenew(), false);
                     }else {
@@ -80,7 +80,7 @@ public class PremiumCommand implements CommandExecutor {
             b.addField(":key2: | Chaves restantes ", "" + e.getUserProfile().getPremiumKeys(), false);
 
             if(e.getUserProfile().userPremium()) {
-                if(MainConfig.bot_owner.equals(e.getAuthor().getId())) {
+                if(BotConfig.bot_owner.equals(e.getAuthor().getId())) {
                     b.addField(":calendar_spiral: | Tempo restante ", "∞", false);
                     b.addField(":arrows_counterclockwise: | Auto renovação ", "" + e.getUserProfile().isAutoRenew(), false);
                 }else {
@@ -96,7 +96,7 @@ public class PremiumCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
-        if(args.get(0).equalsIgnoreCase("ativar")) {
+        if(args.get(0).equalsIgnoreCase("activate")) {
             if(e.getUserProfile().userPremium()) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, parece que você já é premium!");
                 return new CommandResult(CommandResultEnum.SUCCESS);
@@ -113,7 +113,7 @@ public class PremiumCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
-        if(args.get(0).equalsIgnoreCase("dar")) {
+        if(args.get(0).equalsIgnoreCase("give")) {
 
             if(e.getMessage().getMentionedUsers().size() <= 0) {
                 e.sendMessage(EmojiList.WORRIED + " Oops, você tem mencionar algum usuário.");

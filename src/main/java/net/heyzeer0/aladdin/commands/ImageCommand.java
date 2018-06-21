@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class ImageCommand implements CommandExecutor {
 
-    @Command(command = "imagem", description = "Obtenha uma imagem com a tag selecionada", parameters = {"tag"}, type = CommandType.MISCELLANEOUS,
-            usage = "a!imagem carro")
+    @Command(command = "image", description = "Obtenha uma imagem com a tag selecionada", parameters = {"tag"}, type = CommandType.MISCELLANEOUS,
+            usage = "a!image carro")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         Utils.runAsync(() -> {
 

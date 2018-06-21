@@ -17,7 +17,7 @@ import net.heyzeer0.aladdin.profiles.utilities.Paginator;
  */
 public class LogCommand implements CommandExecutor {
 
-    @Command(command = "log", description = "Configure o log da sua guilda", parameters = {"setchannel/modulos"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
+    @Command(command = "log", description = "Configure o log da sua guilda", parameters = {"setchannel/modules"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!log setchannel #log\na!log setchannel\na!log modulos ativar MESSAGE_MODULE\na!log modulos desativar MESSAGE_MODULE\na!log modulos list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("setchannel")) {
@@ -32,10 +32,10 @@ public class LogCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
-        if(args.get(0).equalsIgnoreCase("modulos")) {
+        if(args.get(0).equalsIgnoreCase("modules")) {
 
             if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modulos", "ativar/desativar/list");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modules", "ativar/desativar/list");
             }
 
             if(args.get(1).equalsIgnoreCase("list")) {

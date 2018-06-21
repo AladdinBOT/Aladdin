@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.utils.Utils;
 
 import java.awt.*;
@@ -94,7 +94,7 @@ public class CrashProfile {
     public Message applyEmbed(GuildMessageReceivedEvent e) {
 
         if(auto_solve.contains("tomei a liberade de enviar ele ao meu autor")) {
-            e.getJDA().getUserById(MainConfig.bot_owner).openPrivateChannel().queue(pv -> pv.sendMessage("Crash Solver não presente " + hastebin_url).queue());
+            e.getJDA().getUserById(BotConfig.bot_owner).openPrivateChannel().queue(pv -> pv.sendMessage("Crash Solver não presente " + hastebin_url).queue());
         }
 
         EmbedBuilder b = new EmbedBuilder();

@@ -5,8 +5,7 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.events.EventControl;
 import net.heyzeer0.aladdin.events.LogEvents;
 
@@ -32,11 +31,11 @@ public class ShardProfile {
 
         logger = new LogProfile("Shard " + shardid);
         builder = new JDABuilder(AccountType.BOT)
-                .setToken(MainConfig.bot_token)
+                .setToken(BotConfig.bot_token)
                 .setAutoReconnect(true)
                 .setAudioEnabled(true)
                 .setAudioSendFactory(new NativeAudioSendFactory())
-                .setGame(Game.of(Game.GameType.DEFAULT, "a!help | " + MainConfig.bot_game + " [" + (shardid + 1) + "]"))
+                .setGame(Game.of(Game.GameType.DEFAULT, "a!help | " + BotConfig.bot_game + " [" + (shardid + 1) + "]"))
                 .addEventListener(new EventControl(), new LogEvents())
                 .setCorePoolSize(10);
 

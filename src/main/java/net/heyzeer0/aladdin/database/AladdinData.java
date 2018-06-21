@@ -1,10 +1,9 @@
 package net.heyzeer0.aladdin.database;
 
-import com.rethinkdb.gen.ast.ReqlFunction0;
 import com.rethinkdb.net.Connection;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.instances.DatabaseConfig;
 import net.heyzeer0.aladdin.database.entities.GuildProfile;
 import net.heyzeer0.aladdin.database.entities.ServerProfile;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
@@ -24,7 +23,7 @@ public class AladdinData {
     boolean ready = false;
 
     public AladdinData() {
-        conn = r.connection().hostname(MainConfig.rethink_ip).port(MainConfig.rethink_port).db(MainConfig.rethink_db).user(MainConfig.rethink_user, MainConfig.rethink_pass).connect();
+        conn = r.connection().hostname(DatabaseConfig.rethink_ip).port(Integer.valueOf(DatabaseConfig.rethink_port)).db(DatabaseConfig.rethink_db).user(DatabaseConfig.rethink_user, DatabaseConfig.rethink_pass).connect();
 
         try { r.tableCreate("users").runNoReply(conn); }catch (Exception ignored) {}
         try { r.tableCreate("guilds").runNoReply(conn); }catch (Exception ignored) {}

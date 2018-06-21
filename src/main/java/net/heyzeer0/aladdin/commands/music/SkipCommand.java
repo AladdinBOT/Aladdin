@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class SkipCommand implements CommandExecutor {
 
     @Command(command = "skip", description = "Pule a musica atual", aliasses = {"s"}, extra_perm = {"overpass"}, type = CommandType.MUSIC,
-            usage = "a!play Thunder")
+            usage = "a!skip")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         GuildTrackProfile guild = MusicManager.getManager(e.getGuild());
 

@@ -6,10 +6,11 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.commands.*;
 import net.heyzeer0.aladdin.commands.music.*;
-import net.heyzeer0.aladdin.configs.ApiKeysConfig;
-import net.heyzeer0.aladdin.configs.MainConfig;
+import net.heyzeer0.aladdin.configs.ConfigManager;
+import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
+import net.heyzeer0.aladdin.configs.instances.DatabaseConfig;
 import net.heyzeer0.aladdin.database.AladdinData;
-import net.heyzeer0.aladdin.manager.ConfigManager;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import net.heyzeer0.aladdin.manager.custom.GiveawayManager;
 import net.heyzeer0.aladdin.manager.custom.ReminderManager;
@@ -18,7 +19,6 @@ import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
-import net.heyzeer0.aladdin.profiles.SocketInfo;
 import net.heyzeer0.aladdin.utils.DiscordLists;
 import net.heyzeer0.aladdin.utils.JDAUtils;
 
@@ -42,40 +42,32 @@ public class Main {
 
     public static void main(String args[]) {
         try{
+            getDataFolder().mkdirs();
 
-            long configs = System.currentTimeMillis();
-
-            ConfigManager.lockAndLoad(MainConfig.class);
+            logger.startMsCount();
+            ConfigManager.lockAndLoad(DatabaseConfig.class);
+            ConfigManager.lockAndLoad(BotConfig.class);
             ConfigManager.lockAndLoad(ApiKeysConfig.class);
 
-            if(MainConfig.bot_token.equalsIgnoreCase("<insert-here>")) {
-                logger.warn("Para iniciar o bot você precisa definir o token na configuração.");
+            if(BotConfig.bot_token.equalsIgnoreCase("<insert-here>") || DatabaseConfig.rethink_ip.equalsIgnoreCase("<insert-here>")) {
+                logger.warn("You need to setup configurations first to start the bot.");
                 return;
             }
-            if(MainConfig.rethink_ip.equalsIgnoreCase("<insert-here>")) {
-                logger.warn("Para iniciar o bot você precisa definir a configuração da database.");
-                return;
-            }
+            logger.finishMsCount("Configs");
 
-            logger.info("Configs iniciadas em " + (System.currentTimeMillis() - configs) + "ms");
-
-            long shard = System.currentTimeMillis();
-
+            logger.startMsCount();
             shards = new ShardProfile[JDAUtils.getShardAmmount()];
             for(int i = 0; i < shards.length; i++) {
                 if(i != 0) Thread.sleep(5000);
                 shards[i] = new ShardProfile(i, shards.length);
             }
+            logger.finishMsCount("Shards");
 
-            logger.info("Shards iniciadas em " + (System.currentTimeMillis() - shard) + "ms");
-
-            long database = System.currentTimeMillis();
+            logger.startMsCount();
             data = new AladdinData();
+            logger.finishMsCount("Database");
 
-            logger.info("Database iniciada em " + (System.currentTimeMillis() - database) + "ms");
-
-            long commands = System.currentTimeMillis();
-
+            logger.startMsCount();
             CommandManager.registerCommand(new AdminCommand());
             CommandManager.registerCommand(new AkinatorCommand());
             CommandManager.registerCommand(new BotCommand());
@@ -113,8 +105,7 @@ public class Main {
             CommandManager.registerCommand(new SkipCommand());
             CommandManager.registerCommand(new StopCommand());
             CommandManager.registerCommand(new VolumeCommand());
-
-            logger.info("Comandos registrados em " + (System.currentTimeMillis() - commands) + "ms");
+            logger.finishMsCount("Commands");
 
             logger.info("\n    ___    __          __    ___     \n" +
                     "   /   |  / /___ _____/ /___/ (_)___ \n" +
@@ -128,15 +119,6 @@ public class Main {
             ChooserManager.startCleanup();
             PaginatorManager.startCleanup();
             DiscordLists.updateStatus();
-
-            new SocketInfo(9598, (l, i) -> {
-                if(l.equalsIgnoreCase("shutdown")) {
-                    i.shutdown();
-                    Stream.of(Main.getShards()).forEach(sc -> sc.getJDA().shutdown());
-                    System.exit(0);
-                }
-            });
-
         }catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -149,7 +131,7 @@ public class Main {
     }
 
     public static File getDataFolder() {
-        return new File(System.getProperty("user.dir"));
+        return new File(System.getProperty("user.dir"), "data");
     }
 
     public static LogProfile getLogger() { return logger; }

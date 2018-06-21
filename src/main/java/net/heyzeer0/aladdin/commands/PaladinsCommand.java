@@ -1,7 +1,7 @@
 package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.heyzeer0.aladdin.configs.ApiKeysConfig;
+import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
@@ -32,12 +32,12 @@ public class PaladinsCommand implements CommandExecutor {
     public static PaladinsAPI api = new PaladinsAPI(ApiKeysConfig.paladins_dev_id, ApiKeysConfig.paladins_dev_key, Platform.PC);
     public static DecimalFormat df = new DecimalFormat("###.#");
 
-    @Command(command = "paladins", description = "Informações sobre Paladins", parameters = {"perfil"}, type = CommandType.FUN,
+    @Command(command = "paladins", description = "Informações sobre Paladins", parameters = {"profile"}, type = CommandType.FUN,
             usage = "a!paladins perfil HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
-        if(args.get(0).equalsIgnoreCase("perfil")) {
+        if(args.get(0).equalsIgnoreCase("profile")) {
             if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "perfil", "nick");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
             }
 
             Utils.runAsync(() -> {

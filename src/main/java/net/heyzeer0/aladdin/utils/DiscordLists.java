@@ -4,13 +4,11 @@ import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.UpvoteCommand;
-import net.heyzeer0.aladdin.configs.ApiKeysConfig;
+import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.enums.EmojiList;
-import net.heyzeer0.aladdin.profiles.ShardProfile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HeyZeer0 on 24/11/2016.

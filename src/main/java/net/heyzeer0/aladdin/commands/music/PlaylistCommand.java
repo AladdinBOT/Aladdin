@@ -25,14 +25,14 @@ import java.util.ArrayList;
  */
 public class PlaylistCommand implements CommandExecutor {
 
-    @Command(command = "playlist", description = "Crie playlists para auto-reprodução!", parameters = "criar/deletar/add/rem/play/list/info", type = CommandType.MUSIC,
-            usage = "a!playlist criar Chillhop\na!playlist deletar Chillhop\na!playlist add Chillhop Brock Berrigan - Point Pleasant\na!playlist rem Chillhop 0\na!playlist play Chillhop\na!playlist list\na!playlist list @HeyZeer0\na!playlist info Chillhop")
+    @Command(command = "playlist", description = "Crie playlists para auto-reprodução!", parameters = "create/delete/add/rem/play/list/info", type = CommandType.MUSIC,
+            usage = "a!playlist create Chillhop\na!playlist delete Chillhop\na!playlist add Chillhop Brock Berrigan - Point Pleasant\na!playlist rem Chillhop 0\na!playlist play Chillhop\na!playlist list\na!playlist list @HeyZeer0\na!playlist info Chillhop")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
 
-        if(args.get(0).equalsIgnoreCase("criar")) {
+        if(args.get(0).equalsIgnoreCase("create")) {
 
             if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "criar", "nome");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "create", "nome");
             }
 
             if(e.getUserProfile().getPlaylist().containsKey(args.get(1))) {
@@ -52,7 +52,7 @@ public class PlaylistCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
-        if(args.get(0).equalsIgnoreCase("deletar")) {
+        if(args.get(0).equalsIgnoreCase("delete")) {
 
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "deletar", "nome");
