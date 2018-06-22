@@ -1,15 +1,28 @@
 package net.heyzeer0.aladdin.manager.custom.osu;
 
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.requests.RestAction;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.commands.OsuCommand;
+import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuBeatmapProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuMatchProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuPlayerProfile;
 import net.heyzeer0.aladdin.profiles.utilities.ScheduledExecutor;
+import net.heyzeer0.aladdin.utils.ImageUtils;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,6 +87,7 @@ public class OsuSubscriptionManager {
             }else {
                 ArrayList<String> toRemove = new ArrayList<>();
                 HashMap<String, ArrayList<String>> removeUsers = new HashMap<>();
+                sended_ids.remove(0);
                 if (subscription.size() > 0) {
                     for (String user : subscription.keySet()) {
                         try {
@@ -87,23 +101,51 @@ public class OsuSubscriptionManager {
                                     OsuPlayerProfile pp = OsuManager.getUserProfile(mp.getUser_id(), true);
                                     OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
 
+                                    double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
+
                                     EmbedBuilder eb = new EmbedBuilder();
-                                    eb.setColor(Color.GREEN);
-                                    eb.setImage("https://assets.ppy.sh/beatmaps/" + bp.getBeatmap_id() + "/covers/cover.jpg");
-                                    eb.setThumbnail("https://a.ppy.sh/" + mp.getUser_id());
-                                    eb.setTitle("Novo Rank #" + (i + 1) + " para " + pp.getNome());
-                                    eb.setDescription("Clique [aqui](https://osu.ppy.sh/users/" + mp.getUser_id() + ") para ir ao perfil do jogador.");
-                                    eb.addField(":trophy: | Status:", "**pp:** " + mp.getPp(), true);
-                                    double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss())) * 100;
 
-                                    eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank().replace("H", "+") + " | " + decimalFormat.format(percentage) + "%", true);
+                                    BufferedImage area = new BufferedImage(663, 251, 2);
+                                    BufferedImage cover = ImageUtils.resize(ImageUtils.getImageFromUrl("https://assets.ppy.sh/beatmaps/" + bp.getBeatmapset_id() + "/covers/cover.jpg"), 655, 182);
+                                    BufferedImage overlay = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "osu_play_profile.png")));
+
+                                    Kernel kernel = new Kernel(3, 3, new float[] { 1f / 15f, 1f / 15f, 1f / 15f,
+                                            1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f });
+                                    BufferedImageOp op = new ConvolveOp(kernel);
+                                    cover = op.filter(cover, null);
 
 
+                                    Graphics2D g2d = area.createGraphics();
+                                    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                                    g2d.drawImage(cover, 5, 4, null);
+                                    g2d.drawImage(overlay, 0, 0, null);
+
+                                    BufferedImage user_image = ImageUtils.getImageFromUrl("https://a.ppy.sh/" + pp.getUserid());
+                                    if(user_image != null) {
+                                        if(user_image.getHeight() != 128 || user_image.getWidth() != 128) {
+                                            user_image = ImageUtils.resize(user_image, 128, 128);
+                                        }
+                                        g2d.drawImage(user_image, 52, 31, null);
+                                    }
+
+                                    g2d.setFont(OsuCommand.italic.deriveFont(45.79f));
+                                    g2d.drawString(pp.getNome(), 196, 148);
+                                    g2d.setFont(OsuCommand.italic.deriveFont(25.9f));
+                                    g2d.drawString(shortString(bp.getTitle(), 25) + " [" + bp.getVersion() + "]", 190, 59);
+                                    g2d.setFont(OsuCommand.italic.deriveFont(19.13f));
+                                    g2d.drawString(shortString(bp.getArtist(), 30), 208, 76);
+                                    g2d.setFont(OsuCommand.regular.deriveFont(18.21f));
+                                    g2d.drawString(mp.getPp() + "pp", 90, 210);
+                                    g2d.drawString(decimalFormat.format(percentage * 100) + "% - " + mp.getMaxcombo() + "x - " + mp.getCount50() + "x 50 | " + mp.getCount100() + "x 100 | " + mp.getCountmiss() + "x miss - " + mp.getRank().replace("H", "+"), 122, 236);
+
+                                    g2d.dispose();
+
+                                    final int i2 = i;
                                     for (String usr : subscription.get(user)) {
                                         User u = Main.getUserById(usr);
                                         eb.setFooter("Status requerido por " + u.getName(), u.getEffectiveAvatarUrl());
 
-                                        u.openPrivateChannel().queue(c -> c.sendMessage(eb.build()).queue(v -> {
+                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " Novo rank #" + (i2 + 1) + " para " + pp.getNome()).queue(v -> {
                                         }, k -> {
                                             if (removeUsers.containsKey(user)) {
                                                 removeUsers.get(user).add(usr);
@@ -144,8 +186,26 @@ public class OsuSubscriptionManager {
         }));
     }
 
+    private static RestAction<Message> sendImagePure(PrivateChannel ch, BufferedImage img, String msg) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(img, "png", os);
+        } catch (Exception ex) { ex.printStackTrace();}
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
+
+        return ch.sendFile(is, "ata.png", new MessageBuilder().append(msg).build());
+    }
+
     private static double calculatePercentage(int count50, int count100, int count300, int misses) {
         return (double)((count50 * 50) + (count100 * 100) + (count300 * 300)) / ((misses + count50 + count100 + count300) * 300);
+    }
+
+    private static String shortString(String x, int max) {
+        if(x.length() <= max) {
+            return x;
+        }
+
+        return x.substring(0, x.length() - (x.length() - max));
     }
 
 }

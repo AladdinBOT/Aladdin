@@ -79,7 +79,6 @@ public class OsuCommand implements CommandExecutor {
                     OsuBeatmapProfile bp = null;
                     try{
                         mp = OsuManager.getTop10FromPlayer(pf.getNome()).get(0);
-                        System.out.println(mp.toString());
                         bp = OsuManager.getBeatmap(mp.getBeatmap_id());
                     }catch (Exception ex) { ex.printStackTrace(); }
 
@@ -115,13 +114,14 @@ public class OsuCommand implements CommandExecutor {
                     ImageUtils.drawCenteredString(g, pf.getCount_rank_ss(), new Rectangle(622, 90, 56, 15), bold.deriveFont(21.38f));
                     g.setFont(regular.deriveFont(18.21f));
                     g.drawString("#" + pf.getPp_rank() + " | #" + pf.getCountry_rank() + " - " + Math.round(Float.valueOf(pf.getPp_raw())) + "pp", 116, 237);
-                    String beatmap = (mp == null ? "O jogador não possui uma top play." : bp.getTitle() + " [" + bp.getVersion() + "] " + " - " + Math.round(Float.valueOf(mp.getPp())) + "pp");
+                    String beatmap = (mp == null ? "O jogador não possui uma top play" : bp.getTitle() + " [" + bp.getVersion() + "] " + " - " + Math.round(Float.valueOf(mp.getPp())) + "pp");
                     g.drawString(beatmap, 145, 215);
 
                     g.dispose();
                     e.sendImagePure(background, EmojiList.CORRECT + " Aqui esta o perfil de ``" + pf.getNome() + "``");
 
                 }catch(Exception ex) {
+                    ex.printStackTrace();
                     e.sendMessage(EmojiList.WORRIED + " Oops, ocorreu um erro ao tentar adquirir os dados do jogador informado: ``" + ex.getMessage() + "``");
                 }
             });
