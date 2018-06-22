@@ -6,7 +6,8 @@ import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
-import net.heyzeer0.aladdin.manager.custom.OsuManager;
+import net.heyzeer0.aladdin.manager.custom.osu.OsuManager;
+import net.heyzeer0.aladdin.manager.custom.osu.OsuSubscriptionManager;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -41,20 +42,44 @@ public class OsuCommand implements CommandExecutor {
     }
 
 
-    @Command(command = "osu", description = "Informações sobre Osu!.", parameters = {"profile", "nick"}, type = CommandType.FUN,
-            usage = "a!osu profile HeyZeer0")
+    @Command(command = "osu", description = "Informações sobre Osu!.", parameters = {"profile/follow"}, type = CommandType.FUN,
+            usage = "a!osu profile HeyZeer0\na!osu follow HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+        if (args.get(0).equals("follow")) {
+            if(args.getSize() < 2) {
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
+            }
 
+            Utils.runAsync(() -> {
+                String nick = args.getCompleteAfter(1);
+                try{
+                    OsuPlayerProfile p = OsuManager.getUserProfile(nick, false);
+
+                    if(OsuSubscriptionManager.addSubscriptor(e.getAuthor(), p.getNome())) {
+                        e.sendMessage(EmojiList.THINKING + " Tentei te registrar no programa, se você recebeu uma mensagem no privado significa que foi um sucesso, caso contrario cheque se eu posso te enviar mensagens privadas! ^O^");
+                    }else{
+                        e.sendMessage(EmojiList.CORRECT + " Agora você não esta mais seguindo ``" + nick + "``");
+                    }
+
+                }catch (Exception x) { e.sendMessage(EmojiList.WORRIED + " Oops, o jogador definido não existe!");}
+            });
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
         if(args.get(0).equalsIgnoreCase("profile")) {
+            if(args.getSize() < 2) {
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
+            }
             Utils.runAsync(() -> {
                 try{
-                    OsuPlayerProfile pf = OsuManager.getUserProfile(args.get(1));
+                    OsuPlayerProfile pf = OsuManager.getUserProfile(args.get(1), false);
 
 
                     OsuMatchProfile mp = null;
                     OsuBeatmapProfile bp = null;
                     try{
                         mp = OsuManager.getTop10FromPlayer(pf.getNome()).get(0);
+                        System.out.println(mp.toString());
                         bp = OsuManager.getBeatmap(mp.getBeatmap_id());
                     }catch (Exception ex) { ex.printStackTrace(); }
 

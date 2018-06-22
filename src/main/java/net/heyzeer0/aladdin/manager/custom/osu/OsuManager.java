@@ -1,4 +1,4 @@
-package net.heyzeer0.aladdin.manager.custom;
+package net.heyzeer0.aladdin.manager.custom.osu;
 
 import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuBeatmapProfile;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
  */
 public class OsuManager {
 
-    public static OsuPlayerProfile getUserProfile(String user) throws Exception {
+    public static OsuPlayerProfile getUserProfile(String user, boolean id) throws Exception {
         OsuPlayerProfile profile = new OsuPlayerProfile(user);
-        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_user?k=" + ApiKeysConfig.osu_api_key + "&u=" + user);
+        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_user?k=" + ApiKeysConfig.osu_api_key + "&u=" + user + (id ? "&type=id" : ""));
 
         JSONObject json = new JSONObject(website.substring(1, website.length()-1));
 
@@ -58,6 +58,24 @@ public class OsuManager {
                     new OsuMatchProfile(obj.getString("beatmap_id"), obj.getString("score"), obj.getString("maxcombo"), obj.getString("count300")
                     , obj.getString("count100"), obj.getString("count50"), obj.getString("countmiss"), obj.getString("countkatu"), obj.getString("countgeki")
                     , obj.getString("perfect"), obj.getString("enabled_mods"), obj.getString("user_id"), obj.getString("date"), obj.getString("rank"), obj.getString("pp"))
+            );
+        }
+
+        return matches;
+    }
+
+    public static ArrayList<OsuMatchProfile> getTop50FromPlayer(String user) throws Exception {
+        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&limit=50&u=" + user);
+        ArrayList<OsuMatchProfile> matches = new ArrayList<>();
+
+        JSONArray c = new JSONArray(website);
+        for(int i = 0; i < c.length(); i++) {
+            JSONObject obj = c.getJSONObject(i);
+
+            matches.add(
+                    new OsuMatchProfile(obj.getString("beatmap_id"), obj.getString("score"), obj.getString("maxcombo"), obj.getString("count300")
+                            , obj.getString("count100"), obj.getString("count50"), obj.getString("countmiss"), obj.getString("countkatu"), obj.getString("countgeki")
+                            , obj.getString("perfect"), obj.getString("enabled_mods"), obj.getString("user_id"), obj.getString("date"), obj.getString("rank"), obj.getString("pp"))
             );
         }
 

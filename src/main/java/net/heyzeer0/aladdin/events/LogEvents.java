@@ -57,7 +57,7 @@ import java.util.Optional;
  */
 public class LogEvents implements EventListener {
 
-    private static final Cache<String, Optional<CachedMessage>> messageCache = CacheBuilder.newBuilder().concurrencyLevel(10).maximumSize(35000).build();
+        private static final Cache<String, Optional<CachedMessage>> messageCache = CacheBuilder.newBuilder().concurrencyLevel(10).maximumSize(35000).build();
 
     @Override
     public void onEvent(Event e) {

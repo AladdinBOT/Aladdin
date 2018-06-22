@@ -19,8 +19,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -166,6 +168,16 @@ public class Utils {
             return "";
         }
         return e ? "es" : "s";
+    }
+
+    public static String toMD5(String input) {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(StandardCharsets.UTF_8.encode(input));
+            return String.format("%032x", new BigInteger(1, md5.digest()));
+        }catch (Exception ex) {}
+
+        return input;
     }
 
 

@@ -14,6 +14,7 @@ import net.heyzeer0.aladdin.database.AladdinData;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import net.heyzeer0.aladdin.manager.custom.GiveawayManager;
 import net.heyzeer0.aladdin.manager.custom.ReminderManager;
+import net.heyzeer0.aladdin.manager.custom.osu.OsuSubscriptionManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.SubscriptionManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
@@ -128,6 +129,7 @@ public class Main {
         GiveawayManager.startUpdating();
         SubscriptionManager.startUpdating();
         ReminderManager.startChecking();
+        OsuSubscriptionManager.startUpdating();
     }
 
     public static File getDataFolder() {

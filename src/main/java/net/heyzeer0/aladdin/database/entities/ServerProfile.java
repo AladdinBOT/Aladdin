@@ -30,13 +30,14 @@ public class ServerProfile implements ManagedObject {
     HashMap<String, GiveawayProfile> giveaways = new HashMap<>();
     HashMap<String, SubscriptionProfile> subscriptions = new HashMap<>();
     ArrayList<String> sendedIds = new ArrayList<>();
+    HashMap<String, ArrayList<String>> osu_subscriptions = new HashMap<>();
 
     public ServerProfile() {
-        this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new ArrayList<>());
+        this("main", new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new ArrayList<>(), new HashMap<>());
     }
 
-    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveaways", "subscriptions", "sendedIds"})
-    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GiveawayProfile> giveaways, HashMap<String, SubscriptionProfile> subscriptions, ArrayList<String> sendedIds) {
+    @ConstructorProperties({"id", "users_who_upvoted", "reminders", "giveaways", "subscriptions", "sendedIds", "osu_subscriptions"})
+    public ServerProfile(String id, ArrayList<String> users_who_upvoted, ArrayList<ReminderProfile> reminders, HashMap<String, GiveawayProfile> giveaways, HashMap<String, SubscriptionProfile> subscriptions, ArrayList<String> sendedIds, HashMap<String, ArrayList<String>> osu_subscriptions) {
         this.id = id;
         this.users_who_upvoted = users_who_upvoted;
         this.reminders = reminders;
@@ -55,6 +56,10 @@ public class ServerProfile implements ManagedObject {
             this.sendedIds = new ArrayList<>();
             save = true;
         }else { this.sendedIds = sendedIds; }
+        if(osu_subscriptions == null) {
+            this.osu_subscriptions = new HashMap<>();
+            save = true;
+        }else { this.osu_subscriptions = osu_subscriptions; }
 
         if(save)
             saveAsync();
@@ -97,6 +102,11 @@ public class ServerProfile implements ManagedObject {
 
     public void updateSendedIds(ArrayList<String> sendedIds) {
         this.sendedIds = sendedIds;
+        saveAsync();
+    }
+
+    public void updateOsuSubscriptions(HashMap<String, ArrayList<String>> osu_subscriptions) {
+        this.osu_subscriptions = osu_subscriptions;
         saveAsync();
     }
 
