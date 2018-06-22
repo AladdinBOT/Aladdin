@@ -38,9 +38,14 @@ public class OsuSubscriptionManager {
                     subscription.get(target).add(user.getId());
                     Main.getDatabase().getServer().updateOsuSubscriptions(subscription);
                 }else{
-                    ArrayList<String> ss = new ArrayList<>(); ss.add(user.getId());
-                    subscription.put(target, ss);
-                    Main.getDatabase().getServer().updateOsuSubscriptions(subscription);
+                    try{
+                        OsuManager.getTop50FromPlayer(target).forEach(k -> sended_ids.add(k.toString()));
+                        ArrayList<String> ss = new ArrayList<>(); ss.add(user.getId());
+                        subscription.put(target, ss);
+                        Main.getDatabase().getServer().updateOsuSubscriptions(subscription);
+
+                        sended_ids.remove(0);
+                    }catch (Exception ex) { }
                 }
                 });
         });
@@ -58,6 +63,7 @@ public class OsuSubscriptionManager {
                     for(String user : subscription.keySet()) {
                         try{
                             for(OsuMatchProfile c : OsuManager.getTop50FromPlayer(user)) {
+                                System.out.println(c.toString());
                                 sended_ids.add(c.toString());
                             }
                         }catch (Exception ex) { ex.printStackTrace(); toRemove.add(user); }
@@ -69,6 +75,7 @@ public class OsuSubscriptionManager {
                     }
                 }
             }else {
+                sended_ids.remove(0);
                 ArrayList<String> toRemove = new ArrayList<>();
                 HashMap<String, ArrayList<String>> removeUsers = new HashMap<>();
                 if (subscription.size() > 0) {
@@ -76,7 +83,7 @@ public class OsuSubscriptionManager {
                         try {
 
                             ArrayList<OsuMatchProfile> ls = OsuManager.getTop50FromPlayer(user);
-                            for (int i = 0; i <= ls.size(); i++) {
+                            for (int i = 0; i < ls.size(); i++) {
                                 OsuMatchProfile mp = ls.get(i);
                                 if (!sended_ids.contains(mp.toString())) {
                                     sended_ids.add(mp.toString());
@@ -91,7 +98,7 @@ public class OsuSubscriptionManager {
                                     eb.setTitle("Novo Rank #" + (i + 1) + " para " + pp.getNome());
                                     eb.setDescription("Clique [aqui](https://osu.ppy.sh/users/" + mp.getUser_id() + ") para ir ao perfil do jogador.");
                                     eb.addField(":trophy: | Status:", "**pp:** " + mp.getPp(), true);
-                                    eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank() + " | " + decimalFormat.format(calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()))) + "%", true);
+                                    eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank().replace("H", "+") + " | " + calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss())) + "%", true);
 
 
                                     for (String usr : subscription.get(user)) {
@@ -140,7 +147,7 @@ public class OsuSubscriptionManager {
     }
 
     private static double calculatePercentage(int count50, int count100, int count300, int misses) {
-        return ((count50 * 50) + (count100 * 100) + (count300 * 300))/((misses + count300 + count100 + count50)*300);
+        return ((count50 * 50) + (count100 * 100) + (count300 * 300)) / ((misses + count50 + count100 + count300) * 300);
     }
 
 }
