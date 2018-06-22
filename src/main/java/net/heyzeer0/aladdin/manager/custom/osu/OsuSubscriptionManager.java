@@ -28,6 +28,7 @@ public class OsuSubscriptionManager {
     public static boolean addSubscriptor(User user, String target) {
         if(subscription.containsKey(target) && subscription.get(target).contains(user.getId())) {
             subscription.get(target).remove(user.getId());
+            Main.getDatabase().getServer().updateOsuSubscriptions(subscription);
             return false;
         }
 
