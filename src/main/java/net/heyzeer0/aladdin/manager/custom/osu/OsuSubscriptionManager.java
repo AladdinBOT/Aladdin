@@ -43,8 +43,6 @@ public class OsuSubscriptionManager {
                         ArrayList<String> ss = new ArrayList<>(); ss.add(user.getId());
                         subscription.put(target, ss);
                         Main.getDatabase().getServer().updateOsuSubscriptions(subscription);
-
-                        sended_ids.remove(0);
                     }catch (Exception ex) { }
                 }
                 });
@@ -75,7 +73,6 @@ public class OsuSubscriptionManager {
                     }
                 }
             }else {
-                sended_ids.remove(0);
                 ArrayList<String> toRemove = new ArrayList<>();
                 HashMap<String, ArrayList<String>> removeUsers = new HashMap<>();
                 if (subscription.size() > 0) {
