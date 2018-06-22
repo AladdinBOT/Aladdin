@@ -74,7 +74,6 @@ public class OsuSubscriptionManager {
             }else {
                 ArrayList<String> toRemove = new ArrayList<>();
                 HashMap<String, ArrayList<String>> removeUsers = new HashMap<>();
-                sended_ids.remove(0);
                 if (subscription.size() > 0) {
                     for (String user : subscription.keySet()) {
                         try {
