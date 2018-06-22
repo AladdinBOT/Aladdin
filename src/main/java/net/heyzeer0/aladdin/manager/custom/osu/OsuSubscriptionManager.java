@@ -88,9 +88,9 @@ public class OsuSubscriptionManager {
                                     eb.setColor(Color.GREEN);
                                     eb.setImage("https://assets.ppy.sh/beatmaps/" + bp.getBeatmap_id() + "/covers/cover.jpg");
                                     eb.setThumbnail("https://a.ppy.sh/" + mp.getUser_id());
-                                    eb.setTitle("Novo Rank #" + i + " para " + pp.getNome());
-                                    eb.setDescription("Clique (aqui)[https://osu.ppy.sh/users/" + mp.getUser_id() + "] para ir ao perfil do jogador.");
-                                    eb.addField(":trophy: | Status:", "**pp:** " + mp.getPp() + " | #" + mp.getRank(), true);
+                                    eb.setTitle("Novo Rank #" + (i + 1) + " para " + pp.getNome());
+                                    eb.setDescription("Clique [aqui](https://osu.ppy.sh/users/" + mp.getUser_id() + ") para ir ao perfil do jogador.");
+                                    eb.addField(":trophy: | Status:", "**pp:** " + mp.getPp(), true);
                                     eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank() + " | " + decimalFormat.format(calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()))) + "%", true);
 
 
@@ -140,7 +140,7 @@ public class OsuSubscriptionManager {
     }
 
     private static double calculatePercentage(int count50, int count100, int count300, int misses) {
-        return ((count50 * 50) + (count100 * 100) + (count300 * 300))/((misses + count300 + count100 + count50)/300);
+        return ((count50 * 50) + (count100 * 100) + (count300 * 300))/((misses + count300 + count100 + count50)*300);
     }
 
 }
