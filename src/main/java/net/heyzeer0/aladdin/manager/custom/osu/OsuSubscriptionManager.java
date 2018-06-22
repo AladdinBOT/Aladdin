@@ -75,6 +75,7 @@ public class OsuSubscriptionManager {
             }else {
                 ArrayList<String> toRemove = new ArrayList<>();
                 HashMap<String, ArrayList<String>> removeUsers = new HashMap<>();
+                sended_ids.remove(0);
                 if (subscription.size() > 0) {
                     for (String user : subscription.keySet()) {
                         try {
@@ -95,7 +96,9 @@ public class OsuSubscriptionManager {
                                     eb.setTitle("Novo Rank #" + (i + 1) + " para " + pp.getNome());
                                     eb.setDescription("Clique [aqui](https://osu.ppy.sh/users/" + mp.getUser_id() + ") para ir ao perfil do jogador.");
                                     eb.addField(":trophy: | Status:", "**pp:** " + mp.getPp(), true);
-                                    eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank().replace("H", "+") + " | " + decimalFormat.format(calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss())) * 100) + "%", true);
+                                    double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss())) * 100;
+                                    Main.getLogger().warn(percentage + "%");
+                                    eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank().replace("H", "+") + " | " + decimalFormat.format(percentage) + "%", true);
 
 
                                     for (String usr : subscription.get(user)) {
