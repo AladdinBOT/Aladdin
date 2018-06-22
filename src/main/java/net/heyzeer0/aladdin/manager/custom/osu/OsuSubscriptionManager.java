@@ -96,6 +96,14 @@ public class OsuSubscriptionManager {
                                     eb.setDescription("Clique [aqui](https://osu.ppy.sh/users/" + mp.getUser_id() + ") para ir ao perfil do jogador.");
                                     eb.addField(":trophy: | Status:", "**pp:** " + mp.getPp(), true);
                                     double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss())) * 100;
+
+                                    int count50 = Integer.valueOf(mp.getCount50());
+                                    int count100 = Integer.valueOf(mp.getCount100());
+                                    int count300 = Integer.valueOf(mp.getCount300());
+                                    int countMiss = Integer.valueOf(mp.getCountmiss());
+
+                                    Main.getLogger().warn((((count50 * 50) + (count100 * 100) + (count300 * 300)) / ((countMiss + count50 + count100 + count300) * 300) * 100) + "% " + count50 + " " + count100 + " " + count300 + " " + countMiss);
+
                                     Main.getLogger().warn(percentage + "% " + mp.getCount50() + " " + mp.getCount100() + " " + mp.getCount300() + " " + mp.getCountmiss());
 
                                     eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank().replace("H", "+") + " | " + decimalFormat.format(percentage) + "%", true);
