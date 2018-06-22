@@ -60,7 +60,7 @@ public class OsuSubscriptionManager {
                             for(OsuMatchProfile c : OsuManager.getTop50FromPlayer(user)) {
                                 sended_ids.add(c.toString());
                             }
-                        }catch (Exception ex) { toRemove.add(user); }
+                        }catch (Exception ex) { ex.printStackTrace(); toRemove.add(user); }
                     }
 
                     if(toRemove.size() > 0) {
@@ -121,6 +121,7 @@ public class OsuSubscriptionManager {
                                 }
                             }
                         } catch (Exception ex) {
+                            ex.printStackTrace();
                             toRemove.add(user);
                         }
                     }
