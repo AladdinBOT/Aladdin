@@ -91,7 +91,7 @@ public class OsuSubscriptionManager {
                                     eb.setTitle("Novo Rank #" + i + " para " + pp.getNome());
                                     eb.setDescription("Clique (aqui)[https://osu.ppy.sh/users/" + mp.getUser_id() + "] para ir ao perfil do jogador.");
                                     eb.addField(":trophy: | Status:", "**pp:** " + mp.getPp() + " | #" + mp.getRank(), true);
-                                    eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank() + " | " + decimalFormat.format(calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss())) + "%"), true);
+                                    eb.addField("<:empty:363753754874478602>", "**Rank:** " + mp.getRank() + " | " + decimalFormat.format(calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()))) + "%", true);
 
 
                                     for (String usr : subscription.get(user)) {
