@@ -40,6 +40,7 @@ public class OsuManager {
         profile.pp_raw = json.getString("pp_raw");
         profile.count_rank_sh = json.getString("count_rank_sh");
         profile.count_rank_ssh = json.getString("count_rank_ssh");
+        profile.nome = json.getString("username");
 
         profile.exist = true;
 
