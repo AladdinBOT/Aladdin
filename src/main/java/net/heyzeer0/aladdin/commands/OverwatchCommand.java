@@ -22,7 +22,7 @@ import java.awt.*;
 public class OverwatchCommand implements CommandExecutor{
 
     @Command(command = "overwatch", description = "Comandos sobre overwatch.", aliasses = {"ow"}, parameters = {"profile", "user#id"}, type = CommandType.FUN,
-            usage = "a!overwatch perfil HeyZeer0#1903")
+            usage = "a!overwatch profile HeyZeer0#1903")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("profile")) {
 

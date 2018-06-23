@@ -2,7 +2,7 @@ package net.heyzeer0.aladdin.manager.custom;
 
 import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.custom.PixaBayProfile;
-import net.heyzeer0.aladdin.utils.Utils;
+import net.heyzeer0.aladdin.utils.Router;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,9 +19,7 @@ public class PixaBayManager {
         List<PixaBayProfile> images = new ArrayList<>();
 
 
-        JSONObject obj_main = new JSONObject(Utils.readWebsite(
-                "https://pixabay.com/api/?key=" + ApiKeysConfig.pixabay_api_key + "&q=" + image + "&image_type=photo&per_page=3&safesearch=true"
-        ));
+        JSONObject obj_main = new Router("https://pixabay.com/api/?key=" + ApiKeysConfig.pixabay_api_key + "&q=" + image + "&image_type=photo&per_page=3&safesearch=true").getResponse().asJsonObject();
 
         if(obj_main.getInt("total") <= 0) {
             return null;

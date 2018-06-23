@@ -10,7 +10,7 @@ import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
 import net.heyzeer0.aladdin.profiles.custom.warframe.AlertProfile;
 import net.heyzeer0.aladdin.profiles.custom.warframe.SubscriptionProfile;
 import net.heyzeer0.aladdin.profiles.utilities.ScheduledExecutor;
-import net.heyzeer0.aladdin.utils.Utils;
+import net.heyzeer0.aladdin.utils.Router;
 import org.json.JSONObject;
 
 import java.awt.*;
@@ -67,7 +67,7 @@ public class SubscriptionManager {
                 int amount = subscriptions.size();
 
                 try{
-                    JSONObject main = new JSONObject(Utils.readWebsite("https://api.warframestat.us/pc"));
+                    JSONObject main = new Router("https://api.warframestat.us/pc").getResponse().asJsonObject();
                     JSONObject cycle = main.getJSONObject("cetusCycle");
                     JSONObject baro = main.getJSONObject("voidTrader");
                     JSONObject darvo = main.getJSONArray("dailyDeals").getJSONObject(0);

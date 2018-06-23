@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import net.heyzeer0.aladdin.profiles.custom.warframe.PriceProfile;
-import net.heyzeer0.aladdin.utils.Utils;
+import net.heyzeer0.aladdin.utils.Router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +21,9 @@ public class PriceManager {
     public static List<PriceProfile> getPrices(String item) throws Exception {
         List<PriceProfile> values = new ArrayList<>();
 
-        String jsonstring = Utils.readWebsite(api_url);
 
         Gson gson = new GsonBuilder().create();
-        JsonArray json = gson.fromJson(jsonstring, JsonElement.class).getAsJsonArray();
+        JsonArray json = gson.fromJson(new Router(api_url).getResponse().getResult(), JsonElement.class).getAsJsonArray();
 
         for(JsonElement entry : json) {
             if(entry.getAsJsonObject().get("Title").getAsString().equalsIgnoreCase(item)) {

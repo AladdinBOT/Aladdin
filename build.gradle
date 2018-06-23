@@ -32,7 +32,6 @@ dependencies {
     compile 'com.sedmelluq:jda-nas:1.0.5'
     compile 'com.github.fedy2:yahoo-weather-java-api:2.0.2'
     compile 'com.udojava:EvalEx:1.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'org.json:json:20170516'
     compile 'net.heyzeer0.papi:PaladinsAPI:1.0.0_16'
     compile 'com.github.natanbc:discordbots-api:+'

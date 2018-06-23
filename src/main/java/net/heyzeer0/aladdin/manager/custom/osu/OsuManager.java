@@ -4,7 +4,7 @@ import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuBeatmapProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuMatchProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuPlayerProfile;
-import net.heyzeer0.aladdin.utils.Utils;
+import net.heyzeer0.aladdin.utils.Router;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,7 +18,7 @@ public class OsuManager {
 
     public static OsuPlayerProfile getUserProfile(String user, boolean id) throws Exception {
         OsuPlayerProfile profile = new OsuPlayerProfile(user);
-        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_user?k=" + ApiKeysConfig.osu_api_key + "&u=" + user + (id ? "&type=id" : ""));
+        String website = new Router("https://osu.ppy.sh/api/get_user?k=" + ApiKeysConfig.osu_api_key + "&u=" + user + (id ? "&type=id" : "")).getResponse().getResult();
 
         JSONObject json = new JSONObject(website.substring(1, website.length()-1));
 
@@ -48,7 +48,7 @@ public class OsuManager {
     }
 
     public static ArrayList<OsuMatchProfile> getTop10FromPlayer(String user) throws Exception {
-        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&u=" + user);
+        String website = new Router("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&u=" + user).getResponse().getResult();
         ArrayList<OsuMatchProfile> matches = new ArrayList<>();
 
         JSONArray c = new JSONArray(website);
@@ -66,7 +66,7 @@ public class OsuManager {
     }
 
     public static ArrayList<OsuMatchProfile> getTop50FromPlayer(String user) throws Exception {
-        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&limit=50&u=" + user);
+        String website = new Router("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&limit=50&u=" + user).getResponse().getResult();
         ArrayList<OsuMatchProfile> matches = new ArrayList<>();
 
         JSONArray c = new JSONArray(website);
@@ -84,7 +84,7 @@ public class OsuManager {
     }
 
     public static OsuBeatmapProfile getBeatmap(String id) throws Exception {
-        String website = Utils.readWebsite("https://osu.ppy.sh/api/get_beatmaps?k=" + ApiKeysConfig.osu_api_key + "&b=" + id);
+        String website = new Router("https://osu.ppy.sh/api/get_beatmaps?k=" + ApiKeysConfig.osu_api_key + "&b=" + id).getResponse().getResult();
 
         JSONObject c = new JSONArray(website).getJSONObject(0);
 

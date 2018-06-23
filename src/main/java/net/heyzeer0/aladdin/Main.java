@@ -21,7 +21,7 @@ import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 import net.heyzeer0.aladdin.utils.DiscordLists;
-import net.heyzeer0.aladdin.utils.JDAUtils;
+import net.heyzeer0.aladdin.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class Main {
     private static ShardProfile[] shards;
     private static AladdinData data;
 
-    public static String version = "1.3.1";
+    public static String version = "1.5.0";
 
     public static void main(String args[]) {
         try{
@@ -57,7 +57,7 @@ public class Main {
             logger.finishMsCount("Configs");
 
             logger.startMsCount();
-            shards = new ShardProfile[JDAUtils.getShardAmmount()];
+            shards = new ShardProfile[Utils.getShardAmmount()];
             for(int i = 0; i < shards.length; i++) {
                 if(i != 0) Thread.sleep(5000);
                 shards[i] = new ShardProfile(i, shards.length);

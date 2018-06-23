@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.profiles.custom;
 
-import com.google.gson.stream.JsonWriter;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import net.heyzeer0.aladdin.profiles.utilities.Reactioner;
 import net.heyzeer0.aladdin.utils.ImageUtils;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

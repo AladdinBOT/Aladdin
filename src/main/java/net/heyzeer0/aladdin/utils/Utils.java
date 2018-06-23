@@ -1,16 +1,16 @@
 package net.heyzeer0.aladdin.utils;
 
 import com.google.gson.JsonParser;
+import com.mashape.unirest.http.Unirest;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -41,8 +41,6 @@ public class Utils {
     private static ScheduledExecutorService async = Executors.newSingleThreadScheduledExecutor();
     private static ScheduledExecutorService timers = Executors.newSingleThreadScheduledExecutor();
 
-    public static OkHttpClient httpclient = new OkHttpClient.Builder().build();
-
     public static void runAsync(Runnable r) {
         async.execute(r);
     }
@@ -53,6 +51,19 @@ public class Utils {
 
     public static void runTimer(Runnable r, long delay, TimeUnit unit) {
         timers.scheduleAtFixedRate(r, 0, delay, unit);
+    }
+
+    public static int getShardAmmount() {
+        try {
+            return Unirest.get("https://discordapp.com/api/gateway/bot")
+                    .header("Authorization", "Bot " + BotConfig.bot_token)
+                    .header("Content-Type", "application/json")
+                    .asJson()
+                    .getBody().getObject().getInt("shards");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 
     public static String translateTempo(String entrada) {
@@ -254,10 +265,6 @@ public class Utils {
             }
         }
         return raw;
-    }
-
-    public static String readWebsite(String url) throws Exception {
-        return httpclient.newCall(new Request.Builder().url(url).addHeader("User-Agent", "JDA/DiscordBot (Aladdin)").addHeader("Content-Type", "text/plain").build()).execute().body().string();
     }
 
     public static HashMap<GuildConfig, Object> getDefaultValues() {

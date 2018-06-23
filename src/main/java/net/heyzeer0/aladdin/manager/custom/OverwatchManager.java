@@ -1,7 +1,7 @@
 package net.heyzeer0.aladdin.manager.custom;
 
 import net.heyzeer0.aladdin.profiles.custom.OverwatchPlayer;
-import net.heyzeer0.aladdin.utils.Utils;
+import net.heyzeer0.aladdin.utils.Router;
 import org.json.JSONObject;
 
 /**
@@ -14,12 +14,12 @@ public class OverwatchManager {
 
     public static OverwatchPlayer getUserProfile(String n) throws Exception {
 
-        String website = Utils.readWebsite(api_url + n);
-        if(website.contains("Not Found")) {
+        Router.Response website = new Router(api_url + n).getResponse();
+        if(website.getResult().contains("Not Found")) {
             return null;
         }
 
-        JSONObject json = new JSONObject(Utils.readWebsite(api_url + n));
+        JSONObject json = website.asJsonObject();
 
         OverwatchPlayer p = new OverwatchPlayer();
 

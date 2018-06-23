@@ -135,7 +135,7 @@ public class CommandManager {
                     List<String> params = new ArrayList<>();
 
                     for(int i = 1; i < r.getMessage().length; i++) {
-                        params.add("[" +r.getMessage()[i] + "]");
+                        params.add("[" + r.getMessage()[i] + "]");
                     }
 
                     e.sendMessage(AladdinMessages.WITHOUT_PARAMS.replaceMessage(e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + arg.invoke + " " + r.getMessage()[0], StringUtils.join(params, " ")));

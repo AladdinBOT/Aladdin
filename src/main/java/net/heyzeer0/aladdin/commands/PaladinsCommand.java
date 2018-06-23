@@ -33,7 +33,7 @@ public class PaladinsCommand implements CommandExecutor {
     public static DecimalFormat df = new DecimalFormat("###.#");
 
     @Command(command = "paladins", description = "Informações sobre Paladins", parameters = {"profile"}, type = CommandType.FUN,
-            usage = "a!paladins perfil HeyZeer0")
+            usage = "a!paladins profile HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
         if(args.get(0).equalsIgnoreCase("profile")) {
             if(args.getSize() < 2) {
