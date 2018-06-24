@@ -56,7 +56,7 @@ public class Utils {
         try {
             return new Router("https://discordapp.com/api/gateway/bot")
                     .addHeaderParameter("Authorization", "Bot " + BotConfig.bot_token)
-                    .addHeaderParameter("Content-Typ", "application/json")
+                    .addHeaderParameter("Content-Typw", "application/json")
                     .getResponse().asJsonObject().getInt("shards");
         } catch (Exception e) {
             e.printStackTrace();
