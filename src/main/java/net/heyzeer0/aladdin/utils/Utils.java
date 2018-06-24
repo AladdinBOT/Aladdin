@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.utils;
 
 import com.google.gson.JsonParser;
-import com.mashape.unirest.http.Unirest;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.heyzeer0.aladdin.Main;
@@ -55,11 +54,10 @@ public class Utils {
 
     public static int getShardAmmount() {
         try {
-            return Unirest.get("https://discordapp.com/api/gateway/bot")
-                    .header("Authorization", "Bot " + BotConfig.bot_token)
-                    .header("Content-Type", "application/json")
-                    .asJson()
-                    .getBody().getObject().getInt("shards");
+            return new Router("https://discordapp.com/api/gateway/bot")
+                    .addHeaderParameter("Authorization", "Bot " + BotConfig.bot_token)
+                    .addHeaderParameter("Content-Typ", "application/json")
+                    .getResponse().asJsonObject().getInt("shards");
         } catch (Exception e) {
             e.printStackTrace();
         }

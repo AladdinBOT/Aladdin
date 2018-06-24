@@ -24,7 +24,6 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
     compile 'com.google.guava:guava:20.0'
     compile 'net.dv8tion:JDA:+'
-    compile 'com.mashape.unirest:unirest-java:1.4.9'
     compile 'com.rethinkdb:rethinkdb-driver:2.3.3'
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1'
     compile 'org.projectlombok:lombok:1.16.16'

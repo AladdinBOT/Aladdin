@@ -1,7 +1,5 @@
 package net.heyzeer0.aladdin.profiles.custom;
 
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.Message;
 import net.heyzeer0.aladdin.Main;
@@ -10,6 +8,7 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Reactioner;
 import net.heyzeer0.aladdin.utils.ImageUtils;
+import net.heyzeer0.aladdin.utils.Router;
 import net.heyzeer0.aladdin.utils.Utils;
 import org.json.JSONObject;
 
@@ -26,11 +25,13 @@ import java.util.ArrayList;
  */
 public class AkinatorProfile {
 
-    private String NEW_SESSION_URL = "http://api-pt3.akinator.com/ws/new_session?partner=1";
-    private String ANSWER_URL = "http://api-pt3.akinator.com/ws/answer";
-    private String GET_GUESS_URL = "http://api-pt3.akinator.com/ws/list";
-    private String CHOICE_URL = "http://api-pt3.akinator.com/ws/choice";
-    private String EXCLUSION_URL = "http://api-pt3.akinator.com/ws/exclusion";
+    public String[] servers = new String[] {"http://62-4-22-192.rev.poneytelecom.eu:8166", "http://62-210-100-133.rev.poneytelecom.eu:8161", "http://ns6624370.ip-5-196-85.eu:8111"};
+
+    private String NEW_SESSION_URL;
+    private String ANSWER_URL;
+    private String GET_GUESS_URL;
+    private String CHOICE_URL;
+    private String EXCLUSION_URL;
 
     MessageEvent e;
     AkinatorQuestion actual;
@@ -46,29 +47,31 @@ public class AkinatorProfile {
     public AkinatorProfile(MessageEvent e) throws Exception {
         this.e = e;
 
-        JSONObject session = Unirest.get(NEW_SESSION_URL).queryString("player", "AladdinBOT").asJson().getBody().getObject();
-        actual = new AkinatorQuestion(session);
-        if(actual.isGameOver()) {
-
-            NEW_SESSION_URL = "http://api-pt4.akinator.com/ws/new_session?partner=0&premium=1";
-            ANSWER_URL = "http://api-pt4.akinator.com/ws/answer";
-            GET_GUESS_URL = "http://api-pt4.akinator.com/ws/list";
-            CHOICE_URL = "http://api-pt4.akinator.com/ws/choice";
-            EXCLUSION_URL = "http://api-pt4.akinator.com/ws/exclusion";
-
-            session = Unirest.get(NEW_SESSION_URL).queryString("player", "AladdinBOT").asJson().getBody().getObject();
+        boolean found = false;
+        for(int i = 0; i < servers.length; i++) {
+            NEW_SESSION_URL = servers[i] + String.format("/ws/new_session?partner=1&player=%s&constraint=ETAT%%3C%%3E%%27AV%%27", "AladdinBOT");
+            JSONObject session = new Router(NEW_SESSION_URL).getResponse().asJsonObject();
             actual = new AkinatorQuestion(session);
+            if(!actual.isGameOver()) {
+                found = true;
 
-            if(actual.isGameOver()) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, os servidores do akinator estão offline!");
-                return;
+                ANSWER_URL = servers[i] + "/ws/answer";
+                GET_GUESS_URL = servers[i] + "/ws/list";
+                CHOICE_URL = servers[i] + "/ws/choice";
+                EXCLUSION_URL = servers[i] + "/ws/exclusion";
+                break;
             }
         }
 
-        signature = actual.getSignature();
-        this.session = actual.getSession();
+        if(found) {
+            signature = actual.getSignature();
+            this.session = actual.getSession();
 
-        createNextQuestion();
+            createNextQuestion();
+            return;
+        }
+
+        e.sendMessage(EmojiList.WORRIED + " Oops, os servidores do akinator estão offline!");
     }
 
     public void createGuess() throws Exception {
@@ -82,10 +85,11 @@ public class AkinatorProfile {
         BufferedImage img = ImageUtils.getImageFromUrl(guess.getImgPath());
 
 
-        Graphics g = tempImage.createGraphics();
+        Graphics2D g = tempImage.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g.drawImage(inputImage,0,0,null);
         g.setColor(Color.BLACK);
-        g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "Roboto-Thin.ttf")).deriveFont(25f));
+        g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Roboto-Thin.ttf")).deriveFont(25f));
         g.drawString(guess.getName(), 100, 85);
 
         if(img != null) {
@@ -110,7 +114,7 @@ public class AkinatorProfile {
         }
     }
 
-    public void createNextQuestion() throws Exception {
+    public void createNextQuestion() {
         Utils.runAsync(() -> {
             try{
                 AkinatorCommand.akinators.put(e.getAuthor().getId(), System.currentTimeMillis());
@@ -139,11 +143,12 @@ public class AkinatorProfile {
                 BufferedImage tempImage = new BufferedImage(inputImage.getWidth(),inputImage.getHeight(),BufferedImage.TYPE_INT_ARGB);
 
 
-                Graphics g = tempImage.createGraphics();
+                Graphics2D g = tempImage.createGraphics();
+                g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 g.drawImage(inputImage,0,0,null);
                 g.setColor(Color.BLACK);
 
-                g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "Roboto-Thin.ttf")).deriveFont(25f));
+                g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Roboto-Thin.ttf")).deriveFont(25f));
                 g.drawString("Pergunta Nº " + questions, 100, 85);
 
                 ArrayList<String> strings = new ArrayList<>();
@@ -216,21 +221,19 @@ public class AkinatorProfile {
                answer = 0;
             }
             if (answer == 0) {
-                    Unirest.get(CHOICE_URL)
-                            .queryString("session", session)
-                            .queryString("signature", signature)
-                            .queryString("step", actual.getStepNum())
-                            .queryString("element", guess.getId())
-                            .asString();
-                    e.sendMessage(EmojiList.SMILE + " Ótimo ! Adivinhei certo mais uma vez.\n" + "Eu adorei jogar com você " + e.getAuthor().getName() + "!");
-                    AkinatorCommand.akinators.remove(e.getAuthor().getId());
+                new Router(CHOICE_URL)
+                        .addUrlParameters("session", session)
+                        .addUrlParameters("signature", signature)
+                        .addUrlParameters("step", actual.getStepNum())
+                        .addUrlParameters("element", guess.getId()).getResponse();
+                e.sendMessage(EmojiList.SMILE + " Ótimo ! Adivinhei certo mais uma vez.\n" + "Eu adorei jogar com você " + e.getAuthor().getName() + "!");
+                AkinatorCommand.akinators.remove(e.getAuthor().getId());
             } else if (answer == 1) {
-                    Unirest.get(EXCLUSION_URL)
-                            .queryString("session", session)
-                            .queryString("signature", signature)
-                            .queryString("step", actual.getStepNum())
-                            .queryString("forward_answer", answer)
-                            .asString();
+                new Router(EXCLUSION_URL)
+                        .addUrlParameters("session", session)
+                        .addUrlParameters("signature", signature)
+                        .addUrlParameters("step", actual.getStepNum())
+                        .addUrlParameters("forward_answer", answer).getResponse();
 
                     lastQuestionWasGuess = false;
                     createNextQuestion();
@@ -238,12 +241,13 @@ public class AkinatorProfile {
             return;
         }
 
-        JSONObject json = Unirest.get(ANSWER_URL)
-                    .queryString("session", session)
-                    .queryString("signature", signature)
-                    .queryString("step", actual.getStepNum())
-                    .queryString("answer", answer)
-                    .asJson().getBody().getObject();
+        JSONObject json = new Router(ANSWER_URL)
+                .addUrlParameters("session", session)
+                .addUrlParameters("signature", signature)
+                .addUrlParameters("step", actual.getStepNum())
+                .addUrlParameters("answer", answer)
+                .getResponse().asJsonObject();
+
         actual = new AkinatorQuestion(json);
 
         if (actual.gameOver) {
@@ -301,14 +305,13 @@ public class AkinatorProfile {
         final String pseudo;
         final String imgPath;
 
-        AkinatorGuess() throws UnirestException {
-            JSONObject json = Unirest.get(GET_GUESS_URL)
-                    .queryString("session", session)
-                    .queryString("signature", signature)
-                    .queryString("step", actual.getStepNum())
-                    .asJson()
-                    .getBody()
-                    .getObject();
+        AkinatorGuess() throws Exception {
+
+            JSONObject json = new Router(GET_GUESS_URL)
+                    .addUrlParameters("session", session)
+                    .addUrlParameters("signature", signature)
+                    .addUrlParameters("step", actual.getStepNum())
+                    .getResponse().asJsonObject();
 
             JSONObject character = json.getJSONObject("parameters")
                     .getJSONArray("elements")

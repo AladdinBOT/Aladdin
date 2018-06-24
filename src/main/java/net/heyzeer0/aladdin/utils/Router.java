@@ -16,6 +16,7 @@ public class Router {
 
     String address;
     HashMap<String, String> header_parameters = new HashMap<>();
+    HashMap<String, String> url_parameters = new HashMap<>();
 
     public Router(String address) {
         this.address = address;
@@ -29,6 +30,12 @@ public class Router {
         return this;
     }
 
+    public Router addUrlParameters(String key, Object value) {
+        url_parameters.put(key, value.toString());
+
+        return this;
+    }
+
     public Response getResponse() throws Exception {
         return new Response(this);
     }
@@ -38,7 +45,22 @@ public class Router {
         String result;
 
         public Response(Router r) throws Exception {
-            URLConnection st = new URL(r.address).openConnection();
+            String url = r.address;
+
+            if(r.url_parameters.size() > 0) {
+                boolean first = true;
+                for(String key : r.url_parameters.keySet()) {
+                    if(first) {
+                        first = false;
+                        url = url + "?" + key + "=" + r.url_parameters.get(key);
+                        continue;
+                    }
+
+                    url = url + "&" + key + "=" + r.url_parameters.get(key);
+                }
+            }
+
+            URLConnection st = new URL(url).openConnection();
             for(String k : r.header_parameters.keySet()) {
                 st.setRequestProperty(k, r.header_parameters.get(k));
             }
