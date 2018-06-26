@@ -3,8 +3,11 @@ package net.heyzeer0.aladdin.profiles;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.utils.FileReader;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 /**
@@ -57,7 +60,7 @@ public class LangProfile {
 
         //autogen do file
         if(toCreate.size() > 0) {
-            FileWriter r = new FileWriter(path);
+            BufferedWriter r = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8));
 
             for(String k : reader.getValues().keySet()) {
                 toCreate.put(k, reader.getValues().get(k));
