@@ -51,7 +51,7 @@ public class LangProfile {
             if(reader.hasValue(k)) {
                 messages.put(k, reader.getValue(k));
             }else{
-                toCreate.put(k, baseLang.get(k));
+                toCreate.put(k, baseLang.getRaw(k));
             }
         }
 
@@ -69,6 +69,10 @@ public class LangProfile {
 
             r.close();
         }
+    }
+
+    public String getRaw(String key) {
+        return messages.get(key);
     }
 
     public String get(String key) {
