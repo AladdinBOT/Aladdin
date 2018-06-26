@@ -5,9 +5,12 @@ import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
+import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.LangProfile;
+import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -25,6 +28,8 @@ import java.io.FileInputStream;
  */
 public class AdminCommand implements CommandExecutor {
 
+    private static LogProfile logger = new LogProfile("Admin");
+
     @Command(command = "admin", description = "Comandos sobre o bot", type = CommandType.BOT_ADMIN, isAllowedToDefault = false,
             usage = "", sendTyping = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lang) {
@@ -32,6 +37,20 @@ public class AdminCommand implements CommandExecutor {
             for(User u : e.getMessage().getMentionedUsers()) {
                 Main.getDatabase().getUserProfile(u).addKeys(2);
             }
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
+        if(args.get(0).equals("reloadLang")) {
+
+            long ms = System.currentTimeMillis();
+            for(Lang l : Lang.values()) {
+                try{
+                    l.getLangProfile().refreshLang();
+                }catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            e.sendMessage(EmojiList.CORRECT + " Took ``" + (System.currentTimeMillis() - ms) + "`` to reaload all langs.");
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equalsIgnoreCase("updateavatar")) {

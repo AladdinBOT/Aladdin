@@ -34,6 +34,10 @@ public class LangProfile {
         }catch (Exception ex) { ex.printStackTrace(); }
     }
 
+    public void refreshLang() throws Exception {
+        loadLang();
+    }
+
     private void loadLang() throws Exception {
         if(isBase) {
             messages = new FileReader(path).getValues();
