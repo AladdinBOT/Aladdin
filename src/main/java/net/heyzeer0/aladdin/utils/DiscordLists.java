@@ -3,7 +3,6 @@ package net.heyzeer0.aladdin.utils;
 import com.github.natanbc.discordbotsapi.DiscordBotsAPI;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.commands.UpvoteCommand;
 import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.enums.EmojiList;
 
@@ -24,7 +23,6 @@ public class DiscordLists {
     }
 
     public static void checkUpvoted() {
-        UpvoteCommand.detection_time = System.currentTimeMillis();
         if(!ApiKeysConfig.discord_bots_key.equalsIgnoreCase("<insert-here>")) {
             List<String> upvoters = new ArrayList<>();
             long[] ids = discordBots.getUpvoterIds().execute();
