@@ -11,7 +11,6 @@ import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
-import net.heyzeer0.aladdin.profiles.custom.AkinatorProfile;
 import net.heyzeer0.aladdin.utils.ImageUtils;
 
 import javax.imageio.ImageIO;
@@ -34,14 +33,6 @@ public class AdminCommand implements CommandExecutor {
                 Main.getDatabase().getUserProfile(u).addKeys(2);
             }
             return new CommandResult(CommandResultEnum.SUCCESS);
-        }
-        if(args.get(0).equalsIgnoreCase("akinator")) {
-            try {
-                new AkinatorProfile(e);
-            }catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
         }
         if(args.get(0).equalsIgnoreCase("updateavatar")) {
             try{
