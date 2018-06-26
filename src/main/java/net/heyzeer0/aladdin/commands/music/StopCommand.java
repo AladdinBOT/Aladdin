@@ -6,6 +6,7 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.MusicManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -16,9 +17,10 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
  */
 public class StopCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "stop", description = "Limpe toda a playlist atual", type = CommandType.MUSIC, isAllowedToDefault = false,
             usage = "a!stop")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(!e.getGuild().getAudioManager().isConnected()) {
             e.sendMessage(EmojiList.WORRIED + " Oops, eu não estou conectado a nenhum canal!");
             return new CommandResult((CommandResultEnum.SUCCESS));

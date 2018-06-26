@@ -8,6 +8,7 @@ import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -18,9 +19,10 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
  */
 public class RepeatCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "repeat", description = "Altere o modo de repetição", aliasses = {"r"}, parameters = {"music/playlist/stop"}, extra_perm = {"overpass"}, type = CommandType.MUSIC,
             usage = "a!repeat music\na!repeat playlist\na!repeat stop")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(!Boolean.valueOf(e.getGuildProfile().getConfigValue(GuildConfig.MEMBER_CAN_REPEAT).toString())) {
             if(!e.hasPermission("command.repeat.overpass")) {
                 return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.repeat.overpass");

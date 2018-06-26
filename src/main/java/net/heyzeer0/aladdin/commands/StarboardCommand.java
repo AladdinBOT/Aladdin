@@ -7,6 +7,7 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -21,9 +22,10 @@ import java.util.HashMap;
  */
 public class StarboardCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"create/config/remove/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
             usage = "a!starboard create 3 #starboard\na!starboard config 0 info\na!starboard config 0 setamount 3\na!starboard config 0 ignorechannel #testes\na!starboard remove 0\na!starboard list")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.get(0).equalsIgnoreCase("create")) {
             if(args.getSize() < 3) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "criar", "quantidade necessária de emotes", "#canal");

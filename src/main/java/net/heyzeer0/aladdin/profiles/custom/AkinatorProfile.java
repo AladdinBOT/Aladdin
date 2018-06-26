@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.dv8tion.jda.core.entities.Message;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.AkinatorCommand;
-import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Reactioner;
 import net.heyzeer0.aladdin.utils.ImageUtils;
@@ -44,8 +44,10 @@ public class AkinatorProfile {
     boolean lastQuestionWasGuess = false;
     int questions = 0;
 
-    public AkinatorProfile(MessageEvent e) throws Exception {
-        this.e = e;
+    LangProfile lp;
+
+    public AkinatorProfile(MessageEvent e, LangProfile lp) throws Exception {
+        this.e = e; this.lp = lp;
 
         boolean found = false;
         for(int i = 0; i < servers.length; i++) {
@@ -71,7 +73,7 @@ public class AkinatorProfile {
             return;
         }
 
-        e.sendMessage(EmojiList.WORRIED + " Oops, os servidores do akinator estão offline!");
+        e.sendMessage(lp.get("command.akinator.serversoffline"));
     }
 
     public void createGuess() throws Exception {
@@ -100,7 +102,7 @@ public class AkinatorProfile {
 
         g.dispose();
 
-        Message msg = e.sendImagePure(tempImage, EmojiList.THINKING + " " + e.getAuthor().getName() + " escolha a resposta desejada!");
+        Message msg = e.sendImagePure(tempImage, String.format(lp.get("command.akinator.chooseresponse"), e.getAuthor().getName()));
 
         if(msg != null) {
             msg.addReaction("1⃣").queue();
@@ -109,7 +111,7 @@ public class AkinatorProfile {
             message = new Reactioner(msg, e.getAuthor().getIdLong(), e.getChannel(), (v) -> {
                 try {
                     selectOption(v.getReactionEmote().getName());
-                }catch (Exception ex){ this.e.sendMessage(EmojiList.WORRIED + " Oops, um erro ocorreu ao continuar a utilizar o akinator"); ex.printStackTrace();}
+                }catch (Exception ex){ this.e.sendMessage(lp.get("command.akinator.erroroncontinue")); ex.printStackTrace();}
             });
         }
     }
@@ -149,7 +151,7 @@ public class AkinatorProfile {
                 g.setColor(Color.BLACK);
 
                 g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Roboto-Thin.ttf")).deriveFont(25f));
-                g.drawString("Pergunta Nº " + questions, 100, 85);
+                g.drawString(lp.get("command.akinator.image.questionnumber") + questions, 100, 85);
 
                 ArrayList<String> strings = new ArrayList<>();
                 int index = 0;
@@ -171,7 +173,7 @@ public class AkinatorProfile {
 
                 g.dispose();
 
-                Message msg = e.sendImagePure(tempImage, EmojiList.THINKING + " " + e.getAuthor().getName() + " escolha a resposta desejada!");
+                Message msg = e.sendImagePure(tempImage, String.format(lp.get("command.akinator.chooseresponse"), e.getAuthor().getName()));
 
                 if(msg != null) {
                     msg.addReaction("1⃣").complete();
@@ -185,7 +187,7 @@ public class AkinatorProfile {
                             selectOption(v.getReactionEmote().getName());
                             Message msg2 = v.getTextChannel().getMessageById(v.getMessageId()).complete();
                             if(msg2 != null) { msg2.delete().queue(); }
-                        }catch (Exception ex){ e.sendMessage(EmojiList.WORRIED + " Oops, um erro ocorreu ao continuar a utilizar o akinator"); ex.printStackTrace();}
+                        }catch (Exception ex){ e.sendMessage(lp.get("command.akinator.erroroncontinue")); ex.printStackTrace();}
                     });
                 }
             }catch (Exception ex) { ex.printStackTrace(); }
@@ -226,7 +228,7 @@ public class AkinatorProfile {
                         .addUrlParameters("signature", signature)
                         .addUrlParameters("step", actual.getStepNum())
                         .addUrlParameters("element", guess.getId()).getResponse();
-                e.sendMessage(EmojiList.SMILE + " Ótimo ! Adivinhei certo mais uma vez.\n" + "Eu adorei jogar com você " + e.getAuthor().getName() + "!");
+                e.sendMessage(String.format(lp.get("command.akinator.guess.correct"), e.getAuthor().getName()));
                 AkinatorCommand.akinators.remove(e.getAuthor().getId());
             } else if (answer == 1) {
                 new Router(EXCLUSION_URL)
@@ -251,7 +253,7 @@ public class AkinatorProfile {
         actual = new AkinatorQuestion(json);
 
         if (actual.gameOver) {
-            e.sendMessage(EmojiList.SMILE + " Droga ! Parece que dessa vez não consegui adivinhar.\n" + "Eu adorei jogar com você " + e.getAuthor().getName() + "!");
+            e.sendMessage(String.format(lp.get("command.akinator.guess.incorrect"), e.getAuthor().getName()));
             AkinatorCommand.akinators.remove(e.getAuthor().getId());
             return;
         }

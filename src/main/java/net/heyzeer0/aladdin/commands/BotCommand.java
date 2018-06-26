@@ -12,6 +12,7 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.MusicManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -30,9 +31,9 @@ import java.lang.management.ManagementFactory;
  */
 public class BotCommand implements CommandExecutor {
 
-    @Command(command = "bot", description = "Obtenha informações sobre mim", parameters = {"status/ping/info"}, type = CommandType.INFORMATIVE,
+    @Command(command = "bot", description = "command.bot.description", parameters = {"status/ping/info"}, type = CommandType.INFORMATIVE,
             usage = "a!bot ping\na!bot status\na!bot info", needPermission = false)
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.get(0).equalsIgnoreCase("ping")) {
             long agora = System.currentTimeMillis();
             e.getChannel().sendTyping().queue(msg -> {
@@ -51,9 +52,9 @@ public class BotCommand implements CommandExecutor {
                     hours = duration / 3600000L % 24,
                     minutes = duration / 60000L % 60,
                     seconds = duration / 1000L % 60;
-            String uptime = (years == 0 ? "" : years + " Anos, ") + (months == 0 ? "" : months + " Meses, ")
-                    + (days == 0 ? "" : days + " Dias, ") + (hours == 0 ? "" : hours + " Horas, ")
-                    + (minutes == 0 ? "" : minutes + " Minutos, ") + (seconds == 0 ? "" : seconds + " Segundos, ");
+            String uptime = (years == 0 ? "" : years + " " + lp.get("command.bot.status.years") + ", ") + (months == 0 ? "" : months + " " + lp.get("command.bot.status.months") + ", ")
+                    + (days == 0 ? "" : days + " " + lp.get("command.bot.status.days") + ", ") + (hours == 0 ? "" : hours + " " + lp.get("command.bot.status.hours") + ", ")
+                    + (minutes == 0 ? "" : minutes + " " + lp.get("command.bot.status.minutes") + ", ") + (seconds == 0 ? "" : seconds + " " + lp.get("command.bot.status.seconds") + ", ");
 
             uptime = replaceLast(uptime, ", ", "");
             uptime = replaceLast(uptime, ",", " e");
@@ -63,18 +64,18 @@ public class BotCommand implements CommandExecutor {
 
             Message embed = new MessageBuilder().setEmbed(new EmbedBuilder()
                     .setColor(Color.GREEN)
-                    .setAuthor("Aladdin - Informações" + "\n\u00ad", null, e.getJDA().getSelfUser().getAvatarUrl())
-                    .setDescription("Para mais informações entre na [guilda do Aladdin](https://discord.gg/ubwxx8A)!\nJDA Version ``" + JDAInfo.VERSION + "``")
-                    .addField("Uptime: ", uptime, false)
-                    .addField(":beginner: Guildas:", "" + e.getJDA().getGuilds().size(), true)
-                    .addField(":information_desk_person: Usuários:", "" + e.getJDA().getUsers().size(), true)
-                    .addField(":page_with_curl: Canais de texto:", "" + e.getJDA().getTextChannels().size(), true)
-                    .addField(":small_blue_diamond: Shards:", Main.getShards().length + "/" + Main.getConnectedShards().length, true)
-                    .addField(":desktop: CPU:", getProcessCpuLoad() + "%", true)
-                    .addField(":vertical_traffic_light: RAM:", Utils.convertToBar((long)(ramAllocated / 1048576), (long)currentMemory), true)
-                    .addField(":musical_note: Canais de voz: ", e.getJDA().getVoiceChannels().size() + "", true)
-                    .addField(":musical_keyboard: Players de musica: ", MusicManager.getManagers().size() + "", true)
-                    .addField(":newspaper: Lavaplayer:", PlayerLibrary.VERSION, true)
+                    .setAuthor(lp.get("command.bot.status.embed.title"), null, e.getJDA().getSelfUser().getAvatarUrl())
+                    .setDescription(String.format(lp.get("command.bot.status.embed.description"), JDAInfo.VERSION))
+                    .addField(lp.get("command.bot.status.embed.field.1"), uptime, false)
+                    .addField(lp.get("command.bot.status.embed.field.2"), "" + e.getJDA().getGuilds().size(), true)
+                    .addField(lp.get("command.bot.status.embed.field.3"), "" + e.getJDA().getUsers().size(), true)
+                    .addField(lp.get("command.bot.status.embed.field.4"), "" + e.getJDA().getTextChannels().size(), true)
+                    .addField(lp.get("command.bot.status.embed.field.5"), Main.getShards().length + "/" + Main.getConnectedShards().length, true)
+                    .addField(lp.get("command.bot.status.embed.field.6"), getProcessCpuLoad() + "%", true)
+                    .addField(lp.get("command.bot.status.embed.field.7"), Utils.convertToBar((long)(ramAllocated / 1048576), (long)currentMemory), true)
+                    .addField(lp.get("command.bot.status.embed.field.8"), e.getJDA().getVoiceChannels().size() + "", true)
+                    .addField(lp.get("command.bot.status.embed.field.9"), MusicManager.getManagers().size() + "", true)
+                    .addField(lp.get("command.bot.status.embed.field.10"), PlayerLibrary.VERSION, true)
                     .setFooter("Aladdin - Version " + Main.version, e.getJDA().getSelfUser().getAvatarUrl())
 
                     .build())
@@ -86,8 +87,8 @@ public class BotCommand implements CommandExecutor {
         if(args.get(0).equalsIgnoreCase("info")) {
             EmbedBuilder b = new EmbedBuilder();
             b.setColor(Color.GREEN);
-            b.setAuthor("Sobre Aladdin", null, "https://media.tenor.com/images/9a5178a7b636e201da025b7e41f8e2a2/tenor.gif");
-            b.setDescription("Olá meu nome é Aladdin, caso você não saiba eu fui inspirado no anime [Magi](https://pt.wikipedia.org/wiki/Magi_(mang%C3%A1), eu tenho como foco ações administrativas porém posso ser bastante útil em outras coisas variantes desde diversão até musica, sendo desenvolvido pelo ``HeyZeer0#0190``. \nEm minha aventura eu sou acompanhado pelos meus grandes amigos Ali babá e Morgiana, talvez você encontre eles por aí. Meu objetivo é aprender mais e mais sobre este mundo, você pode me chamar para sua guilda clicando [aqui](https://discordapp.com/oauth2/authorize?client_id=321349548712656896&scope=bot&permissions=2146958463)!\nEae, gostaria de ser meu amigo?");
+            b.setAuthor(lp.get("command.bot.info.embed.author"), null, "https://media.tenor.com/images/9a5178a7b636e201da025b7e41f8e2a2/tenor.gif");
+            b.setDescription(lp.get("command.bot.info.embed.description"));
             b.setImage("http://dl.heyzeer0.tk/Aladdin/aladdin_friend.png");
             b.setFooter("Aladdin v" + Main.version, e.getJDA().getSelfUser().getAvatarUrl());
             e.sendMessage(b);

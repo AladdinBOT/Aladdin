@@ -2,10 +2,10 @@ package net.heyzeer0.aladdin.commands;
 
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -17,32 +17,32 @@ import net.heyzeer0.aladdin.profiles.utilities.Paginator;
  */
 public class LogCommand implements CommandExecutor {
 
-    @Command(command = "log", description = "Configure o log da sua guilda", parameters = {"setchannel/modules"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
-            usage = "a!log setchannel #log\na!log setchannel\na!log modulos ativar MESSAGE_MODULE\na!log modulos desativar MESSAGE_MODULE\na!log modulos list")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    @Command(command = "log", description = "command.log.description", parameters = {"setchannel/modules"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
+            usage = "a!log setchannel #log\na!log setchannel\na!log modulos activate MESSAGE_MODULE\na!log modulos deactivate MESSAGE_MODULE\na!log modules list")
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.get(0).equalsIgnoreCase("setchannel")) {
             if(e.getMessage().getMentionedChannels().size() <= 0) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, você não mencionou nenhum canal.");
+                e.sendMessage(lp.get("command.log.setchannel.error"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             e.getGuildProfile().changeLogChannel(e.getMessage().getMentionedChannels().get(0).getId());
 
-            e.sendMessage(EmojiList.CORRECT + " Você alterou o canal log da guilda para ``" + e.getMessage().getMentionedChannels().get(0).getName() + "``");
+            e.sendMessage(String.format(lp.get("command.log.setchannel.success"), e.getMessage().getMentionedChannels().get(0).getName()));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
         if(args.get(0).equalsIgnoreCase("modules")) {
 
             if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modules", "ativar/desativar/list");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modules", "activate/deactivate/list");
             }
 
             if(args.get(1).equalsIgnoreCase("list")) {
-                Paginator ph = new Paginator(e, ":wrench: Lista de todos os modulos");
+                Paginator ph = new Paginator(e, lp.get("command.log.modules.list.paginator.title"));
 
                 for(LogModules cfg : LogModules.values()) {
-                    ph.addPage("Nome: " + cfg.toString().toLowerCase() + "\nDescrição: " + cfg.getDescription() + "\nAtivo: " + (e.getGuildProfile().isLogModuleActive(cfg) ? "Sim" : "Não"));
+                    ph.addPage(String.format(lp.get("command.log.modules.list.paginator.title"), cfg.toString().toLowerCase(), cfg.getDescription(), e.getGuildProfile().isLogModuleActive(cfg)));
                 }
 
                 ph.start();
@@ -50,10 +50,10 @@ public class LogCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            if(args.get(1).equalsIgnoreCase("ativar")) {
+            if(args.get(1).equalsIgnoreCase("activate")) {
 
                 if(args.getSize() < 3) {
-                    return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modulos ativar", "nome");
+                    return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modules activate", "nome");
                 }
 
                 try{
@@ -61,18 +61,18 @@ public class LogCommand implements CommandExecutor {
 
                     e.getGuildProfile().changeLogModuleStatus(md, true);
 
-                    e.sendMessage(EmojiList.CORRECT + " Você ativou o modulo ``" + md.toString() + "``");
+                    e.sendMessage(String.format(lp.get("command.log.modules.activate.success"), md.toString()));
                 }catch (Exception ex) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, o modulo indicado é invalido.");
+                    e.sendMessage(lp.get("command.log.modules.error"));
                 }
 
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            if(args.get(1).equalsIgnoreCase("desativar")) {
+            if(args.get(1).equalsIgnoreCase("deactivate")) {
 
                 if(args.getSize() < 3) {
-                    return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modulos desativar", "nome");
+                    return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modules deactivate", "nome");
                 }
 
                 try{
@@ -80,15 +80,15 @@ public class LogCommand implements CommandExecutor {
 
                     e.getGuildProfile().changeLogModuleStatus(md, false);
 
-                    e.sendMessage(EmojiList.CORRECT + " Você desativou o modulo ``" + md.toString() + "``");
+                    e.sendMessage(String.format(lp.get("command.log.modules.deactivate.success"), md.toString()));
                 }catch (Exception ex) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, o modulo indicado é invalido.");
+                    e.sendMessage(lp.get("command.log.modules.error"));
                 }
 
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modulos", "ativar/desativar/list");
+            return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "modules", "activate/deactivate/list");
         }
 
         return new CommandResult(CommandResultEnum.NOT_FOUND);

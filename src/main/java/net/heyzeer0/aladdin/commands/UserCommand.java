@@ -10,6 +10,7 @@ import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.manager.permissions.NodeManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -22,9 +23,10 @@ import java.util.List;
  */
 public class UserCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "user", description = "Defina grupos ou permissões a membros\n\nPermissões com ``*`` são aceitáveis, exemplo ``command.*``\nPermissões com ``-`` retirarão acesso a ela, exemplo ``-command.music``", parameters = {"setgroup/addperm/remperm/info"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!user setgroup admin\na!user addperm command.* @HeyZeer0\na!user addperm -command.music @HeyZeer0\na!user remperm command.* @HeyZeer0")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(args.get(0).equalsIgnoreCase("addperm")) {
             if(args.getSize() < 3) {

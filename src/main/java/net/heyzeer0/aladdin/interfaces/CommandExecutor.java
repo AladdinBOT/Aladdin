@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.interfaces;
 
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -10,6 +11,6 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
  */
 public interface CommandExecutor {
 
-    CommandResult onCommand(ArgumentProfile args, MessageEvent e);
+    CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lang);
 
 }

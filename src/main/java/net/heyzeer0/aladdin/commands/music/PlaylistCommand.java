@@ -11,6 +11,7 @@ import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.profiles.AudioLoaderProfile;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -25,9 +26,10 @@ import java.util.ArrayList;
  */
 public class PlaylistCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "playlist", description = "Crie playlists para auto-reprodução!", parameters = "create/delete/add/rem/play/list/info", type = CommandType.MUSIC,
             usage = "a!playlist create Chillhop\na!playlist delete Chillhop\na!playlist add Chillhop Brock Berrigan - Point Pleasant\na!playlist rem Chillhop 0\na!playlist play Chillhop\na!playlist list\na!playlist list @HeyZeer0\na!playlist info Chillhop")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(args.get(0).equalsIgnoreCase("create")) {
 

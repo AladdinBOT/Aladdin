@@ -11,6 +11,7 @@ import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.configs.instances.DatabaseConfig;
 import net.heyzeer0.aladdin.database.AladdinData;
+import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import net.heyzeer0.aladdin.manager.custom.GiveawayManager;
 import net.heyzeer0.aladdin.manager.custom.ReminderManager;
@@ -69,6 +70,12 @@ public class Main {
             logger.finishMsCount("Database");
 
             logger.startMsCount();
+            for(Lang l : Lang.values()) {
+                l.getLangProfile();
+            }
+            logger.finishMsCount("Langs");
+
+            logger.startMsCount();
             CommandManager.registerCommand(new AdminCommand());
             CommandManager.registerCommand(new AkinatorCommand());
             CommandManager.registerCommand(new BotCommand());
@@ -94,7 +101,6 @@ public class Main {
             CommandManager.registerCommand(new ReminderCommand());
             CommandManager.registerCommand(new StarboardCommand());
             CommandManager.registerCommand(new SteamCommand());
-            CommandManager.registerCommand(new UpvoteCommand());
             CommandManager.registerCommand(new UserCommand());
             CommandManager.registerCommand(new WarframeCommand());
             CommandManager.registerCommand(new WeatherCommand());

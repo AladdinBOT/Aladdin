@@ -10,6 +10,7 @@ import net.heyzeer0.aladdin.manager.custom.warframe.AlertManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.PriceManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.SubscriptionManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.WikiManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -29,9 +30,10 @@ import java.util.List;
  */
 public class WarframeCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "warframe", description = "Informações sobre warframe", parameters = {"alerts/wiki/price/armor/subscription"}, sendTyping = false, type = CommandType.FUN,
             usage = "a!warframe alerts\na!warframe wiki plastids\na!warframe price Trinity Prime\na!warframe armor 10\na!warframe armor 10 5 10")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.get(0).equalsIgnoreCase("subscription")) {
 
             if(SubscriptionManager.subscriptions.containsKey(e.getAuthor().getId())) {

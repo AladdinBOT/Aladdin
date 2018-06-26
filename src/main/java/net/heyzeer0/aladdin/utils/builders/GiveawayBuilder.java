@@ -6,9 +6,9 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.manager.custom.GiveawayManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.utils.Utils;
 
@@ -51,7 +51,7 @@ public class GiveawayBuilder {
         }
     }
 
-    String name = "Não definido";
+    String name;
     long end_time = 0L;
     TextChannel ch;
     MessageEvent e;
@@ -62,8 +62,11 @@ public class GiveawayBuilder {
     Prize addPrize;
     String last_text_message_id;
 
-    public GiveawayBuilder(MessageEvent e) {
-        this.e = e;
+    LangProfile lp;
+
+    public GiveawayBuilder(MessageEvent e, LangProfile lp) {
+        this.e = e; this.lp = lp;
+        name = lp.get("command.giveaway.builder.notset");
 
         updateMessage(e);
     }
@@ -73,22 +76,14 @@ public class GiveawayBuilder {
         b.setColor(Color.GREEN);
 
         if(phase == ActualPhase.ADDING_PRIZE) {
-            b.setTitle(":moneybag: Adicionando um premio");
-            b.setDescription("Reaja com os valores indicados abaixo para os alterar" +
-                    "\nquando estiver pronto clique no :white_check_mark:\n\n" +
-                    ":one: Nome: " + addPrize.getName() + "\n" +
-                    ":two: Mensagem privada: " + addPrize.getDmMessage());
+            b.setTitle(lp.get("command.giveaway.builder.embed.prize.title"));
+            b.setDescription(String.format(lp.get("command.giveaway.builder.embed.prize.description"), addPrize.getName(), addPrize.getDmMessage()));
         }else{
-            b.setTitle(":moneybag: Criando seu sorteio");
-            b.setDescription("Reaja com os valores indicados abaixo para os alterar" +
-                    "\nquando estiver pronto clique no :white_check_mark:\n\n" +
-                    ":one: Titulo do sorteio: " + name + "\n" +
-                    ":two: Data de finalização: " + (end_time == 0 ? "Não definido" : Utils.getTime(end_time)) + "\n" +
-                    ":three: Premios: " + prizes.size() + "\n" +
-                    ":four: Canal onde ocorrera: " + (ch == null ? "Não definido" : "#" + ch.getName()));
+            b.setTitle(lp.get("command.giveaway.builder.embed.main.title"));
+            b.setDescription(String.format(lp.get("command.giveaway.builder.embed.main.description"), name, (end_time == 0 ? lp.get("command.giveaway.builder.notset") : Utils.getTime(end_time)), prizes.size(), (ch == null ? lp.get("command.giveaway.builder.notset") : "#" + ch.getName())));
         }
 
-        b.setFooter("Iniciado por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+        b.setFooter(lp.get("command.giveaway.builder.embed.footer") + " " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
         b.setTimestamp(e.getMessage().getCreationTime());
 
 
@@ -137,8 +132,8 @@ public class GiveawayBuilder {
 
             if(ev.getReactionEmote().getName().equals("✅")) {
 
-                if(addPrize.getName().equalsIgnoreCase("Não definido")) {
-                    ev.getTextChannel().sendMessage(EmojiList.WORRIED + " Oops, você precisa ao menos definir o nome do premio").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                if(addPrize.getName().equalsIgnoreCase(lp.get("command.giveaway.builder.notset"))) {
+                    ev.getTextChannel().sendMessage(lp.get("command.giveaway.builder.prize.notitleset")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                     return;
                 }
 
@@ -159,7 +154,7 @@ public class GiveawayBuilder {
             if(ev.getReactionEmote().getName().equals("1⃣")) {
                 phase = ActualPhase.WAITING_FOR_PRIZE_NAME;
 
-                Message msg = e.getChannel().sendMessage(EmojiList.THINKING + " Digite no chat o título desejado.").complete();
+                Message msg = e.getChannel().sendMessage(lp.get("command.giveaway.builder.prize.set.title")).complete();
 
                 if(msg != null) {
                     last_text_message_id = msg.getId();
@@ -169,7 +164,7 @@ public class GiveawayBuilder {
             if(ev.getReactionEmote().getName().equals("2⃣")) {
                 phase = ActualPhase.WAITING_FOR_PRIZE_DM;
 
-                Message msg = e.getChannel().sendMessage(EmojiList.THINKING + " Digite no chat a mensagem que deseja que seja enviado ao usuário ganhador por DM.").complete();
+                Message msg = e.getChannel().sendMessage(lp.get("command.giveaway.builder.prize.set.message")).complete();
 
                 if(msg != null) {
                     last_text_message_id = msg.getId();
@@ -183,20 +178,20 @@ public class GiveawayBuilder {
 
             if(ev.getReactionEmote().getName().equals("✅")) {
 
-                if(name.equalsIgnoreCase("Não definido")) {
-                    ev.getTextChannel().sendMessage(EmojiList.WORRIED + " Oops, você precisa definir o nome do sorteio.").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                if(name.equalsIgnoreCase(lp.get("command.giveaway.builder.notset"))) {
+                    ev.getTextChannel().sendMessage(lp.get("command.giveaway.builder.main.notitleset")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                     return;
                 }
                 if(end_time == 0) {
-                    ev.getTextChannel().sendMessage(EmojiList.WORRIED + " Oops, você precisa definir o tempo do sorteio.").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                    ev.getTextChannel().sendMessage(lp.get("command.giveaway.builder.main.notimeset")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                     return;
                 }
                 if(ch == null) {
-                    ev.getTextChannel().sendMessage(EmojiList.WORRIED + " Oops, você precisa definir o canal do sorteio.").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                    ev.getTextChannel().sendMessage(lp.get("command.giveaway.builder.main.nochannelset")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                     return;
                 }
                 if(prizes.size() <= 0) {
-                    ev.getTextChannel().sendMessage(EmojiList.WORRIED + " Oops, você precisa ao menos adicionar um premio.").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                    ev.getTextChannel().sendMessage(lp.get("command.giveaway.builder.main.noprizeset")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                     return;
                 }
 
@@ -211,7 +206,7 @@ public class GiveawayBuilder {
 
                 builders.remove(e.getAuthor().getId());
 
-                e.sendMessage(EmojiList.CORRECT + " Sorteio criado com sucesso.");
+                e.sendMessage(lp.get("command.giveaway.builder.success"));
                 GiveawayManager.createGiveway(this);
                 return;
             }
@@ -231,7 +226,7 @@ public class GiveawayBuilder {
             if(ev.getReactionEmote().getName().equals("1⃣")) {
                 phase = ActualPhase.WAITING_FOR_TITLE;
 
-                Message msg = e.getChannel().sendMessage(EmojiList.THINKING + " Digite no chat o título do sorteio.").complete();
+                Message msg = e.getChannel().sendMessage(lp.get("command.giveaway.builder.main.set.title")).complete();
 
                 if(msg != null) {
                     last_text_message_id = msg.getId();
@@ -241,7 +236,7 @@ public class GiveawayBuilder {
             if(ev.getReactionEmote().getName().equals("2⃣")) {
                 phase = ActualPhase.WAITING_FOR_TIME;
 
-                Message msg = e.getChannel().sendMessage(EmojiList.THINKING + " Digite no chat quanto tempo deseja para o sorteio. Ex ``2h = 2 horas | 2m = 2 minutos``").complete();
+                Message msg = e.getChannel().sendMessage(lp.get("command.giveaway.builder.main.set.time")).complete();
 
                 if(msg != null) {
                     last_text_message_id = msg.getId();
@@ -250,7 +245,7 @@ public class GiveawayBuilder {
             }
             if(ev.getReactionEmote().getName().equals("3⃣")) {
                 phase = ActualPhase.ADDING_PRIZE;
-                addPrize = new Prize("Não definido", "Não definido");
+                addPrize = new Prize(lp.get("command.giveaway.builder.notset"), lp.get("command.giveaway.builder.notset"));
 
                 updateMessage(e);
                 return;
@@ -258,7 +253,7 @@ public class GiveawayBuilder {
             if(ev.getReactionEmote().getName().equals("4⃣")) {
                 phase = ActualPhase.WAITING_FOR_CHANNEL;
 
-                Message msg = e.getChannel().sendMessage(EmojiList.THINKING + " Mencione no chat o canal cujo o sorteio ocorrerá").complete();
+                Message msg = e.getChannel().sendMessage(lp.get("command.giveaway.builder.main.set.channel")).complete();
 
                 if(msg != null) {
                     last_text_message_id = msg.getId();
@@ -275,7 +270,7 @@ public class GiveawayBuilder {
             return;
         }
 
-        if(ev.getMessage().getContentDisplay().equalsIgnoreCase("cancelar")) {
+        if(ev.getMessage().getContentDisplay().equalsIgnoreCase(lp.get("command.giveaway.builder.cancelcommand"))) {
             if(phase == ActualPhase.WAITING_FOR_PRIZE_NAME || phase == ActualPhase.WAITING_FOR_PRIZE_DM) {
                 phase = ActualPhase.ADDING_PRIZE;
             }else{
@@ -288,7 +283,7 @@ public class GiveawayBuilder {
 
         if(phase == ActualPhase.WAITING_FOR_CHANNEL) {
             if(ev.getMessage().getMentionedChannels().size() <= 0) {
-                e.getChannel().sendMessage(EmojiList.WORRIED + " Oops, você deve mencionar um canal ou digitar ``cancelar`` para cancelar.").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                e.getChannel().sendMessage(lp.get("command.giveaway.builder.main.set.channel.error.channel.invalid")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                 return;
             }
 
@@ -321,13 +316,13 @@ public class GiveawayBuilder {
 
                 if(!minute && !ev.getUserProfile().isPremiumActive()) {
                     if(value > 24) {
-                        ev.getChannel().sendMessage(EmojiList.BUY + " Você não pode exceder o tempo maximo de 24 horas. Você pode ignorar esta limitação ativando uma chave premium, para mais informações utilize ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium``").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                        ev.getChannel().sendMessage(String.format(lp.get("command.giveaway.builder.main.set.time.error.timelimit"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                         return;
                     }
                 }
                 if(minute && !ev.getUserProfile().isPremiumActive()) {
                     if(value > 1440) {
-                        ev.getChannel().sendMessage(EmojiList.BUY + " Você não pode exceder o tempo maximo de 24 horas. Você pode ignorar esta limitação ativando uma chave premium, para mais informações utilize ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium``").queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
+                        ev.getChannel().sendMessage(String.format(lp.get("command.giveaway.builder.main.set.time.error.timelimit"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                         return;
                     }
                 }
@@ -340,7 +335,7 @@ public class GiveawayBuilder {
                 updateMessage(ev);
 
             }catch (Exception ex) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, o tempo inserido é invalido, você pode digitar ``cancelar`` para cancelar.");
+                e.sendMessage(lp.get("command.giveaway.builder.main.set.time.error.invalid"));
             }
             return;
         }

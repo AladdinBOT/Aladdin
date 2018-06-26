@@ -6,6 +6,7 @@ import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -21,7 +22,7 @@ public class JavaCommand implements CommandExecutor {
 
     @Command(command = "java", description = "Emule funções em java.", aliasses = {"eval", "evaluate"}, parameters = {"código"}, type = CommandType.BOT_ADMIN,
             usage = "a!java return \"oi\";")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         String toEval = args.getComplete();
 
         if(toEval.startsWith("-cl")) {

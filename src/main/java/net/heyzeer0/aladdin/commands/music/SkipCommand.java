@@ -8,6 +8,7 @@ import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -20,9 +21,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class SkipCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "skip", description = "Pule a musica atual", aliasses = {"s"}, extra_perm = {"overpass"}, type = CommandType.MUSIC,
             usage = "a!skip")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         GuildTrackProfile guild = MusicManager.getManager(e.getGuild());
 
         if (e.getGuild().getAudioManager().isConnected() && !e.getGuild().getAudioManager().getConnectedChannel().equals(e.getMember().getVoiceState().getChannel())) {

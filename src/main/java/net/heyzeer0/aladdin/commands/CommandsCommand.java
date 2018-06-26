@@ -4,10 +4,10 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.CustomCommand;
@@ -26,30 +26,30 @@ import java.util.Set;
  */
 public class CommandsCommand implements CommandExecutor {
 
-    @Command(command = "commands", description = "Crie comandos customizaveis", extra_perm = {"overpass"}, aliasses = {"cmds"}, parameters = {"create/delete/listargs/list/import/raw"}, type = CommandType.ADMNISTRATIVE,
+    @Command(command = "commands", description = "command.commands.description", extra_perm = {"overpass"}, aliasses = {"cmds"}, parameters = {"create/delete/listargs/list/import/raw"}, type = CommandType.ADMNISTRATIVE,
             usage = "a!commands listargs\na!commands list\na!commands create ata Você é #random[feio,bonito]\na!commands import ata\na!commands delete ata\na!commands raw ata")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.get(0).equalsIgnoreCase("listargs")) {
-            Paginator ph = new Paginator(e, ":wrench: Argumentos para comandos");
-            ph.addPage("Argumento: #arg\nUso: Requerir um argumento\nExemplo: #arg foi assasinado por #arg");
-            ph.addPage("Argumento: #regex_arg[regex]\nUso: Requerir um argumento dentro do regex\nExemplo: Você perdeu #regex_arg[(o jogo)]");
-            ph.addPage("Argumento: #random[obj,obj...]\nUso: Aleatorizar entre palavras escolhidas\nExemplo: Você #random[morreu,perdeu o jogo,explodiu]");
-            ph.addPage("Argumento: #random_int[valor]\nUso: Aleatoriza um numero pelo valor maximo escolhido\nExemplo: O número sorteado foi #random_int[30]");
-            ph.addPage("Argumento: #user\nUso: Altera para o nome do usuário\nExemplo: Tudo bom #user ?");
-            ph.addPage("Argumento: #mention\nUso: Menciona o usuário\nExemplo: Tudo bom #mention ?");
-            ph.addPage("Argumento: -delete\nUso: Deleta a mensagem do usuário após uso\nExemplo ¯\\_(ツ)_/¯ -delete");
+            Paginator ph = new Paginator(e, lp.get("command.commands.listargs.paginator.title"));
+            ph.addPage(lp.get("command.commands.listargs.paginator.page1"));
+            ph.addPage(lp.get("command.commands.listargs.paginator.page2"));
+            ph.addPage(lp.get("command.commands.listargs.paginator.page3"));
+            ph.addPage(lp.get("command.commands.listargs.paginator.page4"));
+            ph.addPage(lp.get("command.commands.listargs.paginator.page5"));
+            ph.addPage(lp.get("command.commands.listargs.paginator.page6"));
+            ph.addPage(lp.get("command.commands.listargs.paginator.page7"));
 
             ph.start();
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
         if(args.get(0).equalsIgnoreCase("list")) {
-            Paginator ph = new Paginator(e, EmojiList.BEGINNER + " Listando comandos");
-
             if(e.getGuildProfile().getCommands().size() <= 0) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, parece que não existem comandos customizados nessa guilda ^0^");
+                e.sendMessage(lp.get("command.commands.list.error.nocommands"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
+
+            Paginator ph = new Paginator(e, lp.get("command.commands.list.paginator.title"));
 
             int pages = (e.getGuildProfile().getCommands().size() + (10 + 1)) / 10;
 
@@ -68,7 +68,7 @@ public class CommandsCommand implements CommandExecutor {
                     }
                     actual++;
                     String user = e.getJDA().getUserById(list.get(p).getValue().getCreator()) == null ? list.get(p).getValue().getCreator() : e.getJDA().getUserById(list.get(p).getValue().getCreator()).getName();
-                    pg = pg + "Nome: " + list.get(p).getKey() + " | Autor: " + user + "\n";
+                    pg = pg + String.format(lp.get("command.commands.list.paginator.page"), list.get(p).getKey(), user) + "\n";
                 }
                 pactual++;
                 ph.addPage(pg);
@@ -88,12 +88,12 @@ public class CommandsCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "create", "nome", "mensagem");
             }
             if (e.getGuildProfile().hasCustomCommand(args.get(1))) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, parece que este comando já existe ^0^");
+                e.sendMessage(lp.get("command.commands.create.error.alreadyexist"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
             String msg = args.getCompleteAfter(2);
 
-            e.sendMessage(EmojiList.CORRECT + " O comando ``" + args.get(1).toLowerCase() + "`` foi criado com sucesso.");
+            e.sendMessage(String.format(lp.get("command.commands.create.success"), args.get(1).toLowerCase()));
             e.getGuildProfile().createCustomCommand(args.get(1).toLowerCase(), msg, e.getAuthor().getId());
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
@@ -108,20 +108,20 @@ public class CommandsCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "delete", "nome");
             }
             if (!e.getGuildProfile().hasCustomCommand(args.get(1))) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, parece que este comando não existe ^0^");
+                e.sendMessage(lp.get("command.commands.delete.error.unknowncommand"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            CustomCommand cmd = e.getGuildProfile().getCustomCommand(args.get(1));
+            CustomCommand cmd = e.getGuildProfile().getCustomCommand(args.get(1).toLowerCase());
 
             if(!e.getAuthor().getId().equals(cmd.getCreator())) {
                 if(!e.hasPermission("command.commands.overpass")) {
-                    e.getChannel().sendMessage(EmojiList.WORRIED + " Você não é o dono deste comando portanto não a pode deletar!").queue();
+                    e.sendMessage(lp.get("command.commands.delete.error.notowner"));
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
             }
 
-            e.sendMessage(EmojiList.CORRECT + " O comando ``" + args.get(1) + "`` foi deletado com sucesso.");
+            e.sendMessage(String.format(lp.get("command.commands.delete.success"), args.get(1).toLowerCase()));
             e.getGuildProfile().deleteCustomCommand(args.get(1));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
@@ -136,7 +136,7 @@ public class CommandsCommand implements CommandExecutor {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "import", "nome");
             }
             if(e.getGuildProfile().getCustomCommand(args.get(1)) != null) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, parece que já há um comando com esse nome!");
+                e.sendMessage(lp.get("command.commands.import.error.alreadyexist"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
             HashMap<Guild, CustomCommand> cmds = new HashMap<>();
@@ -148,14 +148,14 @@ public class CommandsCommand implements CommandExecutor {
             });
 
             if(cmds.size() <= 0) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, parece que não há comandos para importar!");
+                e.sendMessage(lp.get("command.commands.import.error.unknowncommand"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             TextChooser tc = new TextChooser(e, ":beginner: Comandos a importar");
 
             for(Guild x : cmds.keySet()) {
-                tc.addOption("Guilda: " + x.getName() + " | Resposta: " + cmds.get(x).getMsg(), () -> importCommand(e, args.get(1), cmds.get(x)));
+                tc.addOption(String.format(lp.get("command.commands.import.textchooser.option"), x.getName(), cmds.get(x).getMsg()), () -> importCommand(e, args.get(1), cmds.get(x), lp));
             }
 
             tc.start();
@@ -167,25 +167,24 @@ public class CommandsCommand implements CommandExecutor {
                  return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "raw", "nome");
              }
              if(!e.getGuildProfile().hasCustomCommand(args.get(1))) {
-                 e.sendMessage(EmojiList.WORRIED + " Oops, este comando não existe.");
+                 e.sendMessage(lp.get("command.commands.raw.unknowncommand"));
                  return new CommandResult(CommandResultEnum.SUCCESS);
              }
              CustomCommand cmd = e.getGuildProfile().getCustomCommand(args.get(1));
-             e.sendMessage(EmojiList.CORRECT + " Raw String do comando ``" + args.get(1) + "`` ```" +
-             "{\"name\":\"" + args.get(1) + "\", \"author\":\"" + cmd.getCreator() + "\", \"value\":\"" + cmd.getMsg() + "\"}" + "```");
+             e.sendMessage(String.format(lp.get("command.commands.raw.success"), args.get(1), "{\"name\":\"" + args.get(1) + "\", \"author\":\"" + cmd.getCreator() + "\", \"value\":\"" + cmd.getMsg() + "\"}"));
              return new CommandResult(CommandResultEnum.SUCCESS);
          }
 
         return new CommandResult(CommandResultEnum.NOT_FOUND);
     }
 
-    public void importCommand(MessageEvent e, String title, CustomCommand cmd){
+    public void importCommand(MessageEvent e, String title, CustomCommand cmd, LangProfile lp){
         if(e.getGuildProfile().getCustomCommand(title) != null) {
-            e.sendMessage(EmojiList.WORRIED + " Oops, parece que já há um comando com esse nome!");
+            e.sendMessage(lp.get("command.commands.import.error.alreadyexist"));
             return;
         }
         e.getGuildProfile().createCustomCommand(title, cmd.getMsg(), e.getAuthor().getId());
-        e.sendMessage(EmojiList.CORRECT + " O comando ``" + title + "`` foi importado com sucesso.");
+        e.sendMessage(String.format(lp.get("command.commands.import.error.alreadyexist"), title));
     }
 
 

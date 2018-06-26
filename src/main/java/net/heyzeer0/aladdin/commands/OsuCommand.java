@@ -3,11 +3,11 @@ package net.heyzeer0.aladdin.commands;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.manager.custom.osu.OsuManager;
 import net.heyzeer0.aladdin.manager.custom.osu.OsuSubscriptionManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -42,9 +42,9 @@ public class OsuCommand implements CommandExecutor {
     }
 
 
-    @Command(command = "osu", description = "Informações sobre Osu!.", parameters = {"profile/follow"}, type = CommandType.FUN,
+    @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow"}, type = CommandType.FUN,
             usage = "a!osu profile HeyZeer0\na!osu follow HeyZeer0")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if (args.get(0).equals("follow")) {
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
@@ -56,12 +56,12 @@ public class OsuCommand implements CommandExecutor {
                     OsuPlayerProfile p = OsuManager.getUserProfile(nick, false);
 
                     if(OsuSubscriptionManager.addSubscriptor(e.getAuthor(), p.getNome())) {
-                        e.sendMessage(EmojiList.THINKING + " Tentei te registrar no programa, se você recebeu uma mensagem no privado significa que foi um sucesso, caso contrario cheque se eu posso te enviar mensagens privadas! ^O^");
+                        e.sendMessage(lp.get("command.osu.follow.success.1"));
                     }else{
-                        e.sendMessage(EmojiList.CORRECT + " Agora você não esta mais seguindo ``" + nick + "``");
+                        e.sendMessage(String.format(lp.get("command.osu.follow.success.2"), nick));
                     }
 
-                }catch (Exception x) { e.sendMessage(EmojiList.WORRIED + " Oops, o jogador definido não existe!");}
+                }catch (Exception x) { e.sendMessage(lp.get("command.osu.invalidplayer"));}
             });
 
             return new CommandResult(CommandResultEnum.SUCCESS);
@@ -84,7 +84,7 @@ public class OsuCommand implements CommandExecutor {
 
 
                     if(!pf.isExist()) {
-                        e.sendMessage(EmojiList.WORRIED + " Oops, o jogador informado não existe.");
+                        e.sendMessage(lp.get("command.osu.invalidplayer"));
                         return;
                     }
 
@@ -114,15 +114,15 @@ public class OsuCommand implements CommandExecutor {
                     ImageUtils.drawCenteredString(g, pf.getCount_rank_ss(), new Rectangle(622, 90, 56, 15), bold.deriveFont(21.38f));
                     g.setFont(regular.deriveFont(18.21f));
                     g.drawString("#" + pf.getPp_rank() + " | #" + pf.getCountry_rank() + " - " + Math.round(Float.valueOf(pf.getPp_raw())) + "pp", 116, 237);
-                    String beatmap = (mp == null ? "O jogador não possui uma top play" : bp.getTitle() + " [" + bp.getVersion() + "] " + " - " + Math.round(Float.valueOf(mp.getPp())) + "pp");
+                    String beatmap = (mp == null ? lp.get("command.osu.profile.notopplay") : bp.getTitle() + " [" + bp.getVersion() + "] " + " - " + Math.round(Float.valueOf(mp.getPp())) + "pp");
                     g.drawString(beatmap, 145, 215);
 
                     g.dispose();
-                    e.sendImagePure(background, EmojiList.CORRECT + " Aqui esta o perfil de ``" + pf.getNome() + "``");
+                    e.sendImagePure(background, String.format(lp.get("command.osu.profile.success"), pf.getNome()));
 
                 }catch(Exception ex) {
                     ex.printStackTrace();
-                    e.sendMessage(EmojiList.WORRIED + " Oops, ocorreu um erro ao tentar adquirir os dados do jogador informado: ``" + ex.getMessage() + "``");
+                    e.sendMessage(String.format(lp.get("command.osu.profile.error"), ex.getMessage()));
                 }
             });
             return new CommandResult(CommandResultEnum.SUCCESS);

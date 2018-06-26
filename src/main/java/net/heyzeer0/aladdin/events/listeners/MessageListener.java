@@ -67,7 +67,7 @@ public class MessageListener {
             return;
         }
 
-        if(e.getMessage().getContentDisplay().equalsIgnoreCase("sim") || e.getMessage().getContentDisplay().equalsIgnoreCase("s")) {
+        if(e.getMessage().getContentDisplay().equalsIgnoreCase("yes") || e.getMessage().getContentDisplay().equalsIgnoreCase("y")) {
             if(waiting_response.containsKey(e.getAuthor().getId())) {
                 if(waiting_response.get(e.getAuthor().getId()).getTime() >= System.currentTimeMillis()) {
                     CommandManager.handleCommand(CommandManager.parse(waiting_response.get(e.getAuthor().getId()).getCommand(), e));

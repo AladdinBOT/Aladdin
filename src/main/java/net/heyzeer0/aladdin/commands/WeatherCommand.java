@@ -9,6 +9,7 @@ import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -23,9 +24,10 @@ import java.util.List;
  */
 public class WeatherCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "weather", description = "Informações sobre o tempo", aliasses = {"weather"}, parameters = {"city"}, type = CommandType.INFORMATIVE,
             usage = "a!weather São Paulo")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         Utils.runAsync(() -> {
             try{
                 YahooWeatherService service = new YahooWeatherService();

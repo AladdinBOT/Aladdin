@@ -2,9 +2,9 @@ package net.heyzeer0.aladdin.commands;
 
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -23,15 +23,15 @@ public class AkinatorCommand implements CommandExecutor {
 
     public static HashMap<String, Long> akinators = new HashMap<>();
 
-    @Command(command = "akinator", description = "Pense em um um personagem e um gênio adivinhara quem é", type = CommandType.FUN,
+    @Command(command = "akinator", description = "command.akinator.description", type = CommandType.FUN,
             usage = "a!akinator")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lang) {
         if(akinators.containsKey(e.getAuthor().getId())) {
             long atual = akinators.get(e.getAuthor().getId());
             if((System.currentTimeMillis() - atual) >= 15000) {
                 akinators.remove(e.getAuthor().getId());
             }else{
-                e.sendMessage(EmojiList.WORRIED + " Oops, você já esta em um akinator!");
+                e.sendMessage(lang.get("command.akinator.alreadyingame"));
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
         }
@@ -40,7 +40,7 @@ public class AkinatorCommand implements CommandExecutor {
 
         Utils.runAsync(() -> {
             try{
-                new AkinatorProfile(e);
+                new AkinatorProfile(e, lang);
             }catch (Exception ex) { ex.printStackTrace(); }
         });
 

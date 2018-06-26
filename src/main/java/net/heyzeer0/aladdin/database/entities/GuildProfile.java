@@ -14,6 +14,7 @@ import net.heyzeer0.aladdin.database.entities.profiles.LogProfile;
 import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 import net.heyzeer0.aladdin.enums.GuildConfig;
+import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.profiles.commands.CustomCommand;
 import net.heyzeer0.aladdin.utils.Utils;
@@ -64,12 +65,15 @@ public class GuildProfile implements ManagedObject {
     //Iam
     HashMap<String, ArrayList<String>> iam_profiles = new HashMap<>();
 
+    //Lang
+    Lang selectedLanguage;
+
     public GuildProfile(Guild u) {
-        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null), new HashMap<>());
+        this(u.getId(), u.getOwner().getUser().getId(), Utils.getDefaultValues(), Utils.getDefaultGroup(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new LogProfile(null), new HashMap<>(), Lang.PT_BR);
     }
 
-    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "guild_starboards", "guild_log", "iam_profiles"})
-    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> guild_starboards, LogProfile guild_log, HashMap<String, ArrayList<String>> iam_profiles) {
+    @ConstructorProperties({"id", "ownerId", "configs", "groups", "user_group", "user_overrides", "commands", "guild_starboards", "guild_log", "iam_profiles", "selectedLanguage"})
+    public GuildProfile(String id, String ownerId, HashMap<GuildConfig, Object> configs, HashMap<String, GroupProfile> groups, HashMap<String, String> user_group, HashMap<String, ArrayList<String>> user_overrides, HashMap<String, CustomCommand> commands, HashMap<String, StarboardProfile> guild_starboards, LogProfile guild_log, HashMap<String, ArrayList<String>> iam_profiles, Lang selectedLanguage) {
         this.id = id;
         this.ownerId = ownerId;
         this.configs = configs;
@@ -80,8 +84,16 @@ public class GuildProfile implements ManagedObject {
         this.guild_starboards = guild_starboards;
         this.guild_log = guild_log;
         this.iam_profiles = iam_profiles;
+        this.selectedLanguage = selectedLanguage;
 
         if(this.guild_log == null) { this.guild_log = new LogProfile(null); }
+    }
+
+    @JsonIgnore
+    public void updateLang(Lang l) {
+        this.selectedLanguage = l;
+
+        saveAsync();
     }
 
     @JsonIgnore

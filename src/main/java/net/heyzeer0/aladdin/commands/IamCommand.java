@@ -3,21 +3,18 @@ package net.heyzeer0.aladdin.commands;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Role;
-import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
-import net.heyzeer0.aladdin.manager.custom.GiveawayManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
-import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 
 import java.awt.*;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,63 +25,61 @@ import java.util.List;
  */
 public class IamCommand implements CommandExecutor {
 
-    @Command(command = "iam", description = "Permite que membros assumam cargos por conta própria", extra_perm = {"manage"}, parameters = {"role/list/create/addrole/remrole/delete"}, type = CommandType.ADMNISTRATIVE,
+    @Command(command = "iam", description = "command.iam.description", extra_perm = {"manage"}, parameters = {"role/list/create/addrole/remrole/delete"}, type = CommandType.ADMNISTRATIVE,
             usage = "a!iam nsfw\na!iam create nsfw\na!iam addrole nsfw NSFW\na!iam remrole nsfw NSFW\na!iam delete nsfw\na!iam list")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(!e.getGuild().getMemberById(e.getJDA().getSelfUser().getId()).hasPermission(Permission.MANAGE_ROLES)) {
-            e.sendMessage(EmojiList.WORRIED + " Oops, para executar este comando preciso da permissão de controle de cargos.");
+            e.sendMessage(lp.get("command.iam.missingpermission"));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
         if(args.get(0).equalsIgnoreCase("create")) {
             if(!e.hasPermission("command.iam.manage")) {
-                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.command.create");
+                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.iam.manage");
             }
 
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "create", "nome");
             }
 
-            String nome = args.getCompleteAfter(1);
+            String name = args.getCompleteAfter(1);
 
-            if(e.getGuildProfile().iamExists(nome)) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, já existe um iam com este nome!");
+            if(e.getGuildProfile().iamExists(name)) {
+                e.sendMessage(lp.get("command.iam.create.alreadyexist"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            e.getGuildProfile().createIam(nome);
+            e.getGuildProfile().createIam(name);
 
-            e.sendMessage(EmojiList.CORRECT + " Você criou com sucesso o iam ``" + nome + "``\n" + ":interrobang: Para adicionar um cargo utilize ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "iam addrole " + nome + " nomedocargo``");
-
+            e.sendMessage(String.format(lp.get("command.iam.create.success"), name, e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "iam addrole " + name + " role"));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equalsIgnoreCase("delete")) {
             if(!e.hasPermission("command.iam.manage")) {
-                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.command.create");
+                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.iam.manage");
             }
 
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "delete", "nome");
             }
 
-            String nome = args.getCompleteAfter(1);
+            String name = args.getCompleteAfter(1);
 
-            if(!e.getGuildProfile().iamExists(nome)) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, não existe um iam com este nome!");
+            if(!e.getGuildProfile().iamExists(name)) {
+                e.sendMessage(lp.get("command.iam.create.alreadyexist"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            e.getGuildProfile().deleteIam(nome);
+            e.getGuildProfile().deleteIam(name);
 
-            e.sendMessage(EmojiList.CORRECT + " Você deletou com sucesso o iam ``" + nome + "``");
-
+            e.sendMessage(String.format(lp.get("command.iam.delete.success"), name));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
         if(args.get(0).equalsIgnoreCase("addrole")) {
             if(!e.hasPermission("command.iam.manage")) {
-                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.command.create");
+                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.iam.manage");
             }
 
             if(args.getSize() < 3) {
@@ -94,7 +89,7 @@ public class IamCommand implements CommandExecutor {
             String iam = args.get(1);
 
             if(!e.getGuildProfile().iamExists(iam)) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, não existe um iam com este nome!");
+                e.sendMessage(lp.get("command.iam.create.alreadyexist"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
@@ -109,24 +104,24 @@ public class IamCommand implements CommandExecutor {
             }
 
             if(role == null) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, o cargo inserido é invalido.");
+                e.sendMessage(lp.get("command.iam.invalidrole"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(e.getGuild().getMemberById(e.getJDA().getSelfUser().getId()).getRoles().size() <= 0) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, o meu cargo precisa ser maior que o cargo definido.");
+                e.sendMessage(lp.get("command.iam.addrole.invalidhierarchy"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(role.getPosition() >= e.getGuild().getMemberById(e.getJDA().getSelfUser().getId()).getRoles().get(0).getPosition()) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, o meu cargo precisa ser maior que o cargo definido.");
+                e.sendMessage(lp.get("command.iam.addrole.invalidhierarchy"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(e.getGuildProfile().addRoleToIam(iam, role.getId())) {
-                e.sendMessage(EmojiList.CORRECT + " Você adicionou o cargo ``" + role.getName() + "`` para o iam ``" + iam + "`` com sucesso.");
+                e.sendMessage(String.format(lp.get("command.iam.addrole.sucess"), role.getName(), iam));
             }else{
-                e.sendMessage(EmojiList.WORRIED + " Oops, o cargo definido já é parte deste iam.");
+                e.sendMessage(lp.get("command.iam.addrole.alreadyonit"));
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);
@@ -134,7 +129,7 @@ public class IamCommand implements CommandExecutor {
 
         if(args.get(0).equalsIgnoreCase("remrole")) {
             if(!e.hasPermission("command.iam.manage")) {
-                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.command.create");
+                return new CommandResult(CommandResultEnum.MISSING_PERMISSION, "command.command.manage");
             }
 
             if(args.getSize() < 3) {
@@ -144,7 +139,7 @@ public class IamCommand implements CommandExecutor {
             String iam = args.get(1);
 
             if(!e.getGuildProfile().iamExists(iam)) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, não existe um iam com este nome!");
+                e.sendMessage(lp.get("command.iam.create.alreadyexist"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
@@ -159,29 +154,29 @@ public class IamCommand implements CommandExecutor {
             }
 
             if(role == null) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, o cargo inserido é invalido.");
+                e.sendMessage(lp.get("command.iam.invalidrole"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(e.getGuildProfile().removeRoleFromIam(iam, role.getId())) {
-                e.sendMessage(EmojiList.CORRECT + " Você removeu o cargo ``" + role.getName() + "`` para o iam ``" + iam + "`` com sucesso.");
+                e.sendMessage(String.format(lp.get("command.iam.remrole.success"), role.getName(), iam));
             }else{
-                e.sendMessage(EmojiList.WORRIED + " Oops, o cargo definido não é parte deste iam.");
+                e.sendMessage(lp.get("command.iam.remrole.notpart"));
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equalsIgnoreCase("list")) {
             if(e.getGuildProfile().getIam_profiles().size() <= 0) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, esta guilda não possui nenhum cargo publico.");
+                e.sendMessage(lp.get("command.iam.list.noiams"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             EmbedBuilder b = new EmbedBuilder();
-            b.setTitle(":notepad_spiral: Cargos publicos disponíveis");
+            b.setTitle(lp.get("command.iam.list.embed.title"));
             b.setColor(Color.GREEN);
-            b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
-            b.setDescription("Para entrar em um cargo utilize ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "iam nomedocargo``");
+            b.setFooter(String.format(lp.get("command.iam.list.embed.footer"), e.getAuthor().getName()), e.getAuthor().getEffectiveAvatarUrl());
+            b.setDescription(String.format(lp.get("command.iam.list.embed.description"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "iam role"));
 
             HashMap<String, ArrayList<String>> iams = e.getGuildProfile().getIam_profiles();
 
@@ -230,10 +225,10 @@ public class IamCommand implements CommandExecutor {
 
             if(remove) {
                 e.getGuild().getController().removeRolesFromMember(e.getMember(), roles).queue();
-                e.sendMessage(EmojiList.CORRECT + " Agora você não faz parte de ``" + args.getCompleteAfter(0) + "``");
+                e.sendMessage(String.format(lp.get("command.iam.success.1"), args.getCompleteAfter(0)));
             }else{
                 e.getGuild().getController().addRolesToMember(e.getMember(), roles).queue();
-                e.sendMessage(EmojiList.CORRECT + " Agora você faz parte de ``" + args.getCompleteAfter(0) + "``");
+                e.sendMessage(String.format(lp.get("command.iam.success.2"), EmojiList.CORRECT + " Agora você faz parte de ``" + args.getCompleteAfter(0) + "``"));
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);

@@ -8,6 +8,7 @@ import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.music.MusicManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -18,9 +19,10 @@ import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
  */
 public class VolumeCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "volume", description = "Altere o volume do player de musica", parameters = {"30 a 110"}, type = CommandType.MUSIC,
             usage = "a!volume 30", needPermission = false)
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(!e.getUserProfile().isPremiumActive()) {
             return new CommandResult((CommandResultEnum.NEED_PREMIUM));

@@ -2,10 +2,10 @@ package net.heyzeer0.aladdin.commands;
 
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -18,15 +18,15 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class ConfigCommand implements CommandExecutor {
 
-    @Command(command = "config", description = "Altere as configurações de sua guilda", parameters = {"list/set"}, aliasses = {"cfg"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
+    @Command(command = "config", description = "command.config.description", parameters = {"list/set"}, aliasses = {"cfg"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!config list\na!config set prefix !!")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(args.get(0).equalsIgnoreCase("list")) {
-            Paginator ph = new Paginator(e, ":wrench: Configurações da guilda");
+            Paginator ph = new Paginator(e, lp.get("command.config.list.paginator.title"));
 
             for(GuildConfig cfg : GuildConfig.values()) {
-                ph.addPage("Nome: " + cfg.toString().toLowerCase() + "\nDescrição: " + cfg.getDescription() + "\nAtual: " + e.getGuildProfile().getConfigValue(cfg));
+                ph.addPage(String.format(lp.get("command.config.list.paginator.page"), cfg.toString().toLowerCase(), cfg.getDescription(), e.getGuildProfile().getConfigValue(cfg)));
             }
 
             ph.start();
@@ -47,28 +47,28 @@ public class ConfigCommand implements CommandExecutor {
                         if(!e.getGuildProfile().changeConfig(cfg, Integer.valueOf(args.get(2)))) {
                             throw new Exception();
                         }
-                        e.sendMessage(EmojiList.CORRECT + " Você alterou a configuração ``" + cfg.toString() + "`` para ``" + args.get(2) + "``");
+                        e.sendMessage(String.format(lp.get("command.config.set.success"), cfg.toString(), args.get(2)));
                         return new CommandResult((CommandResultEnum.SUCCESS));
                     }
                     if(args.get(2).equalsIgnoreCase("true") || args.get(2).equalsIgnoreCase("false")) {
                         if(!e.getGuildProfile().changeConfig(cfg, Boolean.valueOf(args.get(2)))) {
                             throw new Exception();
                         }
-                        e.sendMessage(EmojiList.CORRECT + " Você alterou a configuração ``" + cfg.toString() + "`` para ``" + args.get(2) + "``");
+                        e.sendMessage(String.format(lp.get("command.config.set.success"), cfg.toString(), args.get(2)));
                         return new CommandResult((CommandResultEnum.SUCCESS));
                     }
 
                     if(!e.getGuildProfile().changeConfig(cfg, args.getCompleteAfter(2))) {
                         throw new Exception();
                     }
-                    e.sendMessage(EmojiList.CORRECT + " Você alterou a configuração ``" + cfg.toString() + "`` para ``" + args.getCompleteAfter(2) + "``");
+                    e.sendMessage(String.format(lp.get("command.config.set.success"), cfg.toString(), args.getCompleteAfter(2)));
 
                 }catch (Exception ex2) {
-                    e.sendMessage(EmojiList.BEGINNER + " O valor inserido é invalido. ");
+                    e.sendMessage(lp.get("command.config.set.error.invalidvalue"));
                 }
 
             }catch (Exception ex) {
-                e.sendMessage(EmojiList.BEGINNER + " O nome inserido é invalido. ");
+                e.sendMessage(lp.get("command.config.set.error.unknownconfig"));
             }
             return new CommandResult((CommandResultEnum.SUCCESS));
         }

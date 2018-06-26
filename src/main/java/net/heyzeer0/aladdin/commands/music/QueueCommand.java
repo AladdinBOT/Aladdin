@@ -9,6 +9,7 @@ import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
 import net.heyzeer0.aladdin.music.profiles.PlayerContext;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -23,9 +24,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class QueueCommand implements CommandExecutor {
 
+    //TODO lang
     @Command(command = "queue", description = "Veja as musicas na queue", aliasses = {"q"}, type = CommandType.MUSIC,
             usage = "a!queue")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         GuildTrackProfile guild = MusicManager.getManager(e.getGuild());
 
         if(guild.getQueue().size() <= 0) {

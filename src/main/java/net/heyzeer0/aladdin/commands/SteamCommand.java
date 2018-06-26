@@ -8,6 +8,7 @@ import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -25,9 +26,10 @@ public class SteamCommand implements CommandExecutor {
     public static SteamApi steam = new SteamApi("BR");
     public static SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 
+    //TODO lang
     @Command(command = "steam", description = "Obtenha informações da Steam.", parameters = {"game"}, type = CommandType.MISCELLANEOUS,
             usage = "a!steam game Portal 2")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(args.get(0).equalsIgnoreCase("game")) {
             if(args.getSize() < 2) {

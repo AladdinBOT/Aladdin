@@ -3,10 +3,10 @@ package net.heyzeer0.aladdin.commands;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.manager.custom.PixaBayManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -22,16 +22,16 @@ import java.util.List;
  */
 public class ImageCommand implements CommandExecutor {
 
-    @Command(command = "image", description = "Obtenha uma imagem com a tag selecionada", parameters = {"tag"}, type = CommandType.MISCELLANEOUS,
+    @Command(command = "image", description = "command.image.description", parameters = {"tag"}, type = CommandType.MISCELLANEOUS,
             usage = "a!image carro")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         Utils.runAsync(() -> {
 
             try{
                 List<PixaBayProfile> pbp = PixaBayManager.getImages(args.getComplete().replace(" ", "+"));
 
                 if(pbp == null) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, não há resultados para ``" + args.getComplete() + "``");
+                    e.sendMessage(String.format(lp.get("command.image.notfound"), args.getComplete()));
                     return;
                 }
 
@@ -39,17 +39,17 @@ public class ImageCommand implements CommandExecutor {
 
                 EmbedBuilder b = new EmbedBuilder();
                 b.setColor(Color.GREEN);
-                b.setDescription("Powered by PixaBay, clique [aqui](" + pf.getPageURL() + ") para ir até a página, sem NSFW");
-                b.setTitle(":frame_photo: | Imagem para " + args.getComplete());
-                b.addField(EmojiList.BUY + " Downloads", pf.getDownloads() + "", true);
-                b.addField(EmojiList.HEART + " Likes", pf.getLikes() + "", true);
+                b.setTitle(String.format(lp.get("command.image.embed.title"), args.getComplete()));
+                b.setDescription(String.format(lp.get("command.image.embed.description"), pf.getPageURL()));
+                b.addField(lp.get("command.image.embed.field.1"), pf.getDownloads() + "", true);
+                b.addField(lp.get("command.image.embed.field.2"), pf.getLikes() + "", true);
                 b.setImage(pf.getWebformatURL());
-                b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+                b.setFooter(String.format(lp.get("command.image.embed.footer"), e.getAuthor().getName()), e.getAuthor().getEffectiveAvatarUrl());
                 b.setTimestamp(e.getMessage().getCreationTime());
 
                 e.sendMessage(b);
             }catch (Exception ex) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, ocorreu um erro ao executar este comando ``" + ex.getMessage() + "``");
+                e.sendMessage(String.format(lp.get("command.image.error"), ex.getMessage()));
                 ex.printStackTrace();
             }
 

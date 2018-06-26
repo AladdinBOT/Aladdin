@@ -7,6 +7,7 @@ import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandContainer;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
@@ -23,31 +24,31 @@ import java.util.HashMap;
  */
 public class HelpCommand implements CommandExecutor {
 
-    @Command(command = "help", description = "Bom parece que você já sabe o que este comando faz :thinking:", type = CommandType.INFORMATIVE,
+    @Command(command = "help", description = "command.help.description", type = CommandType.INFORMATIVE,
             usage = "a!help\na!help group", needPermission = false)
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.getSize() >= 1) {
             if(CommandManager.commands.containsKey(args.get(0))) {
 
                 EmbedBuilder b = new EmbedBuilder();
                 b.setColor(Color.GREEN);
                 b.setThumbnail("https://media.tenor.com/images/9a5178a7b636e201da025b7e41f8e2a2/tenor.gif");
-                b.setTitle(":green_book: Ajuda para o comando " + args.get(0));
-                b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+                b.setTitle(String.format(lp.get("command.help.embed.help.title"), args.get(0)));
+                b.setFooter(String.format(lp.get("command.help.embed.help.footer"), e.getAuthor().getName()), e.getAuthor().getEffectiveAvatarUrl());
                 CommandContainer cmd = CommandManager.commands.get(args.get(0));
-                b.addField("Descrição:", cmd.getAnnotation().description(), false);
-                b.addField("Exemplos:", cmd.getAnnotation().usage(), false);
+                b.addField(lp.get("command.help.embed.help.field.1"), lp.get(cmd.getAnnotation().description()), false);
+                b.addField(lp.get("command.help.embed.help.field.2"), cmd.getAnnotation().usage(), false);
                 if(!cmd.getAnnotation().aliasses()[0].equals("none")) {
-                    b.addField("Alias:", StringUtils.join(cmd.getAnnotation().aliasses(), ", "), false);
+                    b.addField(lp.get("command.help.embed.help.field.3"), StringUtils.join(cmd.getAnnotation().aliasses(), ", "), false);
                 }
                 if(cmd.getAnnotation().extra_perm()[0].equalsIgnoreCase("none")) {
-                    b.addField("Permissão: ", "command." + cmd.getAnnotation().command(), false);
+                    b.addField(lp.get("command.help.embed.help.field.4"), "command." + cmd.getAnnotation().command(), false);
                 }else{
                     String permissioes = " - command." + cmd.getAnnotation().command() + "\n";
                     for(String x : cmd.getAnnotation().extra_perm()) {
                         permissioes = permissioes + "- " + x + "\n";
                     }
-                    b.addField("Permissões: ", permissioes, false);
+                    b.addField(lp.get("command.help.embed.help.field.5"), permissioes, false);
                 }
 
                 e.sendMessage(b);
@@ -57,23 +58,23 @@ public class HelpCommand implements CommandExecutor {
                 EmbedBuilder b = new EmbedBuilder();
                 b.setColor(Color.GREEN);
                 b.setThumbnail("http://www.impactaustin.org/assets/images/icon_check.png");
-                b.setTitle(":green_book: Ajuda para o comando " + args.get(0));
-                b.setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());
+                b.setTitle(String.format(lp.get("command.help.embed.help.title"), args.get(0)));
+                b.setFooter(String.format(lp.get("command.help.embed.help.footer"), e.getAuthor().getName()), e.getAuthor().getEffectiveAvatarUrl());
                 CommandContainer cmd = CommandManager.aliases.get(args.get(0));
-                b.addField("Descrição:", cmd.getAnnotation().description(), false);
-                b.addField("Exemplos:", cmd.getAnnotation().usage(), false);
+                b.addField(lp.get("command.help.embed.help.field.1"), lp.get(cmd.getAnnotation().description()), false);
+                b.addField(lp.get("command.help.embed.help.field.2"), cmd.getAnnotation().usage(), false);
                 if(!cmd.getAnnotation().aliasses()[0].equals("none")) {
-                    b.addField("Alias:", StringUtils.join(cmd.getAnnotation().aliasses(), ", "), false);
+                    b.addField(lp.get("command.help.embed.help.field.3"), StringUtils.join(cmd.getAnnotation().aliasses(), ", "), false);
                 }
 
                 if(cmd.getAnnotation().extra_perm()[0].equalsIgnoreCase("none")) {
-                    b.addField("Permissão: ", "command." + cmd.getAnnotation().command(), false);
+                    b.addField(lp.get("command.help.embed.help.field.4"), "command." + cmd.getAnnotation().command(), false);
                 }else{
                     String permissioes = " - command." + cmd.getAnnotation().command() + "\n";
                     for(String x : cmd.getAnnotation().extra_perm()) {
                         permissioes = permissioes + "- " + x + "\n";
                     }
-                    b.addField("Permissões: ", permissioes, false);
+                    b.addField(lp.get("command.help.embed.help.field.5"), permissioes, false);
                 }
 
                 e.sendMessage(b);
@@ -82,8 +83,8 @@ public class HelpCommand implements CommandExecutor {
         }
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
-        b.setAuthor("Listando todos os meus comandos", null, "https://media.tenor.com/images/9a5178a7b636e201da025b7e41f8e2a2/tenor.gif");
-        b.setDescription("Para mais informações use ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "ajuda {comando}``");
+        b.setAuthor(lp.get("command.help.embed.author"), null, "https://media.tenor.com/images/9a5178a7b636e201da025b7e41f8e2a2/tenor.gif");
+        b.setDescription(String.format(lp.get("command.help.embed.description"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "help {command}"));
 
         HashMap<CommandType, ArrayList<String>> comandos = new HashMap<>();
 
@@ -102,7 +103,7 @@ public class HelpCommand implements CommandExecutor {
             }
         }
 
-        b.setFooter("Comandos disponíveis: " + x, null);
+        b.setFooter(String.format(lp.get("command.help.embed.footer"), x), null);
 
         comandos.keySet().forEach(key -> b.addField(key.getEmoji() + " | " + key.toString(), StringUtils.join(comandos.get(key), ", "), false));
 

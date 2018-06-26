@@ -6,6 +6,7 @@ import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -18,9 +19,9 @@ import java.awt.*;
  */
 public class EmojiCommand implements CommandExecutor {
 
-    @Command(command = "emoji", description = "Obtenha informações sobre o emoji indicado", parameters = {"emoji"}, type = CommandType.MISCELLANEOUS,
+    @Command(command = "emoji", description = "Obtenha informações sobre o emoji indicado", parameters = {"emoji"}, type = CommandType.BOT_ADMIN,
             usage = "a!emoji :smiley:")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(e.getMessage().getEmotes().size() > 0) {
             e.getMessage().getEmotes().forEach(em -> e.sendMessage(new EmbedBuilder().setTitle(":beginner: Informações sobre o emoji " + em.getName()).addField("Id:", em.getId(), true).setDescription("Uso completo ``<:" + em.getName() + ":" + em.getId() + ">``").setThumbnail(em.getImageUrl()).setColor(Color.GREEN)));

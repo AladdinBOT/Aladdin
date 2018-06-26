@@ -46,7 +46,7 @@ public class OsuSubscriptionManager {
         }
 
         user.openPrivateChannel().queue(pc -> {
-            pc.sendMessage(":white_check_mark: Você agora recebera noticias sobre o jogador ``" + target + "``").queue(c -> {
+            pc.sendMessage(":white_check_mark: By now you are going to receive news about ``" + target + "``").queue(c -> {
                 if(subscription.containsKey(target)) {
                     subscription.get(target).add(user.getId());
                     Main.getDatabase().getServer().updateOsuSubscriptions(subscription);
@@ -142,9 +142,9 @@ public class OsuSubscriptionManager {
                                     final int i2 = i;
                                     for (String usr : subscription.get(user)) {
                                         User u = Main.getUserById(usr);
-                                        eb.setFooter("Status requerido por " + u.getName(), u.getEffectiveAvatarUrl());
+                                        eb.setFooter("Status required by " + u.getName(), u.getEffectiveAvatarUrl());
 
-                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " Novo rank #" + (i2 + 1) + " para " + pp.getNome()).queue(v -> {
+                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New rank #" + (i2 + 1) + " for " + pp.getNome()).queue(v -> {
                                         }, k -> {
                                             if (removeUsers.containsKey(user)) {
                                                 removeUsers.get(user).add(usr);
@@ -167,8 +167,10 @@ public class OsuSubscriptionManager {
                                 }
                             }
                         } catch (Exception ex) {
-                            ex.printStackTrace();
-                            toRemove.add(user);
+                            if(!ex.getMessage().contains("HTTP response")) {
+                                ex.printStackTrace();
+                                toRemove.add(user);
+                            }
                         }
                     }
 

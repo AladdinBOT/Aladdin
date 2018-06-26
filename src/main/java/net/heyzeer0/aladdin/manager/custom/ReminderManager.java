@@ -25,7 +25,7 @@ public class ReminderManager {
                     if(System.currentTimeMillis() > rp.getDuration()) {
                         try{
                             String reminder = rp.getReminder();
-                            Main.getUserById(rp.getUserId()).openPrivateChannel().queue(ch -> ch.sendMessage(EmojiList.STOPWATCH + " Você pediu para eu te lembrar de ``" + reminder + "`` agora ^-^").queue());
+                            Main.getUserById(rp.getUserId()).openPrivateChannel().queue(ch -> ch.sendMessage(EmojiList.STOPWATCH + " You told me to remember you of ``" + reminder + "`` right now ^-^").queue());
                             pf.removeReminder(rp);
                         }catch (Exception ignored) { }
                     }

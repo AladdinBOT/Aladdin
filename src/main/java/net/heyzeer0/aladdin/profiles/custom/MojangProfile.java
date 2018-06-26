@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 
 import java.awt.*;
@@ -50,12 +51,12 @@ public class MojangProfile {
         }catch (Exception e) {}
     }
 
-    public void sendAsEmbed(MessageEvent e) {
+    public void sendAsEmbed(MessageEvent e, LangProfile lp) {
         EmbedBuilder b = new EmbedBuilder().setColor(Color.GREEN)
-                .setDescription("Status atual dos servidores da mojang")
+                .setDescription(lp.get("command.minecraft.status.embed.title"))
                 .setTitle("Mojang Status")
                 .setThumbnail("https://qph.ec.quoracdn.net/main-qimg-7607deb0a45b46cd9609bb800a58c9d9")
-                .setFooter("Pedido por " + e.getAuthor().getName(), e.getAuthor().getAvatarUrl())
+                .setFooter(String.format(lp.get("command.minecraft.status.embed.footer"), e.getAuthor().getName()), e.getAuthor().getAvatarUrl())
                 .setTimestamp(e.getMessage().getCreationTime());
 
         for(String x : server_status.keySet()) {

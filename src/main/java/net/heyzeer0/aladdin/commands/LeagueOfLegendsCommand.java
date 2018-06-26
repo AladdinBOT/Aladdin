@@ -6,6 +6,7 @@ import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
@@ -34,9 +35,10 @@ public class LeagueOfLegendsCommand implements CommandExecutor {
     public static ChampionList champions = null;
     public static HashMap<Integer, Champion> championsById = new HashMap<>();
 
+    //TODO translation
     @Command(command = "leagueoflegends", description = "Comandos Relacionados a League of Legends", aliasses = {"lol"}, parameters = {"activeGame"}, type = CommandType.FUN,
             usage = "a!lol activeGame Zer0Master")
-    public CommandResult onCommand(ArgumentProfile args, MessageEvent e) {
+    public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(champions == null) {
             try{
                 champions = apiClient.getDataChampionList(Platform.BR);
