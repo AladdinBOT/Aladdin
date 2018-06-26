@@ -68,7 +68,7 @@ public class LangProfile {
     }
 
     public String get(String key) {
-        return messages.get(key);
+        return messages.get(key).replace("\\n", "\n");
     }
 
     public HashMap<String, String> getMessages() {

@@ -13,7 +13,7 @@
 [command.akinator.erroroncontinue] = 😟 Oops, um erro ocorreu ao continuar a utilizar o akinator
 [command.akinator.image.questionnumber] = Pergunta Nº
 [command.akinator.guess.correct] = 😄 Ótimo! Adivinhei certo mais uma vez.\nEu adorei jogar com você %s!
-[command.akinator.guess.correct] = 😟 Droga! Parece que dessa vez não consegui adivinhar.\nEu adorei jogar com você %s!
+[command.akinator.guess.incorrect] = 😟 Droga! Parece que dessa vez não consegui adivinhar.\nEu adorei jogar com você %s!
 [command.bot.description] = Obtenha informações sobre mim
 [command.bot.status.years] = Anos
 [command.bot.status.months] = Meses
