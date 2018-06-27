@@ -65,8 +65,8 @@ public class PremiumCommand implements CommandExecutor {
                     b.addField(":calendar_spiral: | " + lp.get("ommand.premium.info.embed.field.2"), "∞", false);
                     b.addField(":arrows_counterclockwise: | " + lp.get("ommand.premium.info.embed.field.3"), "" + pf.isAutoRenew(), false);
                 }else {
-                    b.addField(":calendar_spiral: | " + lp.get("ommand.premium.info.embed.field.2"), "" + Utils.getTime((pf.getPremiumTime() - System.currentTimeMillis())), false);
-                    b.addField(":arrows_counterclockwise: | " + lp.get("ommand.premium.info.embed.field.3"), "" + pf.isAutoRenew(), false);
+                    b.addField(":calendar_spiral: | " + lp.get("command.premium.info.embed.field.2"), "" + Utils.getTime((pf.getPremiumTime() - System.currentTimeMillis())), false);
+                    b.addField(":arrows_counterclockwise: | " + lp.get("command.premium.info.embed.field.3"), "" + pf.isAutoRenew(), false);
                 }
             }
 
