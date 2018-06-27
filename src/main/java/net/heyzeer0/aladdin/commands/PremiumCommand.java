@@ -58,12 +58,12 @@ public class PremiumCommand implements CommandExecutor {
             b.setColor(Color.GREEN);
             b.setTitle(String.format(lp.get("command.premium.info.embed.title"), u.getName()));
             b.setDescription(String.format(lp.get("command.premium.info.embed.description"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium ativar"));
-            b.addField(":key2: | " + lp.get("ommand.premium.info.embed.field.1"), "" + pf.getPremiumKeys(), false);
+            b.addField(":key2: | " + lp.get("command.premium.info.embed.field.1"), "" + pf.getPremiumKeys(), false);
 
             if(e.getUserProfile().userPremium()) {
                 if(BotConfig.bot_owner.equals(e.getAuthor().getId())) {
-                    b.addField(":calendar_spiral: | " + lp.get("ommand.premium.info.embed.field.2"), "∞", false);
-                    b.addField(":arrows_counterclockwise: | " + lp.get("ommand.premium.info.embed.field.3"), "" + pf.isAutoRenew(), false);
+                    b.addField(":calendar_spiral: | " + lp.get("command.premium.info.embed.field.2"), "∞", false);
+                    b.addField(":arrows_counterclockwise: | " + lp.get("command.premium.info.embed.field.3"), "" + pf.isAutoRenew(), false);
                 }else {
                     b.addField(":calendar_spiral: | " + lp.get("command.premium.info.embed.field.2"), "" + Utils.getTime((pf.getPremiumTime() - System.currentTimeMillis())), false);
                     b.addField(":arrows_counterclockwise: | " + lp.get("command.premium.info.embed.field.3"), "" + pf.isAutoRenew(), false);
