@@ -3,7 +3,6 @@ package net.heyzeer0.aladdin.commands;
 import net.heyzeer0.aladdin.database.entities.profiles.StarboardProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
@@ -22,17 +21,16 @@ import java.util.HashMap;
  */
 public class StarboardCommand implements CommandExecutor {
 
-    //TODO lang
-    @Command(command = "starboard", description = "Crie ou delete starboards", aliasses = {"sboard"}, parameters = {"create/config/remove/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
+    @Command(command = "starboard", description = "command.starboard.description", aliasses = {"sboard"}, parameters = {"create/config/remove/list"}, type = CommandType.MISCELLANEOUS, isAllowedToDefault = false,
             usage = "a!starboard create 3 #starboard\na!starboard config 0 info\na!starboard config 0 setamount 3\na!starboard config 0 ignorechannel #testes\na!starboard remove 0\na!starboard list")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.get(0).equalsIgnoreCase("create")) {
             if(args.getSize() < 3) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "criar", "quantidade necessária de emotes", "#canal");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "create", lp.get("command.starboard.create.arg.1"), lp.get("command.starboard.create.arg.2"));
             }
 
             if(e.getMessage().getMentionedChannels().size() < 1) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, você não mencionou nenhum canal!");
+                e.sendMessage(lp.get("command.starboard.create.error.nochannel"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
@@ -41,19 +39,19 @@ public class StarboardCommand implements CommandExecutor {
                 Integer amount = Integer.valueOf(args.get(1));
                 String ch = e.getMessage().getMentionedChannels().get(0).getId();
 
-                new Reactioner(EmojiList.THINKING + " Adicione como reação nesta mensagem o emote que quer utilizar", e.getAuthor().getIdLong(), e.getChannel(), (v) -> {
+                new Reactioner(lp.get("command.starboard.create.reactioner.title"), e.getAuthor().getIdLong(), e.getChannel(), (v) -> {
                     String emote = v.getReactionEmote().getName() + "|" + (v.getReactionEmote().getId() == null ? "null" : v.getReactionEmote().getId());
                     if(e.getGuildProfile().getGuild_starboards().containsKey(emote)) {
-                        e.sendMessage(EmojiList.WORRIED + " Oops, o emote mencionado já pertence a outra starboard.");
+                        e.sendMessage(lp.get("command.starboard.create.reactioner.invalidemote"));
                         return;
                     }
                     e.getGuildProfile().createStarboard(emote, amount, ch);
 
-                    e.sendMessage(EmojiList.CORRECT + " Você criou com sucesso a starboard.");
+                    e.sendMessage(lp.get("command.starboard.create.success"));
                 });
 
             }catch (Exception ex) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, a quantidade inserida é invalida");
+                e.sendMessage(lp.get("command.starboard.create.error.invalidamount"));
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);
@@ -68,22 +66,22 @@ public class StarboardCommand implements CommandExecutor {
                 Integer id = Integer.valueOf(args.get(1));
 
                 if(id < 0) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, o número precisa ser maior ou igual a zero");
+                    e.sendMessage(lp.get("command.starboard.config.error.invalidnumber"));
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
                 if(e.getGuildProfile().getGuild_starboards().size() < id) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, a starboard com a id inserida não existe");
+                    e.sendMessage(lp.get("command.starboard.config.error.invalidstarboard"));
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
                 if(args.get(2).equalsIgnoreCase("info")) {
                     StarboardProfile pf = e.getGuildProfile().getStarboardById(id);
 
-                    Paginator ph = new Paginator(e, ":tools: Configurações da starboard " + id);
-                    ph.addPage("Emoji: " + pf.getEmote().split("\\|")[0] + "\nQuantidade necessária: " + pf.getAmount() + "\nMensages: " + pf.getMessages().size());
+                    Paginator ph = new Paginator(e, String.format(lp.get("command.starboard.config.info.paginator.title"), id));
+                    ph.addPage(String.format(lp.get("command.starboard.config.info.paginator.page.1"), pf.getEmote().split("\\|")[0], pf.getAmount(), pf.getMessages().size()));
 
-                    String x = "Canais Ingorados:\n";
+                    String x = lp.get("command.starboard.config.info.paginator.page.2") + "\n";
 
                     if(pf.getBlocked_channels().size() >= 1) {
                         for(String k : pf.getBlocked_channels().keySet()) {
@@ -92,7 +90,7 @@ public class StarboardCommand implements CommandExecutor {
 
                         ph.addPage(x);
                     }else{
-                        ph.addPage("Não há canais a serem ignorados para adicionar utilize \n" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard config " + id + " ignorechannel #canal");
+                        ph.addPage(lp.get("command.starboard.config.info.paginator.page.3", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard config " + id + " ignorechannel #canal"));
                     }
 
                     ph.start();
@@ -109,14 +107,14 @@ public class StarboardCommand implements CommandExecutor {
                         Integer amount = Integer.valueOf(args.get(3));
 
                         if(amount <= 0) {
-                            e.sendMessage(EmojiList.WORRIED + " Oops, o valor inserido é invalido");
+                            e.sendMessage(lp.get("command.starboard.config.setamount.error.invalidamount"));
                             return new CommandResult(CommandResultEnum.SUCCESS);
                         }
 
                         e.getGuildProfile().changeStarboardAmount(id, amount);
-                        e.sendMessage(EmojiList.CORRECT + " Você alterou a quantidade necessária de emojis da starboard ``" + id + "`` para ``" + amount + "``");
+                        e.sendMessage(lp.get("command.starboard.config.setamount.success", id, amount));
                     }catch (Exception ex) {
-                        e.sendMessage(EmojiList.WORRIED + " Oops, o valor inserido é invalido");
+                        e.sendMessage(lp.get("command.starboard.config.setamount.error.invalidamount"));
                     }
 
                     return new CommandResult(CommandResultEnum.SUCCESS);
@@ -128,17 +126,18 @@ public class StarboardCommand implements CommandExecutor {
                     }
 
                     if(e.getMessage().getMentionedChannels().size() <= 0) {
-                        e.sendMessage(EmojiList.WORRIED + " Oops, você esqueceu de mencionar um canal.");
+                        e.sendMessage(lp.get("command.starboard.config.ignorechannel.error.nochannel"));
                         return new CommandResult(CommandResultEnum.SUCCESS);
                     }
 
                     if(e.getGuildProfile().isBlockedChannel(id, e.getMessage().getMentionedChannels().get(0))) {
                         e.getGuildProfile().removeBlockedChannelToStarboard(e.getMessage().getMentionedChannels().get(0), id);
 
-                        e.sendMessage(EmojiList.CORRECT + " Você deixou de ignorar com sucesso o canal " + e.getMessage().getMentionedChannels().get(0).getAsMention() + " da starboard ``" + id + "``");
+                        e.sendMessage(lp.get("command.starboard.config.ignorechannel.success.1", e.getMessage().getMentionedChannels().get(0).getAsMention(), id));
                     }else{
                         e.getGuildProfile().addBlockedChannelToStarboard(e.getMessage().getMentionedChannels().get(0), id);
-                        e.sendMessage(EmojiList.CORRECT + " Você ignorou com sucesso o canal " + e.getMessage().getMentionedChannels().get(0).getAsMention() + " da starboard ``" + id + "``");
+
+                        e.sendMessage(lp.get("command.starboard.config.ignorechannel.success.2", e.getMessage().getMentionedChannels().get(0).getAsMention(), id));
                     }
 
                     return new CommandResult(CommandResultEnum.SUCCESS);
@@ -147,7 +146,7 @@ public class StarboardCommand implements CommandExecutor {
 
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "config", "id", "amount/ignorechannel");
             }catch (Exception ex) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, a id inserida é invalida");
+                e.sendMessage(lp.get("command.starboard.config.error.invalidstarboard"));
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);
@@ -162,21 +161,21 @@ public class StarboardCommand implements CommandExecutor {
                 Integer id = Integer.valueOf(args.get(1));
 
                 if(id < 0) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, o número precisa ser maior ou igual a zero");
+                    e.sendMessage(lp.get("command.starboard.remove.error.invalidamount"));
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
                 if(e.getGuildProfile().getGuild_starboards().size() < id) {
-                    e.sendMessage(EmojiList.WORRIED + " Oops, a starboard com a id inserida não existe");
+                    e.sendMessage(lp.get("command.starboard.remove.error.invalidstarboard"));
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
 
                 e.getGuildProfile().deleteStarboard(id);
 
-                e.sendMessage(EmojiList.CORRECT + " Você deletou com sucesso a starboard de id ``" + id + "``");
+                e.sendMessage(lp.get("command.starboard.remove.success", id));
 
             }catch (Exception ex) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, a id inserida é invalida");
+                e.sendMessage(lp.get("command.starboard.remove.error.invalidamount"));
             }
 
             return new CommandResult(CommandResultEnum.SUCCESS);
@@ -188,11 +187,11 @@ public class StarboardCommand implements CommandExecutor {
             String[] keyset = starboards.keySet().toArray(new String[] {});
 
             if(starboards.size() <= 0) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, parece que você não posssui uma starboard você pode criar uma utilizando o comando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard criar``");
+                e.sendMessage(lp.get("command.starboard.list.error.nostarboards", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "starboard create"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            Paginator ph = new Paginator(e, ":newspaper: Listando todas as starboads!");
+            Paginator ph = new Paginator(e, lp.get("command.starboard.list.paginator.title"));
 
             int pages = (starboards.size() + (10 + 1)) / 10;
 
@@ -210,7 +209,7 @@ public class StarboardCommand implements CommandExecutor {
 
                     String emote = starboards.get(keyset[p]).getEmote().split("\\|")[0];
 
-                    pg = pg + "ID " + p + " | Emote: " +  emote + "(" + starboards.get(keyset[p]).getMessages().size() + " mensagens)\n";
+                    pg = pg + lp.get("command.starboard.list.paginator.page", p, emote, starboards.get(keyset[p]).getMessages().size()) + "\n";
                 }
                 pactual++;
                 ph.addPage(pg);

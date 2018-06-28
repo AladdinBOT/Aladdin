@@ -5,7 +5,6 @@ import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
-import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
@@ -24,13 +23,13 @@ import java.util.List;
 public class UserCommand implements CommandExecutor {
 
     //TODO lang
-    @Command(command = "user", description = "Defina grupos ou permissões a membros\n\nPermissões com ``*`` são aceitáveis, exemplo ``command.*``\nPermissões com ``-`` retirarão acesso a ela, exemplo ``-command.music``", parameters = {"setgroup/addperm/remperm/info"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
+    @Command(command = "user", description = "command.user.description", parameters = {"setgroup/addperm/remperm/info"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
             usage = "a!user setgroup admin\na!user addperm command.* @HeyZeer0\na!user addperm -command.music @HeyZeer0\na!user remperm command.* @HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
 
         if(args.get(0).equalsIgnoreCase("addperm")) {
             if(args.getSize() < 3) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "addperm", "permissão", "usuário");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "addperm", lp.get("command.user.arg.1"), lp.get("command.user.arg.2"));
             }
 
             User u = null;
@@ -51,28 +50,27 @@ public class UserCommand implements CommandExecutor {
             }
 
             if(!NodeManager.validNode(args.get(1).replace("-", ""))) {
-                e.sendMessage(EmojiList.WORRIED + " Oops, parece que o nodo ``" + args.get(1) + "`` não existe, você pode listar todos utilizando ``" + e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "group nodes``");
+                e.sendMessage(lp.get("command.user.addperm.error.invalidnode", args.get(1), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "group nodes"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(u == null) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, o usuário definido é invalido.");
+                e.sendMessage(lp.get("command.user.error.invaliduser"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(!e.getGuildProfile().addUserOverride(u, args.get(1))) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, parece que o usuário já possuia esta permissão.");
+                e.sendMessage(lp.get("command.user.addperm.error.alreadyhas"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            e.sendMessage(EmojiList.CORRECT + " Você adicionou a permissão ``" + args.get(1) + "`` com sucesso ao usuário ``" + u.getName() + "``");
-
+            e.sendMessage(lp.get("command.user.addperm.success", args.get(1), u.getName()));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
         if(args.get(0).equalsIgnoreCase("remperm")) {
             if(args.getSize() < 3) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "remperm", "permissão", "usuário");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "remperm", lp.get("command.user.arg.1"), lp.get("command.user.arg.2"));
             }
 
             User u = null;
@@ -93,23 +91,22 @@ public class UserCommand implements CommandExecutor {
             }
 
             if(u == null) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, o usuário definido é invalido.");
+                e.sendMessage(lp.get("command.user.error.invaliduser"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(!e.getGuildProfile().removeUserOverride(u, args.get(1))) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, parece que o usuário não possuia esta permissão.");
+                e.sendMessage(lp.get("command.user.remperm.invalidperm"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
-            e.sendMessage(EmojiList.CORRECT + " Você removeu a permissão ``" + args.get(1) + "`` com sucesso do usuário ``" + u.getName() + "``");
-
+            e.sendMessage(lp.get("command.user.remperm.success", args.get(1), u.getName()));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 
         if(args.get(0).equalsIgnoreCase("setgroup")) {
             if(args.getSize() < 3) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "addperm", "grupo", "usuário");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "addperm", lp.get("command.user.setgroup.arg.1"), lp.get("command.user.setgroup.arg.2"));
             }
 
             User u = null;
@@ -130,39 +127,38 @@ public class UserCommand implements CommandExecutor {
             }
 
             if(u == null) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, o usuário definido é invalido.");
+                e.sendMessage(lp.get("command.user.error.invaliduser"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(args.get(1).toLowerCase().equalsIgnoreCase("unset")) {
                 e.getGuildProfile().removeUserGroup(u);
-                e.sendMessage(EmojiList.CORRECT + " Você removeu o grupo do usuário com sucesso.");
+                e.sendMessage(lp.get("command.user.setgroup.success.2"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             GroupProfile pf = e.getGuildProfile().getGroupByName(args.get(1).toLowerCase());
 
             if(pf == null) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, grupo inserido é invalido");
+                e.sendMessage(lp.get("command.user.setgroup.error.invalidgroup"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(pf.isDefault()) {
-                e.sendMessage(EmojiList.WORRIED + " Ops, o grupo definido é o padrão, todos possuem acesso ao mesmo.");
+                e.sendMessage(lp.get("command.user.setgroup.error.defaultgroup"));
                 return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             if(e.getGuild().getRolesByName(pf.getId(), true).size() >= 1) {
                 if(e.getGuild().getMember(u).getRoles().contains(e.getGuild().getRolesByName(pf.getId(), true).get(0))) {
-                    e.sendMessage(EmojiList.WORRIED + " Ops, o usuário indicado já faz parte desse grupo.");
+                    e.sendMessage(lp.get("command.user.setgroup.error.alreadymember"));
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
             }
 
             e.getGuildProfile().updateUserGroup(u, pf.getId());
 
-            e.sendMessage(EmojiList.CORRECT + " Você adicionou o usuário ``" + u.getName() + "`` com sucesso ao grupo ``" + pf.getId() + "``");
-
+            e.sendMessage(lp.get("command.user.setgroup.success.1", u.getName(), pf.getId()));
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
 

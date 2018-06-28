@@ -140,7 +140,7 @@ public class StarboardProfile {
         }
 
         EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-        b.setTitle(emote + " " + size + " | Enviada por " + msg.getAuthor().getName());
+        b.setTitle(emote + " " + size + " | " + Main.getDatabase().getGuildProfile(ch.getGuild()).getSelectedLanguage().getLangProfile().get("command.starboard.embed.title", msg.getAuthor().getName()));
 
         m.editMessage(b.build()).queue();
         return false;
@@ -199,7 +199,7 @@ public class StarboardProfile {
             }
 
             EmbedBuilder b = new EmbedBuilder(m.getEmbeds().get(0));
-            b.setTitle(emote + " " + size + " | Enviada por " + msg.getAuthor().getName());
+            b.setTitle(emote + " " + size + " | " + Main.getDatabase().getGuildProfile(ch.getGuild()).getSelectedLanguage().getLangProfile().get("command.starboard.embed.title", msg.getAuthor().getName()));
 
             m.editMessage(b.build()).queue();
 
@@ -235,7 +235,7 @@ public class StarboardProfile {
 
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Color.GREEN);
-        b.setTitle(emote + " " + size + " | Enviada por " + msg.getAuthor().getName());
+        b.setTitle(emote + " " + size + " | " + Main.getDatabase().getGuildProfile(ch.getGuild()).getSelectedLanguage().getLangProfile().get("command.starboard.embed.title", msg.getAuthor().getName()));
         b.setDescription(msg.getContentRaw());
 
         if(msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) {
@@ -246,7 +246,7 @@ public class StarboardProfile {
             }
         }
 
-        b.setFooter("Enviada em #" + e.getChannel().getName(), msg.getAuthor().getEffectiveAvatarUrl());
+        b.setFooter(Main.getDatabase().getGuildProfile(ch.getGuild()).getSelectedLanguage().getLangProfile().get("command.starboard.embed.footer", e.getChannel().getName()), msg.getAuthor().getEffectiveAvatarUrl());
         b.setTimestamp(msg.getCreationTime());
 
         Message newm = ch.sendMessage(b.build()).complete();

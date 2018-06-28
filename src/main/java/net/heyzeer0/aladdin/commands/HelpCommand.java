@@ -105,7 +105,7 @@ public class HelpCommand implements CommandExecutor {
 
         b.setFooter(String.format(lp.get("command.help.embed.footer"), x), null);
 
-        comandos.keySet().forEach(key -> b.addField(key.getEmoji() + " | " + key.toString(), StringUtils.join(comandos.get(key), ", "), false));
+        comandos.keySet().forEach(key -> b.addField(key.getEmoji() + " | " + lp.get("commandtype." + key.toString().toLowerCase()), StringUtils.join(comandos.get(key), ", "), false));
 
         e.sendMessage(b);
         return new CommandResult((CommandResultEnum.SUCCESS));

@@ -28,8 +28,7 @@
     <orderEntry type="library" name="Gradle: org.json:json:20170516" level="project" />
     <orderEntry type="library" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_16" level="project" />
     <orderEntry type="library" name="Gradle: com.github.natanbc:discordbots-api:3.3.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.go-ive:steam-api:5.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.taycaldwell:riot-api-java:4.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.taycaldwell:riot-api-java:4.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-collections4:4.1" level="project" />
@@ -48,7 +47,6 @@
     <orderEntry type="library" name="Gradle: com.sedmelluq:udp-queue:1.0.6" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: com.github.natanbc:reliqua:2.3.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.5" level="project" />
     <orderEntry type="library" name="Gradle: club.minnced:opus-java-api:1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: club.minnced:opus-java-natives:1.0.2" level="project" />
@@ -56,7 +54,6 @@
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpcore:4.4.9" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.10" level="project" />
-    <orderEntry type="library" name="Gradle: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" name="Gradle: net.java.dev.jna:jna:4.4.0" level="project" />
     <orderEntry type="library" name="Gradle: commons-io:commons-io:2.6" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.4" level="project" />

@@ -100,7 +100,6 @@ public class Main {
             CommandManager.registerCommand(new PremiumCommand());
             CommandManager.registerCommand(new ReminderCommand());
             CommandManager.registerCommand(new StarboardCommand());
-            CommandManager.registerCommand(new SteamCommand());
             CommandManager.registerCommand(new UserCommand());
             CommandManager.registerCommand(new WarframeCommand());
             CommandManager.registerCommand(new WeatherCommand());
