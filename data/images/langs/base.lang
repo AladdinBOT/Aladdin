@@ -1,6 +1,6 @@
 [commandtype.fun] = Diversão
 [commandtype.informative] = Informativo
-[commandtype.administrative] = Administrativo
+[commandtype.admnistrative] = Administrativo
 [commandtype.music] = Musica
 [commandtype.miscellaneous] = Diversos
 [commandexecutor.fake] = Opa! Minha câmera não foca em falsos!

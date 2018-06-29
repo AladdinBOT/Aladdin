@@ -50,7 +50,7 @@ public class ConfigCommand implements CommandExecutor {
 
                     e.getGuildProfile().updateLang(l);
 
-                    e.sendMessage(lp.get("command.config.lang.set.success", l.toString()));
+                    e.sendMessage(l.getLangProfile().get("command.config.lang.set.success", l.toString()));
                 }catch (Exception ex) {
                     e.sendMessage(lp.get("command.config.lang.set.error.notfound"));
                 }
