@@ -3,6 +3,7 @@ package net.heyzeer0.aladdin.commands;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.GuildConfig;
+import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
 import net.heyzeer0.aladdin.profiles.LangProfile;
@@ -18,9 +19,43 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class ConfigCommand implements CommandExecutor {
 
-    @Command(command = "config", description = "command.config.description", parameters = {"list/set"}, aliasses = {"cfg"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
-            usage = "a!config list\na!config set prefix !!")
+    @Command(command = "config", description = "command.config.description", parameters = {"list/set/lang"}, aliasses = {"cfg"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
+            usage = "a!config list\na!config set prefix !!\na!config lang list\na!config lang set PT_BR")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
+
+        if(args.get(0).equalsIgnoreCase("lang")) {
+            if(args.getSize() < 2) {
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "lang", "set/list");
+            }
+
+            if(args.get(1).equalsIgnoreCase("list")) {
+                Paginator ph = new Paginator(e, lp.get("command.config.lang.list.paginator.title", e.getGuildProfile().getSelectedLanguage().getFlag()));
+
+                for(Lang l : Lang.values()) {
+                    ph.addPage(lp.get("command.config.lang.list.paginator.page", l.toString(), l.getAuthor(), l.getFlag()));
+                }
+            }
+
+            if(args.get(1).equalsIgnoreCase("set")) {
+                if(args.getSize() < 3) {
+                    return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "lang", "set", "lang");
+                }
+
+                try{
+                    Lang l = Lang.valueOf(args.get(2).toUpperCase().replace("-", "_"));
+
+                    e.getGuildProfile().updateLang(l);
+
+                    e.sendMessage(lp.get("command.config.lang.set.success", l.toString()));
+                }catch (Exception ex) {
+                    e.sendMessage(lp.get("command.config.lang.set.error.notfound"));
+                }
+
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "lang", "set", "lang");
+            }
+
+            return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "lang", "set/list");
+        }
 
         if(args.get(0).equalsIgnoreCase("list")) {
             Paginator ph = new Paginator(e, lp.get("command.config.list.paginator.title"));

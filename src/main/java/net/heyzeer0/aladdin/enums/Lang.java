@@ -8,17 +8,25 @@ import net.heyzeer0.aladdin.profiles.LangProfile;
  */
 public enum Lang {
 
-    PT_BR(new LangProfile("pt_br", false), "HeyZeer0#0190"),
-    EN_US(new LangProfile("en_us", false), "Animadoria#8918");
+    PT_BR(new LangProfile("pt_br", false), "HeyZeer0#0190", ":flag_br:"),
+    EN_US(new LangProfile("en_us", false), "Animadoria#8918", ":flag_us:");
 
-    LangProfile lp; String author;
+    LangProfile lp; String author; String flag;
 
-    Lang(LangProfile lp, String author) {
-        this.lp = lp; this.author = author;
+    Lang(LangProfile lp, String author, String flag) {
+        this.lp = lp; this.author = author; this.flag = flag;
     }
 
     public LangProfile getLangProfile() {
         return lp;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getFlag() {
+        return flag;
     }
 
 }
