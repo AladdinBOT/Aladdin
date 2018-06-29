@@ -34,6 +34,10 @@ public class ConfigCommand implements CommandExecutor {
                 for(Lang l : Lang.values()) {
                     ph.addPage(lp.get("command.config.lang.list.paginator.page", l.toString(), l.getAuthor(), l.getFlag()));
                 }
+
+                ph.start();
+
+                return new CommandResult((CommandResultEnum.SUCCESS));
             }
 
             if(args.get(1).equalsIgnoreCase("set")) {
@@ -51,7 +55,7 @@ public class ConfigCommand implements CommandExecutor {
                     e.sendMessage(lp.get("command.config.lang.set.error.notfound"));
                 }
 
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "lang", "set", "lang");
+                return new CommandResult((CommandResultEnum.SUCCESS));
             }
 
             return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "lang", "set/list");
