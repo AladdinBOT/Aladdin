@@ -121,7 +121,7 @@ public class WarframeCommand implements CommandExecutor {
                 b.setColor(Color.CYAN);
                 b.setTitle(lp.get("command.warframe.alerts.embed.title"), null);
                 b.setThumbnail("http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png/revision/latest?cb=20140823050147");
-                b.setDescription(lp.get("command.warrfame.alerts.embed.description"));
+                b.setDescription(lp.get("command.warframe.alerts.embed.description"));
 
                 Integer alertas = 0;
                 for (AlertProfile p : AlertManager.getAlerts()) {
