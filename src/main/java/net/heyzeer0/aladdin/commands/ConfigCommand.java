@@ -32,7 +32,7 @@ public class ConfigCommand implements CommandExecutor {
                 Paginator ph = new Paginator(e, lp.get("command.config.lang.list.paginator.title", e.getGuildProfile().getSelectedLanguage().getFlag()));
 
                 for(Lang l : Lang.values()) {
-                    ph.addPage(lp.get("command.config.lang.list.paginator.page", l.toString(), l.getAuthor(), l.getFlag()));
+                    ph.addPage(lp.get("command.config.lang.list.paginator.page", l.toString(), l.getAuthor()));
                 }
 
                 ph.start();

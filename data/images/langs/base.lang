@@ -75,7 +75,7 @@
 [command.config.set.error.invalidvalue] = 😟 Oops, o valor inserido não condiz com o requerido.
 [command.config.set.success] = ✅ Você alterou a configuração ``%s`` para ``%s``
 [command.config.lang.list.paginator.title] = %s Todas as linguagens disponíveis
-[command.config.lang.list.paginator.page] = Nome: %s\nAutor: %s\nBandeira:%s
+[command.config.lang.list.paginator.page] = Nome: %s\nAutor: %s
 [command.config.lang.set.error.notfound] = 😟 Oops, a lingua definida não existe!
 [command.config.lang.set.success] = ✅ Você alterou a lingua da guilda para ``%s``.
 [command.giveaway.create.alreadybuilding] = 😟 Oops, você já esta criando um giveaway!

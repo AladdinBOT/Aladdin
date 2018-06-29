@@ -9,7 +9,7 @@ import net.heyzeer0.aladdin.profiles.LangProfile;
 public enum Lang {
 
     PT_BR(new LangProfile("pt_br", false), "HeyZeer0#0190", ":flag_br:"),
-    EN_US(new LangProfile("en_us", false), "Animadoria#8918", ":flag_us:");
+    EN_US(new LangProfile("en_us", false), "Animadoria#8918", "\uD83C\uDDFA\uD83C\uDDF8");
 
     LangProfile lp; String author; String flag;
 
