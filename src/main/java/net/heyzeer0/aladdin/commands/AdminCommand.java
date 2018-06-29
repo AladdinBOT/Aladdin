@@ -50,7 +50,7 @@ public class AdminCommand implements CommandExecutor {
                 }
             }
 
-            e.sendMessage(EmojiList.CORRECT + " Took ``" + (System.currentTimeMillis() - ms) + "`` to reaload all langs.");
+            e.sendMessage(EmojiList.CORRECT + " Took ``" + (System.currentTimeMillis() - ms) + "ms`` to reload all langs.");
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equalsIgnoreCase("updateavatar")) {

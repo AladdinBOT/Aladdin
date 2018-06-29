@@ -29,7 +29,7 @@ public class SubscriptionManager {
     public static ArrayList<String> sendedIds = new ArrayList<>();
 
     public static void addSubscriptor(User u) {
-        u.openPrivateChannel().queue(sc -> sc.sendMessage(":white_check_mark: Você agora recebera noticias sobre o jogo").queue(scc -> {
+        u.openPrivateChannel().queue(sc -> sc.sendMessage(":white_check_mark: By now you are going to receive game notifications.").queue(scc -> {
             subscriptions.put(u.getId(), new SubscriptionProfile());
             Main.getDatabase().getServer().updateSubscriptions(subscriptions);
         }, fl -> {}), fl -> {});
@@ -119,11 +119,11 @@ public class SubscriptionManager {
                                 if(sendDarvo && pf.getValue("darvoAlerts")) {
 
                                     EmbedBuilder b = new EmbedBuilder();
-                                    b.setTitle("<:level:363725048881610753> Status do jogo");
-                                    b.setDescription("Um novo item esta em promoção no Darvo!");
-                                    b.addField("<:lotus:363726000871309312> " + darvo.getString("item") + " | :clock1: " + darvo.getString("eta") + " restantes",
-                                            "<:credits:363725076845035541> Estoque: " + (darvo.getInt("total") - darvo.getInt("sold")) + "/" + darvo.getInt("total") + "\n" +
-                                                    "<:platinum:364483112702443522> Preço: " + darvo.getInt("salePrice") + " (**" + Math.round(Math.round(percent)) + "%** off)",
+                                    b.setTitle("<:level:363725048881610753> Game Status");
+                                    b.setDescription("A new item is available on Darvo!");
+                                    b.addField("<:lotus:363726000871309312> " + darvo.getString("item") + " | :clock1: " + darvo.getString("eta") + " left",
+                                            "<:credits:363725076845035541> Stock: " + (darvo.getInt("total") - darvo.getInt("sold")) + "/" + darvo.getInt("total") + "\n" +
+                                                    "<:platinum:364483112702443522> Price: " + darvo.getInt("salePrice") + " (**" + Math.round(Math.round(percent)) + "%** off)",
                                             true);
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                                     b.setTimestamp(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
@@ -134,8 +134,8 @@ public class SubscriptionManager {
 
                                 if(sendBaro && pf.getValue("baroAlerts")) {
                                     EmbedBuilder b = new EmbedBuilder();
-                                    b.setTitle("<:level:363725048881610753> Status do jogo");
-                                    b.setDescription("O comerciante do void voltou!\nTempo restante ``" + baro.getString("endString") + "``");
+                                    b.setTitle("<:level:363725048881610753> Game Status");
+                                    b.setDescription("The void trader came back!\nTime left ``" + baro.getString("endString") + "``");
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                                     b.setTimestamp(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
                                     b.setColor(Color.CYAN);
@@ -145,8 +145,8 @@ public class SubscriptionManager {
 
                                 if(sendNight && pf.getValue("nightAlerts")) {
                                     EmbedBuilder b = new EmbedBuilder();
-                                    b.setTitle("<:level:363725048881610753> Status das planícies");
-                                    b.setDescription("É noite nas planícies!\nTempo restante ``" + cycle.getString("timeLeft") + "``");
+                                    b.setTitle("<:level:363725048881610753> Plains Status");
+                                    b.setDescription("It's night in the plains!\nTime left ``" + cycle.getString("timeLeft") + "``");
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
                                     b.setTimestamp(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
                                     b.setColor(Color.CYAN);
@@ -160,9 +160,9 @@ public class SubscriptionManager {
                                     b.setColor(Color.CYAN);
 
                                     if(selectedAlerts.size() >= 2) {
-                                        b.setTitle("<:level:363725048881610753> Alertas raros disponíveis", null);
+                                        b.setTitle("<:level:363725048881610753> Rare alerts available", null);
                                     }else{
-                                        b.setTitle("<:level:363725048881610753> Alerta raro disponível", null);
+                                        b.setTitle("<:level:363725048881610753> Rare alert available", null);
                                     }
                                     b.setThumbnail("http://vignette4.wikia.nocookie.net/warframe/images/c/ce/OrdisArchwingtrailer.png/revision/latest?cb=20140823050147");
                                     b.setDescription("Listando todos os alertas raros disponíveis");
@@ -171,16 +171,16 @@ public class SubscriptionManager {
                                     Integer alertas = 0;
                                     for (AlertProfile p : selectedAlerts) {
                                         alertas++;
-                                        b.addField("<:lotus:363726000871309312> Alerta " + alertas + " | :clock1: " + p.getTimeLeft() + " restantes",
-                                                "<:liset:363725081404375040> Localidade: " + p.getLocation() + " | " + p.getMission().getMission() + " | " + p.getMission().getFaction() + "\n" + (p.hasLoot() ?
-                                                        "<:mod:363725102472495107> Recompensa: [" + p.getRewordID().getName() + "](" + p.getRewordID().getDirectURL() + ")" + "\n" : "") +
-                                                        "<:credits:363725076845035541> Créditos: " + p.getCredits() + "\n" +
-                                                        "<:level:363725048881610753> Nível mínimo: " + p.getMinLevel()
+                                        b.addField("<:lotus:363726000871309312> Alert " + alertas + " | :clock1: " + p.getTimeLeft() + " remaining",
+                                                "<:liset:363725081404375040> Place: " + p.getLocation() + " | " + p.getMission().getMission() + " | " + p.getMission().getFaction() + "\n" + (p.hasLoot() ?
+                                                        "<:mod:363725102472495107> Reward: [" + p.getRewordID().getName() + "](" + p.getRewordID().getDirectURL() + ")" + "\n" : "") +
+                                                        "<:credits:363725076845035541> Credits: " + p.getCredits() + "\n" +
+                                                        "<:level:363725048881610753> Min Level: " + p.getMinLevel()
                                                 , false);
                                     }
 
                                     if (alertas == 0) {
-                                        b.addField("", "Não há alertas disponíveis", true);
+                                        b.addField("", "There is no alert available", true);
                                     }
 
                                     b.setFooter("Warframe Status", "http://img05.deviantart.net/b8d4/i/2014/327/a/8/warframe_new_logo_look__vector__by_tasquick-d87fzxg.png");
