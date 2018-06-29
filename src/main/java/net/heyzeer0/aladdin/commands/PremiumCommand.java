@@ -61,7 +61,7 @@ public class PremiumCommand implements CommandExecutor {
             b.addField(":key2: | " + lp.get("command.premium.info.embed.field.1"), "" + pf.getPremiumKeys(), false);
 
             if(e.getUserProfile().userPremium()) {
-                if(BotConfig.bot_owner.equals(e.getAuthor().getId())) {
+                if(BotConfig.bot_owner.equals(u.getId())) {
                     b.addField(":calendar_spiral: | " + lp.get("command.premium.info.embed.field.2"), "∞", false);
                     b.addField(":arrows_counterclockwise: | " + lp.get("command.premium.info.embed.field.3"), "" + pf.isAutoRenew(), false);
                 }else {
