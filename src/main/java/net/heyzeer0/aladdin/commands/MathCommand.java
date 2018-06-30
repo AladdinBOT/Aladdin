@@ -31,7 +31,7 @@ public class MathCommand implements CommandExecutor {
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
 
-        e.sendMessage(String.format(lp.get("command.math.success"), answer));
+        e.sendMessage(String.format(lp.get("command.math.success"), answer.doubleValue()));
         return new CommandResult((CommandResultEnum.SUCCESS));
     }
 }
