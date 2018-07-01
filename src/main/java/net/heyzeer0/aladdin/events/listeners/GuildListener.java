@@ -28,6 +28,8 @@ public class GuildListener {
             e.getGuild().getDefaultChannel().sendMessage(pf.getSelectedLanguage().getLangProfile().get("guild.join.message")).queue();
         }
 
+
+
         Main.getLogger().embed(":house: Guild Join Event", "Guilda ``" + e.getGuild().getName() + "``\nUsers ``" + e.getGuild().getMembers().size() + "``\nDono ``" + e.getGuild().getOwner().getUser().getName() + "#" + e.getGuild().getOwner().getUser().getDiscriminator() + "``", Color.GREEN);
     }
 

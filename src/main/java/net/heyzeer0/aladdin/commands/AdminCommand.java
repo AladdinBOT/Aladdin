@@ -35,8 +35,10 @@ public class AdminCommand implements CommandExecutor {
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lang) {
         if(args.get(0).equalsIgnoreCase("key")) {
             for(User u : e.getMessage().getMentionedUsers()) {
-                Main.getDatabase().getUserProfile(u).addKeys(2);
+                Main.getDatabase().getUserProfile(u).addKeys(Integer.valueOf(args.get(1)));
             }
+
+            e.sendMessage(EmojiList.CORRECT + " Success.");
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equals("reloadLang")) {
