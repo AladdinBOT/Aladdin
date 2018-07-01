@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.enums.ConsoleColors;
+import net.heyzeer0.aladdin.utils.Utils;
 
 import java.awt.*;
 import java.text.DateFormat;
@@ -52,6 +53,16 @@ public class LogProfile {
         b.setDescription(description);
         b.setFooter("Ocorrido as " + dateFormat.format(new Date()), Main.getShards()[0].getJDA().getSelfUser().getEffectiveAvatarUrl());
 
+        Main.getTextChannelById(BotConfig.bot_guildlog_id).sendMessage(b.build()).queue();
+    }
+
+    public void exception(Exception ex) {
+        EmbedBuilder b = new EmbedBuilder();
+        b.setTitle("New exception caught");
+        b.setDescription("```" + Utils.getStackTrace(ex) + "```");
+        b.setFooter("Ocorrido as " + dateFormat.format(new Date()), Main.getShards()[0].getJDA().getSelfUser().getEffectiveAvatarUrl());
+
+        Main.getTextChannelById(BotConfig.bot_guildlog_id).sendMessage("<@" + BotConfig.bot_owner + ">").queue();
         Main.getTextChannelById(BotConfig.bot_guildlog_id).sendMessage(b.build()).queue();
     }
 

@@ -168,6 +168,7 @@ public class OsuSubscriptionManager {
                             }
                         } catch (Exception ex) {
                             if(!ex.getMessage().contains("HTTP response")) {
+                                Main.getLogger().exception(ex);
                                 ex.printStackTrace();
                                 toRemove.add(user);
                             }
