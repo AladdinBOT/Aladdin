@@ -237,8 +237,8 @@ public class AkinatorProfile {
                         .addUrlParameters("step", actual.getStepNum())
                         .addUrlParameters("forward_answer", answer).getResponse();
 
-                    lastQuestionWasGuess = false;
-                    createNextQuestion();
+                lastQuestionWasGuess = false;
+                createNextQuestion();
             }
             return;
         }

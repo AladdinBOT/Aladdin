@@ -41,7 +41,6 @@ public class OsuCommand implements CommandExecutor {
         }catch (Exception ex) { ex.printStackTrace(); }
     }
 
-
     @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow"}, type = CommandType.FUN,
             usage = "a!osu profile HeyZeer0\na!osu follow HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
