@@ -122,7 +122,7 @@ public class OsuCommand implements CommandExecutor {
 
                 }catch(Exception ex) {
                     ex.printStackTrace();
-                    e.sendMessage(String.format(lp.get("command.osu.profile.error"), ex.getMessage()));
+                    e.sendMessage(String.format(lp.get("command.osu.profile.error"), "O jogador definido não existe."));
                 }
             });
             return new CommandResult(CommandResultEnum.SUCCESS);
