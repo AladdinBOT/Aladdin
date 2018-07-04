@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.utils;
 
+import net.heyzeer0.aladdin.Main;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +22,7 @@ public class Router {
     public Router(String address) {
         this.address = address;
 
-        header_parameters.put("User-Agent", "Aladdin BOT 1.5 - JDA - Discord BOT");
+        header_parameters.put("User-Agent", "Aladdin BOT " + Main.version + " - JDA - Discord BOT");
     }
 
     public Router addHeaderParameter(String key, String value) {

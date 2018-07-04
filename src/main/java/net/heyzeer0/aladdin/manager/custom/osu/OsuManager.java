@@ -48,10 +48,9 @@ public class OsuManager {
     }
 
     public static ArrayList<OsuMatchProfile> getTop10FromPlayer(String user) throws Exception {
-        String website = new Router("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&u=" + user).getResponse().getResult();
+        JSONArray c = new Router("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&u=" + user).getResponse().asJsonArray();
         ArrayList<OsuMatchProfile> matches = new ArrayList<>();
 
-        JSONArray c = new JSONArray(website);
         for(int i = 0; i < c.length(); i++) {
             JSONObject obj = c.getJSONObject(i);
 
@@ -65,11 +64,27 @@ public class OsuManager {
         return matches;
     }
 
-    public static ArrayList<OsuMatchProfile> getTop50FromPlayer(String user) throws Exception {
-        String website = new Router("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&limit=50&u=" + user).getResponse().getResult();
+    public static ArrayList<OsuMatchProfile> getRecentFromPlayer(String user, int amount) throws Exception {
+        JSONArray c = new Router("https://osu.ppy.sh/api/get_user_recent?k=" + ApiKeysConfig.osu_api_key + "&limit=" + amount +"&u=" + user).getResponse().asJsonArray();
         ArrayList<OsuMatchProfile> matches = new ArrayList<>();
 
-        JSONArray c = new JSONArray(website);
+        for(int i = 0; i < c.length(); i++) {
+            JSONObject obj = c.getJSONObject(i);
+
+            matches.add(
+                    new OsuMatchProfile(obj.getString("beatmap_id"), obj.getString("score"), obj.getString("maxcombo"), obj.getString("count300")
+                            , obj.getString("count100"), obj.getString("count50"), obj.getString("countmiss"), obj.getString("countkatu"), obj.getString("countgeki")
+                            , obj.getString("perfect"), obj.getString("enabled_mods"), obj.getString("user_id"), obj.getString("date"), obj.getString("rank"), obj.getString("pp"))
+            );
+        }
+
+        return matches;
+    }
+
+    public static ArrayList<OsuMatchProfile> getTop50FromPlayer(String user) throws Exception {
+        JSONArray c = new Router("https://osu.ppy.sh/api/get_user_best?k=" + ApiKeysConfig.osu_api_key + "&limit=50&u=" + user).getResponse().asJsonArray();
+        ArrayList<OsuMatchProfile> matches = new ArrayList<>();
+
         for(int i = 0; i < c.length(); i++) {
             JSONObject obj = c.getJSONObject(i);
 

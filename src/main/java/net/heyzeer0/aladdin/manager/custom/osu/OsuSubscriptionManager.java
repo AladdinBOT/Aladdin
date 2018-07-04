@@ -76,6 +76,9 @@ public class OsuSubscriptionManager {
                             for(OsuMatchProfile c : OsuManager.getTop50FromPlayer(user)) {
                                 sended_ids.add(c.toString());
                             }
+                            for(OsuMatchProfile c : OsuManager.getRecentFromPlayer(user, 10)) {
+                                sended_ids.add(c.toString());
+                            }
                         }catch (Exception ex) { ex.printStackTrace(); toRemove.add(user); }
                     }
 
@@ -90,7 +93,6 @@ public class OsuSubscriptionManager {
                 if (subscription.size() > 0) {
                     for (String user : subscription.keySet()) {
                         try {
-
                             ArrayList<OsuMatchProfile> ls = OsuManager.getTop50FromPlayer(user);
                             for (int i = 0; i < ls.size(); i++) {
                                 OsuMatchProfile mp = ls.get(i);
@@ -163,9 +165,82 @@ public class OsuSubscriptionManager {
                                             }
                                         });
                                     }
-
                                 }
                             }
+                            ls = OsuManager.getRecentFromPlayer(user, 10);
+                            for (int i = 0; i < ls.size(); i++) {
+                                OsuMatchProfile mp = ls.get(i);
+                                if (!sended_ids.contains(mp.toString())) {
+                                    sended_ids.add(mp.toString());
+
+                                    OsuPlayerProfile pp = OsuManager.getUserProfile(mp.getUser_id(), true);
+                                    OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
+
+                                    double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
+
+                                    EmbedBuilder eb = new EmbedBuilder();
+
+                                    BufferedImage area = new BufferedImage(663, 251, 2);
+                                    BufferedImage cover = ImageUtils.resize(ImageUtils.getImageFromUrl("https://assets.ppy.sh/beatmaps/" + bp.getBeatmapset_id() + "/covers/cover.jpg"), 655, 182);
+                                    BufferedImage overlay = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "osu_play_profile.png")));
+
+                                    Kernel kernel = new Kernel(3, 3, new float[] { 1f / 15f, 1f / 15f, 1f / 15f,
+                                            1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f });
+                                    BufferedImageOp op = new ConvolveOp(kernel);
+                                    cover = op.filter(cover, null);
+
+
+                                    Graphics2D g2d = area.createGraphics();
+                                    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                                    g2d.drawImage(cover, 5, 4, null);
+                                    g2d.drawImage(overlay, 0, 0, null);
+
+                                    BufferedImage user_image = ImageUtils.getImageFromUrl("https://a.ppy.sh/" + pp.getUserid());
+                                    if(user_image != null) {
+                                        if(user_image.getHeight() != 128 || user_image.getWidth() != 128) {
+                                            user_image = ImageUtils.resize(user_image, 128, 128);
+                                        }
+                                        g2d.drawImage(user_image, 52, 31, null);
+                                    }
+
+                                    g2d.setFont(OsuCommand.italic.deriveFont(45.79f));
+                                    g2d.drawString(pp.getNome(), 196, 148);
+                                    g2d.setFont(OsuCommand.italic.deriveFont(25.9f));
+                                    g2d.drawString(shortString(bp.getTitle(), 25) + " [" + bp.getVersion() + "]", 190, 59);
+                                    g2d.setFont(OsuCommand.italic.deriveFont(19.13f));
+                                    g2d.drawString(shortString(bp.getArtist(), 30), 208, 76);
+                                    g2d.setFont(OsuCommand.regular.deriveFont(18.21f));
+                                    g2d.drawString(mp.getPp() + "pp", 90, 210);
+                                    g2d.drawString(decimalFormat.format(percentage * 100) + "% - " + mp.getMaxcombo() + "x - " + mp.getCount50() + "x 50 | " + mp.getCount100() + "x 100 | " + mp.getCountmiss() + "x miss - " + mp.getRank().replace("H", "+"), 122, 236);
+
+                                    g2d.dispose();
+
+                                    for (String usr : subscription.get(user)) {
+                                        User u = Main.getUserById(usr);
+                                        eb.setFooter("Status required by " + u.getName(), u.getEffectiveAvatarUrl());
+
+                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New play for ``" + pp.getNome() + "``").queue(v -> {
+                                        }, k -> {
+                                            if (removeUsers.containsKey(user)) {
+                                                removeUsers.get(user).add(usr);
+                                            } else {
+                                                ArrayList<String> rmv = new ArrayList<>();
+                                                rmv.add(usr);
+                                                removeUsers.put(user, rmv);
+                                            }
+                                        }), er -> {
+                                            if (removeUsers.containsKey(user)) {
+                                                removeUsers.get(user).add(usr);
+                                            } else {
+                                                ArrayList<String> rmv = new ArrayList<>();
+                                                rmv.add(usr);
+                                                removeUsers.put(user, rmv);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
                         } catch (Exception ex) {
                             if(!ex.getMessage().contains("HTTP response")) {
                                 Main.getLogger().exception(ex);
@@ -186,6 +261,10 @@ public class OsuSubscriptionManager {
                 }
             }
         }));
+    }
+
+    private static void generateImage(OsuMatchProfile mp) {
+
     }
 
     private static RestAction<Message> sendImagePure(PrivateChannel ch, BufferedImage img, String msg) {
