@@ -53,6 +53,7 @@ public class OsuSubscriptionManager {
                 }else{
                     try{
                         OsuManager.getTop50FromPlayer(target).forEach(k -> sended_ids.add(k.toString()));
+                        OsuManager.getRecentFromPlayer(target, 10).forEach(k -> sended_ids.add(k.toString()));
                         ArrayList<String> ss = new ArrayList<>(); ss.add(user.getId());
                         subscription.put(target, ss);
                         Main.getDatabase().getServer().updateOsuSubscriptions(subscription);
