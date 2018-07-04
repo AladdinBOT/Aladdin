@@ -74,7 +74,7 @@ public class OsuManager {
             matches.add(
                     new OsuMatchProfile(obj.getString("beatmap_id"), obj.getString("score"), obj.getString("maxcombo"), obj.getString("count300")
                             , obj.getString("count100"), obj.getString("count50"), obj.getString("countmiss"), obj.getString("countkatu"), obj.getString("countgeki")
-                            , obj.getString("perfect"), obj.getString("enabled_mods"), obj.getString("user_id"), obj.getString("date"), obj.getString("rank"), obj.getString("pp"))
+                            , obj.getString("perfect"), obj.getString("enabled_mods"), obj.getString("user_id"), obj.getString("date"), obj.getString("rank"))
             );
         }
 
