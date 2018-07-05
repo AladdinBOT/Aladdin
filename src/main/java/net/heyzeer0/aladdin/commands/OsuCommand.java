@@ -111,10 +111,12 @@ public class OsuCommand implements CommandExecutor {
 
                     g2d.dispose();
                 }catch (Exception ex) {
+                    ex.printStackTrace();
                     e.sendMessage(lp.get("command.osu.invalidplayer"));
                 }
             });
 
+            return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if (args.get(0).equals("follow")) {
             if(args.getSize() < 2) {
