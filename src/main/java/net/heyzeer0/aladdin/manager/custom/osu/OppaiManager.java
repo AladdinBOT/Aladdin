@@ -13,8 +13,8 @@ import java.io.InputStreamReader;
 public class OppaiManager {
 
     public static OppaiInfo getMapInfo(int map_id) throws Exception {
-        Process builder = new ProcessBuilder("curl https://osu.ppy.sh/osu/" + map_id + " | oppai - -ojson").start();
-        BufferedReader br = new BufferedReader(new InputStreamReader(builder.getInputStream()));
+        Process p = Runtime.getRuntime().exec("curl https://osu.ppy.sh/osu/" + map_id + " | oppai - -ojson");
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         int count = 0;
         String line;
