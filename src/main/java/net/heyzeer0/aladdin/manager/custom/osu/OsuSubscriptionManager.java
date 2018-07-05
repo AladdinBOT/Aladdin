@@ -9,7 +9,9 @@ import net.dv8tion.jda.core.requests.RestAction;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.OsuCommand;
 import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.enums.OsuMods;
 import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
+import net.heyzeer0.aladdin.profiles.custom.osu.OppaiInfo;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuBeatmapProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuMatchProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuPlayerProfile;
@@ -88,9 +90,9 @@ public class OsuSubscriptionManager {
                 ArrayList<String> toRemove = new ArrayList<>();
                 HashMap<String, ArrayList<String>> removeUsers = new HashMap<>();
                 if (subscription.size() > 0) {
+                    sended_ids.remove(0);
                     for (String user : subscription.keySet()) {
                         try {
-
                             ArrayList<OsuMatchProfile> ls = OsuManager.getTop50FromPlayer(user);
                             for (int i = 0; i < ls.size(); i++) {
                                 OsuMatchProfile mp = ls.get(i);
@@ -99,6 +101,13 @@ public class OsuSubscriptionManager {
 
                                     OsuPlayerProfile pp = OsuManager.getUserProfile(mp.getUser_id(), true);
                                     OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
+
+                                    String mods = "";
+                                    for(OsuMods m : mp.getMods()) {
+                                        mods = mods + m.getShortName();
+                                    }
+
+                                    OppaiInfo oi = OppaiManager.getMapInfo(mp.getBeatmap_id(), mods);
 
                                     double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
 
@@ -134,7 +143,7 @@ public class OsuSubscriptionManager {
                                     g2d.setFont(OsuCommand.italic.deriveFont(19.13f));
                                     g2d.drawString(shortString(bp.getArtist(), 30), 208, 76);
                                     g2d.setFont(OsuCommand.regular.deriveFont(18.21f));
-                                    g2d.drawString(mp.getPp() + "pp", 90, 210);
+                                    g2d.drawString(mp.getPp() + "pp (" + Math.round(oi.getPp()) + "pp) " + (mods.equals("") ? "" : "+" + mods), 90, 210);
                                     g2d.drawString(decimalFormat.format(percentage * 100) + "% - " + mp.getMaxcombo() + "x - " + mp.getCount50() + "x 50 | " + mp.getCount100() + "x 100 | " + mp.getCountmiss() + "x miss - " + mp.getRank().replace("H", "+"), 122, 236);
 
                                     g2d.dispose();
@@ -167,7 +176,7 @@ public class OsuSubscriptionManager {
                                 }
                             }
                         } catch (Exception ex) {
-                            if(!ex.getMessage().contains("HTTP response")) {
+                            if(!ex.getMessage().contains("HTTP response") && !ex.getMessage().contains("Premature EOF")) {
                                 Main.getLogger().exception(ex);
                                 ex.printStackTrace();
                                 toRemove.add(user);

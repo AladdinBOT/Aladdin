@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
  */
 public class OppaiManager {
 
-    public static OppaiInfo getMapInfo(int map_id) throws Exception {
-        Process p = Runtime.getRuntime().exec("./oppai.sh " + map_id + " -ojson");
+    public static OppaiInfo getMapInfo(String map_id, String mods) throws Exception {
+        Process p = Runtime.getRuntime().exec("./oppai.sh " + map_id + " -ojson " + mods);
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         JSONObject jo = new JSONObject(br.readLine());

@@ -48,7 +48,7 @@ public class AdminCommand implements CommandExecutor {
 
             long ms = System.currentTimeMillis();
             try{
-                OppaiInfo info = OppaiManager.getMapInfo(Integer.valueOf(args.get(1)));
+                OppaiInfo info = OppaiManager.getMapInfo(args.get(1), "NONE");
                 e.sendMessage(EmojiList.CORRECT + " Success. ``" + (System.currentTimeMillis() - ms) + "ms`` | PP: " + Math.round(info.getPp()));
             }catch (Exception ex) {
                 e.sendMessage(EmojiList.WORRIED + " Failed. " + Utils.sendToHastebin(Utils.getStackTrace(ex)));
