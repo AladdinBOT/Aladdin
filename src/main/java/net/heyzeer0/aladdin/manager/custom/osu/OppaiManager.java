@@ -31,6 +31,8 @@ public class OppaiManager {
         for(OsuMods om : op.getMods()) {
             mods = mods + om.getShortName();
         }
+
+        System.out.println(op.toString());
         Process p = Runtime.getRuntime().exec("./oppai-full.sh " + map_id + " -ojson " + mods + " " + op.getCount50() + " " + op.getCount100() + " " + op.getCountmiss() + " " + op.getMaxcombo());
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
