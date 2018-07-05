@@ -15,6 +15,7 @@ import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
+import net.heyzeer0.aladdin.profiles.custom.osu.OppaiInfo;
 import net.heyzeer0.aladdin.utils.ImageUtils;
 import net.heyzeer0.aladdin.utils.Utils;
 
@@ -47,8 +48,8 @@ public class AdminCommand implements CommandExecutor {
 
             long ms = System.currentTimeMillis();
             try{
-                OppaiManager.getMapInfo(Integer.valueOf(args.get(1)));
-                e.sendMessage(EmojiList.CORRECT + " Success. ``" + (System.currentTimeMillis() - ms) + "ms``");
+                OppaiInfo info = OppaiManager.getMapInfo(Integer.valueOf(args.get(1)));
+                e.sendMessage(EmojiList.CORRECT + " Success. ``" + (System.currentTimeMillis() - ms) + "ms`` | PP: " + Math.round(info.getPp()));
             }catch (Exception ex) {
                 e.sendMessage(EmojiList.WORRIED + " Failed. " + Utils.sendToHastebin(Utils.getStackTrace(ex)));
             }
