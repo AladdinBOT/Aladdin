@@ -35,6 +35,7 @@ public class OppaiManager {
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         JSONObject jo = new JSONObject(br.readLine());
+        System.out.println(jo);
 
         p.waitFor();
         p.destroy();
