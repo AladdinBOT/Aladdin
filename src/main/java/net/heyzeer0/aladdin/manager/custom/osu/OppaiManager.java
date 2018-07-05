@@ -13,19 +13,12 @@ import java.io.InputStreamReader;
 public class OppaiManager {
 
     public static OppaiInfo getMapInfo(int map_id) throws Exception {
-        Process p = Runtime.getRuntime().exec("curl https://osu.ppy.sh/osu/" + map_id + " | oppai - -ojson");
-        BufferedReader es = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        Process p = Runtime.getRuntime().exec("./oppai.sh " + map_id + "\"-ojson\"");
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         int count = 0;
         String line;
         while((line = br.readLine()) != null) {
-            count++;
-            Main.getLogger().warn("[" + count + "] " + line);
-        }
-
-        count = 0;
-        while((line = es.readLine()) != null) {
             count++;
             Main.getLogger().warn("[" + count + "] " + line);
         }
