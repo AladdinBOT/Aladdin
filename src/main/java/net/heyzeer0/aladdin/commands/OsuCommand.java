@@ -110,6 +110,8 @@ public class OsuCommand implements CommandExecutor {
                     g2d.drawString(OsuSubscriptionManager.decimalFormat.format(percentage * 100) + "% - " + mp.getMaxcombo() + "x - " + mp.getCount50() + "x 50 | " + mp.getCount100() + "x 100 | " + mp.getCountmiss() + "x miss - " + mp.getRank().replace("H", "+"), 122, 236);
 
                     g2d.dispose();
+
+                    e.sendImagePure(area, lp.get("command.osu.recent.success", nick));
                 }catch (Exception ex) {
                     Main.getLogger().exception(ex);
                     e.sendMessage(lp.get("command.osu.invalidplayer"));

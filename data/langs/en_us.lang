@@ -186,6 +186,7 @@
 [command.osu.profile.notopplay] = The player does not have a top play
 [command.osu.profile.error] = 😟 Whoops, an error has occured while trying to get the data from the player: ``%s``
 [command.osu.profile.success] = ✅ Here's the profile for ``%s``
+[command.osu.recent.success] = ✅ Here's the last match for ``%s``
 [command.overwatch.description] = Overwatch commands.
 [command.overwatch.profile.invaliduser.1] = 😟 Whoops, it's necessary to include the player ID, for instance: ``HeyZeer0#1903``
 [command.overwatch.profile.invaliduser.2] = 😟 Whoops, the player ``%s`` does not exist.
