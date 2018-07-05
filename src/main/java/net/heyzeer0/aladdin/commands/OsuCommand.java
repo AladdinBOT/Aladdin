@@ -111,7 +111,7 @@ public class OsuCommand implements CommandExecutor {
 
                     g2d.dispose();
                 }catch (Exception ex) {
-                    ex.printStackTrace();
+                    Main.getLogger().exception(ex);
                     e.sendMessage(lp.get("command.osu.invalidplayer"));
                 }
             });
