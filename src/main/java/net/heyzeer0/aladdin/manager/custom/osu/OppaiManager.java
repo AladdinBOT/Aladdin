@@ -20,9 +20,7 @@ public class OppaiManager {
         String line;
         while((line = br.readLine()) != null) {
             count++;
-            if(count == 4) {
-                Main.getLogger().warn(line);
-            }
+            Main.getLogger().warn("[" + count + "] " + line);
         }
 
         br.close();
