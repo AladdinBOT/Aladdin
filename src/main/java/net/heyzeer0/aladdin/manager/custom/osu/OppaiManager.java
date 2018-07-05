@@ -22,8 +22,8 @@ public class OppaiManager {
             count++;
             Main.getLogger().warn("[" + count + "] " + line);
         }
-
-        br.close();
+        p.waitFor();
+        p.destroy();
 
         return new OppaiInfo(null, 0, null, null, null, null, null, null, null, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
