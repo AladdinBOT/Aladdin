@@ -90,7 +90,6 @@ public class OsuSubscriptionManager {
                 ArrayList<String> toRemove = new ArrayList<>();
                 HashMap<String, ArrayList<String>> removeUsers = new HashMap<>();
                 if (subscription.size() > 0) {
-                    sended_ids.remove(0);
                     for (String user : subscription.keySet()) {
                         try {
                             ArrayList<OsuMatchProfile> ls = OsuManager.getTop50FromPlayer(user);
