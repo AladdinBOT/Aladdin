@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.manager.custom.osu;
 
-import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.PrivateChannel;
@@ -38,7 +37,7 @@ public class OsuSubscriptionManager {
     private static HashMap<String, ArrayList<String>> subscription;
     private static ArrayList<String> sended_ids = new ArrayList<>();
 
-    private static final DecimalFormat decimalFormat = new DecimalFormat("##.##");
+    public static final DecimalFormat decimalFormat = new DecimalFormat("##.##");
 
     public static boolean addSubscriptor(User user, String target) {
         if(subscription.containsKey(target) && subscription.get(target).contains(user.getId())) {
@@ -110,8 +109,6 @@ public class OsuSubscriptionManager {
 
                                     double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
 
-                                    EmbedBuilder eb = new EmbedBuilder();
-
                                     BufferedImage area = new BufferedImage(663, 251, 2);
                                     BufferedImage cover = ImageUtils.resize(ImageUtils.getImageFromUrl("https://assets.ppy.sh/beatmaps/" + bp.getBeatmapset_id() + "/covers/cover.jpg"), 655, 182);
                                     BufferedImage overlay = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "osu_play_profile.png")));
@@ -150,7 +147,6 @@ public class OsuSubscriptionManager {
                                     final int i2 = i;
                                     for (String usr : subscription.get(user)) {
                                         User u = Main.getUserById(usr);
-                                        eb.setFooter("Status required by " + u.getName(), u.getEffectiveAvatarUrl());
 
                                         u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New rank #" + (i2 + 1) + " for " + pp.getNome()).queue(v -> {
                                         }, k -> {
@@ -206,11 +202,11 @@ public class OsuSubscriptionManager {
         return ch.sendFile(is, "ata.png", new MessageBuilder().append(msg).build());
     }
 
-    private static double calculatePercentage(int count50, int count100, int count300, int misses) {
+    public static double calculatePercentage(int count50, int count100, int count300, int misses) {
         return (double)((count50 * 50) + (count100 * 100) + (count300 * 300)) / ((misses + count50 + count100 + count300) * 300);
     }
 
-    private static String shortString(String x, int max) {
+    public static String shortString(String x, int max) {
         if(x.length() <= max) {
             return x;
         }
