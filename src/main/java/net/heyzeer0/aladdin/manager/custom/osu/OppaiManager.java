@@ -23,7 +23,7 @@ public class OppaiManager {
         p.waitFor();
         p.destroy();
 
-        return new OppaiInfo(jo.getString("oppai_version"), jo.getInt("code"), jo.getString("errstr"), jo.getString("artist"), jo.getString("title"), jo.getString("creator"), jo.getString("version"), jo.getString("mods_str"), jo.getInt("mods"), jo.getDouble("od"), jo.getDouble("ar"), jo.getDouble("cs"), jo.getDouble("hp"), jo.getInt("combo"), jo.getInt("max_combo"), jo.getInt("num_circles"), jo.getInt("num_sliders"), jo.getInt("num_spinners"), jo.getInt("misses"), jo.getInt("score_version"), jo.getLong("stars"), jo.getLong("speed_stars"), jo.getLong("aim_stars"), jo.getInt("nsingles"), jo.getInt("nsingles_threshold"), jo.getLong("aim_pp"), jo.getLong("speed_pp"), jo.getLong("acc_pp"), jo.getLong("pp"));
+        return new OppaiInfo(jo.getString("oppai_version"), jo.getInt("code"), jo.getString("errstr"), jo.getString("title"), jo.getString("creator"), jo.getString("version"), jo.getString("mods_str"), jo.getInt("mods"), jo.getDouble("od"), jo.getDouble("ar"), jo.getDouble("cs"), jo.getDouble("hp"), jo.getInt("combo"), jo.getInt("max_combo"), jo.getInt("num_circles"), jo.getInt("num_sliders"), jo.getInt("num_spinners"), jo.getInt("misses"), jo.getInt("score_version"), jo.getLong("stars"), jo.getLong("speed_stars"), jo.getLong("aim_stars"), jo.getInt("nsingles"), jo.getInt("nsingles_threshold"), jo.getLong("aim_pp"), jo.getLong("speed_pp"), jo.getLong("acc_pp"), jo.getLong("pp"));
     }
 
     public static OppaiInfo getMapInfo(String map_id, OsuMatchProfile op) throws Exception {
@@ -39,7 +39,7 @@ public class OppaiManager {
         p.waitFor();
         p.destroy();
 
-        return new OppaiInfo(jo.getString("oppai_version"), jo.getInt("code"), jo.getString("errstr"), jo.getString("artist"), jo.getString("title"), jo.getString("creator"), jo.getString("version"), jo.getString("mods_str"), jo.getInt("mods"), jo.getDouble("od"), jo.getDouble("ar"), jo.getDouble("cs"), jo.getDouble("hp"), jo.getInt("combo"), jo.getInt("max_combo"), jo.getInt("num_circles"), jo.getInt("num_sliders"), jo.getInt("num_spinners"), jo.getInt("misses"), jo.getInt("score_version"), jo.getLong("stars"), jo.getLong("speed_stars"), jo.getLong("aim_stars"), jo.getInt("nsingles"), jo.getInt("nsingles_threshold"), jo.getLong("aim_pp"), jo.getLong("speed_pp"), jo.getLong("acc_pp"), jo.getLong("pp"));
+        return new OppaiInfo(jo.getString("oppai_version"), jo.getInt("code"), jo.getString("errstr"), jo.getString("title"), jo.getString("creator"), jo.getString("version"), jo.getString("mods_str"), jo.getInt("mods"), jo.getDouble("od"), jo.getDouble("ar"), jo.getDouble("cs"), jo.getDouble("hp"), jo.getInt("combo"), jo.getInt("max_combo"), jo.getInt("num_circles"), jo.getInt("num_sliders"), jo.getInt("num_spinners"), jo.getInt("misses"), jo.getInt("score_version"), jo.getLong("stars"), jo.getLong("speed_stars"), jo.getLong("aim_stars"), jo.getInt("nsingles"), jo.getInt("nsingles_threshold"), jo.getLong("aim_pp"), jo.getLong("speed_pp"), jo.getLong("acc_pp"), jo.getLong("pp"));
     }
 
 }
