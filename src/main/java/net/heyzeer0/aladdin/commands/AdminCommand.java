@@ -9,12 +9,14 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.manager.custom.osu.OppaiManager;
 import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.utils.ImageUtils;
+import net.heyzeer0.aladdin.utils.Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -39,6 +41,18 @@ public class AdminCommand implements CommandExecutor {
             }
 
             e.sendMessage(EmojiList.CORRECT + " Success.");
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
+        if(args.get(0).equals("testOppai")) {
+
+            try{
+                OppaiManager.getMapInfo(Integer.valueOf(args.get(1)));
+                e.sendMessage(EmojiList.CORRECT + " Success.");
+            }catch (Exception ex) {
+                e.sendMessage(EmojiList.WORRIED + " Failed. " + Utils.sendToHastebin(Utils.getStackTrace(ex)));
+            }
+
+
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equals("reloadLang")) {
