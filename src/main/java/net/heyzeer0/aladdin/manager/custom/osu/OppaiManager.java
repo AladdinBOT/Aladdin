@@ -31,14 +31,14 @@ public class OppaiManager {
         for(OsuMods om : op.getMods()) {
             mods = mods + om.getShortName();
         }
+        if(mods.equals("")) {
+            mods = "none";
+        }
 
-        System.out.println(op.getBeatmap_id() + " " + mods + " " + op.getCount50() + " " + op.getCount100() + " " + op.getCountmiss() + " " + op.getMaxcombo());
         Process p = Runtime.getRuntime().exec("./oppai-full.sh " + map_id + " -ojson " + mods + " " + op.getCount50() + " " + op.getCount100() + " " + op.getCountmiss() + " " + op.getMaxcombo());
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         JSONObject jo = new JSONObject(br.readLine());
-        System.out.println(jo);
-
         p.waitFor();
         p.destroy();
 
