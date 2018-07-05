@@ -32,7 +32,7 @@ public class OppaiManager {
             mods = mods + om.getShortName();
         }
 
-        System.out.println(op.toString());
+        System.out.println(mods + " " + op.getCount50() + " " + op.getCount100() + " " + op.getCountmiss() + " " + op.getMaxcombo());
         Process p = Runtime.getRuntime().exec("./oppai-full.sh " + map_id + " -ojson " + mods + " " + op.getCount50() + " " + op.getCount100() + " " + op.getCountmiss() + " " + op.getMaxcombo());
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
