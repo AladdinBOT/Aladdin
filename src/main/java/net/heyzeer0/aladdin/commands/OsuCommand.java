@@ -50,7 +50,7 @@ public class OsuCommand implements CommandExecutor {
     @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow/recent"}, type = CommandType.FUN,
             usage = "a!osu profile HeyZeer0\na!osu follow HeyZeer0\na!osu recent\na!osu recent HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
-        if(args.get(0).equals("recent")) {
+        if(args.get(0).equals("recent") || args.get(0).equals("r")) {
             final String nick;
             if(args.getSize() >= 2) {
                 nick = args.getCompleteAfter(1);
@@ -120,7 +120,7 @@ public class OsuCommand implements CommandExecutor {
 
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
-        if (args.get(0).equals("follow")) {
+        if (args.get(0).equals("follow") || args.get(0).equals("f")) {
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
             }
@@ -141,7 +141,7 @@ public class OsuCommand implements CommandExecutor {
 
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
-        if(args.get(0).equalsIgnoreCase("profile")) {
+        if(args.get(0).equalsIgnoreCase("profile") || args.get(0).equals("p")) {
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
             }
