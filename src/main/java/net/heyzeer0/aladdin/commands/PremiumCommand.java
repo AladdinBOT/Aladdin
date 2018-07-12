@@ -57,7 +57,7 @@ public class PremiumCommand implements CommandExecutor {
             EmbedBuilder b = new EmbedBuilder();
             b.setColor(Color.GREEN);
             b.setTitle(String.format(lp.get("command.premium.info.embed.title"), u.getName()));
-            b.setDescription(String.format(lp.get("command.premium.info.embed.description"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium ativar"));
+            b.setDescription(String.format(lp.get("command.premium.info.embed.description"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium activate"));
             b.addField(":key2: | " + lp.get("command.premium.info.embed.field.1"), "" + pf.getPremiumKeys(), false);
 
             if(pf.userPremium()) {
