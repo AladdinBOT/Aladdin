@@ -80,7 +80,7 @@ public class GiveawayBuilder {
             b.setDescription(String.format(lp.get("command.giveaway.builder.embed.prize.description"), addPrize.getName(), addPrize.getDmMessage()));
         }else{
             b.setTitle(lp.get("command.giveaway.builder.embed.main.title"));
-            b.setDescription(String.format(lp.get("command.giveaway.builder.embed.main.description"), name, (end_time == 0 ? lp.get("command.giveaway.builder.notset") : Utils.getTime(end_time)), prizes.size(), (ch == null ? lp.get("command.giveaway.builder.notset") : "#" + ch.getName())));
+            b.setDescription(String.format(lp.get("command.giveaway.builder.embed.main.description"), name, (end_time == 0 ? lp.get("command.giveaway.builder.notset") : Utils.getTime(end_time, e.getGuildProfile().getSelectedLanguage().getLangProfile())), prizes.size(), (ch == null ? lp.get("command.giveaway.builder.notset") : "#" + ch.getName())));
         }
 
         b.setFooter(lp.get("command.giveaway.builder.embed.footer") + " " + e.getAuthor().getName(), e.getAuthor().getEffectiveAvatarUrl());

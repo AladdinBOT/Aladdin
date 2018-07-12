@@ -10,6 +10,7 @@ import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -18,6 +19,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
+import java.lang.management.ManagementFactory;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -147,7 +149,7 @@ public class Utils {
         return healthbar;
     }
 
-    public static String getTime(long duration) {
+    public static String getTime(long duration, LangProfile lp) {
         final long
                 years = duration / 31104000000L,
                 months = duration / 2592000000L % 12,
@@ -155,9 +157,9 @@ public class Utils {
                 hours = duration / 3600000L % 24,
                 minutes = duration / 60000L % 60,
                 seconds = duration / 1000L % 60;
-        String uptime = (years == 0 ? "" : years + " Ano" + cS(years) + ", ") + (months == 0 ? "" : months + " Mes" + cS(months, true) + ", ")
-                + (days == 0 ? "" : days + " Dia" + cS(days) + ", ") + (hours == 0 ? "" : hours + " Hora" + cS(hours) + ", ")
-                + (minutes == 0 ? "" : minutes + " Minuto" + cS(minutes) + ", ") + (seconds == 0 ? "" : seconds + " Segundo" + cS(seconds) + ", ");
+        String uptime = (years == 0 ? "" : years + " " + lp.get("command.bot.status.years") + ", ") + (months == 0 ? "" : months + " " + lp.get("command.bot.status.months") + ", ")
+                + (days == 0 ? "" : days + " " + lp.get("command.bot.status.days") + ", ") + (hours == 0 ? "" : hours + " " + lp.get("command.bot.status.hours") + ", ")
+                + (minutes == 0 ? "" : minutes + " " + lp.get("command.bot.status.minutes") + ", ") + (seconds == 0 ? "" : seconds + " " + lp.get("command.bot.status.seconds") + ", ");
 
         uptime = replaceLast(uptime, ", ", "");
         uptime = replaceLast(uptime, ",", " e");

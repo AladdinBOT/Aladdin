@@ -44,21 +44,6 @@ public class BotCommand implements CommandExecutor {
         }
         if(args.get(0).equalsIgnoreCase("status")) {
 
-            final long
-                    duration = ManagementFactory.getRuntimeMXBean().getUptime(),
-                    years = duration / 31104000000L,
-                    months = duration / 2592000000L % 12,
-                    days = duration / 86400000L % 30,
-                    hours = duration / 3600000L % 24,
-                    minutes = duration / 60000L % 60,
-                    seconds = duration / 1000L % 60;
-            String uptime = (years == 0 ? "" : years + " " + lp.get("command.bot.status.years") + ", ") + (months == 0 ? "" : months + " " + lp.get("command.bot.status.months") + ", ")
-                    + (days == 0 ? "" : days + " " + lp.get("command.bot.status.days") + ", ") + (hours == 0 ? "" : hours + " " + lp.get("command.bot.status.hours") + ", ")
-                    + (minutes == 0 ? "" : minutes + " " + lp.get("command.bot.status.minutes") + ", ") + (seconds == 0 ? "" : seconds + " " + lp.get("command.bot.status.seconds") + ", ");
-
-            uptime = replaceLast(uptime, ", ", "");
-            uptime = replaceLast(uptime, ",", " e");
-
             final double ramAllocated = Runtime.getRuntime().totalMemory();
             final double currentMemory = (((double) (Runtime.getRuntime().totalMemory() / 1024) / 1024)) - (((double) (Runtime.getRuntime().freeMemory() / 1024) / 1024));
 
@@ -66,7 +51,7 @@ public class BotCommand implements CommandExecutor {
                     .setColor(Color.GREEN)
                     .setAuthor(lp.get("command.bot.status.embed.title"), null, e.getJDA().getSelfUser().getAvatarUrl())
                     .setDescription(String.format(lp.get("command.bot.status.embed.description"), JDAInfo.VERSION))
-                    .addField(lp.get("command.bot.status.embed.field.1"), uptime, false)
+                    .addField(lp.get("command.bot.status.embed.field.1"), Utils.getTime(ManagementFactory.getRuntimeMXBean().getUptime(), e.getGuildProfile().getSelectedLanguage().getLangProfile()), false)
                     .addField(lp.get("command.bot.status.embed.field.2"), "" + e.getJDA().getGuilds().size(), true)
                     .addField(lp.get("command.bot.status.embed.field.3"), "" + e.getJDA().getUsers().size(), true)
                     .addField(lp.get("command.bot.status.embed.field.4"), "" + e.getJDA().getTextChannels().size(), true)
@@ -96,10 +81,6 @@ public class BotCommand implements CommandExecutor {
         }
 
         return new CommandResult(CommandResultEnum.NOT_FOUND);
-    }
-
-    private String replaceLast(String text, String regex, String replacement) {
-        return text.replaceFirst("(?s)(.*)" + regex, "$1" + replacement);
     }
 
     public static double getProcessCpuLoad() {

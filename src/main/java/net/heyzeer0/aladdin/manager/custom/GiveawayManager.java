@@ -8,7 +8,9 @@ import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
+import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.utilities.ScheduledExecutor;
 import net.heyzeer0.aladdin.utils.Utils;
 import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
@@ -45,7 +47,7 @@ public class GiveawayManager {
         }
 
         eb.addField(":tada: Premios", premios, false);
-        eb.addField(":stopwatch: Tempo restante", Utils.getTime(b.getEnd_time()), false);
+        eb.addField(":stopwatch: Tempo restante", Utils.getTime(b.getEnd_time(), Main.getDatabase().getGuildProfile(b.getCh().getGuild()).getSelectedLanguage().getLangProfile()), false);
 
         Message msg = b.getCh().sendMessage(eb.build()).complete();
 
@@ -159,7 +161,7 @@ public class GiveawayManager {
                             }
 
                             eb.addField(":tada: Premios", premios, false);
-                            eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis()), false);
+                            eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis(), Main.getDatabase().getGuildProfile(msg.getGuild()).getSelectedLanguage().getLangProfile()), false);
 
                             msg.editMessage(eb.build()).queue();
                         }

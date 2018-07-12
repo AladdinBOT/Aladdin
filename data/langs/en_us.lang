@@ -75,7 +75,7 @@
 [command.config.set.error.invalidvalue] = 😟 Whoops, the following value is invalid.
 [command.config.set.success] = ✅ You changed the configuration ``%s`` to ``%s``
 [command.config.lang.list.paginator.title] = %s All available languages
-[command.config.lang.list.paginator.page] = Name: %s\nAuthor: %s\Flag:%s
+[command.config.lang.list.paginator.page] = Name: %s\nAuthor: %s
 [command.config.lang.set.error.notfound] = 😟 Whoops, the inserted language doesn't exists!
 [command.config.lang.set.success] = ✅ You have succesfully changed the guild language to ``%s``.
 [command.giveaway.create.alreadybuilding] = 😟 Whoops, you're already creating a giveaway!
