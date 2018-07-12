@@ -72,6 +72,7 @@ public class AladdinData {
 
         try{
             OppaiInfo oinfo = OppaiManager.getMapInfoPure(map_id, mods);
+            osumaps.add(oinfo);
             exec.submit(() -> r.table("osumaps").insert(oinfo).optArg("conflict", "replace").runNoReply(conn));
             return oinfo;
         }catch (Exception ex) { ex.printStackTrace(); }
