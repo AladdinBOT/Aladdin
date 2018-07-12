@@ -14,5 +14,7 @@ public class BotConfig {
     public static String bot_game = "Tudo esta conectado";
     public static String bot_owner = "169904764048375809";
     public static String bot_guildlog_id = "<insert-here>";
+    public static String bot_guild_id = "363723753361899521";
+    public static String bot_guild_premiumrole_id = "466999491375923200";
 
 }

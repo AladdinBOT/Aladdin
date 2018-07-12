@@ -1,6 +1,7 @@
 package net.heyzeer0.aladdin.database.entities;
 
 import lombok.Getter;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
@@ -65,11 +66,7 @@ public class UserProfile implements ManagedObject {
                 return true;
             }
 
-            premiumActive = false;
-            premiumTime = 0;
-            autoRenew = false;
-            trialPremium = false;
-            saveAsync();
+            disablePremium();
             return false;
         }
 
@@ -96,6 +93,11 @@ public class UserProfile implements ManagedObject {
 
         premiumTime = System.currentTimeMillis() + 2592000000L;
 
+        Guild g = Main.getGuildById(BotConfig.bot_guild_id);
+        if(g.isMember(Main.getUserById(id))) {
+            g.getController().addRolesToMember(g.getMemberById(id), g.getRoleById(BotConfig.bot_guild_premiumrole_id)).queue();
+        }
+
         saveAsync();
         return true;
     }
@@ -118,6 +120,11 @@ public class UserProfile implements ManagedObject {
     public boolean disablePremium() {
         if(!premiumActive) {
             return false;
+        }
+
+        Guild g = Main.getGuildById(BotConfig.bot_guild_id);
+        if(g.isMember(Main.getUserById(id))) {
+            g.getController().removeRolesFromMember(g.getMemberById(id), g.getRoleById(BotConfig.bot_guild_premiumrole_id)).queue();
         }
 
         premiumActive = false;
