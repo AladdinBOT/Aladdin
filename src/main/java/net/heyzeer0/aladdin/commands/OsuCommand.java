@@ -28,6 +28,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 /**
  * Created by HeyZeer0 on 30/09/2017.
@@ -61,7 +62,14 @@ public class OsuCommand implements CommandExecutor {
             Utils.runAsync(() -> {
 
                 try {
-                    OsuMatchProfile mp = OsuManager.getRecentFromPlayer(nick, 1).get(0);
+                    ArrayList<OsuMatchProfile> matches = OsuManager.getRecentFromPlayer(nick, 1);
+
+                    if(matches.size() <= 0) {
+                        e.sendMessage(lp.get("command.osu.recent.error.nomatches", nick));
+                        return;
+                    }
+
+                    OsuMatchProfile mp = matches.get(0);
 
                     OsuPlayerProfile pp = OsuManager.getUserProfile(mp.getUser_id(), true);
                     OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
