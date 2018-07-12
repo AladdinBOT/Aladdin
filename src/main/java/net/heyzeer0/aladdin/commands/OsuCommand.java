@@ -62,7 +62,7 @@ public class OsuCommand implements CommandExecutor {
             Utils.runAsync(() -> {
 
                 try {
-                    ArrayList<OsuMatchProfile> matches = OsuManager.getRecentFromPlayer(nick, 1);
+                    ArrayList<OsuMatchProfile> matches = OsuManager.getRecentFromPlayer(nick, 10);
 
                     if(matches.size() <= 0) {
                         e.sendMessage(lp.get("command.osu.recent.error.nomatches", nick));

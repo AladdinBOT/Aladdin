@@ -46,4 +46,13 @@ public enum OsuMods {
 
         return rm;
     }
+
+    public static String asString(ArrayList<OsuMods> mods) {
+        if(mods.size() <= 0) return "";
+        String result = "";
+        for (OsuMods mod : mods) {
+            result = result + mod.getShortName();
+        }
+        return result;
+    }
 }
