@@ -3,6 +3,7 @@ package net.heyzeer0.aladdin.commands;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
+import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.enums.OsuMods;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
@@ -29,6 +30,7 @@ import java.awt.image.Kernel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HeyZeer0 on 30/09/2017.
@@ -76,11 +78,14 @@ public class OsuCommand implements CommandExecutor {
         if(args.get(0).equals("recent") || args.get(0).equalsIgnoreCase("r")) {
             final String nick;
 
-            if(args.getSize() >= 2) {
+            if(args.getSize() >= 2 && e.getMessage().getMentionedUsers().size() <= 0) {
                 nick = args.getCompleteAfter(1);
+            }else if(e.getMessage().getMentionedUsers().size() > 0 && !Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername().equals("")) {
+                nick = Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername();
             }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
                 nick = e.getUserProfile().getOsuUsername();
             }else{
+                if(e.getUserProfile().getOsuUsername().equals("")) e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
 
@@ -178,12 +183,15 @@ public class OsuCommand implements CommandExecutor {
         if(args.get(0).equalsIgnoreCase("profile") || args.get(0).equalsIgnoreCase("p")) {
             final String nick;
 
-            if(args.getSize() >= 2) {
+            if(args.getSize() >= 2 && e.getMessage().getMentionedUsers().size() <= 0) {
                 nick = args.getCompleteAfter(1);
+            }else if(e.getMessage().getMentionedUsers().size() > 0 && !Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername().equals("")) {
+                nick = Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername();
             }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
                 nick = e.getUserProfile().getOsuUsername();
             }else{
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
+                if(e.getUserProfile().getOsuUsername().equals("")) e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
 
             Utils.runAsync(() -> {
