@@ -1,9 +1,9 @@
 package net.heyzeer0.aladdin.profiles.custom.osu;
 
 import lombok.Getter;
+import net.heyzeer0.aladdin.utils.Utils;
 
 import java.beans.ConstructorProperties;
-import java.util.UUID;
 
 /**
  * Created by HeyZeer0 on 05/07/2018.
@@ -57,7 +57,7 @@ public class OppaiInfo {
     }
 
     public OppaiInfo(String oppai_version, String beatmap_id, int code, String errstr, String title, String creator, String version, String mods_str, int mods, double od, double ar, double cs, double hp, int combo, int max_combo, int num_circles, int num_sliders, int num_spinners, int misses, int score_version, long stars, long speed_stars, long aim_stars, int nsingles, int nsingles_threshold, long aim_pp, long speed_pp, long acc_pp, long pp) {
-        this.id = UUID.randomUUID().toString(); this.beatmap_id = beatmap_id;
+        this.id = Utils.toMD5(beatmap_id + mods_str); this.beatmap_id = beatmap_id;
         this.oppai_version = oppai_version; this.code = code; this.errstr = errstr; this.title = title;
         this.creator = creator; this.version = version; this.mods_str = mods_str; this.mods = mods; this.od = od; this.ar = ar; this.cs = cs;
         this.hp = hp; this.combo = combo; this.max_combo = max_combo; this.num_circles = num_circles; this.num_spinners = num_spinners; this.num_sliders = num_sliders; this.misses = misses;

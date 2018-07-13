@@ -6,7 +6,6 @@ import net.heyzeer0.aladdin.profiles.custom.osu.OsuBeatmapProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuMatchProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuPlayerProfile;
 import net.heyzeer0.aladdin.utils.Router;
-import net.heyzeer0.aladdin.utils.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -63,11 +62,9 @@ public class OsuManager {
             );
         }
 
-        Utils.runAsync(() -> {
-            for(OsuMatchProfile mm : matches) {
-                OppaiManager.getMapInfo(mm.getBeatmap_id(), OsuMods.asString(mm.getMods()));
-            }
-        });
+        for(OsuMatchProfile mm : matches) {
+            OppaiManager.addMapToQueue(mm.getBeatmap_id(), OsuMods.asString(mm.getMods()));
+        }
 
         return matches;
     }
@@ -86,11 +83,9 @@ public class OsuManager {
             );
         }
 
-        Utils.runAsync(() -> {
-            for(OsuMatchProfile mm : matches) {
-                OppaiManager.getMapInfo(mm.getBeatmap_id(), OsuMods.asString(mm.getMods()));
-            }
-        });
+        for(OsuMatchProfile mm : matches) {
+            OppaiManager.addMapToQueue(mm.getBeatmap_id(), OsuMods.asString(mm.getMods()));
+        }
 
         return matches;
     }
@@ -109,11 +104,9 @@ public class OsuManager {
             );
         }
 
-        Utils.runAsync(() -> {
-            for(OsuMatchProfile mm : matches) {
-                OppaiManager.getMapInfo(mm.getBeatmap_id(), OsuMods.asString(mm.getMods()));
-            }
-        });
+        for(OsuMatchProfile mm : matches) {
+            OppaiManager.addMapToQueue(mm.getBeatmap_id(), OsuMods.asString(mm.getMods()));
+        }
 
         return matches;
     }
