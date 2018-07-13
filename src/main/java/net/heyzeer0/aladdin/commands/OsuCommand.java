@@ -85,7 +85,7 @@ public class OsuCommand implements CommandExecutor {
             }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
                 nick = e.getUserProfile().getOsuUsername();
             }else{
-                if(e.getUserProfile().getOsuUsername().equals("")) e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
+                e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
 
@@ -190,7 +190,7 @@ public class OsuCommand implements CommandExecutor {
             }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
                 nick = e.getUserProfile().getOsuUsername();
             }else{
-                if(e.getUserProfile().getOsuUsername().equals("")) e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
+                e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
 
