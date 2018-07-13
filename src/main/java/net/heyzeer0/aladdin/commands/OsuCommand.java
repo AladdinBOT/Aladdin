@@ -77,11 +77,11 @@ public class OsuCommand implements CommandExecutor {
                         if(NumberUtils.isCreatable(args.get(1))) {
                             pp = Integer.valueOf(args.get(1));
                         }else{
-                            mods = args.get(1);
+                            mods = args.get(1).toUpperCase();
                         }
                     }
                     if(args.getSize() >= 3) {
-                        mods = args.get(2);
+                        mods = args.get(2).toUpperCase();
                     }
 
                     ArrayList<String> ignored = new ArrayList<>();
@@ -154,7 +154,7 @@ public class OsuCommand implements CommandExecutor {
                     g2d.setFont(italic.deriveFont(19.13f));
                     g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
                     g2d.setFont(regular.deriveFont(18.21f));
-                    g2d.drawString("Future You = " + Math.round(mapPlayer.getPp()) + "pp | 98% = " + Math.round(map98.getPp()) + "pp | 99% = " + Math.round(map99.getPp()) + "pp | 100% = " + Math.round(map100.getPp()) + "pp", 90, 210);
+                    g2d.drawString("Your % = " + Math.round(mapPlayer.getPp()) + "pp | 98% = " + Math.round(map98.getPp()) + "pp | 99% = " + Math.round(map99.getPp()) + "pp | 100% = " + Math.round(map100.getPp()) + "pp", 90, 210);
                     g2d.drawString("Stars: " + Math.round(map100.getStars()) + " - " + map100.getMax_combo() + "x | AR: " + Math.round(map100.getAr()) + " OD: " + Math.round(map100.getOd()) + " HP: " + Math.round(map100.getHp()) + " CS: " + Math.round(map100.getCs()) + " BPM: " + Math.round(Integer.valueOf(bp.getBpm())) + " +" + map100.getMods_str(), 122, 236);
 
                     g2d.dispose();

@@ -8,6 +8,7 @@ import net.heyzeer0.aladdin.configs.instances.DatabaseConfig;
 import net.heyzeer0.aladdin.database.entities.GuildProfile;
 import net.heyzeer0.aladdin.database.entities.ServerProfile;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
+import net.heyzeer0.aladdin.enums.OsuMods;
 import net.heyzeer0.aladdin.manager.custom.osu.OppaiManager;
 import net.heyzeer0.aladdin.profiles.custom.osu.OppaiInfo;
 import net.heyzeer0.aladdin.utils.Utils;
@@ -98,7 +99,7 @@ public class AladdinData {
     }
 
     public OppaiInfo getMapByPPRange(int pp_range, ArrayList<String> ignored, String mods) {
-        Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getMods_str().equals(mods)).filter(c -> !ignored.contains(c.getId())).sorted(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range))).limit(15).findAny();
+        Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getMods() == OsuMods.fromString(mods)).filter(c -> !ignored.contains(c.getId())).sorted(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range))).limit(15).findAny();
         return info.orElse(null);
     }
 

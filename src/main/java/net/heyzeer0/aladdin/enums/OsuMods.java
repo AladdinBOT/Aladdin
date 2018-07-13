@@ -1,8 +1,10 @@
 package net.heyzeer0.aladdin.enums;
 
+import com.google.common.base.Splitter;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by HeyZeer0 on 05/07/2018.
@@ -45,6 +47,21 @@ public enum OsuMods {
         }
 
         return rm;
+    }
+
+    public static int fromString(String mods) {
+        int result = 0;
+        Iterator<String> it = Splitter.fixedLength(2).split(mods).iterator();
+        while(it.hasNext()) {
+            for(OsuMods md : values()) {
+                if(md.getShortName().equalsIgnoreCase(it.next())) {
+                    result+=md.id;
+                    break;
+                }
+            }
+        }
+
+        return result;
     }
 
     public static String asString(ArrayList<OsuMods> mods) {
