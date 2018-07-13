@@ -39,7 +39,7 @@ public class GuildListener {
     }
 
     public static void onMemberLeave(GuildMemberLeaveEvent e) {
-        Main.getDatabase().getGuildProfile(e.getGuild()).cleanUserData(e.getMember().getUser());
+        Main.getDatabase().getGuildProfile(e.getGuild()).cleanUserData(e.getUser());
     }
 
     public static void onOwnerUpdate(GuildUpdateOwnerEvent e) {
