@@ -64,7 +64,7 @@ public class OppaiManager {
     }
 
     public static OppaiInfo getMapInfoPure(String map_id, String mods) throws Exception {
-        Process p = Runtime.getRuntime().exec("./oppai.sh " + map_id + " -ojson " + (mods.equalsIgnoreCase("") ? "none" : ""));
+        Process p = Runtime.getRuntime().exec("./oppai.sh " + map_id + " -ojson " + (mods.equalsIgnoreCase("") ? "none" : mods));
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         JSONObject jo = new JSONObject(br.readLine());
