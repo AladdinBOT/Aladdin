@@ -13,6 +13,7 @@ import net.heyzeer0.aladdin.profiles.custom.osu.OppaiInfo;
 import net.heyzeer0.aladdin.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -64,6 +65,11 @@ public class AladdinData {
     public ServerProfile getServer() {
         ServerProfile data = r.table(ServerProfile.DB_TABLE).get("main").run(conn, ServerProfile.class);
         return data != null ? data : new ServerProfile();
+    }
+
+    public OppaiInfo getMapByPPRange(int pp_range) {
+        Optional<OppaiInfo> info = osumaps.stream().min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
+        return info.orElse(null);
     }
 
     public OppaiInfo getOsuMapWD(String map_id, String mods) {

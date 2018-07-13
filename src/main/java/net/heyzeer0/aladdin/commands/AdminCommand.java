@@ -36,6 +36,17 @@ public class AdminCommand implements CommandExecutor {
     @Command(command = "admin", description = "Comandos sobre o bot", type = CommandType.BOT_ADMIN, isAllowedToDefault = false,
             usage = "", sendTyping = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lang) {
+        if(args.get(0).equalsIgnoreCase("searchMap")) {
+            OppaiInfo info = Main.getDatabase().getMapByPPRange(Integer.valueOf(args.get(1)));
+
+            if(info == null) {
+                e.sendMessage(EmojiList.WORRIED + " Out of range.");
+                return new CommandResult(CommandResultEnum.SUCCESS);
+            }
+
+            e.sendMessage(EmojiList.CORRECT + " Found. ``" + info.getTitle() + " [" + info.getVersion() + "]``\nPP: ``" + info.getPp() + "`` Mods: ``" + info.getMods_str() + "``");
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
         if(args.get(0).equalsIgnoreCase("key")) {
             for(User u : e.getMessage().getMentionedUsers()) {
                 Main.getDatabase().getUserProfile(u).addKeys(Integer.valueOf(args.get(1)));
