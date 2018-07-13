@@ -29,7 +29,7 @@ public class MessageListener {
     public static HashMap<String, Long> star_timeout = new HashMap<>();
 
     public static void onMessage(GuildMessageReceivedEvent e) {
-        ThreadManager.startThread();
+        ThreadManager.startThread(false);
 
         if(Main.getDatabase() == null || !Main.getDatabase().isReady()) {
             return;

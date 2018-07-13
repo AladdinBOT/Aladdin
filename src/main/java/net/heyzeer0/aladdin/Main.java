@@ -19,6 +19,7 @@ import net.heyzeer0.aladdin.manager.custom.osu.OsuSubscriptionManager;
 import net.heyzeer0.aladdin.manager.custom.warframe.SubscriptionManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
+import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 import net.heyzeer0.aladdin.utils.DiscordLists;
@@ -131,6 +132,7 @@ public class Main {
     }
 
     public static void checkThreads() {
+        ThreadManager.startThread(true);
         GiveawayManager.startUpdating();
         SubscriptionManager.startUpdating();
         ReminderManager.startChecking();

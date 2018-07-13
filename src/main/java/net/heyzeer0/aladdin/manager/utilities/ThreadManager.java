@@ -15,9 +15,13 @@ public class ThreadManager {
     private static Thread th;
     private static ConcurrentArrayList<ScheduledExecutor> runnables = new ConcurrentArrayList<>();
 
-    public static void startThread() {
+    private static boolean canRun = false;
+
+    public static void startThread(boolean init) {
+        if(!canRun && !init) return;
         if(th != null && th.isAlive()) return;
 
+        canRun = true;
         Main.getLogger().warn("Starting Runnables Thread");
 
         th = new Thread(() -> {
@@ -44,7 +48,7 @@ public class ThreadManager {
     public static void registerScheduledExecutor(ScheduledExecutor r) {
         runnables.add(r);
 
-        startThread();
+        startThread(false);
     }
 
 
