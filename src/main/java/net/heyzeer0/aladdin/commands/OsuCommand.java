@@ -32,6 +32,7 @@ import java.awt.image.Kernel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -51,6 +52,8 @@ public class OsuCommand implements CommandExecutor {
             regular = Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "fonts" + File.separator + "Exo2-Regular.otf"));
         }catch (Exception ex) { ex.printStackTrace(); }
     }
+
+    private static Random r = new Random();
 
     @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow/recent/setuser/recommend"}, type = CommandType.FUN,
             usage = "a!osu profile HeyZeer0\na!osu profile\na!osu follow HeyZeer0\na!osu recent\na!osu recent HeyZeer0\na!osu setuser HeyZeer0\na!osu recommend\na!osu recommend [pp]\na!osu recommend [pp] [mods]\na!osu recommend [mods]\na!osu recommend nomod")
@@ -96,6 +99,7 @@ public class OsuCommand implements CommandExecutor {
                         }
 
                         pp = totalpp / 10;
+                        pp+= r.nextInt(35);
                     }
 
                     ArrayList<OsuMatchProfile> recent = OsuManager.getRecentFromPlayer(nick, 50);
