@@ -50,7 +50,7 @@ public class OppaiManager {
     }
 
     public static OppaiInfo getMapByAcurracy(String map_id, String mods, double acurracy) throws Exception {
-        Process p = Runtime.getRuntime().exec("./oppai-percent.sh " + map_id + " -ojson " + mods + " " + acurracy);
+        Process p = Runtime.getRuntime().exec("./oppai-percent.sh " + map_id + " -ojson " + (mods.equalsIgnoreCase("") ? "none" : "") + " " + acurracy);
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
         JSONObject jo = new JSONObject(br.readLine());
