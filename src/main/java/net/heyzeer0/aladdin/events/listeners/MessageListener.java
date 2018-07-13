@@ -31,6 +31,10 @@ public class MessageListener {
     public static void onMessage(GuildMessageReceivedEvent e) {
         ThreadManager.startThread();
 
+        if(!Main.getDatabase().isReady()) {
+            return;
+        }
+
         if(!e.getGuild().getSelfMember().hasPermission(e.getChannel(), Permission.MESSAGE_WRITE)) {
             return;
         }
@@ -39,7 +43,7 @@ public class MessageListener {
             return;
         }
 
-        if (ChooserManager.updateTextChooser(e)) {
+        if(ChooserManager.updateTextChooser(e)) {
             return;
         }
 
