@@ -59,7 +59,7 @@ public class Main {
             logger.finishMsCount("Configs");
 
             logger.startMsCount();
-            shards = new ShardProfile[Utils.getShardAmmount()];
+            shards = new ShardProfile[Utils.getShardAmount()];
             for(int i = 0; i < shards.length; i++) {
                 if(i != 0) Thread.sleep(5000);
                 shards[i] = new ShardProfile(i, shards.length);

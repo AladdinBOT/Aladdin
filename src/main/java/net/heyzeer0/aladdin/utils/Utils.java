@@ -19,7 +19,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
-import java.lang.management.ManagementFactory;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,7 +53,7 @@ public class Utils {
         timers.scheduleAtFixedRate(r, 0, delay, unit);
     }
 
-    public static int getShardAmmount() {
+    public static int getShardAmount() {
         try {
             return new Router("https://discordapp.com/api/gateway/bot")
                     .addHeaderParameter("Authorization", "Bot " + BotConfig.bot_token)
@@ -64,6 +63,21 @@ public class Utils {
             e.printStackTrace();
         }
         return 1;
+    }
+
+    public static String[] splitStringEvery(String s, int interval) {
+        int arrayLength = (int) Math.ceil(((s.length() / (double)interval)));
+        String[] result = new String[arrayLength];
+
+        int j = 0;
+        int lastIndex = result.length - 1;
+        for (int i = 0; i < lastIndex; i++) {
+            result[i] = s.substring(j, j + interval);
+            j += interval;
+        }
+        result[lastIndex] = s.substring(j);
+
+        return result;
     }
 
     public static String translateTempo(String entrada) {

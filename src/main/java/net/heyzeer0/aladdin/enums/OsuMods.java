@@ -1,10 +1,9 @@
 package net.heyzeer0.aladdin.enums;
 
-import com.google.common.base.Splitter;
 import lombok.Getter;
+import net.heyzeer0.aladdin.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by HeyZeer0 on 05/07/2018.
@@ -53,12 +52,11 @@ public enum OsuMods {
         if(mods.equals("") || mods.length() < 2) return 0;
 
         int result = 0;
-        Iterator<String> it = Splitter.fixedLength(2).split(mods.toUpperCase()).iterator();
-        while(it.hasNext()) {
+        for(String mm : Utils.splitStringEvery(mods, 2)) {
             for(OsuMods md : values()) {
                 if(md.getShortName() == null) continue;
 
-                if(md.getShortName().equalsIgnoreCase(it.next())) {
+                if(md.getShortName().equalsIgnoreCase(mm)) {
                     result+=md.id;
                     break;
                 }
