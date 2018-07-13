@@ -31,18 +31,20 @@ public class UserProfile implements ManagedObject {
     boolean autoRenew;
     boolean trialPremium = false;
 
+    String osuUsername;
+
     HashMap<String, ArrayList<PlaylistTrackProfile>> playlist;
 
     public UserProfile(User u) {
-        this(u.getId(), 0, false, 0, false, new HashMap<>(), false);
+        this(u.getId(), 0, false, 0, false, new HashMap<>(), false, "");
     }
 
     public UserProfile(String id) {
-        this(id, 0, false, 0, false, new HashMap<>(), false);
+        this(id, 0, false, 0, false, new HashMap<>(), false, "");
     }
 
-    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist", "trialPremium"})
-    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist, boolean trialPremium) {
+    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist", "trialPremium", "osuUsername"})
+    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist, boolean trialPremium, String osuUsername) {
         this.id = id;
         this.premiumKeys = premiumKeys;
         this.premiumActive = premiumActive;
@@ -50,6 +52,13 @@ public class UserProfile implements ManagedObject {
         this.autoRenew = autoRenew;
         this.playlist = playlist;
         this.trialPremium = trialPremium;
+        this.osuUsername = osuUsername;
+    }
+
+    public void updateOsuUsername(String nick) {
+        this.osuUsername = nick;
+
+        saveAsync();
     }
 
     public boolean userPremium() {

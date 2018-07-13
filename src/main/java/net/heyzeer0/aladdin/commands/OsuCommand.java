@@ -48,16 +48,42 @@ public class OsuCommand implements CommandExecutor {
         }catch (Exception ex) { ex.printStackTrace(); }
     }
 
-    @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow/recent"}, type = CommandType.FUN,
-            usage = "a!osu profile HeyZeer0\na!osu follow HeyZeer0\na!osu recent\na!osu recent HeyZeer0")
+    @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow/recent/setuser"}, type = CommandType.FUN,
+            usage = "a!osu profile HeyZeer0\na!osu follow HeyZeer0\na!osu recent\na!osu recent HeyZeer0\na!osu setuser HeyZeer0")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
+        if(args.get(0).equalsIgnoreCase("setuser")) {
+            if(args.getSize() < 2) {
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "setuser", "nick");
+            }
+
+            String nick = args.getCompleteAfter(1);
+
+            Utils.runAsync(() -> {
+                try{
+                    OsuPlayerProfile pp = OsuManager.getUserProfile(nick, false);
+                    e.getUserProfile().updateOsuUsername(pp.getNome());
+
+                    e.sendMessage(lp.get("command.osu.setuser.success", pp.getNome()));
+                }catch (Exception ex) {
+                    e.sendMessage(lp.get("command.osu.invalidplayer"));
+                }
+            });
+
+            e.getUserProfile().updateOsuUsername(args.getCompleteAfter(1));
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
         if(args.get(0).equals("recent") || args.get(0).equalsIgnoreCase("r")) {
             final String nick;
-            if(args.getSize() >= 2) {
+
+            if(args.getSize() > 2) {
                 nick = args.getCompleteAfter(1);
+            }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
+                nick = e.getUserProfile().getOsuUsername();
             }else{
-                nick = e.getAuthor().getName();
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
+
 
             Utils.runAsync(() -> {
 
@@ -130,18 +156,17 @@ public class OsuCommand implements CommandExecutor {
         }
         if (args.get(0).equals("follow") || args.get(0).equalsIgnoreCase("f")) {
             if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
 
             Utils.runAsync(() -> {
-                String nick = args.getCompleteAfter(1);
                 try{
-                    OsuPlayerProfile p = OsuManager.getUserProfile(nick, false);
+                    OsuPlayerProfile p = OsuManager.getUserProfile(args.getCompleteAfter(1), false);
 
                     if(OsuSubscriptionManager.addSubscriptor(e.getAuthor(), p.getNome())) {
                         e.sendMessage(lp.get("command.osu.follow.success.1"));
                     }else{
-                        e.sendMessage(String.format(lp.get("command.osu.follow.success.2"), nick));
+                        e.sendMessage(String.format(lp.get("command.osu.follow.success.2"), args.getCompleteAfter(1)));
                     }
 
                 }catch (Exception x) { e.sendMessage(lp.get("command.osu.invalidplayer"));}
@@ -150,12 +175,19 @@ public class OsuCommand implements CommandExecutor {
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         if(args.get(0).equalsIgnoreCase("profile") || args.get(0).equalsIgnoreCase("p")) {
-            if(args.getSize() < 2) {
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
+            final String nick;
+
+            if(args.getSize() > 2) {
+                nick = args.getCompleteAfter(1);
+            }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
+                nick = e.getUserProfile().getOsuUsername();
+            }else{
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
+
             Utils.runAsync(() -> {
                 try{
-                    OsuPlayerProfile pf = OsuManager.getUserProfile(args.get(1), false);
+                    OsuPlayerProfile pf = OsuManager.getUserProfile(nick, false);
 
 
                     OsuMatchProfile mp = null;

@@ -181,6 +181,7 @@
 [command.minecraft.skin.embed.title] = Skin do jogador %s
 [command.osu.description] = Informações sobre Osu!
 [command.osu.invalidplayer] = 😟 Oops, o jogador definido não existe!
+[command.osu.setuser.success] = ✅ Agora todos os comandos usarão ``%s`` como nick padrão quando sem argumentos.
 [command.osu.follow.success.1] = 🤔 Tentei te registrar no programa, se você recebeu uma mensagem no privado significa que foi um sucesso, caso contrario cheque se eu posso te enviar mensagens privadas! ^O^
 [command.osu.follow.success.2] = ✅ Agora você não esta mais seguindo ``%s``
 [command.osu.profile.notopplay] = O jogador não possui uma top play

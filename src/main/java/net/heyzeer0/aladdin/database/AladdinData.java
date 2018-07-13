@@ -67,11 +67,6 @@ public class AladdinData {
         return data != null ? data : new ServerProfile();
     }
 
-    public OppaiInfo getMapByPPRange(int pp_range) {
-        Optional<OppaiInfo> info = osumaps.stream().min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
-        return info.orElse(null);
-    }
-
     public OppaiInfo getOsuMapWD(String map_id, String mods) {
         Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getId().equals(Utils.toMD5(map_id + mods))).findFirst();
         return info.orElse(null);
@@ -90,6 +85,16 @@ public class AladdinData {
         }catch (Exception ex) { ex.printStackTrace(); }
 
         return null;
+    }
+
+    public OppaiInfo getMapByPPRange(int pp_range) {
+        Optional<OppaiInfo> info = osumaps.stream().min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
+        return info.orElse(null);
+    }
+
+    public OppaiInfo getMapByPPRange(int pp_range, ArrayList<String> ignored) {
+        Optional<OppaiInfo> info = osumaps.stream().filter(c -> !ignored.contains(c.getId())).min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
+        return info.orElse(null);
     }
 
     public boolean isReady() {
