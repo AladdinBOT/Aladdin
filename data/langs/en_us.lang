@@ -188,6 +188,7 @@
 [command.osu.description] = Osu! informations
 [command.osu.invalidplayer] = 😟 Whoops, that player does not exist!
 [command.osu.nonickset] = :interrobang: You can set an automatic nickname using ``%s``, with that you will no longer need to place your nick when using osu commands.
+[command.osu.recommend.error] = 😟 Whoops, looks like there is no recommendations by now!
 [command.osu.setuser.success] = ✅ By now all commands are going to use ``%s`` as nick when no argument is provided.
 [command.osu.follow.success.1] = 🤔 I tried to register you in the program, if you got a direct message that means it was successful, otherwise check if I can send you DMs! ^O^
 [command.osu.follow.success.2] = ✅ You're no longer following ``%s``

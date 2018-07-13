@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.commands;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
@@ -20,6 +21,7 @@ import net.heyzeer0.aladdin.profiles.custom.osu.OsuMatchProfile;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuPlayerProfile;
 import net.heyzeer0.aladdin.utils.ImageUtils;
 import net.heyzeer0.aladdin.utils.Utils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -50,9 +52,127 @@ public class OsuCommand implements CommandExecutor {
         }catch (Exception ex) { ex.printStackTrace(); }
     }
 
-    @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow/recent/setuser"}, type = CommandType.FUN,
-            usage = "a!osu profile HeyZeer0\na!osu follow HeyZeer0\na!osu recent\na!osu recent HeyZeer0\na!osu setuser HeyZeer0")
+    @Command(command = "osu", description = "command.osu.description", parameters = {"profile/follow/recent/setuser/recommend"}, type = CommandType.FUN,
+            usage = "a!osu profile HeyZeer0\na!osu profile\na!osu follow HeyZeer0\na!osu recent\na!osu recent HeyZeer0\na!osu setuser HeyZeer0\na!osu recommend\na!osu recommend [pp]\na!osu recommend [pp] [mods]\na!osu recommend [mods]\na!osu recommend nomod")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
+        if(args.get(0).equalsIgnoreCase("recommend") || args.get(0).equalsIgnoreCase("rec")) {
+            final String nick;
+
+            if(args.getSize() >= 2 && e.getMessage().getMentionedUsers().size() <= 0) {
+                nick = args.getCompleteAfter(1);
+            }else if(e.getMessage().getMentionedUsers().size() > 0 && !Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername().equals("")) {
+                nick = Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername();
+            }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
+                nick = e.getUserProfile().getOsuUsername();
+            }else{
+                e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
+            }
+
+            Utils.runAsync(() -> {
+                try{
+                    String mods = "";
+                    int pp = 0;
+
+                    if(args.getSize() >= 2) {
+                        if(NumberUtils.isCreatable(args.get(1))) {
+                            Integer.valueOf(args.get(1));
+                        }else{
+                            mods = args.get(1);
+                        }
+                    }
+                    if(args.getSize() >= 3) {
+                        mods = args.get(2);
+                    }
+
+                    ArrayList<String> ignored = new ArrayList<>();
+
+                    if(pp == 0) {
+                        ArrayList<OsuMatchProfile> top10 = OsuManager.getTop10FromPlayer(nick);
+                        int totalpp = 0;
+                        for (OsuMatchProfile mm : top10) {
+                            ignored.add(Utils.toMD5(mm.getBeatmap_id() + OsuMods.asString(mm.getMods())));
+                            totalpp+= Math.round(Float.valueOf(mm.getPp()));
+                        }
+
+                        pp = totalpp / 10;
+                    }
+
+                    ArrayList<OsuMatchProfile> recent = OsuManager.getRecentFromPlayer(nick, 50);
+                    recent.forEach(c -> ignored.add(Utils.toMD5(c.getBeatmap_id() + OsuMods.asString(c.getMods()))));
+
+                    OsuPlayerProfile player = OsuManager.getUserProfile(nick, false);
+
+                    OppaiInfo map100;
+                    if(mods.equalsIgnoreCase("")) {
+                        map100 = Main.getDatabase().getMapByPPRange(pp, ignored);
+                    }else if(mods.equalsIgnoreCase("nomod")) {
+                        map100 = Main.getDatabase().getMapByPPRange(pp, ignored, "");
+                    }else{
+                        map100 = Main.getDatabase().getMapByPPRange(pp, ignored, mods);
+                    }
+
+                    if(map100 == null) {
+                        e.sendMessage(lp.get("command.osu.recommend.error"));
+                        return;
+                    }
+
+
+                    OppaiInfo map99 = OppaiManager.getMapByAcurracy(map100.getBeatmap_id(), map100.getMods_str(), 99);
+                    OppaiInfo map98 = OppaiManager.getMapByAcurracy(map100.getBeatmap_id(), map100.getMods_str(), 98);
+                    OppaiInfo mapPlayer = OppaiManager.getMapByAcurracy(map100.getBeatmap_id(), map100.getMods_str(), Double.valueOf(player.accuracy));
+
+                    OsuBeatmapProfile bp = OsuManager.getBeatmap(map100.getBeatmap_id());
+
+                    BufferedImage area = new BufferedImage(663, 251, 2);
+                    BufferedImage cover = ImageUtils.resize(ImageUtils.getImageFromUrl("https://assets.ppy.sh/beatmaps/" + bp.getBeatmapset_id() + "/covers/cover.jpg"), 655, 182);
+                    BufferedImage overlay = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "osu_play_profile.png")));
+
+                    Kernel kernel = new Kernel(3, 3, new float[]{1f / 15f, 1f / 15f, 1f / 15f,
+                            1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f});
+                    BufferedImageOp op = new ConvolveOp(kernel);
+                    cover = op.filter(cover, null);
+
+
+                    Graphics2D g2d = area.createGraphics();
+                    g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                    g2d.drawImage(cover, 5, 4, null);
+                    g2d.drawImage(overlay, 0, 0, null);
+
+                    BufferedImage user_image = ImageUtils.getImageFromUrl("https://a.ppy.sh/" + player.getUserid());
+                    if (user_image != null) {
+                        if (user_image.getHeight() != 128 || user_image.getWidth() != 128) {
+                            user_image = ImageUtils.resize(user_image, 128, 128);
+                        }
+                        g2d.drawImage(user_image, 52, 31, null);
+                    }
+
+                    g2d.setFont(italic.deriveFont(45.79f));
+                    g2d.drawString(player.getNome(), 196, 148);
+                    g2d.setFont(italic.deriveFont(25.9f));
+                    g2d.drawString(OsuSubscriptionManager.shortString(bp.getTitle(), 25) + " [" + bp.getVersion() + "]", 190, 59);
+                    g2d.setFont(italic.deriveFont(19.13f));
+                    g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
+                    g2d.setFont(regular.deriveFont(18.21f));
+                    g2d.drawString("You " + Math.round(mapPlayer.getPp()) + " 98% " + Math.round(map98.getPp()) + " 99% " + Math.round(map99.getPp()) + " 100% " + Math.round(map100.getPp()), 90, 210);
+                    g2d.drawString("★ " + Math.round(map100.getStars()) + " - " + map100.getMax_combo() + "x | AR: " + Math.round(map100.getAr()) + " OD: " + Math.round(map100.getOd()) + " HP: " + Math.round(map100.getHp()) + " CS: " + Math.round(map100.getCs()), 122, 236);
+
+                    g2d.dispose();
+
+                    EmbedBuilder b = new EmbedBuilder();
+                    b.setColor(Color.GREEN);
+                    b.setDescription("[Normal](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + ") - [No Vid](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + "n) - [Bloodcat](https://bloodcat.com/osu/s/" + bp.getBeatmapset_id() + ")");
+
+                    e.sendImageWithEmbed(area, b);
+                }catch (Exception ex) {
+                    e.sendMessage(lp.get("command.osu.recommend.error"));
+                    Main.getLogger().exception(ex);
+                }
+            });
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
+
         if(args.get(0).equalsIgnoreCase("setuser")) {
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "setuser", "nick");

@@ -188,6 +188,7 @@
 [command.osu.description] = Informações sobre Osu!
 [command.osu.invalidplayer] = 😟 Oops, o jogador definido não existe!
 [command.osu.nonickset] = :interrobang: Você pode definir um nickname automatico para não precisar ficar definindo seu usuário toda hora utilizando ``%s``.
+[command.osu.recommend.error] = 😟 Oops, parece que não há recomendações por agora!
 [command.osu.setuser.success] = ✅ Agora todos os comandos usarão ``%s`` como nick padrão quando sem argumentos.
 [command.osu.follow.success.1] = 🤔 Tentei te registrar no programa, se você recebeu uma mensagem no privado significa que foi um sucesso, caso contrario cheque se eu posso te enviar mensagens privadas! ^O^
 [command.osu.follow.success.2] = ✅ Agora você não esta mais seguindo ``%s``

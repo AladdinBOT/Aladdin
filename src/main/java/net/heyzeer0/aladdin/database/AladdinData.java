@@ -97,6 +97,11 @@ public class AladdinData {
         return info.orElse(null);
     }
 
+    public OppaiInfo getMapByPPRange(int pp_range, ArrayList<String> ignored, String mods) {
+        Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getMods_str().equals(mods)).filter(c -> !ignored.contains(c.getId())).min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
+        return info.orElse(null);
+    }
+
     public boolean isReady() {
         return ready;
     }
