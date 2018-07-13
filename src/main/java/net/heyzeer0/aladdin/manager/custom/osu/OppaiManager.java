@@ -21,7 +21,7 @@ public class OppaiManager {
     private static boolean queueRunning = false;
 
     public static OppaiInfo getMapInfo(String map_id, String mods) {
-        return Main.getDatabase().getOsuMap(map_id, mods);
+        return Main.getDatabase().getOsuMapWD(map_id, mods);
     }
 
     public static void addMapToQueue(String map_id, String mods) {
