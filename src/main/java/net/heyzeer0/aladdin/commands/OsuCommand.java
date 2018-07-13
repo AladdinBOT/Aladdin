@@ -61,17 +61,11 @@ public class OsuCommand implements CommandExecutor {
         if(args.get(0).equalsIgnoreCase("recommend") || args.get(0).equalsIgnoreCase("rec")) {
             final String nick;
 
-            final int arg;
-
-            if(args.getSize() >= 2 && e.getMessage().getMentionedUsers().size() <= 0) {
-                nick = args.getCompleteAfter(1); arg = 1;
-            }else if(e.getMessage().getMentionedUsers().size() > 0 && !Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername().equals("")) {
-                nick = Main.getDatabase().getUserProfile(e.getMessage().getMentionedUsers().get(0)).getOsuUsername(); arg = 1;
-            }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
-                nick = e.getUserProfile().getOsuUsername(); arg = 0;
+            if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
+                nick = e.getUserProfile().getOsuUsername();
             }else{
                 e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
+                return new CommandResult(CommandResultEnum.SUCCESS);
             }
 
             Utils.runAsync(() -> {
@@ -80,14 +74,14 @@ public class OsuCommand implements CommandExecutor {
                     int pp = 0;
 
                     if(args.getSize() >= 2) {
-                        if(NumberUtils.isCreatable(args.get(1+arg))) {
-                            Integer.valueOf(args.get(1+arg));
+                        if(NumberUtils.isCreatable(args.get(1))) {
+                            Integer.valueOf(args.get(1));
                         }else{
-                            mods = args.get(1+arg);
+                            mods = args.get(1);
                         }
                     }
                     if(args.getSize() >= 3) {
-                        mods = args.get(2+arg);
+                        mods = args.get(2);
                     }
 
                     ArrayList<String> ignored = new ArrayList<>();
