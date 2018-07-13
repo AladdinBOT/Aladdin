@@ -50,6 +50,8 @@ public enum OsuMods {
     }
 
     public static int fromString(String mods) {
+        if(mods.equals("") || mods.length() < 2) return 0;
+
         int result = 0;
         Iterator<String> it = Splitter.fixedLength(2).split(mods.toUpperCase()).iterator();
         while(it.hasNext()) {
