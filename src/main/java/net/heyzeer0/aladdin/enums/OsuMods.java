@@ -51,9 +51,11 @@ public enum OsuMods {
 
     public static int fromString(String mods) {
         int result = 0;
-        Iterator<String> it = Splitter.fixedLength(2).split(mods).iterator();
+        Iterator<String> it = Splitter.fixedLength(2).split(mods.toUpperCase()).iterator();
         while(it.hasNext()) {
             for(OsuMods md : values()) {
+                if(md.getShortName() == null) continue;
+
                 if(md.getShortName().equalsIgnoreCase(it.next())) {
                     result+=md.id;
                     break;
