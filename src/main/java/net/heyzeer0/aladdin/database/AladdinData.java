@@ -88,17 +88,17 @@ public class AladdinData {
     }
 
     public OppaiInfo getMapByPPRange(int pp_range) {
-        Optional<OppaiInfo> info = osumaps.stream().min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
+        Optional<OppaiInfo> info = osumaps.stream().sorted(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range))).limit(15).findAny();
         return info.orElse(null);
     }
 
     public OppaiInfo getMapByPPRange(int pp_range, ArrayList<String> ignored) {
-        Optional<OppaiInfo> info = osumaps.stream().filter(c -> !ignored.contains(c.getId())).min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
+        Optional<OppaiInfo> info = osumaps.stream().filter(c -> !ignored.contains(c.getId())).sorted(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range))).limit(15).findAny();
         return info.orElse(null);
     }
 
     public OppaiInfo getMapByPPRange(int pp_range, ArrayList<String> ignored, String mods) {
-        Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getMods_str().equals(mods)).filter(c -> !ignored.contains(c.getId())).min(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range)));
+        Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getMods_str().equals(mods)).filter(c -> !ignored.contains(c.getId())).sorted(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range))).limit(15).findAny();
         return info.orElse(null);
     }
 
