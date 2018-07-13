@@ -8,6 +8,7 @@ import net.heyzeer0.aladdin.configs.instances.DatabaseConfig;
 import net.heyzeer0.aladdin.database.entities.GuildProfile;
 import net.heyzeer0.aladdin.database.entities.ServerProfile;
 import net.heyzeer0.aladdin.database.entities.UserProfile;
+import net.heyzeer0.aladdin.enums.OsuMods;
 import net.heyzeer0.aladdin.manager.custom.osu.OppaiManager;
 import net.heyzeer0.aladdin.profiles.custom.osu.OppaiInfo;
 import net.heyzeer0.aladdin.profiles.custom.osu.OsuMatchProfile;
@@ -28,7 +29,7 @@ public class AladdinData {
     public static ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
     boolean ready = false;
 
-    private static ArrayList<OppaiInfo> osumaps = new ArrayList<>();
+    public static ArrayList<OppaiInfo> osumaps = new ArrayList<>();
 
     public AladdinData() {
         conn = r.connection().hostname(DatabaseConfig.rethink_ip).port(Integer.valueOf(DatabaseConfig.rethink_port)).db(DatabaseConfig.rethink_db).user(DatabaseConfig.rethink_user, DatabaseConfig.rethink_pass).connect();
@@ -67,7 +68,7 @@ public class AladdinData {
     }
 
     public OppaiInfo getOsuMap(String map_id, String mods) {
-        Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getBeatmap_id().equals(map_id)).filter(c -> c.getMods_str().equals(mods)).findFirst();
+        Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getBeatmap_id().equals(map_id)).filter(c -> OsuMods.asString(OsuMods.getMods(c.getMods())).equals(mods)).findFirst();
         if(info.isPresent()) return info.get();
 
         try{
