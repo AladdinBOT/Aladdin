@@ -76,7 +76,7 @@ public class OsuCommand implements CommandExecutor {
         if(args.get(0).equals("recent") || args.get(0).equalsIgnoreCase("r")) {
             final String nick;
 
-            if(args.getSize() > 2) {
+            if(args.getSize() >= 2) {
                 nick = args.getCompleteAfter(1);
             }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
                 nick = e.getUserProfile().getOsuUsername();
@@ -177,12 +177,12 @@ public class OsuCommand implements CommandExecutor {
         if(args.get(0).equalsIgnoreCase("profile") || args.get(0).equalsIgnoreCase("p")) {
             final String nick;
 
-            if(args.getSize() > 2) {
+            if(args.getSize() >= 2) {
                 nick = args.getCompleteAfter(1);
             }else if(!e.getUserProfile().getOsuUsername().equalsIgnoreCase("")) {
                 nick = e.getUserProfile().getOsuUsername();
             }else{
-                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
+                return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "profile", "nick");
             }
 
             Utils.runAsync(() -> {
