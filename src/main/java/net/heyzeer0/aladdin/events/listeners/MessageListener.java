@@ -31,7 +31,7 @@ public class MessageListener {
     public static void onMessage(GuildMessageReceivedEvent e) {
         ThreadManager.startThread();
 
-        if(!Main.getDatabase().isReady()) {
+        if(Main.getDatabase() == null || !Main.getDatabase().isReady()) {
             return;
         }
 
