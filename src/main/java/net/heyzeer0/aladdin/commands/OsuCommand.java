@@ -99,7 +99,7 @@ public class OsuCommand implements CommandExecutor {
                         }
 
                         pp = totalpp / 10;
-                        pp+= r.nextInt(35);
+                        pp += r.nextInt(35);
                     }
 
                     ArrayList<OsuMatchProfile> recent = OsuManager.getRecentFromPlayer(nick, 50);
@@ -158,7 +158,7 @@ public class OsuCommand implements CommandExecutor {
                     g2d.setFont(italic.deriveFont(19.13f));
                     g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
                     g2d.setFont(regular.deriveFont(18.21f));
-                    g2d.drawString("Future You = " + Math.round(mapPlayer.getPp()) + " | 98% = " + Math.round(map98.getPp()) + " | 99% = " + Math.round(map99.getPp()) + " | 100% = " + Math.round(map100.getPp()), 90, 210);
+                    g2d.drawString("Future You = " + Math.round(mapPlayer.getPp()) + "pp | 98% = " + Math.round(map98.getPp()) + "pp | 99% = " + Math.round(map99.getPp()) + "pp | 100% = " + Math.round(map100.getPp()) + "pp", 90, 210);
                     g2d.drawString("Stars: " + Math.round(map100.getStars()) + " - " + map100.getMax_combo() + "x | AR: " + Math.round(map100.getAr()) + " OD: " + Math.round(map100.getOd()) + " HP: " + Math.round(map100.getHp()) + " CS: " + Math.round(map100.getCs()) + " BPM: " + Math.round(Integer.valueOf(bp.getBpm())), 122, 236);
 
                     g2d.dispose();
