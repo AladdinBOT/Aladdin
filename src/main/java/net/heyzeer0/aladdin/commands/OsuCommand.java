@@ -161,7 +161,7 @@ public class OsuCommand implements CommandExecutor {
                     OsuMatchProfile mp = null;
                     OsuBeatmapProfile bp = null;
                     try{
-                        mp = OsuManager.getTop10FromPlayer(pf.getNome()).get(0);
+                        mp = OsuManager.getTop50FromPlayer(pf.getNome()).get(0);
                         bp = OsuManager.getBeatmap(mp.getBeatmap_id());
                     }catch (Exception ex) { ex.printStackTrace(); }
 
