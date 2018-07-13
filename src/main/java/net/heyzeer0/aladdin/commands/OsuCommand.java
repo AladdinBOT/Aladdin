@@ -141,7 +141,7 @@ public class OsuCommand implements CommandExecutor {
                     g2d.setFont(italic.deriveFont(19.13f));
                     g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
                     g2d.setFont(regular.deriveFont(18.21f));
-                    g2d.drawString(Math.round(full.getPp()) + "pp (" + Math.round(oi.getPp()) + "pp)" + (mods.equals("") ? "" : " +" + mods) + " (Map Completion " + OsuSubscriptionManager.decimalFormat.format(mapCompletion) + "%)", 90, 210);
+                    g2d.drawString(Math.round(full.getPp()) + "pp (" + Math.round(oi.getPp()) + "pp)" + (mods.equals("") ? "" : " +" + mods) + " [Map Completion " + OsuSubscriptionManager.decimalFormat.format(mapCompletion) + "%]", 90, 210);
                     g2d.drawString(OsuSubscriptionManager.decimalFormat.format(percentage * 100) + "% - " + mp.getMaxcombo() + "x - " + mp.getCount50() + "x 50 | " + mp.getCount100() + "x 100 | " + mp.getCountmiss() + "x miss - " + mp.getRank().replace("H", "+"), 122, 236);
 
                     g2d.dispose();

@@ -65,7 +65,7 @@ public class ConfigCommand implements CommandExecutor {
             Paginator ph = new Paginator(e, lp.get("command.config.list.paginator.title"));
 
             for(GuildConfig cfg : GuildConfig.values()) {
-                ph.addPage(String.format(lp.get("command.config.list.paginator.page"), cfg.toString().toLowerCase(), cfg.getDescription(), e.getGuildProfile().getConfigValue(cfg)));
+                ph.addPage(String.format(lp.get("command.config.list.paginator.page"), cfg.toString().toLowerCase(), lp.get("config." + cfg.toString().toLowerCase() + ".description"), e.getGuildProfile().getConfigValue(cfg)));
             }
 
             ph.start();

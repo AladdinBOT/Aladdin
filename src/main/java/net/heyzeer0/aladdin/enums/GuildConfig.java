@@ -6,27 +6,21 @@ package net.heyzeer0.aladdin.enums;
  */
 public enum GuildConfig {
 
-    PREFIX("a!", "Prefixo principal para comandos"),
-    MEMBER_CREATE_CMDS(true, "Define se membros irão poder criar comandos."),
-    MEMBER_CAN_REPEAT(true, "Permite que membros alterer o modo de repetição do player de musica"),
-    MINECRAFT_CRASHHELPER(false, "Permite que membros envie um crash report no canal de suporte para auto-analise"),
-    THE_GAME(true, "Ativa \"o jogo\" na guilda"),
-    STARBOARD_SELFREACT(true, "Permite auto-reações nas starboards");
+    PREFIX("a!"),
+    MEMBER_CREATE_CMDS(true),
+    MEMBER_CAN_REPEAT(true),
+    MINECRAFT_CRASHHELPER(false),
+    THE_GAME(false),
+    STARBOARD_SELFREACT(true);
 
     Object df;
-    String ds;
 
-    GuildConfig(Object x, String description) {
+    GuildConfig(Object x) {
         df = x;
-        ds = description;
     }
 
     public Object getDefault() {
         return df;
-    }
-
-    public String getDescription() {
-        return ds;
     }
 
 }
