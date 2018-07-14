@@ -234,7 +234,15 @@ public class OsuCommand implements CommandExecutor {
                     OppaiInfo full = OppaiManager.getMapInfo(mp.getBeatmap_id(), mp);
 
                     double percentage = OsuSubscriptionManager.calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
-                    double mapCompletion = (double)((Integer.valueOf(mp.getCount50()) + Integer.valueOf(mp.getCount100()) + Integer.valueOf(mp.getCount300()) + Integer.valueOf(mp.getCountmiss()))*100)/(oi.getNum_sliders() + oi.getNum_circles() + oi.getNum_spinners());
+                    double mapCompletion = (double)((
+                            Integer.valueOf(mp.getCount50())
+                                    + Integer.valueOf(mp.getCount100())
+                                    + Integer.valueOf(mp.getCount300())
+                                    + Integer.valueOf(mp.getCountmiss()))
+                            *100)/
+                            (oi.getNum_sliders()
+                                    + oi.getNum_circles()
+                                    + oi.getNum_spinners());
 
                     BufferedImage area = new BufferedImage(663, 251, 2);
                     BufferedImage cover = ImageUtils.resize(ImageUtils.getImageFromUrl("https://assets.ppy.sh/beatmaps/" + bp.getBeatmapset_id() + "/covers/cover.jpg"), 655, 182);
