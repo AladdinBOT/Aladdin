@@ -20,7 +20,7 @@ public class OppaiManager {
     public static ArrayList<OppaiQueue> queue = new ArrayList<>();
     private static boolean queueRunning = false;
 
-    public static OppaiInfo getMapInfo(String map_id, String mods) {
+    public static OppaiInfo getMapInfo(String map_id, String mods) throws Exception {
         return Main.getDatabase().getOsuMapWD(map_id, mods);
     }
 
