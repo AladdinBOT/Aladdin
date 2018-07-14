@@ -70,7 +70,7 @@ public class AladdinData {
 
     public OppaiInfo getOsuMapWD(String map_id, String mods) {
         Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getId().equals(Utils.toMD5(map_id + mods))).findFirst();
-        return info.orElse(null);
+        return info.orElse(OppaiManager.getMapInfo(map_id, mods));
 
     }
 
