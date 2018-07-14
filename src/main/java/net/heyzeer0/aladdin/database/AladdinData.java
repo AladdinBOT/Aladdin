@@ -68,9 +68,9 @@ public class AladdinData {
         return data != null ? data : new ServerProfile();
     }
 
-    public OppaiInfo getOsuMapWD(String map_id, String mods) {
+    public OppaiInfo getOsuMapWD(String map_id, String mods) throws Exception {
         Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getId().equals(Utils.toMD5(map_id + mods))).findFirst();
-        return info.orElse(OppaiManager.getMapInfo(map_id, mods));
+        return info.orElse(OppaiManager.getMapInfoPure(map_id, mods));
 
     }
 
