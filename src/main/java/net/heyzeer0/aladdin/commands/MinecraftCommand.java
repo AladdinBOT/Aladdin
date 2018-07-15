@@ -36,8 +36,10 @@ public class MinecraftCommand implements CommandExecutor {
             try{
                 String uuid = new Router("https://api.mojang.com/users/profiles/minecraft/" + args.get(1)).getResponse().asJsonObject().getString("id");
 
+
                 e.sendMessage(new EmbedBuilder()
                         .setTitle(String.format(lp.get("command.minecraft.skin.embed.title"), args.get(1)))
+                        .setDescription(uuid)
                         .setImage("https://crafatar.com/renders/body/uuid/" + uuid)
                         .setColor(Color.GREEN));
             }catch (Exception ex) {
