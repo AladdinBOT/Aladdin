@@ -5,6 +5,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public class Router {
     String address;
     HashMap<String, String> header_parameters = new HashMap<>();
     HashMap<String, String> url_parameters = new HashMap<>();
+
+    String post;
 
     public Router(String address) {
         this.address = address;
@@ -33,6 +36,12 @@ public class Router {
 
     public Router addUrlParameters(String key, Object value) {
         url_parameters.put(key, value.toString());
+
+        return this;
+    }
+
+    public Router setPostRequest(Object obj) {
+        post = obj.toString();
 
         return this;
     }
@@ -64,6 +73,14 @@ public class Router {
             URLConnection st = new URL(url).openConnection();
             for(String k : r.header_parameters.keySet()) {
                 st.setRequestProperty(k, r.header_parameters.get(k));
+            }
+
+            if(post != null) {
+                st.setDoOutput(true);
+                DataOutputStream dos = new DataOutputStream(st.getOutputStream());
+                dos.writeBytes(post);
+                dos.flush();
+                dos.close();
             }
 
             result = IOUtils.toString(st.getInputStream());

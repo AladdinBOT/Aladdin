@@ -185,6 +185,7 @@
 [command.minecraft.status.embed.description] = Mojang servers status
 [command.minecraft.status.embed.footer] = Requested by %s
 [command.minecraft.skin.embed.title] = %s's skin
+[command.minecraft.skin.error] = 😟 Whoops, this player doesn't exists!
 [command.osu.description] = Osu! informations
 [command.osu.invalidplayer] = 😟 Whoops, that player does not exist!
 [command.osu.nonickset] = :interrobang: You can set an automatic nickname using ``%s``, with that you will no longer need to place your nick when using osu commands.

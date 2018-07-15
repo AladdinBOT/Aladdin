@@ -134,7 +134,6 @@ public class OsuCommand implements CommandExecutor {
                     BufferedImageOp op = new ConvolveOp(kernel);
                     cover = op.filter(cover, null);
 
-
                     Graphics2D g2d = area.createGraphics();
                     g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                     g2d.drawImage(cover, 5, 4, null);

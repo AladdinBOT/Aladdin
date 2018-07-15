@@ -10,6 +10,7 @@ import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.custom.MojangProfile;
+import net.heyzeer0.aladdin.utils.Router;
 
 import java.awt.*;
 
@@ -30,10 +31,19 @@ public class MinecraftCommand implements CommandExecutor {
             if(args.getSize() < 2) {
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "skin", "nick");
             }
-            e.sendMessage(new EmbedBuilder()
-            .setTitle(String.format(lp.get("command.minecraft.skin.embed.title"), args.get(1)))
-            .setImage("https://mcapi.ca/skin/" + args.get(1))
-            .setColor(Color.GREEN));
+
+
+            try{
+                String uuid = new Router("https://api.mojang.com/users/profiles/minecraft/HeyZeer0").getResponse().asJsonObject().getString("id");
+
+                e.sendMessage(new EmbedBuilder()
+                        .setTitle(String.format(lp.get("command.minecraft.skin.embed.title"), args.get(1)))
+                        .setImage("https://crafatar.com/renders/body/uuid/" + uuid)
+                        .setColor(Color.GREEN));
+            }catch (Exception ex) {
+                e.sendMessage(lp.get("command.minecraft.skin.error"));
+            }
+
             return new CommandResult(CommandResultEnum.SUCCESS);
         }
         return new CommandResult(CommandResultEnum.NOT_FOUND);

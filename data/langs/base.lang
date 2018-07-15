@@ -185,6 +185,7 @@
 [command.minecraft.status.embed.description] = Status atual dos servidores da mojang
 [command.minecraft.status.embed.footer] = Pedido por %s
 [command.minecraft.skin.embed.title] = Skin do jogador %s
+[command.minecraft.skin.error] = 😟 Oops, o jogador definido não existe!
 [command.osu.description] = Informações sobre Osu!
 [command.osu.invalidplayer] = 😟 Oops, o jogador definido não existe!
 [command.osu.nonickset] = :interrobang: Você pode definir um nickname automatico para não precisar ficar definindo seu usuário toda hora utilizando ``%s``.
