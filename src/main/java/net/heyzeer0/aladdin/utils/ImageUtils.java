@@ -1,12 +1,7 @@
 package net.heyzeer0.aladdin.utils;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by HeyZeer0 on 19/10/2017.
@@ -31,27 +26,12 @@ public class ImageUtils {
             metrics = g.getFontMetrics();
         }
 
-        g.drawString(text, x, y + (initSize - g.getFont().getSize()));
+        g.drawString(text, x, y);
         g.setFont(g.getFont().deriveFont(initSize));
     }
 
     public static BufferedImage getImageFromUrl(String url) throws Exception {
-        System.setProperty("http.agent", "AladdinBOT");
-        URL input = new URL(url);
-        if (input == null) {
-            return null;
-        }
-
-        URLConnection cnc = input.openConnection();
-        cnc.setRequestProperty("User-Agent", "AladdinBOT");
-        cnc.connect();
-
-        InputStream istream = null;
-        try {
-            istream = cnc.getInputStream();
-        } catch (IOException ignored) { return null; }
-        BufferedImage bi = ImageIO.read(istream);
-        return bi;
+        return new Router(url).acceptImage().getResponse().asImage();
     }
 
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {

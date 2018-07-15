@@ -5,7 +5,11 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -21,6 +25,7 @@ public class Router {
     HashMap<String, String> url_parameters = new HashMap<>();
 
     String post;
+    boolean image = false;
 
     public Router(String address) {
         this.address = address;
@@ -46,33 +51,40 @@ public class Router {
         return this;
     }
 
+    public Router acceptImage() {
+        image = true;
+
+        return this;
+    }
+
     public Response getResponse() throws Exception {
-        return new Response(this);
+        return new Response();
     }
 
     public class Response {
 
         String result;
+        BufferedImage img;
 
-        public Response(Router r) throws Exception {
-            String url = r.address;
+        public Response() throws Exception {
+            String url = address;
 
-            if(r.url_parameters.size() > 0) {
+            if(url_parameters.size() > 0) {
                 boolean first = true;
-                for(String key : r.url_parameters.keySet()) {
+                for(String key : url_parameters.keySet()) {
                     if(first) {
                         first = false;
-                        url = url + "?" + key + "=" + r.url_parameters.get(key);
+                        url = url + "?" + key + "=" + url_parameters.get(key);
                         continue;
                     }
 
-                    url = url + "&" + key + "=" + r.url_parameters.get(key);
+                    url = url + "&" + key + "=" + url_parameters.get(key);
                 }
             }
 
             URLConnection st = new URL(url).openConnection();
-            for(String k : r.header_parameters.keySet()) {
-                st.setRequestProperty(k, r.header_parameters.get(k));
+            for(String k : header_parameters.keySet()) {
+                st.setRequestProperty(k, header_parameters.get(k));
             }
 
             if(post != null) {
@@ -81,6 +93,15 @@ public class Router {
                 dos.writeBytes(post);
                 dos.flush();
                 dos.close();
+            }
+
+            if(image) {
+                InputStream istream;
+                try {
+                    istream = st.getInputStream();
+
+                    img = ImageIO.read(istream);
+                } catch (IOException ignored) { }
             }
 
             result = IOUtils.toString(st.getInputStream());
@@ -92,6 +113,10 @@ public class Router {
 
         public JSONArray asJsonArray() {
             return new JSONArray(result);
+        }
+
+        public BufferedImage asImage() {
+            return img;
         }
 
         public String getResult() {
