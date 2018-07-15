@@ -10,6 +10,7 @@ import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.custom.MojangProfile;
+import net.heyzeer0.aladdin.utils.ImageUtils;
 import net.heyzeer0.aladdin.utils.Router;
 
 import java.awt.*;
@@ -36,10 +37,8 @@ public class MinecraftCommand implements CommandExecutor {
             try{
                 String uuid = new Router("https://api.mojang.com/users/profiles/minecraft/" + args.get(1)).getResponse().asJsonObject().getString("id");
 
-
-                e.sendMessage(new EmbedBuilder()
+                e.sendImageWithEmbed(ImageUtils.getImageFromUrl("https://crafatar.com/renders/body/" + uuid), new EmbedBuilder()
                         .setTitle(String.format(lp.get("command.minecraft.skin.embed.title"), args.get(1)))
-                        .setImage("https://crafatar.com/renders/body/" + uuid)
                         .setColor(Color.GREEN));
             }catch (Exception ex) {
                 e.sendMessage(lp.get("command.minecraft.skin.error"));
