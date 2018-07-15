@@ -39,8 +39,7 @@ public class MinecraftCommand implements CommandExecutor {
 
                 e.sendMessage(new EmbedBuilder()
                         .setTitle(String.format(lp.get("command.minecraft.skin.embed.title"), args.get(1)))
-                        .setDescription(uuid)
-                        .setImage("https://crafatar.com/renders/body/uuid/" + uuid)
+                        .setImage("https://crafatar.com/renders/body/" + uuid)
                         .setColor(Color.GREEN));
             }catch (Exception ex) {
                 e.sendMessage(lp.get("command.minecraft.skin.error"));
