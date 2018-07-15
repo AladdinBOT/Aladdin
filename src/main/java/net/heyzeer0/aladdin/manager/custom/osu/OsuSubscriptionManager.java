@@ -24,6 +24,7 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.*;
+import java.net.UnknownHostException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -183,7 +184,7 @@ public class OsuSubscriptionManager {
                                 }
                             }
                         } catch (Exception ex) {
-                            if(!ex.getMessage().contains("HTTP response") && !ex.getMessage().contains("Premature EOF")) {
+                            if(!ex.getMessage().contains("HTTP response") && !ex.getMessage().contains("Premature EOF") && !(ex instanceof UnknownHostException)) {
                                 Main.getLogger().exception(ex);
                                 ex.printStackTrace();
                                 toRemove.add(user);
