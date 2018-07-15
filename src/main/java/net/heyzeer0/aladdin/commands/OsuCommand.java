@@ -357,7 +357,7 @@ public class OsuCommand implements CommandExecutor {
                     g.drawImage(user_image, 52, 27, null);
                     g.drawImage(ImageUtils.resize(flag, 45, 30), 269, 109, null);
                     g.setFont(italic.deriveFont(45.79f));
-                    g.drawString(pf.getNome(), 198, 80);
+                    ImageUtils.drawStringWithSizeLimit(g, pf.getNome(), 198, 80, 261);
                     ImageUtils.drawCenteredString(g, "" + Math.round(Float.valueOf(pf.getLevel())), new Rectangle(205, 106, 42, 24), bold.deriveFont(23.5f));
                     ImageUtils.drawCenteredString(g, pf.getCount_rank_sh(), new Rectangle(491, 147, 56, 15), bold.deriveFont(21.38f));
                     ImageUtils.drawCenteredString(g, pf.getCount_rank_s(), new Rectangle(580, 147, 53, 15), bold.deriveFont(21.38f));
@@ -369,8 +369,7 @@ public class OsuCommand implements CommandExecutor {
 
                     g.drawString("#" + pf.getPp_rank() + " | #" + pf.getCountry_rank() + " - " + Math.round(Float.valueOf(pf.getPp_raw())) + "pp", 116, 237);
                     String beatmap = (mp == null ? lp.get("command.osu.profile.notopplay") : bp.getTitle() + " [" + bp.getVersion() + "] " + " - " + Math.round(Float.valueOf(mp.getPp())) + "pp");
-                    ImageUtils.drawStringWithSizeLimit(g, beatmap, 145, 215, 263);
-                    g.drawString(beatmap, 145, 215);
+                    ImageUtils.drawStringWithSizeLimit(g, beatmap, 145, 215, 548);
 
                     g.dispose();
                     e.sendImagePure(background, String.format(lp.get("command.osu.profile.success"), pf.getNome()));
