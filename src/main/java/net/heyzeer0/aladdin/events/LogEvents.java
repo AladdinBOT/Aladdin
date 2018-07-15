@@ -36,7 +36,7 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.core.events.user.GenericUserEvent;
-import net.dv8tion.jda.core.events.user.UserAvatarUpdateEvent;
+import net.dv8tion.jda.core.events.user.update.UserUpdateAvatarEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.ChatClearCommand;
@@ -115,8 +115,8 @@ public class LogEvents implements EventListener {
             return;
         }
         if(e instanceof GenericUserEvent) {
-            if(e instanceof UserAvatarUpdateEvent) {
-                UserAvatarUpdateEvent ev = (UserAvatarUpdateEvent)e;
+            if(e instanceof UserUpdateAvatarEvent) {
+                UserUpdateAvatarEvent ev = (UserUpdateAvatarEvent)e;
 
                 Utils.runAsync(() -> {
                     try{
@@ -124,10 +124,10 @@ public class LogEvents implements EventListener {
 
                         BufferedImage before;
                         try{
-                            before = ImageUtils.getImageFromUrl(ev.getPreviousAvatarUrl().replace("jpg", "png"));
+                            before = ImageUtils.getImageFromUrl(ev.getOldAvatarUrl().replace("jpg", "png"));
 
                         }catch (Exception ex) {
-                            before = ImageUtils.getImageFromUrl(ev.getPreviousAvatarUrl());
+                            before = ImageUtils.getImageFromUrl(ev.getOldAvatarId());
                         }
 
                         if(before == null) {

@@ -24,6 +24,7 @@ public class ImageUtils {
 
     public static void drawStringWithSizeLimit(Graphics2D g, String text, int x, int y, int width) {
         FontMetrics metrics = g.getFontMetrics();
+        float initSize = g.getFont().getSize();
         int yplus = 0;
         while(metrics.stringWidth(text) > width) {
             g.setFont(g.getFont().deriveFont(g.getFont().getSize() - 1f));
@@ -33,6 +34,7 @@ public class ImageUtils {
         }
 
         g.drawString(text, x, y + yplus);
+        g.setFont(g.getFont().deriveFont(initSize));
     }
 
     public static BufferedImage getImageFromUrl(String url) throws Exception {

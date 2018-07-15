@@ -48,7 +48,7 @@
     <orderEntry type="library" name="Gradle: com.sedmelluq:lavaplayer-common:1.0.6" level="project" />
     <orderEntry type="library" name="Gradle: commons-io:commons-io:2.6" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:20.0" level="project" />
-    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.6.0_380" level="project" />
+    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.7.0_382" level="project" />
     <orderEntry type="library" name="Gradle: com.rethinkdb:rethinkdb-driver:2.3.3" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1" level="project" />
     <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
