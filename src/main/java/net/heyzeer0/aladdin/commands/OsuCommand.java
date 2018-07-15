@@ -151,7 +151,7 @@ public class OsuCommand implements CommandExecutor {
                     g2d.setFont(italic.deriveFont(45.79f));
                     g2d.drawString(player.getNome(), 196, 148);
                     g2d.setFont(italic.deriveFont(25.9f));
-                    g2d.drawString(OsuSubscriptionManager.shortString(bp.getTitle(), 25) + " [" + bp.getVersion() + "]", 190, 59);
+                    ImageUtils.drawStringWithSizeLimit(g2d, bp.getTitle() + " [" + bp.getVersion() + "]", 190, 59, 453);
                     g2d.setFont(italic.deriveFont(19.13f));
                     g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
                     g2d.setFont(regular.deriveFont(18.21f));
@@ -272,7 +272,7 @@ public class OsuCommand implements CommandExecutor {
                     g2d.setFont(italic.deriveFont(45.79f));
                     g2d.drawString(pp.getNome(), 196, 148);
                     g2d.setFont(italic.deriveFont(25.9f));
-                    g2d.drawString(OsuSubscriptionManager.shortString(bp.getTitle(), 25) + " [" + bp.getVersion() + "]", 190, 59);
+                    ImageUtils.drawStringWithSizeLimit(g2d, bp.getTitle() + " [" + bp.getVersion() + "]", 190, 59, 453);
                     g2d.setFont(italic.deriveFont(19.13f));
                     g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
                     g2d.setFont(regular.deriveFont(18.21f));
@@ -367,8 +367,11 @@ public class OsuCommand implements CommandExecutor {
                     ImageUtils.drawCenteredString(g, pf.getCount_rank_ssh(), new Rectangle(536, 90, 56, 15), bold.deriveFont(21.38f));
                     ImageUtils.drawCenteredString(g, pf.getCount_rank_ss(), new Rectangle(622, 90, 56, 15), bold.deriveFont(21.38f));
                     g.setFont(regular.deriveFont(18.21f));
+
+
                     g.drawString("#" + pf.getPp_rank() + " | #" + pf.getCountry_rank() + " - " + Math.round(Float.valueOf(pf.getPp_raw())) + "pp", 116, 237);
                     String beatmap = (mp == null ? lp.get("command.osu.profile.notopplay") : bp.getTitle() + " [" + bp.getVersion() + "] " + " - " + Math.round(Float.valueOf(mp.getPp())) + "pp");
+                    ImageUtils.drawStringWithSizeLimit(g, beatmap, 145, 215, 263);
                     g.drawString(beatmap, 145, 215);
 
                     g.dispose();
