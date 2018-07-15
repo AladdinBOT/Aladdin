@@ -26,13 +26,12 @@ public class MojangProfile {
 
             server_status.put("minecraft.net", json.getJSONObject("minecraft.net").getString("status"));
             server_status.put("minecraft.net Session", json.getJSONObject("session.minecraft.net").getString("status"));
-            server_status.put("mojang.com", json.getJSONObject("mojang.com").getString("status"));
-            server_status.put("Session", json.getJSONObject("sessionserver.mojang.net").getString("status"));
             server_status.put("Account", json.getJSONObject("account.mojang.com").getString("status"));
             server_status.put("Auth", json.getJSONObject("authserver.mojang.com").getString("status"));
-            server_status.put("Skins", json.getJSONObject("textures.minecraft.net").getString("status"));
+            server_status.put("Session", json.getJSONObject("session.mojang.com").getString("status"));
             server_status.put("API", json.getJSONObject("api.mojang.com").getString("status"));
             server_status.put("Textures", json.getJSONObject("textures.minecraft.net").getString("status"));
+            server_status.put("mojang.com", json.getJSONObject("mojang.com").getString("status"));
 
         }catch (Exception e) {}
     }
