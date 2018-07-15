@@ -101,7 +101,7 @@ public class MessageEvent {
     }
 
     public ChannelType getChannelType() {
-        return originEvent.getChannelType();
+        return originEvent.getChannel().getType();
     }
 
     public void deleteMessage() {
