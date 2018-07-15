@@ -134,7 +134,7 @@ public class LogEvents implements EventListener {
                             return;
                         }
 
-                        BufferedImage actual = ImageUtils.getImageFromUrl(ev.getUser().getEffectiveAvatarUrl());
+                        BufferedImage actual = ImageUtils.getImageFromUrl(ev.getNewAvatarUrl());
 
 
                         if(actual == null) {
