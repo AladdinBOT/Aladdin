@@ -1,18 +1,13 @@
 package net.heyzeer0.aladdin.profiles.custom;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
+import net.heyzeer0.aladdin.utils.Router;
+import org.json.JSONObject;
 
 import java.awt.*;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.Scanner;
 
 /**
  * Created by HeyZeer0 on 25/06/2017.
@@ -26,27 +21,18 @@ public class MojangProfile {
 
     public MojangProfile() {
         try{
-            URL url = new URL(server_api);
-            InputStream in = url.openStream();
-            Scanner scan = new Scanner(in);
-            String jsonstring = "";
-            while(scan.hasNext()){
-                jsonstring += scan.next() + " ";
-            }
-            scan.close();
 
-            Gson gson = new GsonBuilder().create();
+            JSONObject json = new Router(server_api).getResponse().asJsonObject();
 
-            JsonObject json = gson.fromJson(jsonstring, JsonElement.class).getAsJsonObject();
-
-            server_status.put("minecraft.net", json.getAsJsonObject("minecraft.net").get("status").getAsString());
-            server_status.put("mojang.api", json.getAsJsonObject("mojang.com").get("status").getAsString());
-            server_status.put("Session", json.getAsJsonObject("session.minecraft.net").get("status").getAsString());
-            server_status.put("Account", json.getAsJsonObject("account.mojang.com").get("status").getAsString());
-            server_status.put("Auth", json.getAsJsonObject("auth.mojang.com").get("status").getAsString());
-            server_status.put("Skins", json.getAsJsonObject("skins.minecraft.net").get("status").getAsString());
-            server_status.put("API", json.getAsJsonObject("api.mojang.com").get("status").getAsString());
-            server_status.put("Textures", json.getAsJsonObject("textures.minecraft.net").get("status").getAsString());
+            server_status.put("minecraft.net", json.getJSONObject("minecraft.net").getString("status"));
+            server_status.put("minecraft.net Session", json.getJSONObject("session.minecraft.net").getString("status"));
+            server_status.put("mojang.com", json.getJSONObject("mojang.com").getString("status"));
+            server_status.put("Session", json.getJSONObject("sessionserver.mojang.net").getString("status"));
+            server_status.put("Account", json.getJSONObject("account.mojang.com").getString("status"));
+            server_status.put("Auth", json.getJSONObject("authserver.mojang.com").getString("status"));
+            server_status.put("Skins", json.getJSONObject("textures.minecraft.net").getString("status"));
+            server_status.put("API", json.getJSONObject("api.mojang.com").getString("status"));
+            server_status.put("Textures", json.getJSONObject("textures.minecraft.net").getString("status"));
 
         }catch (Exception e) {}
     }
