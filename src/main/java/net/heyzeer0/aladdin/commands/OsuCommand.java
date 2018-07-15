@@ -160,7 +160,7 @@ public class OsuCommand implements CommandExecutor {
                     ArrayList<OsuMods> modArray = OsuMods.getMods(map100.getMods());
                     if(modArray.size() > 0) {
 
-                        int x = 234;
+                        int x = 212;
                         for(OsuMods mod : modArray) {
                             BufferedImage modImg = ImageUtils.resize(mod.getImage(), 36, 25);
 
@@ -287,7 +287,7 @@ public class OsuCommand implements CommandExecutor {
 
                     if(mp.getMods().size() > 0) {
 
-                        int x = 234;
+                        int x = 212;
                         for(OsuMods mod : mp.getMods()) {
                             BufferedImage modImg = ImageUtils.resize(mod.getImage(), 36, 25);
 
