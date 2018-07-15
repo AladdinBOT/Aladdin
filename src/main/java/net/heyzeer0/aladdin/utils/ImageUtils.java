@@ -17,16 +17,16 @@ public class ImageUtils {
         g.drawString(text, x, y);
     }
 
-    public static void drawStringWithSizeLimit(Graphics2D g, String text, int x, int y, int width) {
+    public static void drawStringWithSizeLimit(Graphics2D g, String text, int x, int y, int max_width) {
         FontMetrics metrics = g.getFontMetrics();
         float initSize = g.getFont().getSize();
 
-        while(metrics.stringWidth(text) > width) {
+        while(metrics.stringWidth(text) > max_width) {
             g.setFont(g.getFont().deriveFont(g.getFont().getSize() - 1f));
             metrics = g.getFontMetrics();
         }
 
-        g.drawString(text, x, y);
+        g.drawString(text, x, y - (initSize - g.getFont().getSize()));
         g.setFont(g.getFont().deriveFont(initSize));
     }
 
