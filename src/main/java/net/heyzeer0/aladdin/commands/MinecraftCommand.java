@@ -34,7 +34,7 @@ public class MinecraftCommand implements CommandExecutor {
 
 
             try{
-                String uuid = new Router("https://api.mojang.com/users/profiles/minecraft/HeyZeer0").getResponse().asJsonObject().getString("id");
+                String uuid = new Router("https://api.mojang.com/users/profiles/minecraft/" + args.get(1)).getResponse().asJsonObject().getString("id");
 
                 e.sendMessage(new EmbedBuilder()
                         .setTitle(String.format(lp.get("command.minecraft.skin.embed.title"), args.get(1)))
