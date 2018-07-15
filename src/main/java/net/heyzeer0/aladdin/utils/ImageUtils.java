@@ -27,7 +27,7 @@ public class ImageUtils {
             metrics = g.getFontMetrics();
         }
 
-        g.drawString(text, x, y - (initialHeight - metrics.getHeight()));
+        g.drawString(text, x, y - ((initialHeight - metrics.getHeight())/2));
         g.setFont(g.getFont().deriveFont(initSize));
     }
 
