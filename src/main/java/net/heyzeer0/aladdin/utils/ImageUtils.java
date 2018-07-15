@@ -21,12 +21,13 @@ public class ImageUtils {
         FontMetrics metrics = g.getFontMetrics();
         float initSize = g.getFont().getSize();
 
+        int initialHeight = metrics.getHeight();
         while(metrics.stringWidth(text) > max_width) {
             g.setFont(g.getFont().deriveFont(g.getFont().getSize() - 1f));
             metrics = g.getFontMetrics();
         }
 
-        g.drawString(text, x, y - (initSize - g.getFont().getSize()));
+        g.drawString(text, x, y - (initialHeight - metrics.getHeight()));
         g.setFont(g.getFont().deriveFont(initSize));
     }
 
