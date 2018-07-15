@@ -155,7 +155,20 @@ public class OsuCommand implements CommandExecutor {
                     g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
                     g2d.setFont(regular.deriveFont(18.21f));
                     g2d.drawString("Your % = " + Math.round(mapPlayer.getPp()) + "pp | 98% = " + Math.round(map98.getPp()) + "pp | 99% = " + Math.round(map99.getPp()) + "pp | 100% = " + Math.round(map100.getPp()) + "pp", 90, 210);
-                    g2d.drawString("Stars: " + Math.round(map100.getStars()) + " - " + map100.getMax_combo() + "x | AR: " + Math.round(map100.getAr()) + " OD: " + Math.round(map100.getOd()) + " HP: " + Math.round(map100.getHp()) + " CS: " + Math.round(map100.getCs()) + " BPM: " + Math.round(Double.valueOf(bp.getBpm())) + " " + (map100.getMods_str().equals("") ? "" : "+" + map100.getMods_str()), 122, 236);
+                    g2d.drawString("Stars: " + Math.round(map100.getStars()) + " - " + map100.getMax_combo() + "x | AR: " + Math.round(map100.getAr()) + " OD: " + Math.round(map100.getOd()) + " HP: " + Math.round(map100.getHp()) + " CS: " + Math.round(map100.getCs()) + " BPM: " + Math.round(Double.valueOf(bp.getBpm())), 122, 236);
+
+                    ArrayList<OsuMods> modArray = OsuMods.getMods(map100.getMods());
+                    if(modArray.size() > 0) {
+
+                        int x = 234;
+                        for(OsuMods mod : modArray) {
+                            BufferedImage modImg = ImageUtils.resize(mod.getImage(), 36, 25);
+
+                            g2d.drawImage(modImg, x, 85, null);
+                            x+=40;
+                        }
+
+                    }
 
                     g2d.dispose();
 
@@ -225,12 +238,7 @@ public class OsuCommand implements CommandExecutor {
                     OsuPlayerProfile pp = OsuManager.getUserProfile(mp.getUser_id(), true);
                     OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
 
-                    String mods = "";
-                    for (OsuMods m : mp.getMods()) {
-                        mods = mods + m.getShortName();
-                    }
-
-                    OppaiInfo oi = OppaiManager.getMapInfo(mp.getBeatmap_id(), mods);
+                    OppaiInfo oi = OppaiManager.getMapInfo(mp.getBeatmap_id(), OsuMods.asString(mp.getMods()));
                     OppaiInfo full = OppaiManager.getMapInfo(mp.getBeatmap_id(), mp);
 
                     double percentage = OsuSubscriptionManager.calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
@@ -274,8 +282,20 @@ public class OsuCommand implements CommandExecutor {
                     g2d.setFont(italic.deriveFont(19.13f));
                     g2d.drawString(OsuSubscriptionManager.shortString(bp.getArtist(), 30), 208, 76);
                     g2d.setFont(regular.deriveFont(18.21f));
-                    g2d.drawString(Math.round(full.getPp()) + "pp (" + Math.round(oi.getPp()) + "pp)" + (mods.equals("") ? "" : " +" + mods) + " [Map Completion " + OsuSubscriptionManager.decimalFormat.format(mapCompletion) + "%]", 90, 210);
+                    g2d.drawString(Math.round(full.getPp()) + "pp (" + Math.round(oi.getPp()) + "pp) [Map Completion " + OsuSubscriptionManager.decimalFormat.format(mapCompletion) + "%]", 90, 210);
                     g2d.drawString(OsuSubscriptionManager.decimalFormat.format(percentage * 100) + "% - " + mp.getMaxcombo() + "x - " + mp.getCount50() + "x 50 | " + mp.getCount100() + "x 100 | " + mp.getCountmiss() + "x miss - " + mp.getRank().replace("H", "+"), 122, 236);
+
+                    if(mp.getMods().size() > 0) {
+
+                        int x = 234;
+                        for(OsuMods mod : mp.getMods()) {
+                            BufferedImage modImg = ImageUtils.resize(mod.getImage(), 36, 25);
+
+                            g2d.drawImage(modImg, x, 85, null);
+                            x+=40;
+                        }
+
+                    }
 
                     g2d.dispose();
 

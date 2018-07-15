@@ -9,14 +9,6 @@ import java.awt.image.BufferedImage;
  */
 public class ImageUtils {
 
-    public static void drawCenteredString(Graphics g, String text, BufferedImage rect, Font font) {
-        FontMetrics metrics = g.getFontMetrics(font);
-        int x = rect.getMinX() + (rect.getWidth() - metrics.stringWidth(text)) / 2;
-        int y = rect.getMinY() + ((rect.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
-        g.setFont(font);
-        g.drawString(text, x, y);
-    }
-
     public static void drawStringWithSizeLimit(Graphics2D g, String text, int x, int y, int max_width) {
         FontMetrics metrics = g.getFontMetrics();
         float initSize = g.getFont().getSize();
