@@ -22,6 +22,19 @@ public class ImageUtils {
         g.drawString(text, x, y);
     }
 
+    public static void drawStringWithSizeLimit(Graphics2D g, String text, int x, int y, int width) {
+        FontMetrics metrics = g.getFontMetrics();
+        int yplus = 0;
+        while(metrics.stringWidth(text) > width) {
+            g.setFont(g.getFont().deriveFont(g.getFont().getSize() - 1f));
+            metrics = g.getFontMetrics();
+
+            yplus = 1;
+        }
+
+        g.drawString(text, x, y + yplus);
+    }
+
     public static BufferedImage getImageFromUrl(String url) throws Exception {
         System.setProperty("http.agent", "AladdinBOT");
         URL input = new URL(url);

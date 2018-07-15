@@ -36,6 +36,22 @@ public class AdminCommand implements CommandExecutor {
     @Command(command = "admin", description = "Comandos sobre o bot", type = CommandType.BOT_ADMIN, isAllowedToDefault = false,
             usage = "", sendTyping = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lang) {
+
+        if(args.get(0).equalsIgnoreCase("stringSizeTest")) {
+            BufferedImage base = new BufferedImage(128, 128, 2);
+            Graphics2D g = base.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+            ImageUtils.drawStringWithSizeLimit(g, args.getCompleteAfter(0), 10, 10, 125);
+
+            g.dispose();
+
+
+            e.sendImage(base);
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
+
         if(args.get(0).equalsIgnoreCase("searchMap")) {
             OppaiInfo info = Main.getDatabase().getMapByPPRange(Integer.valueOf(args.get(1)));
 
