@@ -161,7 +161,6 @@ public class OsuCommand implements CommandExecutor {
                     g2d.dispose();
 
                     EmbedBuilder b = new EmbedBuilder();
-                    b.setTitle("Searchng for recomendations (" + pp + "pp)", null);
                     b.setColor(Color.GREEN);
                     b.setDescription("[Normal](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + ") - [No Vid](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + "n) - [Bloodcat](https://bloodcat.com/osu/s/" + bp.getBeatmapset_id() + ")");
 
