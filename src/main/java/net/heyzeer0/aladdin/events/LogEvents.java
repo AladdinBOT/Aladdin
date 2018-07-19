@@ -39,7 +39,6 @@ import net.dv8tion.jda.core.hooks.EventListener;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.ChatClearCommand;
 import net.heyzeer0.aladdin.enums.LogModules;
-import net.heyzeer0.aladdin.utils.Cache;
 import net.heyzeer0.aladdin.utils.ImageUtils;
 import net.heyzeer0.aladdin.utils.Utils;
 
@@ -48,6 +47,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -56,7 +56,7 @@ import java.util.Optional;
  */
 public class LogEvents implements EventListener {
 
-    private static final Cache<String, Optional<CachedMessage>> messageCache = new Cache<>(35000);
+    private static final Map<String, Optional<CachedMessage>> messageCache = Utils.createCache(35000);
 
     @Override
     public void onEvent(Event e) {
@@ -73,7 +73,7 @@ public class LogEvents implements EventListener {
                 if(ev.getAuthor().isBot() || ev.getAuthor().isFake()) {
                     return;
                 }
-                messageCache.add(ev.getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContentDisplay(), ev.getAuthor().getName() + "#" + ev.getAuthor().getDiscriminator(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
+                messageCache.put(ev.getMessageId(), Optional.of(new CachedMessage(ev.getMessage().getContentDisplay(), ev.getAuthor().getName() + "#" + ev.getAuthor().getDiscriminator(), ev.getAuthor().getEffectiveAvatarUrl(), ev.getAuthor().getId())));
                 return;
             }
             if(e instanceof GuildMessageDeleteEvent) {
@@ -84,7 +84,7 @@ public class LogEvents implements EventListener {
                 }
 
                 try{
-                    CachedMessage cache = messageCache.getValue(ev.getMessageId()).orElse(null);
+                    CachedMessage cache = messageCache.get(ev.getMessageId()).orElse(null);
 
                     if(cache != null && !cache.getMessage().isEmpty()) {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
@@ -100,7 +100,7 @@ public class LogEvents implements EventListener {
                     return;
                 }
                 try{
-                    CachedMessage old_message = messageCache.getValue(ev.getMessageId()).orElse(null);
+                    CachedMessage old_message = messageCache.get(ev.getMessageId()).orElse(null);
 
                     if(old_message != null && !old_message.getMessage().isEmpty()) {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),

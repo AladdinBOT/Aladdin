@@ -65,6 +65,14 @@ public class Utils {
         return 1;
     }
 
+    public static <K,V> Map<K,V> createCache(final int maxSize) {
+        return new LinkedHashMap<K,V>(maxSize*4/3, 0.75f, true) {
+            protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
+                return size() > maxSize;
+            }
+        };
+    }
+
     public static String[] splitStringEvery(String s, int interval) {
         int arrayLength = (int) Math.ceil(((s.length() / (double)interval)));
         String[] result = new String[arrayLength];
