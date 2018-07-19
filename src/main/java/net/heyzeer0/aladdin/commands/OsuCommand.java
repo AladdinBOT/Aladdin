@@ -118,7 +118,6 @@ public class OsuCommand implements CommandExecutor {
                     }
 
                     //dab
-
                     OppaiInfo map99 = OppaiManager.getMapByAcurracy(map100.getBeatmap_id(), map100.getMods_str(), 99);
                     OppaiInfo map98 = OppaiManager.getMapByAcurracy(map100.getBeatmap_id(), map100.getMods_str(), 98);
                     OppaiInfo mapPlayer = OppaiManager.getMapByAcurracy(map100.getBeatmap_id(), map100.getMods_str(), Double.valueOf(player.accuracy));
@@ -163,6 +162,7 @@ public class OsuCommand implements CommandExecutor {
                         int x = 212;
                         for(OsuMods mod : modArray) {
                             BufferedImage modImg = ImageUtils.resize(mod.getImage(), 36, 25);
+                            if(modImg == null) continue;
 
                             g2d.drawImage(modImg, x, 85, null);
                             x+=40;
@@ -221,7 +221,6 @@ public class OsuCommand implements CommandExecutor {
                 e.sendPureMessage(lp.get("command.osu.nonickset", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "osu setuser [nick]")).queueAfter(500, TimeUnit.MILLISECONDS);
                 return new CommandResult(CommandResultEnum.MISSING_ARGUMENT, "recent", "nick");
             }
-
 
             Utils.runAsync(() -> {
 
@@ -290,6 +289,7 @@ public class OsuCommand implements CommandExecutor {
                         int x = 212;
                         for(OsuMods mod : mp.getMods()) {
                             BufferedImage modImg = ImageUtils.resize(mod.getImage(), 36, 25);
+                            if(modImg == null) continue;
 
                             g2d.drawImage(modImg, x, 85, null);
                             x+=40;

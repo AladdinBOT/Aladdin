@@ -40,6 +40,15 @@ public class ConcurrentArrayList<T> {
         }
     }
 
+    public void remove(int index) {
+        writeLock.lock();
+        try{
+            list.remove(index);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
     public int size() {
         return list.size();
     }

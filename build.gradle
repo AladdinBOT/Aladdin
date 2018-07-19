@@ -35,7 +35,6 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'commons-io:commons-io:2.5'
-    compile 'com.google.guava:guava:20.0'
     compile 'net.dv8tion:JDA:+'
     compile 'com.rethinkdb:rethinkdb-driver:2.3.3'
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1'

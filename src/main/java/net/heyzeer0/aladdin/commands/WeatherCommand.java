@@ -58,7 +58,7 @@ public class WeatherCommand implements CommandExecutor {
                 b1.addField(lp.get("command.weather.embed.field.14"), ":cloud_tornado: **" + lp.get("command.weather.embed.field.15") + "** " + i.getWind().getSpeed() + " km/h", true);
                 b1.addField("", ":dash:  **" + lp.get("command.weather.embed.field.16") + "** " + i.getWind().getDirection(), true);
                 b1.addBlankField(true);
-                b1.addField(lp.get("command.weather.embed.field.17"), ":cloud_rain:  **" + lp.get("command.weather.embed.field.18") + "** " + Utils.translateTempo(i.getItem().getCondition().getText()), true);
+                b1.addField(lp.get("command.weather.embed.field.17"), ":cloud_rain:  **" + lp.get("command.weather.embed.field.18") + "** " + i.getItem().getCondition().getText(), true);
                 b1.setFooter("Tempo requisitado por " + e.getAuthor().getName(), e.getAuthor().getAvatarUrl());
 
                 b1.setTimestamp(e.getMessage().getCreationTime());

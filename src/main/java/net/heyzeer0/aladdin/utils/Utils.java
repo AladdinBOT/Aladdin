@@ -80,41 +80,6 @@ public class Utils {
         return result;
     }
 
-    public static String translateTempo(String entrada) {
-        if(entrada.equalsIgnoreCase("Mostly Cloudy")) {
-            return "Predominantemente nublado";
-        }
-        if(entrada.equalsIgnoreCase("Partly Cloudy")) {
-            return "Parcialmente nublado";
-        }
-        if(entrada.equalsIgnoreCase("Showers")) {
-            return "Aguaceiros";
-        }
-        if(entrada.equalsIgnoreCase("Cloudy")) {
-            return "Nublado";
-        }
-        if(entrada.equalsIgnoreCase("Sunny")) {
-            return "Ensolarado";
-        }
-        if(entrada.equalsIgnoreCase("Breezy")) {
-            return "Ventoso";
-        }
-        if(entrada.equalsIgnoreCase("Clear")) {
-            return "Limpo";
-        }
-        if(entrada.equalsIgnoreCase("Thunderstorms")) {
-            return "Trovoadas";
-        }
-        if(entrada.equalsIgnoreCase("Rain")) {
-            return "Chovendo";
-        }
-        if(entrada.equalsIgnoreCase("Mostly Sunny")) {
-            return "Maioritariamente Ensolarado";
-        }
-
-        return entrada;
-    }
-
     public static String sendToHastebin(String data) {
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost("https://hastebin.com/documents");
