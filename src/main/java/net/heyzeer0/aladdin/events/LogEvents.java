@@ -121,12 +121,13 @@ public class LogEvents implements EventListener {
                     try{
                         BufferedImage inputImage = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "update_avatar.png")));
 
-                        BufferedImage before;
+                        BufferedImage before = null;
                         try{
                             before = ImageUtils.getImageFromUrl(ev.getOldAvatarUrl().replace("jpg", "png"));
-
                         }catch (Exception ex) {
-                            before = ImageUtils.getImageFromUrl(ev.getOldAvatarUrl());
+                            try{
+                                before = ImageUtils.getImageFromUrl(ev.getOldAvatarUrl());
+                            }catch (Exception ex2) { }
                         }
 
                         if(before == null) {
