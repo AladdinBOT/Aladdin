@@ -199,17 +199,8 @@ public class Main {
     }
 
     public static TextChannel getTextChannelById(String id) {
-        TextChannel ch = null;
-        for(ShardProfile shards : getConnectedShards()) {
-            if(ch != null) {
-                break;
-            }
-            if(shards.getJDA().getTextChannelById(id) != null) {
-                ch = shards.getJDA().getTextChannelById(id);
-            }
-        }
-
-        return ch;
+        ShardProfile sh = Stream.of(getConnectedShards()).filter(s -> s.getJDA().getTextChannelById(id) != null).findFirst().orElse(null);
+        return sh == null ? null : sh.getJDA().getTextChannelById(id);
     }
 
 }

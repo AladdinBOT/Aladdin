@@ -119,8 +119,6 @@ public class LogEvents implements EventListener {
 
                 Utils.runAsync(() -> {
                     try{
-                        BufferedImage inputImage = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "update_avatar.png")));
-
                         BufferedImage before = null;
                         try{
                             before = ImageUtils.getImageFromUrl(ev.getOldAvatarUrl().replace("jpg", "png"));
@@ -134,12 +132,16 @@ public class LogEvents implements EventListener {
                             return;
                         }
 
-                        BufferedImage actual = ImageUtils.getImageFromUrl(ev.getNewAvatarUrl());
-
+                        BufferedImage actual = null;
+                        try{
+                            actual = ImageUtils.getImageFromUrl(ev.getNewAvatarUrl());
+                        }catch (Exception ex) { }
 
                         if(actual == null) {
                             return;
                         }
+
+                        BufferedImage inputImage = ImageIO.read(new FileInputStream(new File(Main.getDataFolder(), "images" + File.separator + "update_avatar.png")));
 
                         Graphics g = inputImage.createGraphics();
                         g.drawImage(inputImage,0,0,null);
