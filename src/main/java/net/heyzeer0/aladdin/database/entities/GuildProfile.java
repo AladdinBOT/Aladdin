@@ -425,6 +425,7 @@ public class GuildProfile implements ManagedObject {
             saveAsync();
             return;
         }
+        if(guild_starboards.size() <= 0) return;
         if(guild_starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
             try{
                 if(guild_starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).addReaction(e)) {
@@ -441,6 +442,7 @@ public class GuildProfile implements ManagedObject {
         if(guild_starboards == null) {
             guild_starboards = new HashMap<>();
         }
+        if(guild_starboards.size() <= 0) return;
         if(guild_starboards.containsKey(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId())) {
             try{
                 if(guild_starboards.get(e.getReactionEmote().getName() + "|" + e.getReactionEmote().getId()).removeReaction(e)) {

@@ -97,6 +97,10 @@ public class MessageListener {
             return;
         }
 
+        if(Main.getDatabase() == null || !Main.getDatabase().isReady()) {
+            return;
+        }
+
         if(star_timeout.containsKey(e.getMessageId())) {
             if(System.currentTimeMillis() - star_timeout.get(e.getMessageId()) >= 500) {
                 Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardAdd(e);
@@ -106,6 +110,7 @@ public class MessageListener {
             Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardAdd(e);
             star_timeout.put(e.getMessageId(), System.currentTimeMillis());
         }
+
         PaginatorManager.updatePaginator(e);
         ChooserManager.selectChooser(e);
         ReactionerManager.updateReactioner(e);
@@ -116,6 +121,11 @@ public class MessageListener {
         if(e.getMember().getUser().isBot() || e.getMember().getUser().isFake()) {
             return;
         }
+        if(Main.getDatabase() == null || !Main.getDatabase().isReady()) {
+            return;
+        }
+
+        
         Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardRemove(e);
     }
 

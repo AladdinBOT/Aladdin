@@ -10,7 +10,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.Charset;
 import java.rmi.UnexpectedException;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
@@ -22,18 +21,11 @@ import java.util.concurrent.TimeoutException;
  */
 public class JavaEvaluation {
 
-    private static File folder = new File(Main.getDataFolder() + File.separator + "classes");
+    private static File folder = Main.getDataFolder();
     private static File f; // Src
     private static File out;
 
-    public static HashMap<String, Boolean> ks = new HashMap<>();
-
-    private static StringBuilder imports = new StringBuilder();
-
-
     public static String eval(String objeto, MessageEvent evento) {
-
-        folder.mkdirs();
         f = new File(folder + "/Evaluation.java");
         out = new File(folder + "/Evaluation.class");
 

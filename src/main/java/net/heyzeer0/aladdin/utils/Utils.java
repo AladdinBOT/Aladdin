@@ -149,20 +149,6 @@ public class Utils {
         return uptime;
     }
 
-    public static String cS(long value) {
-        if(value == 1) {
-            return "";
-        }
-        return "s";
-    }
-
-    public static String cS(long value, boolean e) {
-        if(value == 1) {
-            return "";
-        }
-        return e ? "es" : "s";
-    }
-
     public static String toMD5(String input) {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
