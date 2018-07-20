@@ -126,7 +126,7 @@ public class LogEvents implements EventListener {
                             before = ImageUtils.getImageFromUrl(ev.getOldAvatarUrl().replace("jpg", "png"));
 
                         }catch (Exception ex) {
-                            before = ImageUtils.getImageFromUrl(ev.getOldAvatarId());
+                            before = ImageUtils.getImageFromUrl(ev.getOldAvatarUrl());
                         }
 
                         if(before == null) {

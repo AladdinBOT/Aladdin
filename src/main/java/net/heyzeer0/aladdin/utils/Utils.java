@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -47,10 +46,6 @@ public class Utils {
 
     public static void runLater(Runnable r, long time, TimeUnit unit) {
         timers.schedule(r, time, unit);
-    }
-
-    public static void runTimer(Runnable r, long delay, TimeUnit unit) {
-        timers.scheduleAtFixedRate(r, 0, delay, unit);
     }
 
     public static int getShardAmount() {
@@ -181,24 +176,6 @@ public class Utils {
 
     public static String replaceLast(String text, String regex, String replacement) {
         return text.replaceFirst("(?s)(.*)" + regex, "$1" + replacement);
-    }
-
-    public static String cryptWithMD5(String value){
-        MessageDigest md;
-        try {
-            md = MessageDigest.getInstance("MD5");
-            byte[] passBytes = value.getBytes();
-            md.reset();
-            byte[] digested = md.digest(passBytes);
-            StringBuffer sb = new StringBuffer();
-            for(int i=0;i<digested.length;i++){
-                sb.append(Integer.toHexString(0xff & digested[i]));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
 
     public static String getRegional(String value) {
