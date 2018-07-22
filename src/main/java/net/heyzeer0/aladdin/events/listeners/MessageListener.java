@@ -125,7 +125,7 @@ public class MessageListener {
             return;
         }
 
-        
+
         Main.getDatabase().getGuildProfile(e.getGuild()).checkStarboardRemove(e);
     }
 

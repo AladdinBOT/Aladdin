@@ -140,7 +140,7 @@ public class OsuSubscriptionManager {
                                     g2d.setFont(OsuCommand.italic.deriveFont(19.13f));
                                     g2d.drawString(shortString(bp.getArtist(), 30), 208, 76);
                                     g2d.setFont(OsuCommand.regular.deriveFont(18.21f));
-                                    g2d.drawString(Math.round(Integer.valueOf(mp.getPp())) + "pp (" + Math.round(oi.getPp()) + "pp) ", 90, 210);
+                                    g2d.drawString(Math.round(Long.valueOf(mp.getPp())) + "pp (" + Math.round(oi.getPp()) + "pp) ", 90, 210);
                                     g2d.drawString(decimalFormat.format(percentage * 100) + "% - " + mp.getMaxcombo() + "x - " + mp.getCount50() + "x 50 | " + mp.getCount100() + "x 100 | " + mp.getCountmiss() + "x miss - " + mp.getRank().replace("H", "+"), 122, 236);
 
                                     if(mp.getMods().size() > 0) {
