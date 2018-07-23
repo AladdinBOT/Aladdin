@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.events.guild.update.GuildUpdateOwnerEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.GuildProfile;
 import net.heyzeer0.aladdin.enums.Lang;
+import net.heyzeer0.aladdin.utils.DiscordLists;
 
 import java.awt.*;
 
@@ -28,7 +29,7 @@ public class GuildListener {
             e.getGuild().getDefaultChannel().sendMessage(pf.getSelectedLanguage().getLangProfile().get("guild.join.message")).queue();
         }
 
-
+        DiscordLists.updateStatus();
 
         Main.getLogger().embed(":house: Guild Join Event", "Guilda ``" + e.getGuild().getName() + "``\nUsers ``" + e.getGuild().getMembers().size() + "``\nDono ``" + e.getGuild().getOwner().getUser().getName() + "#" + e.getGuild().getOwner().getUser().getDiscriminator() + "``", Color.GREEN);
     }
@@ -36,6 +37,8 @@ public class GuildListener {
     public static void onGuildLeave(GuildLeaveEvent e) {
         Main.getDatabase().getGuildProfile(e.getGuild()).deleteAsync();
         Main.getLogger().embed(":house: Guild Leave Event", "Guilda ``" + e.getGuild().getName() + "``\nUsers ``" + e.getGuild().getMembers().size() + "``", Color.GREEN);
+
+        DiscordLists.updateStatus();
     }
 
     public static void onMemberLeave(GuildMemberLeaveEvent e) {

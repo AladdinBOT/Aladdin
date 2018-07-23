@@ -5,6 +5,7 @@ import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.instances.ApiKeysConfig;
 import net.heyzeer0.aladdin.enums.EmojiList;
+import net.heyzeer0.aladdin.profiles.ShardProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,21 @@ public class DiscordLists {
     public static DiscordBotsAPI discordBots;
     private static boolean upvoteStarted = false;
 
-    public static void updateStatus() {
+    private static void registerLists() {
+        discordBots = new DiscordBotsAPI.Builder().setToken(ApiKeysConfig.discord_bots_key).build();
+    }
 
+    public static void updateStatus() {
+        registerLists();
+
+        if(discordBots != null) {
+            int guilds = 0;
+
+            for(ShardProfile c : Main.getShards()) {
+                guilds+= c.getJDA().getGuilds().size();
+            }
+            discordBots.postStats(guilds);
+        }
     }
 
     public static void checkUpvoted() {
