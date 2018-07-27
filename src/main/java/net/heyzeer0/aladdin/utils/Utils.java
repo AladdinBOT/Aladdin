@@ -36,7 +36,6 @@ import java.util.concurrent.TimeUnit;
 public class Utils {
 
     public static Random r = new Random();
-    private static final Map<String, String> regional = new HashMap<>();
     private static ScheduledExecutorService async = Executors.newSingleThreadScheduledExecutor();
     private static ScheduledExecutorService timers = Executors.newSingleThreadScheduledExecutor();
 
@@ -165,31 +164,30 @@ public class Utils {
     }
 
     public static String getRegional(String value) {
-        if(regional.size() <= 0) {
-            regional.put("0", "0⃣");
-            regional.put("1", "1⃣");
-            regional.put("2", "2⃣");
-            regional.put("3", "3⃣");
-            regional.put("4", "4⃣");
-            regional.put("5", "5⃣");
-
-            regional.put("6", "6⃣");
-            regional.put("7", "7⃣");
-            regional.put("8", "8⃣");
-            regional.put("9", "9⃣");
-
-            regional.put("0⃣", "0");
-            regional.put("1⃣", "1");
-            regional.put("2⃣", "2");
-            regional.put("3⃣", "3");
-            regional.put("3⃣", "4");
-            regional.put("5⃣", "5");
-            regional.put("6⃣", "6");
-            regional.put("7⃣", "7");
-            regional.put("8⃣", "8");
-            regional.put("9⃣", "9");
+        switch(value) {
+            case "0":
+                return "0⃣";
+            case "1":
+                return "1⃣";
+            case "2":
+                return "2⃣";
+            case "3":
+                return "3⃣";
+            case "4":
+                return "4⃣";
+            case "5":
+                return "5⃣";
+            case "6":
+                return "6⃣";
+            case "7":
+                return "7⃣";
+            case "8":
+                return "8⃣";
+            case "9":
+                return "9⃣";
+            default:
+                return value.replace("⃣", "");
         }
-        return regional.getOrDefault(value, null);
     }
 
     public static List<String> readBuffer(String link) {
