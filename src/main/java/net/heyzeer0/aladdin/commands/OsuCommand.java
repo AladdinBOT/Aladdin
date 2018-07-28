@@ -174,7 +174,7 @@ public class OsuCommand implements CommandExecutor {
 
                     EmbedBuilder b = new EmbedBuilder();
                     b.setColor(Color.GREEN);
-                    b.setDescription("[Normal](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + ") - [No Vid](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + "n) - [Bloodcat](https://bloodcat.com/osu/s/" + bp.getBeatmapset_id() + ")");
+                    b.setDescription("[Normal](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + ") - [No Vid](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + "n) - [Bloodcat](https://bloodcat.com/osu/s/" + bp.getBeatmapset_id() + ") - [Direct](http://heyzeer0.cf/direct.php?beatmapset=" + bp.getBeatmapset_id() + ")");
 
                     e.sendImageWithEmbed(area, b);
                 }catch (Exception ex) {
