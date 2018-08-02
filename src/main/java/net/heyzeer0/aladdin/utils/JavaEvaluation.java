@@ -127,7 +127,6 @@ public class JavaEvaluation {
                         "import net.dv8tion.jda.core.entities.impl.*;\n" +
                         "import net.dv8tion.jda.core.*;\n" +
                         "import net.dv8tion.jda.core.managers.*;\n" +
-                        "import net.dv8tion.jda.core.managers.fields.*;\n" +
                         "import net.dv8tion.jda.core.managers.impl.*;\n" +
                         "import net.heyzeer0.aladdin.*;\n" +
                         "import net.heyzeer0.aladdin.enums.*;\n" +
