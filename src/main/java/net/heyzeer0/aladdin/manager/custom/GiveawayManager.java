@@ -10,6 +10,7 @@ import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
 import net.heyzeer0.aladdin.profiles.utilities.ScheduledExecutor;
+import net.heyzeer0.aladdin.utils.RandomSeed;
 import net.heyzeer0.aladdin.utils.Utils;
 import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
 import net.heyzeer0.aladdin.utils.builders.Prize;
@@ -27,6 +28,8 @@ public class GiveawayManager {
 
     public static HashMap<String, GiveawayProfile> giveways = new HashMap<>();
     public static boolean already_requested = false;
+
+    private static final RandomSeed random = new RandomSeed();
 
     public static void createGiveway(GiveawayBuilder b) {
         if(!b.getCh().canTalk()) {
@@ -74,12 +77,12 @@ public class GiveawayManager {
                     if (ch == null || ch.getMessageById(g.getMessageID()).complete() == null) {
                         toCleanup.add(id);
                     }else{
-
                         if(g.getEndTime() - System.currentTimeMillis() <= 0) {
                             toCleanup.add(id);
                             Message msg = ch.getMessageById(g.getMessageID()).complete();
 
                             HashMap<User, Prize> winners = new HashMap<>();
+                            ArrayList<Long> seeds = new ArrayList<>();
 
                             for(MessageReaction rc : msg.getReactions()) {
                                 if(rc.getReactionEmote().getName().equalsIgnoreCase("✅")) {
@@ -95,13 +98,15 @@ public class GiveawayManager {
                                         break;
                                     }
                                     while(count < g.getPrizes().size()) {
-                                        User u = usr.get(Utils.r.nextInt(usr.size()));
+                                        User u = usr.get(random.nextInt(usr.size()));
                                         if(u.isBot() || u.isFake()) {
                                             continue;
                                         }
                                         if(winners.containsKey(u)) {
                                             continue;
                                         }
+
+                                        random.getLastSeed().ifPresent(seeds::add);
                                         winners.put(u, g.getPrizes().get(count));
                                         count++;
                                     }
@@ -127,6 +132,18 @@ public class GiveawayManager {
                             }
 
                             eb.addField(":trophy: Ganhadores", premios ,false);
+
+                            String seeds_string = "";
+                            for(Long l : seeds) {
+                                if(seeds_string.equals("")) {
+                                    seeds_string = l.toString();
+                                    continue;
+                                }
+
+                                seeds_string = seeds_string + ", " + l.toString();
+                            }
+
+                            eb.addField(":scroll: Seeds", "``" + seeds_string + "``", false);
 
                             msg.editMessage(eb.build()).queue();
                         }else{
