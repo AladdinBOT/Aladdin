@@ -76,6 +76,7 @@ public class GiveawayManager {
                     }else{
 
                         if(g.getEndTime() - System.currentTimeMillis() <= 0) {
+                            toCleanup.add(id);
                             Message msg = ch.getMessageById(g.getMessageID()).complete();
 
                             HashMap<User, Prize> winners = new HashMap<>();
@@ -128,8 +129,6 @@ public class GiveawayManager {
                             eb.addField(":trophy: Ganhadores", premios ,false);
 
                             msg.editMessage(eb.build()).queue();
-
-                            toCleanup.add(id);
                         }else{
 
                             Message msg = ch.getMessageById(g.getMessageID()).complete();
@@ -162,7 +161,6 @@ public class GiveawayManager {
                             eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis(), Main.getDatabase().getGuildProfile(msg.getGuild()).getSelectedLanguage().getLangProfile()), false);
 
                             msg.editMessage(eb.build()).queue();
-                            toCleanup.add(id);
                         }
                     }
                 }
