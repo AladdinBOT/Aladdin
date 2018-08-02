@@ -85,7 +85,8 @@
 [command.config.lang.set.error.notfound] = 😟 Whoops, the inserted language doesn't exists!
 [command.config.lang.set.success] = ✅ You have succesfully changed the guild language to ``%s``.
 [command.giveaway.create.alreadybuilding] = 😟 Whoops, you're already creating a giveaway!
-[command.giveaway.formula.success.1] = ✅ The formula used to pick up the winner is ``seed >>> (48 - number of participants)``.
+[command.giveaway.formula.success.1] = ✅ The formula used to pick up the winner is ``seed % number of participants``. :interrobang: You can use ``%s`` to check your seed.
+[command.giveaway.formula.success.2] = ✅ The seed returned ``%s``. Check the giveaway reactions to see the winner.
 [command.giveaway.builder.notset] = Not defined
 [command.giveaway.builder.embed.prize.title] = :moneybag: Adding a prize
 [command.giveaway.builder.embed.prize.description] = React with the values above to change it.\nWhen you ready, click the :white_check_mark:\n\n:one: Name: %s\n:two: Direct Message: %s

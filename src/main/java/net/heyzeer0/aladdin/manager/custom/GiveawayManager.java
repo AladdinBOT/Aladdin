@@ -82,7 +82,7 @@ public class GiveawayManager {
                             Message msg = ch.getMessageById(g.getMessageID()).complete();
 
                             HashMap<User, Prize> winners = new HashMap<>();
-                            ArrayList<Long> seeds = new ArrayList<>();
+                            ArrayList<Integer> seeds = new ArrayList<>();
 
                             for(MessageReaction rc : msg.getReactions()) {
                                 if(rc.getReactionEmote().getName().equalsIgnoreCase("✅")) {
@@ -106,7 +106,7 @@ public class GiveawayManager {
                                             continue;
                                         }
 
-                                        random.getLastSeed().ifPresent(seeds::add);
+                                        random.getLastGeneratedNumber().ifPresent(seeds::add);
                                         winners.put(u, g.getPrizes().get(count));
                                         count++;
                                     }
@@ -134,7 +134,7 @@ public class GiveawayManager {
                             eb.addField(":trophy: Ganhadores", premios ,false);
 
                             String seeds_string = "";
-                            for(Long l : seeds) {
+                            for(Integer l : seeds) {
                                 if(seeds_string.equals("")) {
                                     seeds_string = l.toString();
                                     continue;

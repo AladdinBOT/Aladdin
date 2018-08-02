@@ -17,6 +17,8 @@ public class RandomSeed {
     AtomicLong seed;
     long lastSeed;
 
+    int lastGeneratedNumber;
+
     public RandomSeed() { seed = new AtomicLong(seedUniquifier() ^ System.nanoTime()); }
 
     private static long seedUniquifier() {
@@ -38,7 +40,9 @@ public class RandomSeed {
             nextseed = (oldseed * multiplier + addend) & mask;
             lastSeed = nextseed;
         } while (!seed.compareAndSet(oldseed, nextseed));
-        return (int)(nextseed >>> (48 - 31));
+
+        lastGeneratedNumber = (int)nextseed >>> (17);
+        return lastGeneratedNumber;
     }
 
     public int nextInt(int bound) {
@@ -59,5 +63,8 @@ public class RandomSeed {
         return Optional.of(lastSeed);
     }
 
+    public Optional<Integer> getLastGeneratedNumber() {
+        return Optional.of(lastGeneratedNumber);
+    }
 
 }

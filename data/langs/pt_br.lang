@@ -85,7 +85,8 @@
 [command.config.lang.set.error.notfound] = 😟 Oops, a lingua definida não existe!
 [command.config.lang.set.success] = ✅ Você alterou a lingua da guilda para ``%s``.
 [command.giveaway.create.alreadybuilding] = 😟 Oops, você já esta criando um giveaway!
-[command.giveaway.formula.success.1] = ✅ A formula utilizada para selecionar os ganhadores é ``seed >>> (48 - numero de participantes)``.
+[command.giveaway.formula.success.1] = ✅ A formula utilizada para selecionar os ganhadores é ``seed % numero de participantes``. :interrobang: Você pode utilizar ``%s`` para checar uma seed.
+[command.giveaway.formula.success.2] = ✅ A seed retornou o valor ``%s``. Cheque a lista das reaçoes para achar o ganhador.
 [command.giveaway.builder.notset] = Não definido
 [command.giveaway.builder.embed.prize.title] = :moneybag: Adicionando um premio
 [command.giveaway.builder.embed.prize.description] = Reaja com os valores indicados abaixo para os alterar\nquando estiver pronto clique no :white_check_mark:\n\n:one: Nome: %s\n:two: Mensagem privada: %s

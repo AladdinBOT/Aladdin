@@ -30,7 +30,19 @@ public class GiveawayCommand implements CommandExecutor {
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
         if(args.get(0).equalsIgnoreCase("formula")) {
-            e.sendMessage(lp.get("command.giveaway.formula.success.1", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "giveaway formula [seed]"));
+            if(args.getSize() < 3) {
+                e.sendMessage(lp.get("command.giveaway.formula.success.1", e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "giveaway formula [seed] [participants]"));
+                return new CommandResult((CommandResultEnum.SUCCESS));
+            }
+
+            try{
+                int seed = Integer.valueOf(args.get(1));
+                int participants = Integer.valueOf(args.get(2));
+
+                e.sendMessage(lp.get("command.giveaway.formula.success.2", (int)(seed % participants)));
+            }catch (Exception ex) {
+                e.sendMessage(lp.get("command.giveaway.formula.error.invalidnumber"));
+            }
 
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
