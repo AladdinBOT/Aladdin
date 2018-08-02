@@ -30,7 +30,7 @@ public class RandomSeed {
         }
     }
 
-    private int next(int bits) {
+    private int next() {
         long oldseed, nextseed;
         AtomicLong seed = this.seed;
         do {
@@ -38,22 +38,19 @@ public class RandomSeed {
             nextseed = (oldseed * multiplier + addend) & mask;
             lastSeed = nextseed;
         } while (!seed.compareAndSet(oldseed, nextseed));
-        return (int)(nextseed >>> (48 - bits));
+        return (int)(nextseed >>> (48 - 31));
     }
 
     public int nextInt(int bound) {
         if (bound <= 0)
             throw new IllegalArgumentException("bound must be positive");
 
-        int r = next(31);
+        int r = next();
         int m = bound - 1;
         if ((bound & m) == 0)  // i.e., bound is a power of 2
             r = (int)((bound * (long)r) >> 31);
         else {
-            for (int u = r;
-                 u - (r = u % bound) + m < 0;
-                 u = next(31))
-                ;
+            for (int u = r; u - (r = u % bound) + m < 0; u = next()) ;
         }
         return r;
     }

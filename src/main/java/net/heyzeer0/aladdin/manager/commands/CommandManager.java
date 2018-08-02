@@ -212,7 +212,7 @@ public class CommandManager {
                 continue;
             }
 
-            if(x.startsWith("\"")) {
+            if(x.startsWith("\"") && !x.startsWith("/\"")) {
                 to_add = x.replace("\"", "") + " ";
                 searching = true;
                 continue;
