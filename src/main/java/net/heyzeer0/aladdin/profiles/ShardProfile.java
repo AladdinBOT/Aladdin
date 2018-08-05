@@ -40,9 +40,7 @@ public class ShardProfile {
                 .addEventListener(new EventControl(), new LogEvents(), Main.getMusicManger().getLavaLink())
                 .setCorePoolSize(10);
 
-        if(totalshards > 1) {
-            builder.useSharding(shardid, totalshards);
-        }
+        builder.useSharding(shardid, totalshards);
 
         changeJDAStatus(false);
     }
