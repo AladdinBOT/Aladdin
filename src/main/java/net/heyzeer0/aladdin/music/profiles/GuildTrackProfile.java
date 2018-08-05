@@ -151,6 +151,18 @@ public class GuildTrackProfile extends PlayerEventListenerAdapter {
     public void onTrackStart(IPlayer player, AudioTrack track) {
         TextChannel channel = currentTrack.getChannel();
         if (channel != null && channel.canTalk()) {
+
+            int retries = 0;
+            while (!channel.getGuild().getAudioManager().isConnected()) {
+                try {
+                    retries++;
+
+                    if(retries > 40) break;
+                    
+                    Thread.sleep(150);
+                } catch (InterruptedException ignored) { }
+            }
+
             VoiceChannel vc = getGuild().getAudioManager().isAttemptingToConnect() ? getGuild().getAudioManager().getQueuedAudioConnection() : getGuild().getAudioManager().getConnectedChannel();
             if (vc == null) {
                 channel.sendMessage(EmojiList.WORRIED + "Ops, parece que eu perdi conexão com o canal de audio!").queue();
