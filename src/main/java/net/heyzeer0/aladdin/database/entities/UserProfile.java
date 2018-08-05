@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
@@ -32,19 +33,20 @@ public class UserProfile implements ManagedObject {
     boolean trialPremium = false;
 
     String osuUsername;
+    ArrayList<String> recommendedBeatmaps = new ArrayList<>();
 
     HashMap<String, ArrayList<PlaylistTrackProfile>> playlist;
 
     public UserProfile(User u) {
-        this(u.getId(), 0, false, 0, false, new HashMap<>(), false, "");
+        this(u.getId(), 0, false, 0, false, new HashMap<>(), false, "", new ArrayList<>());
     }
 
     public UserProfile(String id) {
-        this(id, 0, false, 0, false, new HashMap<>(), false, "");
+        this(id, 0, false, 0, false, new HashMap<>(), false, "", new ArrayList<>());
     }
 
-    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist", "trialPremium", "osuUsername"})
-    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist, boolean trialPremium, String osuUsername) {
+    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist", "trialPremium", "osuUsername", "recommendedBeatmaps"})
+    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist, boolean trialPremium, String osuUsername, ArrayList<String> recommendedBeatmaps) {
         this.id = id;
         this.premiumKeys = premiumKeys;
         this.premiumActive = premiumActive;
@@ -53,6 +55,21 @@ public class UserProfile implements ManagedObject {
         this.playlist = playlist;
         this.trialPremium = trialPremium;
         this.osuUsername = osuUsername;
+        this.recommendedBeatmaps = recommendedBeatmaps;
+    }
+
+    public void addRecommendedBeatmap(String id) {
+        if(recommendedBeatmaps.size() + 1 > 100) {
+            recommendedBeatmaps.remove(0);
+        }
+
+        recommendedBeatmaps.add(id);
+        saveAsync();
+    }
+
+    @JsonIgnore
+    public boolean isAlreadyRecommendedBeatmap(String id) {
+        return recommendedBeatmaps.contains(id);
     }
 
     public void updateOsuUsername(String nick) {

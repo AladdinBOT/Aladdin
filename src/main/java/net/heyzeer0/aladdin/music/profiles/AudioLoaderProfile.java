@@ -36,7 +36,7 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
         this.search = search;
         this.force = force;
         this.playlist = playlist;
-        this.send_msgs = true;
+        this.send_msgs = send_msgs;
     }
 
     public static void loadAndPlay(User user, Message msg, String search, boolean force) {

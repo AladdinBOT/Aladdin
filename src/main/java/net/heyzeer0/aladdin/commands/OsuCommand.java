@@ -98,6 +98,8 @@ public class OsuCommand implements CommandExecutor {
                         pp += r.nextInt(35);
                     }
 
+                    ignored.addAll(e.getUserProfile().getRecommendedBeatmaps());
+
                     ArrayList<OsuMatchProfile> recent = OsuManager.getRecentFromPlayer(nick, 50);
                     recent.forEach(c -> ignored.add(Utils.toMD5(c.getBeatmap_id() + OsuMods.asString(c.getMods()))));
 
@@ -177,6 +179,8 @@ public class OsuCommand implements CommandExecutor {
                     b.setDescription("[Normal](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + ") - [No Vid](https://osu.ppy.sh/d/" + bp.getBeatmapset_id() + "n) - [Bloodcat](https://bloodcat.com/osu/s/" + bp.getBeatmapset_id() + ") - [Direct](http://heyzeer0.cf/direct.php?beatmapset=" + bp.getBeatmapset_id() + ")");
 
                     e.sendImageWithEmbed(area, b);
+
+                    e.getUserProfile().addRecommendedBeatmap(map100.getId());
                 }catch (Exception ex) {
                     e.sendMessage(lp.get("command.osu.recommend.error"));
                     Main.getLogger().exception(ex);
