@@ -9,7 +9,6 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.EmojiList;
-import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;
 import net.heyzeer0.aladdin.profiles.utilities.chooser.Chooser;
 
@@ -40,15 +39,15 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
     }
 
     public static void loadAndPlay(User user, Message msg, String search, boolean force) {
-        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, "none", true));
+        Main.getMusicManger().getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, "none", true));
     }
 
     public static void loadAndPlay(User user, Message msg, String search, boolean force, boolean send_msgs) {
-        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, "none", send_msgs));
+        Main.getMusicManger().getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, "none", send_msgs));
     }
 
     public static void addToPlaylist(User user, Message msg, String search, boolean force, String playlist) {
-        MusicManager.getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, playlist, true));
+        Main.getMusicManger().getPlayerManager().loadItem(search, new AudioLoaderProfile(user, msg, search, force, playlist, true));
     }
 
     @Override
@@ -58,8 +57,8 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
             return;
         }
         Member member = message.getGuild().getMember(user);
-        if (AudioUtils.connectChannel(message.getTextChannel(), member)) {
-            GuildTrackProfile scheduler = MusicManager.getManager(message.getGuild());
+        GuildTrackProfile scheduler = Main.getMusicManger().getManager(message.getGuild());
+        if (AudioUtils.connectChannel(scheduler.getLink(), message.getTextChannel(), member)) {
             scheduler.offer(new PlayerContext(track, user, message.getTextChannel(), Main.getShard(user.getJDA().getShardInfo() == null ? 0 : user.getJDA().getShardInfo().getShardId())));
 
             if(send_msgs)
@@ -101,8 +100,8 @@ public class AudioLoaderProfile implements AudioLoadResultHandler {
             message.editMessage(EmojiList.WORRIED + " Você não pode adicionar playlists que possuam mais de  " + MAX_PLAYLIST_LENGTH + " musicas!").queue(msg -> msg.delete().queueAfter(30, TimeUnit.SECONDS));
             return;
         }
-        if (AudioUtils.connectChannel(message.getTextChannel(), message.getGuild().getMember(user))) {
-            GuildTrackProfile scheduler = MusicManager.getManager(message.getGuild());
+        GuildTrackProfile scheduler = Main.getMusicManger().getManager(message.getGuild());
+        if (AudioUtils.connectChannel(scheduler.getLink(), message.getTextChannel(), message.getGuild().getMember(user))) {
             pl.getTracks().forEach(audioTrack -> scheduler.offer(new PlayerContext(audioTrack, user, message.getTextChannel(), Main.getShard(user.getJDA().getShardInfo() == null ? 0 : user.getJDA().getShardInfo().getShardId()))));
         }
     }

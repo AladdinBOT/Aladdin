@@ -1,12 +1,12 @@
 package net.heyzeer0.aladdin.commands.music;
 
 import gnu.trove.list.TLongList;
+import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
-import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
 import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
@@ -25,7 +25,7 @@ public class SkipCommand implements CommandExecutor {
     @Command(command = "skip", description = "Pule a musica atual", aliasses = {"s"}, extra_perm = {"overpass"}, type = CommandType.MUSIC,
             usage = "a!skip")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
-        GuildTrackProfile guild = MusicManager.getManager(e.getGuild());
+        GuildTrackProfile guild = Main.getMusicManger().getManager(e.getGuild());
 
         if (e.getGuild().getAudioManager().isConnected() && !e.getGuild().getAudioManager().getConnectedChannel().equals(e.getMember().getVoiceState().getChannel())) {
             if(!e.hasPermission("command.skip.overpass")) {

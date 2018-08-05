@@ -5,6 +5,7 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
+import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.events.EventControl;
 import net.heyzeer0.aladdin.events.LogEvents;
@@ -36,7 +37,7 @@ public class ShardProfile {
                 .setAudioEnabled(true)
                 .setAudioSendFactory(new NativeAudioSendFactory())
                 .setGame(Game.of(Game.GameType.DEFAULT, "a!help | " + BotConfig.bot_game + " [" + (shardid + 1) + "]"))
-                .addEventListener(new EventControl(), new LogEvents())
+                .addEventListener(new EventControl(), new LogEvents(), Main.getMusicManger().getLavaLink())
                 .setCorePoolSize(10);
 
         if(totalshards > 1) {

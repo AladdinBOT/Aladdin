@@ -16,5 +16,6 @@ public class BotConfig {
     public static String bot_guildlog_id = "<insert-here>";
     public static String bot_guild_id = "363723753361899521";
     public static String bot_guild_premiumrole_id = "466999491375923200";
+    public static String bot_id = "321349548712656896";
 
 }

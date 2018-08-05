@@ -11,7 +11,6 @@ import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
-import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
@@ -59,7 +58,7 @@ public class BotCommand implements CommandExecutor {
                     .addField(lp.get("command.bot.status.embed.field.6"), getProcessCpuLoad() + "%", true)
                     .addField(lp.get("command.bot.status.embed.field.7"), Utils.convertToBar((long)(ramAllocated / 1048576), (long)currentMemory), true)
                     .addField(lp.get("command.bot.status.embed.field.8"), e.getJDA().getVoiceChannels().size() + "", true)
-                    .addField(lp.get("command.bot.status.embed.field.9"), MusicManager.getManagers().size() + "", true)
+                    .addField(lp.get("command.bot.status.embed.field.9"), Main.getMusicManger().getManagers().size() + "", true)
                     .addField(lp.get("command.bot.status.embed.field.10"), PlayerLibrary.VERSION, true)
                     .setFooter("Aladdin - Version " + Main.version, e.getJDA().getSelfUser().getAvatarUrl())
 

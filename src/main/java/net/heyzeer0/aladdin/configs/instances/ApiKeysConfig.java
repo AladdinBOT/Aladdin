@@ -15,5 +15,6 @@ public class ApiKeysConfig {
     public static String discord_bots_key = "<insert-here>";
     public static String pixabay_api_key = "<insert-here>";
     public static String league_of_legends_key = "<insert-here>";
+    public static String lavalink_nodes = "<insert-here>";
 
 }

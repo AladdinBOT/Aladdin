@@ -1,11 +1,11 @@
 package net.heyzeer0.aladdin.commands.music;
 
+import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
-import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
 import net.heyzeer0.aladdin.music.profiles.PlayerContext;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;
@@ -28,7 +28,7 @@ public class QueueCommand implements CommandExecutor {
     @Command(command = "queue", description = "Veja as musicas na queue", aliasses = {"q"}, type = CommandType.MUSIC,
             usage = "a!queue")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
-        GuildTrackProfile guild = MusicManager.getManager(e.getGuild());
+        GuildTrackProfile guild = Main.getMusicManger().getManager(e.getGuild());
 
         if(guild.getQueue().size() <= 0) {
             if(guild.getCurrentTrack() != null) {

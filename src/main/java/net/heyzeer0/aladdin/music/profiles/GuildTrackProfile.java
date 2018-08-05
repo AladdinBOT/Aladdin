@@ -1,32 +1,30 @@
 package net.heyzeer0.aladdin.music.profiles;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
-import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrackState;
 import gnu.trove.list.TLongList;
 import gnu.trove.list.array.TLongArrayList;
+import lavalink.client.io.jda.JdaLink;
+import lavalink.client.player.IPlayer;
+import lavalink.client.player.LavalinkPlayer;
+import lavalink.client.player.event.PlayerEventListenerAdapter;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.music.utils.AudioUtils;
-import net.heyzeer0.aladdin.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.*;
 
 /**
  * Created by HeyZeer0 on 22/06/2017.
  * Copyright © HeyZeer0 - 2016
  */
-public class GuildTrackProfile extends AudioEventAdapter {
+public class GuildTrackProfile extends PlayerEventListenerAdapter {
 
     public static final ScheduledExecutorService LEAVE_EXECUTOR_SERVICE = Executors.newScheduledThreadPool(5, r->{
         Thread t = new Thread(r, "VoiceLeaveThread");
@@ -38,15 +36,16 @@ public class GuildTrackProfile extends AudioEventAdapter {
     private RepeatMode repeatMode;
     private PlayerContext currentTrack;
     private PlayerContext previousTrack;
-    private final AudioPlayer audioPlayer;
+    private final JdaLink link;
+    private final LavalinkPlayer audioPlayer;
     private long lastMessageId, guildId;
     private TLongList voteSkips;
     private ScheduledFuture<?> task;
 
 
-    public GuildTrackProfile(AudioPlayerManager playerManager, Guild guild) {
-        this.audioPlayer = playerManager.createPlayer();
-        this.audioPlayer.addListener(this);
+    public GuildTrackProfile(JdaLink link, Guild guild) {
+        this.link = link;
+        this.audioPlayer = link.getPlayer();
         this.guildId = guild.getIdLong();
         this.queue = new LinkedBlockingQueue<>();
         this.repeatMode = null;
@@ -54,14 +53,16 @@ public class GuildTrackProfile extends AudioEventAdapter {
         this.previousTrack = null;
         this.lastMessageId = 0;
         this.voteSkips = new TLongArrayList();
+
+        this.audioPlayer.addListener(this);
     }
 
-    public AudioPlayer getAudioPlayer() {
+    public JdaLink getLink() {
+        return link;
+    }
+
+    public IPlayer getAudioPlayer() {
         return audioPlayer;
-    }
-
-    public PlayerSendHandler getSendHandler() {
-        return new PlayerSendHandler(audioPlayer);
     }
 
     public int getRequiredVotes() {
@@ -74,24 +75,8 @@ public class GuildTrackProfile extends AudioEventAdapter {
         return queue;
     }
 
-    public void shuffle() {
-        List<PlayerContext> tracks = new ArrayList<>();
-        queue.drainTo(tracks);
-        Collections.shuffle(tracks);
-        queue.addAll(tracks);
-        tracks.clear();
-    }
-
     public PlayerContext getCurrentTrack() {
         return currentTrack;
-    }
-
-    public PlayerContext getPreviousTrack() {
-        return previousTrack;
-    }
-
-    public RepeatMode getRepeatMode() {
-        return repeatMode;
     }
 
     public void setRepeatMode(RepeatMode repeatMode) {
@@ -109,12 +94,12 @@ public class GuildTrackProfile extends AudioEventAdapter {
     public void startNext(boolean isSkipped) {
         voteSkips.clear();
         if (RepeatMode.SONG == repeatMode && !isSkipped && currentTrack != null) {
-            audioPlayer.startTrack(currentTrack.makeClone().getTrack(), false);
+            audioPlayer.playTrack(currentTrack.makeClone().getTrack());
         } else {
             if (currentTrack != null)
                 previousTrack = currentTrack;
             currentTrack = queue.poll();
-            audioPlayer.startTrack(currentTrack == null ? null : currentTrack.makeClone().getTrack(), false);
+            audioPlayer.playTrack(currentTrack == null ? null : currentTrack.makeClone().getTrack());
             if (!isSkipped && RepeatMode.QUEUE == repeatMode && previousTrack != null)
                 queue.offer(previousTrack.makeClone());
         }
@@ -143,27 +128,12 @@ public class GuildTrackProfile extends AudioEventAdapter {
         return removedSongs;
     }
 
-    public boolean restart(Member member) {
-        if (currentTrack != null && currentTrack.getTrack().getState() == AudioTrackState.PLAYING) {
-            currentTrack.getTrack().setPosition(0);
-            return true;
-        } else if (previousTrack != null && previousTrack.getChannel() != null && AudioUtils.connectChannel(previousTrack.getChannel(), member)) {
-            queue.offer(previousTrack.makeClone());
-            startNext(true);
-            return true;
-        }
-        return false;
-    }
-
     public boolean scheduleLeave() {
         if (task != null) {
             return false;
         }
         getAudioPlayer().setPaused(true);
-        task = LEAVE_EXECUTOR_SERVICE.schedule(() -> {
-            TextChannel tc = getCurrentTrack().getChannel();
-            stop();
-        }, 1, TimeUnit.MINUTES);
+        task = LEAVE_EXECUTOR_SERVICE.schedule((Runnable) this::stop, 1, TimeUnit.MINUTES);
         return true;
     }
 
@@ -178,7 +148,7 @@ public class GuildTrackProfile extends AudioEventAdapter {
     }
 
     @Override
-    public void onTrackStart(AudioPlayer player, AudioTrack track) {
+    public void onTrackStart(IPlayer player, AudioTrack track) {
         TextChannel channel = currentTrack.getChannel();
         if (channel != null && channel.canTalk()) {
             VoiceChannel vc = getGuild().getAudioManager().isAttemptingToConnect() ? getGuild().getAudioManager().getQueuedAudioConnection() : getGuild().getAudioManager().getConnectedChannel();
@@ -193,20 +163,22 @@ public class GuildTrackProfile extends AudioEventAdapter {
     }
 
     private void onQueueEnd() {
-        Utils.runAsync(() -> getGuild().getAudioManager().closeAudioConnection());
         if (task != null) {
             task.cancel(true);
             task = null;
         }
+
         getAudioPlayer().setPaused(false);
         setRepeatMode(null);
         TextChannel tc = previousTrack.getChannel();
         if (tc != null && tc.canTalk())
             tc.sendMessage(":musical_note: Playlist finalizada, desconectando...").queue();
+
+        link.disconnect();
     }
 
     @Override
-    public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+    public void onTrackEnd(IPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         voteSkips.clear();
         if (currentTrack != null) {
             TextChannel channel = currentTrack.getChannel();
@@ -220,7 +192,7 @@ public class GuildTrackProfile extends AudioEventAdapter {
     }
 
     @Override
-    public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
+    public void onTrackException(IPlayer player, AudioTrack track, Exception exception) {
         try {
             TextChannel channel = currentTrack.getChannel();
             if (channel != null && channel.canTalk()) {
@@ -235,7 +207,7 @@ public class GuildTrackProfile extends AudioEventAdapter {
     }
 
     @Override
-    public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
+    public void onTrackStuck(IPlayer player, AudioTrack track, long thresholdMs) {
         try {
             TextChannel channel = currentTrack.getChannel();
             if (channel != null && channel.canTalk()) {
