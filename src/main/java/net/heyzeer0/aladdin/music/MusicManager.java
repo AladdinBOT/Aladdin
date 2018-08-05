@@ -2,7 +2,12 @@ package net.heyzeer0.aladdin.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.beam.BeamAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import lavalink.client.io.jda.JdaLavalink;
@@ -26,6 +31,14 @@ public class MusicManager {
     private AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
     public MusicManager(int shard_amount, String bot_id) {
+        playerManager.registerSourceManager(new SoundCloudAudioSourceManager());
+        playerManager.registerSourceManager(new BandcampAudioSourceManager());
+        playerManager.registerSourceManager(new TwitchStreamAudioSourceManager());
+        playerManager.registerSourceManager(new VimeoAudioSourceManager());
+        playerManager.registerSourceManager(new SoundCloudAudioSourceManager());
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager());
+        playerManager.registerSourceManager(new BeamAudioSourceManager());
+
         lavalink = new JdaLavalink(bot_id, shard_amount, shard -> Main.getShard(shard).getJDA());
 
         try{
@@ -44,9 +57,6 @@ public class MusicManager {
                 lavalink.addNode(new URIBuilder().setHost(spplited[0]).setPort(Integer.valueOf(spplited[1])).build(), spplited[2]);
             }
         }catch (Exception ex) { ex.printStackTrace(); }
-
-
-        AudioSourceManagers.registerRemoteSources(playerManager);
     }
 
     public TLongObjectMap getManagers() {
