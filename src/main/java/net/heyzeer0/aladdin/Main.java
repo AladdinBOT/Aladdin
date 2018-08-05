@@ -20,7 +20,6 @@ import net.heyzeer0.aladdin.manager.custom.warframe.SubscriptionManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
-import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 import net.heyzeer0.aladdin.utils.DiscordLists;
@@ -41,7 +40,6 @@ public class Main {
     private static LogProfile logger = new LogProfile("Main");
     private static ShardProfile[] shards;
     private static AladdinData data;
-    private static MusicManager musicManager;
 
     public static String version = "2.0.0";
 
@@ -61,11 +59,7 @@ public class Main {
             logger.finishMsCount("Configs");
 
             logger.startMsCount();
-
-            int shardAmount = Utils.getShardAmount();
-            musicManager = new MusicManager(shardAmount, BotConfig.bot_id);
-
-            shards = new ShardProfile[shardAmount];
+            shards = new ShardProfile[Utils.getShardAmount()];
             for(int i = 0; i < shards.length; i++) {
                 if(i != 0) Thread.sleep(5000);
                 shards[i] = new ShardProfile(i, shards.length);
@@ -157,10 +151,6 @@ public class Main {
 
     public static ShardProfile[] getShards() {
         return shards;
-    }
-
-    public static MusicManager getMusicManger() {
-        return musicManager;
     }
 
     public static ShardProfile[] getConnectedShards() {

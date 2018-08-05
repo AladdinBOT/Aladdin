@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.commands.music;
 
-import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
 import net.heyzeer0.aladdin.enums.CommandType;
@@ -8,6 +7,7 @@ import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
+import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.profiles.LangProfile;
 import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
@@ -51,7 +51,7 @@ public class VolumeCommand implements CommandExecutor {
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
 
-            Main.getMusicManger().getManager(e.getGuild()).getAudioPlayer().setVolume(value);
+            MusicManager.getManager(e.getGuild()).getAudioPlayer().setVolume(value);
 
             e.sendMessage(EmojiList.CORRECT + " Você alterou o volume do player atual para ``" + value + "%``");
         }catch (Exception ex) {

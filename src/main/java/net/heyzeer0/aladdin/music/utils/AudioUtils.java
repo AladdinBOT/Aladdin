@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.music.utils;
 
-import lavalink.client.io.jda.JdaLink;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -30,8 +29,7 @@ public class AudioUtils {
         return "0" + num;
     }
 
-    public static boolean connectChannel(JdaLink link, TextChannel tc, Member member) {
-
+    public static boolean connectChannel(TextChannel tc, Member member) {
         if (tc.getGuild().getAudioManager().isConnected() || tc.getGuild().getAudioManager().isAttemptingToConnect()) {
             while (!tc.getGuild().getAudioManager().isConnected()) {
                 try {
@@ -60,9 +58,9 @@ public class AudioUtils {
             tc.sendMessage(EmojiList.WORRIED + " Oops, parece que eu não posso entrar no seu canal de audio já que o limite de usuários foi alcançado!").queue();
             return false;
         }
-
-        link.connect(vc);
+        tc.getGuild().getAudioManager().openAudioConnection(vc);
         return true;
+
     }
 
 }

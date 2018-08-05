@@ -83,7 +83,7 @@ public class AladdinData {
             osumaps.add(oinfo);
             exec.submit(() -> r.table("osumaps").insert(oinfo).optArg("conflict", "replace").runNoReply(conn));
             return oinfo;
-        }catch (Exception ex) { }
+        }catch (Exception ex) { ex.printStackTrace(); }
 
         return null;
     }
