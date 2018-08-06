@@ -96,7 +96,7 @@ public class GuildController {
 
     public void deleteAndCreateMessage(String text) {
         if(lastMessageId != null && getGuild().getSelfMember().hasPermission(Permission.MESSAGE_HISTORY)) {
-            currentTrack.getChannel().getMessageById(lastMessageId).complete().delete();
+            currentTrack.getChannel().getMessageById(lastMessageId).complete().delete().queue();
         }
 
         lastMessageId = currentTrack.getChannel().sendMessage(text).complete().getId();
