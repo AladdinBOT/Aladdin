@@ -36,7 +36,7 @@ public class QueueCommand implements CommandExecutor {
 
         if(controller.getQueue().size() <= 0) {
             e.sendPureMessage(
-                    lp.get("command.music.queue.success", current.getAudioTrack().getInfo().title, Utils.format(current.getAudioTrack().getPosition()), Utils.format(current.getAudioTrack().getDuration()))
+                    lp.get("command.music.queue.success", current.getAudioTrack().getInfo().title, Utils.format(controller.getPlayer().getPlayingTrack().getPosition()), Utils.format(current.getAudioTrack().getDuration()))
             ).queue(msg -> msg.delete().queueAfter(30, TimeUnit.SECONDS));
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
@@ -53,7 +53,7 @@ public class QueueCommand implements CommandExecutor {
         Integer pactual = 1;
 
         for (int i = 1; i <= pages; i++) {
-            String pg = lp.get("command.music.queue.paginator.page.current", current.getAudioTrack().getInfo().title, Utils.format(current.getAudioTrack().getPosition()), Utils.format(current.getAudioTrack().getDuration())) + "\n";
+            String pg = lp.get("command.music.queue.paginator.page.current", current.getAudioTrack().getInfo().title, Utils.format(controller.getPlayer().getPlayingTrack().getPosition()), Utils.format(current.getAudioTrack().getDuration())) + "\n";
             for (int p = actual; p < pactual * 10; p++) {
                 if (tracks.size() <= p) {
                     break;
