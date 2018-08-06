@@ -15,7 +15,6 @@ import net.dv8tion.jda.core.hooks.EventListener;
 import net.heyzeer0.aladdin.events.listeners.GuildListener;
 import net.heyzeer0.aladdin.events.listeners.MessageListener;
 import net.heyzeer0.aladdin.events.listeners.VoiceListener;
-import net.heyzeer0.aladdin.music.utils.AudioUtils;
 import net.heyzeer0.aladdin.utils.DiscordLists;
 
 /**
@@ -76,18 +75,17 @@ public class EventControl implements EventListener {
         }
         if(e instanceof GuildVoiceLeaveEvent) {
             GuildVoiceLeaveEvent event = (GuildVoiceLeaveEvent) e;
-            if(event.getChannelLeft().getMembers().contains(event.getGuild().getSelfMember()) && AudioUtils.isAlone(event.getChannelLeft())) {
+            if(event.getChannelLeft().getMembers().contains(event.getGuild().getSelfMember())) {
                 VoiceListener.onVoiceLeave(((GuildVoiceLeaveEvent)e).getChannelLeft());
             }
-
         }
         if(e instanceof GuildVoiceMoveEvent) {
             GuildVoiceMoveEvent event = (GuildVoiceMoveEvent) e;
-            if(event.getChannelJoined().getMembers().contains(event.getGuild().getSelfMember()) && AudioUtils.isAlone(event.getChannelJoined())) {
+            if(event.getChannelJoined().getMembers().contains(event.getGuild().getSelfMember())) {
                 VoiceListener.onVoiceJoin(event.getChannelJoined());
             }
 
-            if(event.getChannelLeft().getMembers().contains(event.getGuild().getSelfMember()) && AudioUtils.isAlone(event.getChannelLeft())) {
+            if(event.getChannelLeft().getMembers().contains(event.getGuild().getSelfMember())) {
                 VoiceListener.onVoiceLeave(event.getChannelLeft());
             }
         }

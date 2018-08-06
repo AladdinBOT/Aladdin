@@ -8,6 +8,7 @@ import net.dv8tion.jda.core.entities.Game;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.events.EventControl;
 import net.heyzeer0.aladdin.events.LogEvents;
+import net.heyzeer0.aladdin.music.MusicManager;
 
 import javax.security.auth.login.LoginException;
 
@@ -26,7 +27,7 @@ public class ShardProfile {
     Integer shardId;
     long init_uptime;
 
-    public ShardProfile(int shardid, int totalshards) {
+    public ShardProfile(int shardid, int totalshards, MusicManager mg) {
         shardId = shardid;
 
         logger = new LogProfile("Shard " + shardid);
@@ -36,7 +37,7 @@ public class ShardProfile {
                 .setAudioEnabled(true)
                 .setAudioSendFactory(new NativeAudioSendFactory())
                 .setGame(Game.of(Game.GameType.DEFAULT, "a!help | " + BotConfig.bot_game + " [" + (shardid + 1) + "]"))
-                .addEventListener(new EventControl(), new LogEvents())
+                .addEventListener(new EventControl(), new LogEvents(), mg.getLavaLink())
                 .setCorePoolSize(10);
 
         builder.useSharding(shardid, totalshards);

@@ -20,6 +20,7 @@ import net.heyzeer0.aladdin.manager.custom.warframe.SubscriptionManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
 import net.heyzeer0.aladdin.manager.utilities.PaginatorManager;
 import net.heyzeer0.aladdin.manager.utilities.ThreadManager;
+import net.heyzeer0.aladdin.music.MusicManager;
 import net.heyzeer0.aladdin.profiles.LogProfile;
 import net.heyzeer0.aladdin.profiles.ShardProfile;
 import net.heyzeer0.aladdin.utils.DiscordLists;
@@ -40,6 +41,7 @@ public class Main {
     private static LogProfile logger = new LogProfile("Main");
     private static ShardProfile[] shards;
     private static AladdinData data;
+    private static MusicManager musicManager;
 
     public static String version = "2.0.0";
 
@@ -59,10 +61,14 @@ public class Main {
             logger.finishMsCount("Configs");
 
             logger.startMsCount();
-            shards = new ShardProfile[Utils.getShardAmount()];
+            int shard_amount = Utils.getShardAmount();
+
+            musicManager = new MusicManager(shard_amount, BotConfig.bot_id);
+
+            shards = new ShardProfile[shard_amount];
             for(int i = 0; i < shards.length; i++) {
                 if(i != 0) Thread.sleep(5000);
-                shards[i] = new ShardProfile(i, shards.length);
+                shards[i] = new ShardProfile(i, shards.length, musicManager);
             }
             logger.finishMsCount("Shards");
 
@@ -106,12 +112,12 @@ public class Main {
             CommandManager.registerCommand(new WeatherCommand());
 
             CommandManager.registerCommand(new PlayCommand());
-            CommandManager.registerCommand(new PlaylistCommand());
-            CommandManager.registerCommand(new QueueCommand());
-            CommandManager.registerCommand(new RepeatCommand());
-            CommandManager.registerCommand(new SkipCommand());
             CommandManager.registerCommand(new StopCommand());
+            CommandManager.registerCommand(new SkipCommand());
+            CommandManager.registerCommand(new RepeatCommand());
+            CommandManager.registerCommand(new QueueCommand());
             CommandManager.registerCommand(new VolumeCommand());
+
             logger.finishMsCount("Commands");
 
             logger.info("\n    ___    __          __    ___     \n" +
@@ -132,6 +138,8 @@ public class Main {
     }
 
     public static void checkThreads() {
+        if(BotConfig.dev.equalsIgnoreCase("true")) return;
+
         ThreadManager.startThread(true);
         GiveawayManager.startUpdating();
         SubscriptionManager.startUpdating();
@@ -147,6 +155,10 @@ public class Main {
 
     public static AladdinData getDatabase() {
         return data;
+    }
+
+    public static MusicManager getMusicManager() {
+        return musicManager;
     }
 
     public static ShardProfile[] getShards() {

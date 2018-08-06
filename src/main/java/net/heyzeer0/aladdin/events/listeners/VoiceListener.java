@@ -1,9 +1,6 @@
 package net.heyzeer0.aladdin.events.listeners;
 
-import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.heyzeer0.aladdin.music.MusicManager;
-import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
 
 /**
  * Created by HeyZeer0 on 22/06/2017.
@@ -12,23 +9,11 @@ import net.heyzeer0.aladdin.music.profiles.GuildTrackProfile;
 public class VoiceListener {
 
     public static void onVoiceLeave(VoiceChannel vc) {
-        GuildTrackProfile scheduler = MusicManager.getManager (vc.getGuild());
-        if (scheduler.scheduleLeave()) {
-            TextChannel tc = scheduler.getCurrentTrack().getChannel();
-            if (tc != null && tc.canTalk()) {
-                tc.sendMessage(":musical_note: Todos sairam do canal, irei finalizar a playlist em 1 minuto.").queue();
-            }
-        }
+
     }
 
     public static void onVoiceJoin(VoiceChannel vc) {
-        GuildTrackProfile scheduler = MusicManager.getManager(vc.getGuild());
-        if (scheduler.cancelLeave()) {
-            TextChannel tc = scheduler.getCurrentTrack().getChannel();
-            if (tc != null && tc.canTalk()) {
-                tc.sendMessage(":musical_note: Alguem entrou no canal, finalizando contagem.").queue();
-            }
-        }
+
     }
 
 }

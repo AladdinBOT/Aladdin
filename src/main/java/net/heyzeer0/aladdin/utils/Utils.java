@@ -268,4 +268,17 @@ public class Utils {
         return gp;
     }
 
+    public static String format(long length) {
+        long hours = length / 3600000L % 24,
+                minutes = length / 60000L % 60,
+                seconds = length / 1000L % 60;
+        return (hours == 0 ? "" : octal(hours) + ":")
+                + (minutes == 0 ? "00" : octal(minutes)) + ":" + (seconds == 0 ? "00" : octal(seconds));
+    }
+
+    public static String octal(long num) {
+        if (num > 9) return String.valueOf(num);
+        return "0" + num;
+    }
+
 }
