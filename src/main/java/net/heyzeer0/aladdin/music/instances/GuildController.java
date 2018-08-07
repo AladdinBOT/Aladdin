@@ -159,6 +159,8 @@ public class GuildController {
         running = false;
         channel_name = null;
 
+        if(player.getPlayingTrack() != null) player.stopTrack();
+
         return qsize++;
     }
 
