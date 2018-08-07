@@ -47,22 +47,22 @@ public class MessageListener {
             return;
         }
 
-        if(e.getMessage().getContentDisplay().startsWith(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString()) && e.getMessage().getContentDisplay().length() > (Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString().length() + 1)) {
+        if(e.getMessage().getContentDisplay().startsWith(Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString()) && e.getMessage().getContentDisplay().length() >= (Main.getDatabase().getGuildProfile(e.getGuild()).getConfigValue(GuildConfig.PREFIX).toString().length() + 1)) {
             CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
-        if(e.getMessage().getContentDisplay().startsWith(GuildConfig.PREFIX.getDefault().toString()) && e.getMessage().getContentDisplay().length() > (GuildConfig.PREFIX.getDefault().toString().length() + 1)) {
+        if(e.getMessage().getContentDisplay().startsWith(GuildConfig.PREFIX.getDefault().toString()) && e.getMessage().getContentDisplay().length() >= (GuildConfig.PREFIX.getDefault().toString().length() + 1)) {
             CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
         String id = "<@" + e.getJDA().getSelfUser().getId() + ">";
-        if(e.getMessage().getContentRaw().startsWith(id) && e.getMessage().getContentRaw().length() > (id.length() + 1)) {
+        if(e.getMessage().getContentRaw().startsWith(id) && e.getMessage().getContentRaw().length() >= (id.length() + 1)) {
             CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
 
         String id2 = "<@!" + e.getJDA().getSelfUser().getId() + ">";
-        if(e.getMessage().getContentRaw().startsWith(id2) && e.getMessage().getContentRaw().length() > (id2.length() + 1)) {
+        if(e.getMessage().getContentRaw().startsWith(id2) && e.getMessage().getContentRaw().length() >= (id2.length() + 1)) {
             CommandManager.handleCommand(CommandManager.parse(e.getMessage().getContentRaw(), e));
             return;
         }
