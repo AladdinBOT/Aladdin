@@ -1,5 +1,6 @@
 package net.heyzeer0.aladdin.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
@@ -64,6 +65,11 @@ public class UserProfile implements ManagedObject {
 
         recommendedBeatmaps.add(id);
         saveAsync();
+    }
+
+    @JsonIgnore
+    public boolean isAlreadyRecommendedBeatmap(String id) {
+        return recommendedBeatmaps.contains(id);
     }
 
     public void updateOsuUsername(String nick) {

@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class QueueCommand implements CommandExecutor {
 
     @Command(command = "queue", description = "command.music.queue.description", type = CommandType.MUSIC,
-            usage = "a!queue")
+            usage = "a!queue", aliasses = {"q"})
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(!Main.getMusicManager().isConnected(e.getGuild())) {
             e.sendMessage(lp.get("command.music.queue.error.notplaying"));

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class SkipCommand implements CommandExecutor {
 
     @Command(command = "skip", description = "command.music.skip.description", type = CommandType.MUSIC,
-            usage = "a!skip")
+            usage = "a!skip", aliasses = {"s"})
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(!Main.getMusicManager().isConnected(e.getGuild())) {
             e.sendMessage(lp.get("command.music.skip.error.notconnected"));

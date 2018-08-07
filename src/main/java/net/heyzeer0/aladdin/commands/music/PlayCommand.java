@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class PlayCommand implements CommandExecutor {
 
     @Command(command = "play", description = "command.music.play.description", type = CommandType.MUSIC, parameters = {"name/url"},
-            usage = "a!play Thunder - Imagine Dragons")
+            usage = "a!play Thunder - Imagine Dragons", aliasses = {"p"})
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
          e.sendPureMessage(lp.get("command.music.play.success", args.getCompleteAfter(0))).queue(msg -> {
              Main.getMusicManager().addToQueue(e.getAuthor(), msg, args.getCompleteAfter(0));
