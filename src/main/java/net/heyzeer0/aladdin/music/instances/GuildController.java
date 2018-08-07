@@ -3,7 +3,10 @@ package net.heyzeer0.aladdin.music.instances;
 import lavalink.client.io.jda.JdaLink;
 import lavalink.client.player.IPlayer;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.music.enums.RepeatMode;
@@ -107,22 +110,22 @@ public class GuildController {
     }
 
     //logic
-    public void computeSkipVote(User u) {
-        if(vote_skips.contains(u.getId())) {
-            vote_skips.remove(u.getId());
+    public void computeSkipVote(Member u) {
+        if(vote_skips.contains(u.getUser().getId())) {
+            vote_skips.remove(u.getUser().getId());
 
-            sendMessage(getLangProfile().get("music.skipremoved", u.getName(), vote_skips.size(), getRequiredVotes()));
+            sendMessage(getLangProfile().get("music.skipremoved", u.getUser().getName(), vote_skips.size(), getRequiredVotes(u)));
             return;
         }
 
-        vote_skips.add(u.getId());
+        vote_skips.add(u.getUser().getId());
 
-        if(getRequiredVotes() <= vote_skips.size()) {
+        if(getRequiredVotes(u) <= vote_skips.size()) {
             startNext(true);
 
             sendMessage(getLangProfile().get("music.skipped"));
         }else{
-            sendMessage(getLangProfile().get("music.skipadded", u.getName(), vote_skips.size(), getRequiredVotes()));
+            sendMessage(getLangProfile().get("music.skipadded", u.getUser().getName(), vote_skips.size(), getRequiredVotes(u)));
         }
     }
 
@@ -161,7 +164,7 @@ public class GuildController {
 
         if(player.getPlayingTrack() != null) player.stopTrack();
 
-        return qsize++;
+        return qsize+=1;
     }
 
     private boolean attemptToJoinChannel(TextChannel tc, Member member) {
@@ -199,8 +202,8 @@ public class GuildController {
         return true;
     }
 
-    public int getRequiredVotes() {
-        int listeners = (int) getGuild().getAudioManager().getConnectedChannel().getMembers().stream().filter(m -> !m.getUser().isBot()).count();
+    public int getRequiredVotes(Member u) {
+        int listeners = (int) u.getVoiceState().getChannel().getMembers().stream().filter(m -> !m.getUser().isBot()).count();
         return (int) Math.ceil(listeners * .55);
     }
 

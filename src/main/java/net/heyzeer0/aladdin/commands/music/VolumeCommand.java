@@ -32,7 +32,7 @@ public class VolumeCommand implements CommandExecutor {
                 e.sendMessage(lp.get("command.music.skip.error.notconnected"));
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
-            if (Main.getMusicManager().isConnected(e.getGuild()) && !Main.getMusicManager().getGuildController(e.getGuild()).getChannelName().equals(e.getMember().getVoiceState().getChannel().getName())) {
+            if (!e.getMember().getVoiceState().inVoiceChannel() || !Main.getMusicManager().getGuildController(e.getGuild()).getChannelName().equals(e.getMember().getVoiceState().getChannel().getName())) {
                 if(!e.hasPermission("command.skip.overpass")) {
                     e.sendMessage(lp.get("command.music.skip.error.notonchannel"));
                     return new CommandResult((CommandResultEnum.SUCCESS));
