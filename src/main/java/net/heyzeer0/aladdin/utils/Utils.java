@@ -3,6 +3,7 @@ package net.heyzeer0.aladdin.utils;
 import com.google.gson.JsonParser;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
@@ -279,6 +280,10 @@ public class Utils {
     public static String octal(long num) {
         if (num > 9) return String.valueOf(num);
         return "0" + num;
+    }
+
+    public static boolean isAlone(VoiceChannel vc) {
+        return vc.getMembers().stream().allMatch(m -> m.getUser().isBot());
     }
 
 }

@@ -1,3 +1,4 @@
+[music.leftalone] = 🤔 I was left alone in the music channel, I will leave in 1 minute if anyone joins it!
 [music.addtoqueue] = :musical_note: %s Added the song ``%s`` to the queue! (``%s``) [``%s``]
 [music.skipremoved] = :guitar: ``%s`` took her song vote skip! (``%s/%s``)
 [music.skipadded] = :guitar: ``%s`` voted to skip this song! (``%s/%s``)

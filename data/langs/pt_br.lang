@@ -1,3 +1,4 @@
+[music.leftalone] = 🤔 Fui deixado sozinho no canal de música, irei sair em 1 minuto caso ninguem entre!
 [music.addtoqueue] = :musical_note: %s adicionou a musica ``%s`` na playlist! (``%s``) [``%s``]
 [music.skipremoved] = :guitar: ``%s`` retirou seu voto para pular! (``%s/%s``)
 [music.skipadded] = :guitar: ``%s`` votou para pular! (``%s/%s``)
