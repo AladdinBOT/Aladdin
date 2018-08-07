@@ -34,7 +34,7 @@ public class VoiceListener {
                 concurrentTasks.remove(vc.getId());
             }, 1, TimeUnit.MINUTES);
 
-            controller.deleteAndCreateMessage(Main.getDatabase().getGuildProfile(vc.getGuild()).getSelectedLanguage().getLangProfile().get("music.leftalone"));
+            controller.deleteAndCreateMessage(controller.getLangProfile().get("music.leftalone"));
             concurrentTasks.put(vc.getId(), executor);
         }
     }
@@ -42,6 +42,7 @@ public class VoiceListener {
     public static void onVoiceJoin(VoiceChannel vc) {
         if(concurrentTasks.containsKey(vc.getId())) {
             if(!Main.getMusicManager().isConnected(vc.getGuild())) {
+                concurrentTasks.get(vc.getId()).cancel(true);
                 concurrentTasks.remove(vc.getId());
                 return;
             }
