@@ -46,7 +46,7 @@ public class AudioResultHandler implements AudioLoadResultHandler {
     @Override
     public void playlistLoaded(AudioPlaylist playlist) {
         if(playlist.isSearchResult()) {
-            Chooser ch = new Chooser(m, lp.get("music.selector.title"));
+            Chooser ch = new Chooser(u.getId(), m, lp.get("music.selector.title"));
             AudioTrack[] options = playlist.getTracks().stream().limit(3).toArray(AudioTrack[]::new);
             for (AudioTrack track : options) {
                 ch.addOption(lp.get("music.selector.option", track.getInfo().title, Utils.format(track.getDuration())), () -> trackLoaded(track));

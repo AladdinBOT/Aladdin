@@ -27,11 +27,13 @@ public class Chooser {
     long last_action = 0;
 
     Message e;
+    String author_id;
 
     boolean selected = false;
 
-    public Chooser(Message e, String title) {
+    public Chooser(String author_id, Message e, String title) {
         this.title = title;
+        this.author_id = author_id;
         this.e = e;
     }
 
@@ -46,7 +48,7 @@ public class Chooser {
     public void clickAction(MessageReactionAddEvent e) {
         if(last_action == 0) return;
         if(e.getMember().getUser().isFake() || e.getMember().getUser().isBot()) return;
-        if(e.getUser().getId().equalsIgnoreCase(e.getUser().getId())) return;
+        if(!e.getUser().getId().equalsIgnoreCase(author_id)) return;
 
         if(Utils.getRegional(e.getReactionEmote().getName()) != null) {
             if(e.getReactionEmote().getName().equalsIgnoreCase("\uD83D\uDED1")) {
@@ -90,7 +92,7 @@ public class Chooser {
             for(int i = 1; i <= options; i++) {
                 msg.addReaction(Utils.getRegional(String.valueOf(i))).queue();
             }
-            msg.addReaction("\uD83D\uDED1");
+            msg.addReaction("\uD83D\uDED1").queue();
             ChooserManager.registerChooser(this);
         }
 
