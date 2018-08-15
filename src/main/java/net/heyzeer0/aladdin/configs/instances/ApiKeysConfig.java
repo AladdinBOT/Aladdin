@@ -16,5 +16,6 @@ public class ApiKeysConfig {
     public static String pixabay_api_key = "<insert-here>";
     public static String league_of_legends_key = "<insert-here>";
     public static String lavalink_nodes = "<insert-here>";
+    public static String vagalume_api_key = "<insert-here>";
 
 }

@@ -44,13 +44,16 @@ public class Chooser {
     }
 
     public void clickAction(MessageReactionAddEvent e) {
-        if(last_action == 0) {
-            return;
-        }
-        if(e.getMember().getUser().isFake() || e.getMember().getUser().isBot()) {
-            return;
-        }
+        if(last_action == 0) return;
+        if(e.getMember().getUser().isFake() || e.getMember().getUser().isBot()) return;
+        if(e.getUser().getId().equalsIgnoreCase(e.getUser().getId())) return;
+
         if(Utils.getRegional(e.getReactionEmote().getName()) != null) {
+            if(e.getReactionEmote().getName().equalsIgnoreCase("\uD83D\uDED1")) {
+                ChooserManager.choosers.remove(selector.getId());
+                selector.delete().queue(scs -> {}, flr -> {});
+                return;
+            }
             if(NumberUtils.isCreatable(Utils.getRegional(e.getReactionEmote().getName()))) {
                 try{
                     selected = true;
@@ -63,10 +66,6 @@ public class Chooser {
                 }
             }
         }
-    }
-
-    public boolean isSelected() {
-        return selected;
     }
 
     public void start() {
@@ -91,6 +90,7 @@ public class Chooser {
             for(int i = 1; i <= options; i++) {
                 msg.addReaction(Utils.getRegional(String.valueOf(i))).queue();
             }
+            msg.addReaction("\uD83D\uDED1");
             ChooserManager.registerChooser(this);
         }
 

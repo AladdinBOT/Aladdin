@@ -40,6 +40,8 @@
 [command.music.volume.description] = Altere o volume do player de musica
 [command.music.volume.error.invalidvalue] = 😟 Oops, o valor necessita ser maior que ``30`` e menor que ``110``
 [command.music.volume.success] = ✅ Você alterou o volume do player atual para ``%s``
+[command.music.lyrics.description] = Veja a letra de musica que esta tocando!
+[command.music.lyrics.error.notfound] = 😟 Oops, não encontrei uma letra para a musica atual!
 [commandtype.fun] = Diversão
 [commandtype.informative] = Informativo
 [commandtype.admnistrative] = Administrativo

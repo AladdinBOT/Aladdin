@@ -111,6 +111,7 @@ public class Main {
             CommandManager.registerCommand(new WarframeCommand());
             CommandManager.registerCommand(new WeatherCommand());
 
+            CommandManager.registerCommand(new LyricsCommand());
             CommandManager.registerCommand(new PlayCommand());
             CommandManager.registerCommand(new StopCommand());
             CommandManager.registerCommand(new SkipCommand());

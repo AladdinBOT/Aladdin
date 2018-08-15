@@ -1,3 +1,5 @@
+[command.music.lyrics.description] = Veja a letra de musica que esta tocando!
+[command.music.lyrics.error.notfound] = 😟 Oops, não encontrei uma letra para a musica atual!
 [music.leftalone] = 🤔 Fui deixado sozinho no canal de música, irei sair em 1 minuto caso ninguem entre!
 [music.addtoqueue] = :musical_note: %s adicionou a musica ``%s`` na playlist! (``%s``) [``%s``]
 [music.skipremoved] = :guitar: ``%s`` retirou seu voto para pular! (``%s/%s``)
