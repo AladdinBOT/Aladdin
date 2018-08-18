@@ -28,7 +28,7 @@ public class MusicContext {
 
         if(audioTrack.getInfo().title.contains(" - ")) {
             String[] spplited = audioTrack.getInfo().title.split(" - ");
-            Utils.runAsync(() -> { try{ lyrics = VagalumeManager.getLyrics(spplited[0], spplited[1]).replace("\\n", "\n"); }catch (Exception ignored) {} });
+            Utils.runAsync(() -> { try{ lyrics = VagalumeManager.getLyrics(spplited[0], spplited[1].replaceAll("\\(.*\\)", "").replaceAll("\\[.*]", "")).replace("\\n", "\n"); }catch (Exception ignored) {} });
         }
     }
 

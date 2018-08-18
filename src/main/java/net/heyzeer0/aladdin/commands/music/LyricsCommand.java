@@ -34,5 +34,4 @@ public class LyricsCommand implements CommandExecutor {
         return new CommandResult(CommandResultEnum.SUCCESS);
     }
 
-
 }
