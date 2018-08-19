@@ -34,7 +34,7 @@ public class MessageListener {
     public static void onMessage(GuildMessageReceivedEvent e) {
         ThreadManager.startThread(false);
 
-        if(e.getChannel().getId().equals(BotConfig.lang_update_channel)) {
+        if(e.getChannel().getId().equals(BotConfig.lang_update_channel) && e.getMessage().getEmbeds().size() >= 1) {
             long ms = System.currentTimeMillis();
             for(Lang l : Lang.values()) {
                 try{
