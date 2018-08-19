@@ -11,6 +11,7 @@ import java.util.HashMap;
 public class FileReader {
 
     File f;
+    String url;
 
     HashMap<String, String> values = new HashMap<>();
 
@@ -18,6 +19,28 @@ public class FileReader {
         this.f = f;
 
         parseFile();
+    }
+
+    public FileReader(String url) throws Exception {
+        this.url = url;
+
+        parseUrl();
+    }
+
+    private void parseUrl() throws Exception {
+        String response = new Router(url).getResponse().getResult();
+
+        String[] ss = response.split("\n");
+        for(String ctnt : ss) {
+            if(!ctnt.contains("[") || !ctnt.contains("]") || !ctnt.contains("=")) continue;
+            String[] splited;
+
+            if(ctnt.contains(" = ")) {
+                splited = ctnt.split(" = ");
+            }else { splited = ctnt.split("="); }
+
+            values.put(splited[0].replace("[", "").replace("]", ""), splited[1]);
+        }
     }
 
     private void parseFile() throws Exception {

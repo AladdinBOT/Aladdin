@@ -3,10 +3,7 @@ package net.heyzeer0.aladdin.music.instances;
 import lavalink.client.io.jda.JdaLink;
 import lavalink.client.player.IPlayer;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.core.entities.*;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.music.enums.RepeatMode;
@@ -99,7 +96,8 @@ public class GuildController {
 
     public void deleteAndCreateMessage(String text) {
         if(lastMessageId != null && getGuild().getSelfMember().hasPermission(Permission.MESSAGE_HISTORY)) {
-            currentTrack.getChannel().getMessageById(lastMessageId).complete().delete().queue();
+            Message msg = currentTrack.getChannel().getMessageById(lastMessageId).complete();
+            if(msg != null) msg.delete().queue();
         }
 
         lastMessageId = currentTrack.getChannel().sendMessage(text).complete().getId();

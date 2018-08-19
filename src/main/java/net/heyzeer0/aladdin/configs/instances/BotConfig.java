@@ -18,5 +18,6 @@ public class BotConfig {
     public static String bot_guild_premiumrole_id = "466999491375923200";
     public static String bot_id = "321349548712656896";
     public static String dev = "false";
+    public static String lang_base_url = "https://raw.githubusercontent.com/AladdinBOT/AladdinLanguage/master/";
 
 }
