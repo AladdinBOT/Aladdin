@@ -9,7 +9,7 @@
 
 About Aladdin
 ========
-Hi, my name is Aladdin. In case you didn't know, I was inspired by the anime [Magi](https://en.wikipedia.org/wiki/Magi:_The_Labyrinth_of_Magic "Magi"), my focus is administrative actions however I can be really usefol in other things, such as fun or music, being developed by `HeyZeer0#0190`. In my adventure I'm followed by my great friends Ali Baba and Morgiana, maybe you'll find them around. My goal is to learn more and more about this world, you can call me to your guild by clicking [here](https://discordapp.com/oauth2/authorize?client_id=321349548712656896&scope=bot&permissions=2146958463 "here")! So, would you like to be my friend?
+Hi, my name is Aladdin. In case you didn't know, I was inspired by the anime [Magi](https://en.wikipedia.org/wiki/Magi:_The_Labyrinth_of_Magic "Magi"), my focus are administrative actions however I can be really useful in other things, such as fun commands or music, being developed by `HeyZeer0#0190`. In my adventure I'm followed by my great friends Ali Baba and Morgiana, maybe you'll find them around. My goal is to learn more and more about this world, you can bring me to your guild by clicking [here](https://discordapp.com/oauth2/authorize?client_id=321349548712656896&scope=bot&permissions=2146958463 "here")! So, would you like to be my friend?
 
 Building your own instance
 ========
@@ -17,7 +17,7 @@ I actually have no idea why you would want to self-host your own version of Alad
 
  - I'm **not going** to support your self hosted version of Aladdin.
  - The source code is under AGLP, so **your source need to be public**.
- - The main idea of leaving the source public is for "study purpose", allowing people to see my code and learn over it, try to fix it and similar, not creating a copy saying "Hey look, I've made a Discord Bot" since you not.
+ - The main idea of leaving the source public is for "study purpose", allowing people to see my code and learn over it, try to fix it and such, not creating a copy saying "Hey look, I've made a Discord Bot" since you did not.
  - All the assets of the bot **is public** but **over my copyright**, so you probably shoudn't use it.
 
 Requirements:
