@@ -27,6 +27,7 @@ public class EventControl implements EventListener {
     public void onEvent(Event e) {
         if(e instanceof GuildMessageReceivedEvent) {
             if(((GuildMessageReceivedEvent) e).getAuthor().isBot() || ((GuildMessageReceivedEvent) e).getAuthor().isFake()) {
+                MessageListener.botOrWebhookMessage((GuildMessageReceivedEvent)e);
                 return;
             }
             MessageListener.onMessage((GuildMessageReceivedEvent)e);

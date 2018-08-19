@@ -31,10 +31,8 @@ public class MessageListener {
     private static long cooldown_jogo = 0L;
     public static HashMap<String, Long> star_timeout = new HashMap<>();
 
-    public static void onMessage(GuildMessageReceivedEvent e) {
-        ThreadManager.startThread(false);
-
-        if(e.getChannel().getId().equals(BotConfig.lang_update_channel) && e.getMessage().getEmbeds().size() >= 1) {
+    public static void botOrWebhookMessage(GuildMessageReceivedEvent e) {
+        if(e.getChannel().getId().equals(BotConfig.lang_update_channel) && e.getMessage().getEmbeds().size() >= 1 && e.getAuthor().isFake()) {
             long ms = System.currentTimeMillis();
             for(Lang l : Lang.values()) {
                 try{
@@ -47,6 +45,10 @@ public class MessageListener {
             e.getChannel().sendMessage(EmojiList.CORRECT + " Took ``" + (System.currentTimeMillis() - ms) + "ms`` to reload all langs.").queue();
             return;
         }
+    }
+
+    public static void onMessage(GuildMessageReceivedEvent e) {
+        ThreadManager.startThread(false);
 
         if(Main.getDatabase() == null || !Main.getDatabase().isReady()) {
             return;
