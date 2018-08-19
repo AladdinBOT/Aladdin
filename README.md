@@ -18,7 +18,7 @@ I actually have no idea why you would want to self-host your own version of Alad
  - I'm **not going** to support your self hosted version of Aladdin.
  - The source code is under AGLP, so **your source need to be public**.
  - The main idea of leaving the source public is for "study purpose", allowing people to see my code and learn over it, try to fix it and such, not creating a copy saying "Hey look, I've made a Discord Bot" since you did not.
- - All the assets of the bot **is public** but **over my copyright**, so you probably shoudn't use it.
+ - All the assets of the bot **are public** but **over my copyright**, so you probably shoudn't use them.
 
 Requirements:
 
