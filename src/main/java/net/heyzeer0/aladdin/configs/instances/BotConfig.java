@@ -19,5 +19,6 @@ public class BotConfig {
     public static String bot_id = "321349548712656896";
     public static String dev = "false";
     public static String lang_base_url = "https://raw.githubusercontent.com/AladdinBOT/AladdinLanguage/master/";
+    public static String lang_update_channel = "480746006221291540";
 
 }

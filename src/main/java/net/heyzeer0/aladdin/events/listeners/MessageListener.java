@@ -5,7 +5,10 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
 import net.heyzeer0.aladdin.Main;
+import net.heyzeer0.aladdin.configs.instances.BotConfig;
+import net.heyzeer0.aladdin.enums.EmojiList;
 import net.heyzeer0.aladdin.enums.GuildConfig;
+import net.heyzeer0.aladdin.enums.Lang;
 import net.heyzeer0.aladdin.manager.commands.CommandManager;
 import net.heyzeer0.aladdin.manager.custom.CrashManager;
 import net.heyzeer0.aladdin.manager.utilities.ChooserManager;
@@ -30,6 +33,20 @@ public class MessageListener {
 
     public static void onMessage(GuildMessageReceivedEvent e) {
         ThreadManager.startThread(false);
+
+        if(e.getChannel().getId().equals(BotConfig.lang_update_channel)) {
+            long ms = System.currentTimeMillis();
+            for(Lang l : Lang.values()) {
+                try{
+                    l.getLangProfile().refreshLang();
+                }catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            e.getChannel().sendMessage(EmojiList.CORRECT + " Took ``" + (System.currentTimeMillis() - ms) + "ms`` to reload all langs.").queue();
+            return;
+        }
 
         if(Main.getDatabase() == null || !Main.getDatabase().isReady()) {
             return;
