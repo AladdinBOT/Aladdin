@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.requests.RestAction;
 import net.heyzeer0.aladdin.commands.*;
 import net.heyzeer0.aladdin.commands.music.*;
 import net.heyzeer0.aladdin.configs.ConfigManager;
@@ -48,6 +49,9 @@ public class Main {
     public static void main(String args[]) {
         try{
             getDataFolder().mkdirs();
+
+            RestAction.setPassContext(true);
+            RestAction.DEFAULT_FAILURE = Throwable::printStackTrace;
 
             logger.startMsCount();
             ConfigManager.lockAndLoad(DatabaseConfig.class);

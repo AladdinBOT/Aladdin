@@ -43,7 +43,6 @@ public class MessageListener {
             }
 
             e.getChannel().sendMessage(EmojiList.CORRECT + " Took ``" + (System.currentTimeMillis() - ms) + "ms`` to reload all langs.").queue();
-            return;
         }
     }
 
