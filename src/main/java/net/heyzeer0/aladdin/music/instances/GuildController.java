@@ -161,6 +161,7 @@ public class GuildController {
         queue.clear();
         running = false;
         channel_name = null;
+        player.setPaused(false);
 
         if(player.getPlayingTrack() != null) player.stopTrack();
 
