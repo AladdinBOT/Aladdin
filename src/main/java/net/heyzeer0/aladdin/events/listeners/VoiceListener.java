@@ -26,7 +26,7 @@ public class VoiceListener {
             return;
         }
 
-        if(Utils.isAlone(vc) && ! concurrentTasks.containsKey(vc.getId())) {
+        if(Utils.isAlone(vc) && !concurrentTasks.containsKey(vc.getId())) {
             GuildController controller = Main.getMusicManager().getGuildController(vc.getGuild());
             controller.getPlayer().setPaused(true);
 

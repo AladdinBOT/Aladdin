@@ -83,7 +83,10 @@ public class EventControl implements EventListener {
         if(e instanceof GuildVoiceMoveEvent) {
             GuildVoiceMoveEvent event = (GuildVoiceMoveEvent) e;
 
-            VoiceListener.onVoiceMove((GuildVoiceMoveEvent) e);
+            if(event.getMember().getUser().getId().equals(e.getJDA().getSelfUser().getId())) {
+                VoiceListener.onVoiceMove((GuildVoiceMoveEvent) e);
+                VoiceListener.onVoiceLeave(event.getChannelJoined());
+            }
 
             if(event.getChannelJoined().getMembers().contains(event.getGuild().getSelfMember())) {
                 VoiceListener.onVoiceJoin(event.getChannelJoined());
