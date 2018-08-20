@@ -39,7 +39,7 @@ public class LyricsCommand implements CommandExecutor {
         for(String x : lyrics.split("\n")) {
             if(chars + x.length() > 2000) {
                 messages.add(currentMessage);
-                currentMessage = null;
+                currentMessage = "";
                 chars = 10;
                 continue;
             }
