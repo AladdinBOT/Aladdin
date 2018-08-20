@@ -34,13 +34,13 @@ public class LyricsCommand implements CommandExecutor {
         String lyrics = Main.getMusicManager().getGuildController(e.getGuild()).getCurrentTrack().getLyrics();
         ArrayList<String> messages = new ArrayList<>();
 
-        int chars = 0;
+        int chars = 10;
         String currentMessage = "";
         for(String x : lyrics.split("\n")) {
             if(chars + x.length() > 2000) {
                 messages.add(currentMessage);
                 currentMessage = null;
-                chars = 0;
+                chars = 10;
                 continue;
             }
             chars+= x.length() + 2;
