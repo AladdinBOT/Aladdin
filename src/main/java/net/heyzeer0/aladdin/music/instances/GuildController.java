@@ -106,7 +106,7 @@ public class GuildController {
     }
 
     public void sendMessage(String text) {
-        currentTrack.getChannel().sendMessage(text).queue(c -> c.delete().queueAfter(30, TimeUnit.SECONDS));
+        if(currentTrack != null && currentTrack.getChannel() != null) currentTrack.getChannel().sendMessage(text).queue(c -> c.delete().queueAfter(30, TimeUnit.SECONDS));
     }
 
     //logic
