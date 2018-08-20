@@ -1,6 +1,7 @@
 package net.heyzeer0.aladdin.events.listeners;
 
 import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.music.instances.GuildController;
 import net.heyzeer0.aladdin.utils.Utils;
@@ -52,6 +53,12 @@ public class VoiceListener {
 
             concurrentTasks.get(vc.getId()).cancel(true);
             concurrentTasks.remove(vc.getId());
+        }
+    }
+
+    public static void onVoiceMove(GuildVoiceMoveEvent e) {
+        if(e.getMember().getUser().getId().equals(e.getJDA().getSelfUser().getId())) {
+            Main.getMusicManager().getGuildController(e.getGuild()).onMoveToChannel(e.getChannelJoined());
         }
     }
 

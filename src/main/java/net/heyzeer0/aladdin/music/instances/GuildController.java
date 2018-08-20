@@ -37,6 +37,7 @@ public class GuildController {
     MusicContext currentTrack;
     MusicContext lastTrack;
     String lastMessageId;
+
     ArrayList<String> vote_skips = new ArrayList<>();
     String channel_name = "";
 
@@ -201,6 +202,16 @@ public class GuildController {
         channel_name = vc.getName();
         jdaLink.connect(vc);
         return true;
+    }
+
+    public void onMoveToChannel(VoiceChannel vc) {
+        if(!running) return;
+
+        channel_name = vc.getName();
+
+        long pos = player.getTrackPosition();
+        player.playTrack(currentTrack.getAudioTrack());
+        player.seekTo(pos);
     }
 
     public int getRequiredVotes(Member u) {

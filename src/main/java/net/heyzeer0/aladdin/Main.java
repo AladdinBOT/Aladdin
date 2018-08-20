@@ -68,7 +68,9 @@ public class Main {
             int shard_amount = Utils.getShardAmount();
 
             musicManager = new MusicManager(shard_amount, BotConfig.bot_id);
+            logger.finishMsCount("Music");
 
+            logger.startMsCount();
             shards = new ShardProfile[shard_amount];
             for(int i = 0; i < shards.length; i++) {
                 if(i != 0) Thread.sleep(5000);
