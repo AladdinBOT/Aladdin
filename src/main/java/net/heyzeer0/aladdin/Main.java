@@ -51,7 +51,7 @@ public class Main {
             getDataFolder().mkdirs();
 
             RestAction.setPassContext(true);
-            RestAction.DEFAULT_FAILURE = Throwable::printStackTrace;
+            RestAction.DEFAULT_FAILURE = null;
 
             logger.startMsCount();
             ConfigManager.lockAndLoad(DatabaseConfig.class);

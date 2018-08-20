@@ -10,6 +10,8 @@ import net.heyzeer0.aladdin.profiles.commands.ArgumentProfile;
 import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 
+import java.util.ArrayList;
+
 /**
  * Created by HeyZeer0 on 10/08/2018.
  * Copyright © HeyZeer0 - 2016
@@ -29,7 +31,28 @@ public class LyricsCommand implements CommandExecutor {
             return new CommandResult((CommandResultEnum.SUCCESS));
         }
 
-        e.sendMessage("```HTTP\n" + Main.getMusicManager().getGuildController(e.getGuild()).getCurrentTrack().getLyrics() + "\n```");
+        String lyrics = Main.getMusicManager().getGuildController(e.getGuild()).getCurrentTrack().getLyrics();
+        ArrayList<String> messages = new ArrayList<>();
+
+        int chars = 0;
+        String currentMessage = "";
+        for(String x : lyrics.split("\n")) {
+            if(chars + x.length() > 2000) {
+                messages.add(currentMessage);
+                currentMessage = null;
+                chars = 0;
+                continue;
+            }
+            chars+= x.length() + 2;
+
+            currentMessage+=x + "\n";
+        }
+
+        if(currentMessage != null) messages.add(currentMessage);
+
+        for(String msg : messages) {
+            e.sendMessage("```HTTP\n" + msg + "\n```");
+        }
 
         return new CommandResult(CommandResultEnum.SUCCESS);
     }
