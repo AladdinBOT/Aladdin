@@ -26,13 +26,13 @@ public class ReminderCommand implements CommandExecutor {
         try{
             Integer value = Integer.valueOf(args.get(0).replace("m", "").replace("h", ""));
 
-            if(!minute && !e.getUserProfile().isPremiumActive()) {
+            if(!minute && !e.getUserProfile().userPremium()) {
                 if(value > 5) {
                     e.sendMessage(String.format(lp.get("command.remindme.timelimit"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium"));
                     return new CommandResult(CommandResultEnum.SUCCESS);
                 }
             }
-            if(minute && !e.getUserProfile().isPremiumActive()) {
+            if(minute && !e.getUserProfile().userPremium()) {
                 if(value > 300) {
                     e.sendMessage(String.format(lp.get("command.remindme.timelimit"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium"));
                     return new CommandResult(CommandResultEnum.SUCCESS);

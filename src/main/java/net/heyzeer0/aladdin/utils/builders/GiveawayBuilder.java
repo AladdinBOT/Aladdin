@@ -314,13 +314,13 @@ public class GiveawayBuilder {
 
                 Integer value = Integer.valueOf(ev.getMessage().getContentDisplay().replace("m", "").replace("h", ""));
 
-                if(!minute && !ev.getUserProfile().isPremiumActive()) {
+                if(!minute && !ev.getUserProfile().userPremium()) {
                     if(value > 24) {
                         ev.getChannel().sendMessage(String.format(lp.get("command.giveaway.builder.main.set.time.error.timelimit"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                         return;
                     }
                 }
-                if(minute && !ev.getUserProfile().isPremiumActive()) {
+                if(minute && !ev.getUserProfile().userPremium()) {
                     if(value > 1440) {
                         ev.getChannel().sendMessage(String.format(lp.get("command.giveaway.builder.main.set.time.error.timelimit"), e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "premium")).queue(scs -> scs.delete().queueAfter(3, TimeUnit.SECONDS));
                         return;

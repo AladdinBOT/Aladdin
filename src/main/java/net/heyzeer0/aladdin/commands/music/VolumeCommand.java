@@ -21,7 +21,7 @@ public class VolumeCommand implements CommandExecutor {
     @Command(command = "volume", description = "command.music.volume.description", parameters = {"30 to 110"}, type = CommandType.MUSIC,
             usage = "a!volume 30", needPermission = false, aliasses = {"vol"})
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
-        if(!e.getUserProfile().isPremiumActive()) {
+        if(!e.getUserProfile().userPremium()) {
             return new CommandResult((CommandResultEnum.NEED_PREMIUM));
         }
 

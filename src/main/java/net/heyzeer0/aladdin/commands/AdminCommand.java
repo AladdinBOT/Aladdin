@@ -139,7 +139,7 @@ public class AdminCommand implements CommandExecutor {
                 g.setFont(Font.createFont(Font.TRUETYPE_FONT, new File(Main.getDataFolder(), "images" + File.separator + "Roboto-Thin.ttf")).deriveFont(35f));
                 g.drawString(u.getName(), 320, 365);
 
-                if(Main.getDatabase().getUserProfile(u).isPremiumActive()) {
+                if(Main.getDatabase().getUserProfile(u).userPremium()) {
                     BufferedImage badge = ImageUtils.resize(ImageIO.read(new File(Main.getDataFolder(), "images" + File.separator + "badge.png")), 300, 200);
                     g.drawImage(badge,490,inputImage.getMinY() + 10, null);
                 }
