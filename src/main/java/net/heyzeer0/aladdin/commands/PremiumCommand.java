@@ -33,8 +33,6 @@ public class PremiumCommand implements CommandExecutor {
             b.setColor(Color.GREEN);
             b.setTitle(lp.get("command.premium.features.embed.title"));
             b.setDescription(String.format(lp.get("command.premium.features.embed.description"),
-                    e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "playlist",
-                    e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "playlist",
                     e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play",
                     e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "play",
                     e.getGuildProfile().getConfigValue(GuildConfig.PREFIX) + "volume",

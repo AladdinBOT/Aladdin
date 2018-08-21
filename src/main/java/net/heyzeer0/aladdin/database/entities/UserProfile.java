@@ -6,12 +6,10 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.configs.instances.BotConfig;
-import net.heyzeer0.aladdin.database.entities.profiles.PlaylistTrackProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static com.rethinkdb.RethinkDB.r;
 
@@ -35,24 +33,21 @@ public class UserProfile implements ManagedObject {
     String osuUsername;
     ArrayList<String> recommendedBeatmaps = new ArrayList<>();
 
-    HashMap<String, ArrayList<PlaylistTrackProfile>> playlist;
-
     public UserProfile(User u) {
-        this(u.getId(), 0, false, 0, false, new HashMap<>(), false, "", new ArrayList<>());
+        this(u.getId(), 0, false, 0, false, false, "", new ArrayList<>());
     }
 
     public UserProfile(String id) {
-        this(id, 0, false, 0, false, new HashMap<>(), false, "", new ArrayList<>());
+        this(id, 0, false, 0, false, false, "", new ArrayList<>());
     }
 
-    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "playlist", "trialPremium", "osuUsername", "recommendedBeatmaps"})
-    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, HashMap<String, ArrayList<PlaylistTrackProfile>> playlist, boolean trialPremium, String osuUsername, ArrayList<String> recommendedBeatmaps) {
+    @ConstructorProperties({"id", "premiumKeys", "premiumActive", "premiumTime", "autoRenew", "trialPremium", "osuUsername", "recommendedBeatmaps"})
+    public UserProfile(String id, Integer premiumKeys, boolean premiumActive, long premiumTime, boolean autoRenew, boolean trialPremium, String osuUsername, ArrayList<String> recommendedBeatmaps) {
         this.id = id;
         this.premiumKeys = premiumKeys;
         this.premiumActive = premiumActive;
         this.premiumTime = premiumTime;
         this.autoRenew = autoRenew;
-        this.playlist = playlist;
         this.trialPremium = trialPremium;
         this.osuUsername = osuUsername;
         this.recommendedBeatmaps = recommendedBeatmaps;
@@ -169,52 +164,6 @@ public class UserProfile implements ManagedObject {
     public void addKeys(Integer amount) {
         premiumKeys+= amount;
         saveAsync();
-    }
-
-    public boolean createPlaylist(String name) {
-        if(playlist.containsKey(name)) {
-            return false;
-        }
-
-        playlist.put(name, new ArrayList<>());
-        saveAsync();
-        return true;
-    }
-
-    public boolean deletePlaylist(String name) {
-        if(!playlist.containsKey(name)) {
-            return false;
-        }
-
-        playlist.remove(name);
-        saveAsync();
-        return true;
-    }
-
-    public boolean addTrackToPlaylist(String playlistn, String name, String duration, String url) {
-        if(!playlist.containsKey(playlistn)) {
-            return false;
-        }
-        ArrayList<PlaylistTrackProfile> tracks = playlist.get(playlistn);
-        tracks.add(new PlaylistTrackProfile(name, duration, url));
-
-        playlist.put(playlistn, tracks);
-        saveAsync();
-        return true;
-    }
-
-    public boolean removeTrackFromPlaylist(String playlistn, int id) {
-        if(!playlist.containsKey(playlistn)) {
-            return false;
-        }
-
-        if(playlist.get(playlistn).size() < (id)) {
-            return false;
-        }
-
-        playlist.get(playlistn).remove((id));
-        saveAsync();
-        return true;
     }
 
     @Override
