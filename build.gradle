@@ -39,7 +39,7 @@ dependencies {
     compile 'org.discordbots:DBL-Java-Library:+'
     compile 'com.github.taycaldwell:riot-api-java:+'
     compile 'net.heyzeer0.papi:PaladinsAPI:+'
-    compile 'com.github.FredBoat:Lavalink-Client:+'
+    compile 'com.github.FredBoat:Lavalink-Client:-SNAPSHOT'
 }
 
 
