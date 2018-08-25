@@ -106,6 +106,12 @@ public class SubscriptionManager {
 
                     for(String userId : subscriptions.keySet()) {
                         User u = Main.getUserById(userId);
+
+                        if(u == null) {
+                            subscriptions.remove(userId);
+                            return;
+                        }
+
                         List<Guild> mutual = Main.getMutualGuilds(u);
                         SubscriptionProfile pf = subscriptions.get(userId);
 
