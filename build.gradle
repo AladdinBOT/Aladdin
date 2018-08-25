@@ -36,7 +36,7 @@ dependencies {
     compile 'com.udojava:EvalEx:1.0'
     compile 'org.json:json:20170516'
     compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'com.github.natanbc:discordbots-api:+'
+    compile 'org.discordbots:DBL-Java-Library:+'
     compile 'com.github.taycaldwell:riot-api-java:+'
     compile 'net.heyzeer0.papi:PaladinsAPI:+'
     compile 'com.github.FredBoat:Lavalink-Client:+'
