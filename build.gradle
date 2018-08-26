@@ -39,7 +39,7 @@ dependencies {
     compile 'com.github.taycaldwell:riot-api-java:+'
     compile 'net.heyzeer0.papi:PaladinsAPI:+'
     compile 'com.github.FredBoat:Lavalink-Client:-SNAPSHOT'
-    compile 'net.dv8tion:JDA:3.7.1._401'
+    compile 'net.dv8tion:JDA:3.7.1_401'
 }
 
 
