@@ -21,7 +21,6 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.math.BigInteger;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -202,15 +201,12 @@ public class Utils {
             while ((str = in.readLine()) != null) {
                 raw.add(str);
             }
-        } catch (MalformedURLException e) {
-
-        } catch (IOException e) {
-
+        } catch (IOException ignored) {
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException ex) {}
+                } catch (IOException ignored) {}
             }
         }
         return raw;

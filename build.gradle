@@ -27,7 +27,6 @@ repositories {
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'commons-io:commons-io:2.5'
-    compile 'net.dv8tion:JDA:+'
     compile 'com.rethinkdb:rethinkdb-driver:2.3.3'
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1'
     compile 'org.projectlombok:lombok:1.16.16'
@@ -40,6 +39,7 @@ dependencies {
     compile 'com.github.taycaldwell:riot-api-java:+'
     compile 'net.heyzeer0.papi:PaladinsAPI:+'
     compile 'com.github.FredBoat:Lavalink-Client:-SNAPSHOT'
+    compile 'net.dv8tion:JDA:3.7.1._401'
 }
 
 
