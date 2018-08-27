@@ -146,6 +146,8 @@ public class OsuCommand implements CommandExecutor {
                             user_image = ImageUtils.resize(user_image, 128, 128);
                         }
                         g2d.drawImage(user_image, 52, 31, null);
+                    }else{
+                        user_image = ImageUtils.getImageFromUrl("https://osu.ppy.sh/images/layout/avatar-guest.png");
                     }
 
                     g2d.setFont(italic.deriveFont(45.79f));
@@ -276,6 +278,8 @@ public class OsuCommand implements CommandExecutor {
                             user_image = ImageUtils.resize(user_image, 128, 128);
                         }
                         g2d.drawImage(user_image, 52, 31, null);
+                    }else{
+                       user_image = ImageUtils.getImageFromUrl("https://osu.ppy.sh/images/layout/avatar-guest.png");
                     }
 
                     g2d.setFont(italic.deriveFont(45.79f));
@@ -292,6 +296,7 @@ public class OsuCommand implements CommandExecutor {
 
                         int x = 212;
                         for(OsuMods mod : mp.getMods()) {
+                            if(mod.getImage() == null) continue;
                             BufferedImage modImg = ImageUtils.resize(mod.getImage(), 36, 25);
                             if(modImg == null) continue;
 
@@ -368,9 +373,9 @@ public class OsuCommand implements CommandExecutor {
                     BufferedImage user_image = ImageUtils.getImageFromUrl("https://a.ppy.sh/" + pf.getUserid());
                     BufferedImage flag = ImageUtils.getImageFromUrl("https://osu.ppy.sh/images/flags/" + pf.getCountry().toUpperCase() + ".png");
 
-                    if(user_image == null || flag == null) {
-                        return;
-                    }
+                    if(user_image == null) user_image = ImageUtils.getImageFromUrl("https://osu.ppy.sh/images/layout/avatar-guest.png");
+
+                    if(flag == null) flag = ImageUtils.getImageFromUrl("https://osu.ppy.sh/images/flags/XX.png");
 
                     if(user_image.getHeight() != 128 || user_image.getWidth() != 128) {
                         user_image = ImageUtils.resize(user_image, 128, 128);
