@@ -21,6 +21,12 @@ public class PlayCommand implements CommandExecutor {
     @Command(command = "play", description = "command.music.play.description", type = CommandType.MUSIC, parameters = {"name/url"},
             usage = "a!play Thunder - Imagine Dragons", aliasses = {"p"})
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
+        if (!e.getMember().getVoiceState().inVoiceChannel() || !Main.getMusicManager().getGuildController(e.getGuild()).getChannelName().equals(e.getMember().getVoiceState().getChannel().getName())) {
+            if(!e.hasPermission("command.skip.overpass")) {
+                e.sendMessage(lp.get("command.music.skip.error.notonchannel"));
+                return new CommandResult((CommandResultEnum.SUCCESS));
+            }
+        }
          e.sendPureMessage(lp.get("command.music.play.success", args.getCompleteAfter(0))).queue(msg -> {
              Main.getMusicManager().addToQueue(e.getAuthor(), msg, args.getCompleteAfter(0));
              msg.delete().queueAfter(30, TimeUnit.SECONDS);
