@@ -44,7 +44,7 @@ public class Main {
     private static AladdinData data;
     private static MusicManager musicManager;
 
-    public static String version = "2.0.1";
+    public static String version = "2.0.2";
 
     public static void main(String args[]) {
         try{
