@@ -30,7 +30,7 @@ public class PlayCommand implements CommandExecutor {
                 }
             }
         }
-        
+
          e.sendPureMessage(lp.get("command.music.play.success", args.getCompleteAfter(0))).queue(msg -> {
              Main.getMusicManager().addToQueue(e.getAuthor(), msg, args.getCompleteAfter(0));
              msg.delete().queueAfter(30, TimeUnit.SECONDS);

@@ -18,7 +18,7 @@ import java.math.BigDecimal;
  */
 public class MathCommand implements CommandExecutor {
 
-    @Command(command = "mat", description = "command.math.description", aliasses = {"math", "matematica"}, parameters = {"operação"}, type = CommandType.MISCELLANEOUS,
+    @Command(command = "math", description = "command.math.description", aliasses = {"mat", "matematic"}, parameters = {"operation"}, type = CommandType.MISCELLANEOUS,
             usage = "a!mat 10+10")
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         String conta = args.getComplete().replace(" ", "");
