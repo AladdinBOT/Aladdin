@@ -21,6 +21,10 @@ public class OsuManager {
         OsuPlayerProfile profile = new OsuPlayerProfile(user);
         String website = new Router("https://osu.ppy.sh/api/get_user?k=" + ApiKeysConfig.osu_api_key + "&u=" + user + (id ? "&type=id" : "")).getResponse().getResult();
 
+        if(website.equals("[]")) {
+            return null;
+        }
+
         JSONObject json = new JSONObject(website.substring(1, website.length()-1));
 
         profile.userid = json.getString("user_id");

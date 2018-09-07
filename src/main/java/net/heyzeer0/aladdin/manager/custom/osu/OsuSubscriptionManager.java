@@ -24,7 +24,6 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.*;
-import java.net.UnknownHostException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +36,8 @@ public class OsuSubscriptionManager {
 
     private static HashMap<String, ArrayList<String>> subscription;
     private static ArrayList<String> sended_ids = new ArrayList<>();
+
+    private static HashMap<String, Long> last_pp = new HashMap<>();
 
     public static final DecimalFormat decimalFormat = new DecimalFormat("##.##");
 
@@ -93,12 +94,17 @@ public class OsuSubscriptionManager {
                     for (String user : subscription.keySet()) {
                         try {
                             ArrayList<OsuMatchProfile> ls = OsuManager.getTop50FromPlayer(user);
+                            OsuPlayerProfile pp = OsuManager.getUserProfile(user, false);
+
                             for (int i = 0; i < ls.size(); i++) {
                                 OsuMatchProfile mp = ls.get(i);
                                 if (!sended_ids.contains(mp.toString())) {
                                     sended_ids.add(mp.toString());
 
-                                    OsuPlayerProfile pp = OsuManager.getUserProfile(mp.getUser_id(), true);
+                                    if(pp == null) {
+                                        toRemove.add(user);
+                                        continue;
+                                    }
                                     OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
 
                                     String mods = "";
@@ -164,7 +170,7 @@ public class OsuSubscriptionManager {
                                     for (String usr : subscription.get(user)) {
                                         User u = Main.getUserById(usr);
 
-                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New rank #" + (i2 + 1) + " for " + pp.getNome()).queue(v -> {
+                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New rank #" + (i2 + 1) + " for " + pp.getNome() + "(+" + (Long.valueOf(pp.getPp_raw()) - last_pp.get(pp.getUserid())) + "pp)").queue(v -> {
                                         }, k -> {
                                             if (removeUsers.containsKey(user)) {
                                                 removeUsers.get(user).add(usr);
@@ -186,12 +192,9 @@ public class OsuSubscriptionManager {
 
                                 }
                             }
+
+                            last_pp.put(pp.userid, Long.valueOf(pp.getPp_raw()));
                         } catch (Exception ex) {
-                            if(!ex.getMessage().contains("HTTP response") && !ex.getMessage().contains("Premature EOF") && !(ex instanceof UnknownHostException)) {
-                                Main.getLogger().exception(ex);
-                                ex.printStackTrace();
-                                toRemove.add(user);
-                            }
                         }
                     }
 
