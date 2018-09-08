@@ -195,6 +195,7 @@ public class OsuSubscriptionManager {
 
                             last_pp.put(pp.userid, Long.valueOf(pp.getPp_raw()));
                         } catch (Exception ex) {
+                            Main.getLogger().exception(ex);
                         }
                     }
 
