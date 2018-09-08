@@ -37,7 +37,7 @@ public class OsuSubscriptionManager {
     private static HashMap<String, ArrayList<String>> subscription;
     private static ArrayList<String> sended_ids = new ArrayList<>();
 
-    private static HashMap<String, Long> last_pp = new HashMap<>();
+    private static HashMap<String, Float> last_pp = new HashMap<>();
 
     public static final DecimalFormat decimalFormat = new DecimalFormat("##.##");
 
@@ -170,7 +170,7 @@ public class OsuSubscriptionManager {
                                     for (String usr : subscription.get(user)) {
                                         User u = Main.getUserById(usr);
 
-                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New rank #" + (i2 + 1) + " for " + pp.getNome() + "(+" + (Long.valueOf(pp.getPp_raw()) - last_pp.get(pp.getUserid())) + "pp)").queue(v -> {
+                                        u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New rank #" + (i2 + 1) + " for " + pp.getNome() + "(+" + (Float.valueOf(pp.getPp_raw()) - last_pp.get(pp.getUserid())) + "pp)").queue(v -> {
                                         }, k -> {
                                             if (removeUsers.containsKey(user)) {
                                                 removeUsers.get(user).add(usr);
@@ -193,7 +193,7 @@ public class OsuSubscriptionManager {
                                 }
                             }
 
-                            last_pp.put(pp.userid, Long.valueOf(pp.getPp_raw()));
+                            last_pp.put(pp.userid, Float.valueOf(pp.getPp_raw()));
                         } catch (Exception ex) {
                             Main.getLogger().exception(ex);
                         }
