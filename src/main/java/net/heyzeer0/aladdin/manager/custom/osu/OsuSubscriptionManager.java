@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 09/09/18 10:23.
+ * Last Modification 09/09/18 10:18.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.manager.custom.osu;
 
 import net.dv8tion.jda.core.MessageBuilder;
@@ -28,10 +36,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by HeyZeer0 on 21/06/2018.
- * Copyright © HeyZeer0 - 2016
- */
 public class OsuSubscriptionManager {
 
     private static HashMap<String, ArrayList<String>> subscription;
@@ -194,9 +198,8 @@ public class OsuSubscriptionManager {
                             }
 
                             last_pp.put(pp.userid, Float.valueOf(pp.getPp_raw()));
-                        } catch (Exception ex) {
-                            Main.getLogger().exception(ex);
-                        }
+                        }catch (IOException ignored) {
+                        }catch (Exception ex) { Main.getLogger().exception(ex); }
                     }
 
                     if (toRemove.size() > 0) {

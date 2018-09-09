@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 09/09/18 10:23.
+ * Last Modification 09/09/18 10:19.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.profiles;
 
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -11,10 +19,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by HeyZeer0 on 05/06/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class LogProfile {
 
     private static DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -59,8 +63,9 @@ public class LogProfile {
     public void exception(Exception ex) {
         EmbedBuilder b = new EmbedBuilder();
         b.setTitle("New exception caught");
-        b.setDescription("```" + Utils.getStackTrace(ex) + "```");
+        b.setDescription("```fix\n" + Utils.getStackTrace(ex) + "```");
         b.setFooter("Ocorrido as " + dateFormat.format(new Date()), Main.getShards()[0].getJDA().getSelfUser().getEffectiveAvatarUrl());
+        b.setColor(Color.GREEN);
 
         Main.getTextChannelById(BotConfig.bot_guildlog_id).sendMessage("<@" + BotConfig.bot_owner + ">").queue();
         Main.getTextChannelById(BotConfig.bot_guildlog_id).sendMessage(b.build()).queue();

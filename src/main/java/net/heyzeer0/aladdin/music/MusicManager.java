@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 09/09/18 10:23.
+ * Last Modification 09/09/18 10:17.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration;
@@ -20,10 +28,6 @@ import org.apache.http.client.utils.URIBuilder;
 
 import java.util.HashMap;
 
-/**
- * Created by HeyZeer0 on 05/08/2018.
- * Copyright © HeyZeer0 - 2016
- */
 public class MusicManager {
 
     JdaLavalink lavaLink;
@@ -41,14 +45,13 @@ public class MusicManager {
                 for(String node : nodes.split(",")) {
                     if(node.startsWith(" ")) node = node.substring(1);
                     String[] spplited = node.split("::");
-                    Main.getLogger().warn("|" + spplited[0] + "|" + spplited[1] + "|" + spplited[2] + "|");
                     lavaLink.addNode(new URIBuilder().setHost(spplited[0]).setPort(Integer.valueOf(spplited[1])).build(), spplited[2]);
                 }
             }else{
                 String[] spplited = nodes.split("::");
                 lavaLink.addNode(new URIBuilder().setHost(spplited[0]).setPort(Integer.valueOf(spplited[1])).build(), spplited[2]);
             }
-        }catch (Exception ex) { }
+        }catch (Exception ex) { ex.printStackTrace(); }
 
         playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.MEDIUM);
 
