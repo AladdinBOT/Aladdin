@@ -1,6 +1,6 @@
 /*
- * Developed by HeyZeer0 on 09/09/18 10:23.
- * Last Modification 09/09/18 10:18.
+ * Developed by HeyZeer0 on 16/09/18 09:12.
+ * Last Modification 16/09/18 09:12.
  *
  * Copyright HeyZeer0 (c) 2018.
  * This project is over AGLP 3.0 License.
@@ -97,18 +97,19 @@ public class OsuSubscriptionManager {
                 if (subscription.size() > 0) {
                     for (String user : subscription.keySet()) {
                         try {
-                            ArrayList<OsuMatchProfile> ls = OsuManager.getTop50FromPlayer(user);
                             OsuPlayerProfile pp = OsuManager.getUserProfile(user, false);
+                            if(pp == null) {
+                                toRemove.add(user);
+                                continue;
+                            }
+
+                            ArrayList<OsuMatchProfile> ls = OsuManager.getTop50FromPlayer(user);
 
                             for (int i = 0; i < ls.size(); i++) {
                                 OsuMatchProfile mp = ls.get(i);
                                 if (!sended_ids.contains(mp.toString())) {
                                     sended_ids.add(mp.toString());
 
-                                    if(pp == null) {
-                                        toRemove.add(user);
-                                        continue;
-                                    }
                                     OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
 
                                     String mods = "";
