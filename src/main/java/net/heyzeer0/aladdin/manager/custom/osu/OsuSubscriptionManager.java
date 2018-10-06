@@ -1,6 +1,6 @@
 /*
- * Developed by HeyZeer0 on 16/09/18 09:12.
- * Last Modification 16/09/18 09:12.
+ * Developed by HeyZeer0 on 10/6/18 10:44 AM.
+ * Last Modification 10/6/18 10:44 AM.
  *
  * Copyright HeyZeer0 (c) 2018.
  * This project is over AGLP 3.0 License.
@@ -118,6 +118,10 @@ public class OsuSubscriptionManager {
                                     }
 
                                     OppaiInfo oi = OppaiManager.getMapInfo(mp.getBeatmap_id(), mods);
+
+                                    if(oi == null) {
+                                        continue;
+                                    }
 
                                     double percentage = calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
 

@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 10/6/18 10:44 AM.
+ * Last Modification 10/6/18 10:44 AM.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -35,10 +43,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by HeyZeer0 on 30/09/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class OsuCommand implements CommandExecutor {
 
     public static Font italic;
@@ -244,6 +248,11 @@ public class OsuCommand implements CommandExecutor {
                     OsuBeatmapProfile bp = OsuManager.getBeatmap(mp.getBeatmap_id());
 
                     OppaiInfo oi = OppaiManager.getMapInfo(mp.getBeatmap_id(), OsuMods.asString(mp.getMods()));
+                    if(oi == null) {
+                        e.sendMessage(lp.get("command.osu.recent.error.nomatches", nick));
+                        return;
+                    }
+                    
                     OppaiInfo full = OppaiManager.getMapInfo(mp.getBeatmap_id(), mp);
 
                     double percentage = OsuSubscriptionManager.calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));

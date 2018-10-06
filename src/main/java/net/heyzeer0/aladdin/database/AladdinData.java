@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 10/6/18 10:44 AM.
+ * Last Modification 10/6/18 10:44 AM.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.database;
 
 import com.rethinkdb.net.Connection;
@@ -20,10 +28,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static com.rethinkdb.RethinkDB.r;
-/**
- * Created by HeyZeer0 on 19/09/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class AladdinData {
 
     public Connection conn;
@@ -69,9 +73,9 @@ public class AladdinData {
     }
 
     public OppaiInfo getOsuMapWD(String map_id, String mods) throws Exception {
+        if(map_id == null || mods == null | map_id.equals("") || mods.equals("")) return null;
         Optional<OppaiInfo> info = osumaps.stream().filter(c -> c.getId().equals(Utils.toMD5(map_id + mods))).findFirst();
         return info.orElse(OppaiManager.getMapInfoPure(map_id, mods));
-
     }
 
     public OppaiInfo getOsuMap(String map_id, String mods) {
