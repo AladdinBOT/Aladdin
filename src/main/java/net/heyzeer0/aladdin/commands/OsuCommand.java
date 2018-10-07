@@ -1,5 +1,5 @@
 /*
- * Developed by HeyZeer0 on 10/6/18 10:44 AM.
+ * Developed by HeyZeer0 on 10/7/18 11:09 AM.
  * Last Modification 10/6/18 10:44 AM.
  *
  * Copyright HeyZeer0 (c) 2018.
@@ -252,7 +252,7 @@ public class OsuCommand implements CommandExecutor {
                         e.sendMessage(lp.get("command.osu.recent.error.nomatches", nick));
                         return;
                     }
-                    
+
                     OppaiInfo full = OppaiManager.getMapInfo(mp.getBeatmap_id(), mp);
 
                     double percentage = OsuSubscriptionManager.calculatePercentage(Integer.valueOf(mp.getCount50()), Integer.valueOf(mp.getCount100()), Integer.valueOf(mp.getCount300()), Integer.valueOf(mp.getCountmiss()));
