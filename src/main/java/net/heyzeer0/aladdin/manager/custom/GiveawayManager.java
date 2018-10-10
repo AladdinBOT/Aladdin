@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 10/10/18 8:52 PM.
+ * Last Modification 10/10/18 8:51 PM.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.manager.custom;
 
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -20,10 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by HeyZeer0 on 14/11/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class GiveawayManager {
 
     public static HashMap<String, GiveawayProfile> giveways = new HashMap<>();
@@ -147,7 +151,7 @@ public class GiveawayManager {
 
                             msg.editMessage(eb.build()).queue();
                         }else{
-
+                            toCleanup.add(id);
                             Message msg = ch.getMessageById(g.getMessageID()).complete();
 
                             for(MessageReaction rc : msg.getReactions()) {
