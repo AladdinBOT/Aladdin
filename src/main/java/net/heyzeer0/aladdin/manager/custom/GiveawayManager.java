@@ -1,6 +1,6 @@
 /*
- * Developed by HeyZeer0 on 10/10/18 8:52 PM.
- * Last Modification 10/10/18 8:51 PM.
+ * Developed by HeyZeer0 on 10/10/18 8:57 PM.
+ * Last Modification 10/10/18 8:57 PM.
  *
  * Copyright HeyZeer0 (c) 2018.
  * This project is over AGLP 3.0 License.
@@ -152,36 +152,39 @@ public class GiveawayManager {
                             msg.editMessage(eb.build()).queue();
                         }else{
                             toCleanup.add(id);
-                            Message msg = ch.getMessageById(g.getMessageID()).complete();
 
-                            for(MessageReaction rc : msg.getReactions()) {
-                                if(rc.getReactionEmote().getName().equalsIgnoreCase("⏭")) {
-                                    List<User> usr = rc.getUsers().complete();
+                            try{
+                                Message msg = ch.getMessageById(g.getMessageID()).complete();
 
-                                    for(User u : usr) {
-                                        if(!Main.getDatabase().getGuildProfile(ch.getGuild()).hasPermission(ch.getGuild().getMember(u), "command.giveaway.takewinner")) {
-                                            continue;
+                                for(MessageReaction rc : msg.getReactions()) {
+                                    if(rc.getReactionEmote().getName().equalsIgnoreCase("⏭")) {
+                                        List<User> usr = rc.getUsers().complete();
+
+                                        for(User u : usr) {
+                                            if(!Main.getDatabase().getGuildProfile(ch.getGuild()).hasPermission(ch.getGuild().getMember(u), "command.giveaway.takewinner")) {
+                                                continue;
+                                            }
+                                            g.endNow();
                                         }
-                                        g.endNow();
                                     }
                                 }
-                            }
 
-                            EmbedBuilder eb = new EmbedBuilder();
-                            eb.setColor(Color.GREEN);
-                            eb.setTitle(EmojiList.MONEY + " " + g.getTitle());
-                            eb.setDescription("Para participar clique na reação :white_check_mark:");
-                            eb.setFooter("Iniciado por " + g.getAuthorName(), g.getAuthorAvatar());
-                            String premios = "";
+                                EmbedBuilder eb = new EmbedBuilder();
+                                eb.setColor(Color.GREEN);
+                                eb.setTitle(EmojiList.MONEY + " " + g.getTitle());
+                                eb.setDescription("Para participar clique na reação :white_check_mark:");
+                                eb.setFooter("Iniciado por " + g.getAuthorName(), g.getAuthorAvatar());
+                                String premios = "";
 
-                            for(Prize p : g.getPrizes()) {
-                                premios = premios + " - " + p.getName() + "\n";
-                            }
+                                for(Prize p : g.getPrizes()) {
+                                    premios = premios + " - " + p.getName() + "\n";
+                                }
 
-                            eb.addField(":tada: Premios", premios, false);
-                            eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis(), Main.getDatabase().getGuildProfile(msg.getGuild()).getSelectedLanguage().getLangProfile()), false);
+                                eb.addField(":tada: Premios", premios, false);
+                                eb.addField(":stopwatch: Tempo restante", Utils.getTime(g.getEndTime() - System.currentTimeMillis(), Main.getDatabase().getGuildProfile(msg.getGuild()).getSelectedLanguage().getLangProfile()), false);
 
-                            msg.editMessage(eb.build()).queue();
+                                msg.editMessage(eb.build()).queue();
+                            }catch (Exception ex) { }
                         }
                     }
                 }
