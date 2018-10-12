@@ -1,6 +1,6 @@
 /*
- * Developed by HeyZeer0 on 10/10/18 8:57 PM.
- * Last Modification 10/10/18 8:57 PM.
+ * Developed by HeyZeer0 on 10/12/18 11:10 AM.
+ * Last Modification 10/12/18 11:10 AM.
  *
  * Copyright HeyZeer0 (c) 2018.
  * This project is over AGLP 3.0 License.
@@ -68,6 +68,7 @@ public class GiveawayManager {
             if(giveways.size() <= 0) {
                 if(!already_requested) {
                     giveways = Main.getDatabase().getServer().getGiveaways();
+                    giveways.keySet().stream().filter(c -> c.equals("491031048306819072")).findFirst().ifPresent(c -> giveways.remove(c));
 
                     already_requested = true;
                 }
