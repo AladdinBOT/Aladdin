@@ -1,6 +1,7 @@
 package net.heyzeer0.aladdin.commands;
 
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Icon;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
@@ -36,7 +37,19 @@ public class AdminCommand implements CommandExecutor {
     @Command(command = "admin", description = "Comandos sobre o bot", type = CommandType.BOT_ADMIN, isAllowedToDefault = false,
             usage = "", sendTyping = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lang) {
+        if(args.get(0).equalsIgnoreCase("updateAvatar")) {
+            File folder = new File(Main.getDataFolder(), "avatars");
 
+            try{
+                e.getJDA().getSelfUser().getManager().setAvatar(Icon.from(new File(folder, args.get(1)))).queue();
+                e.sendMessage(EmojiList.CORRECT + " Success.");
+            }catch (Exception ex) {
+                e.sendMessage(ex.getMessage());
+            }
+
+
+            return new CommandResult(CommandResultEnum.SUCCESS);
+        }
         if(args.get(0).equalsIgnoreCase("stringSizeTest")) {
             BufferedImage base = new BufferedImage(128, 128, 2);
             Graphics2D g = base.createGraphics();
