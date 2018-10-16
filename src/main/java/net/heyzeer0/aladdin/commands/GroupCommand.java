@@ -3,8 +3,7 @@ package net.heyzeer0.aladdin.commands;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.heyzeer0.aladdin.database.entities.profiles.GroupProfile;
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
-import net.heyzeer0.aladdin.enums.CommandType;command.group.info.embed.descriptio
-
+import net.heyzeer0.aladdin.enums.CommandType;
 import net.heyzeer0.aladdin.enums.GuildConfig;
 import net.heyzeer0.aladdin.interfaces.Command;
 import net.heyzeer0.aladdin.interfaces.CommandExecutor;
