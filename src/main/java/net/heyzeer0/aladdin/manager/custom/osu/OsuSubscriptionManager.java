@@ -178,6 +178,15 @@ public class OsuSubscriptionManager {
                                     final int i2 = i;
                                     for (String usr : subscription.get(user)) {
                                         User u = Main.getUserById(usr);
+                                        if(u == null) {
+                                            if (removeUsers.containsKey(user)) {
+                                                removeUsers.get(user).add(usr);
+                                            } else {
+                                                ArrayList<String> rmv = new ArrayList<>();
+                                                rmv.add(usr);
+                                                removeUsers.put(user, rmv);
+                                            }
+                                        }
 
                                         u.openPrivateChannel().queue(c -> sendImagePure(c, area, EmojiList.CORRECT + " New rank #" + (i2 + 1) + " for " + pp.getNome() + " (+" + (Float.valueOf(pp.getPp_raw()) - last_pp.get(pp.getUserid())) + "pp)").queue(v -> {
                                         }, k -> {
