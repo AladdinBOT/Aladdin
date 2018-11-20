@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 11/20/18 1:09 PM.
+ * Last Modification 11/20/18 1:08 PM.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.commands;
 
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
@@ -12,17 +20,13 @@ import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.utils.builders.GiveawayBuilder;
 
-/**
- * Created by HeyZeer0 on 14/11/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class GiveawayCommand implements CommandExecutor {
 
     @Command(command = "giveaway", description = "Faça sorteios automaticos!", parameters = {"create/formula"}, extra_perm = {"takewinner"}, type = CommandType.MISCELLANEOUS,
             usage = "a!giveaway create", isAllowedToDefault = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
         if(args.get(0).equalsIgnoreCase("create")) {
-            if(GiveawayManager.giveways.containsKey(e.getAuthor().getId())) {
+            if(GiveawayManager.giveaways.containsKey(e.getAuthor().getId())) {
                 e.sendMessage(lp.get("command.giveaway.create.alreadybuilding"));
                 return new CommandResult((CommandResultEnum.SUCCESS));
             }
