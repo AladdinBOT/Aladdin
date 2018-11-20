@@ -29,7 +29,7 @@
     <orderEntry type="library" name="Gradle: com.udojava:EvalEx:1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.discordbots:DBL-Java-Library:2.0.1" level="project" />
     <orderEntry type="library" name="Gradle: net.heyzeer0.papi:PaladinsAPI:1.0.0_18" level="project" />
-    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.8.0_436" level="project" />
+    <orderEntry type="library" name="Gradle: net.dv8tion:JDA:3.8.1_446" level="project" />
     <orderEntry type="library" name="Gradle: org.json:json:20180130" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />

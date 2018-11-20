@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 11/20/18 1:01 PM.
+ * Last Modification 11/20/18 12:56 PM.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.database.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,11 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.rethinkdb.RethinkDB.r;
-
-/**
- * Created by HeyZeer0 on 19/09/2017.
- * Copyright © HeyZeer0 - 2016
- */
 
 @Getter
 public class ServerProfile implements ManagedObject {
@@ -90,8 +93,8 @@ public class ServerProfile implements ManagedObject {
         saveAsync();
     }
 
-    public void updateGiveways(HashMap<String, GiveawayProfile> giveways) {
-        this.giveaways = giveways;
+    public void updateGiveaways(HashMap<String, GiveawayProfile> giveaways) {
+        this.giveaways = giveaways;
         saveAsync();
     }
 
