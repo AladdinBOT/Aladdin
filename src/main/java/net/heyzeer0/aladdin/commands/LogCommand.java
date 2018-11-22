@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 11/22/18 8:05 PM.
+ * Last Modification 11/22/18 8:05 PM.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.commands;
 
 import net.heyzeer0.aladdin.enums.CommandResultEnum;
@@ -11,10 +19,6 @@ import net.heyzeer0.aladdin.profiles.commands.CommandResult;
 import net.heyzeer0.aladdin.profiles.commands.MessageEvent;
 import net.heyzeer0.aladdin.profiles.utilities.Paginator;
 
-/**
- * Created by HeyZeer0 on 27/10/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class LogCommand implements CommandExecutor {
 
     @Command(command = "log", description = "command.log.description", parameters = {"setchannel/modules"}, type = CommandType.ADMNISTRATIVE, isAllowedToDefault = false,
@@ -42,7 +46,7 @@ public class LogCommand implements CommandExecutor {
                 Paginator ph = new Paginator(e, lp.get("command.log.modules.list.paginator.title"));
 
                 for(LogModules cfg : LogModules.values()) {
-                    ph.addPage(String.format(lp.get("command.log.modules.list.paginator.title"), cfg.toString().toLowerCase(), cfg.getDescription(), e.getGuildProfile().isLogModuleActive(cfg)));
+                    ph.addPage(String.format(lp.get("command.log.modules.list.paginator.page"), cfg.toString().toLowerCase(), cfg.getDescription(), e.getGuildProfile().isLogModuleActive(cfg)));
                 }
 
                 ph.start();
