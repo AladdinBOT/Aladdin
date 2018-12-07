@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 12/7/18 7:51 PM.
+ * Last Modification 12/7/18 7:49 PM.
+ *
+ * Copyright HeyZeer0 (c) 2018.
+ * This project is over AGLP 3.0 License.
+ */
+
 buildscript {
     repositories {
         mavenCentral()
@@ -38,7 +46,7 @@ dependencies {
     compile 'org.discordbots:DBL-Java-Library:+'
     compile 'com.github.taycaldwell:riot-api-java:+'
     compile 'net.heyzeer0.papi:PaladinsAPI:+'
-    compile 'com.github.FredBoat:Lavalink-Client:125b074065'
+    compile 'com.github.FredBoat:Lavalink-Client:-SNAPSHOT'
     compile 'net.dv8tion:JDA:+'
 }
 
