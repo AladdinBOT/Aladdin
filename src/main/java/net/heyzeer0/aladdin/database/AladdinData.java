@@ -98,7 +98,24 @@ public class AladdinData {
     }
 
     public OppaiInfo getMapByPPRange(int pp_range, ArrayList<String> ignored) {
-        Optional<OppaiInfo> info = osumaps.stream().filter(c -> !ignored.contains(c.getId())).sorted(Comparator.comparingInt(v -> Math.abs(Math.round(v.getPp()) - pp_range))).limit(15).findAny();
+        Optional<OppaiInfo> info = osumaps
+                .stream()
+                .filter(
+                        c ->
+                                !ignored.contains(
+                                        c.getId()
+                                ))
+                .sorted(
+                        Comparator
+                                .comparingInt(
+                                v -> Math.abs
+                                        (Math.round(
+                                                v.getPp())
+                                                - pp_range)))
+                .limit(15)
+                .findAny();
+
+
         return info.orElse(null);
     }
 

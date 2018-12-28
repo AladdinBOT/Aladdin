@@ -118,10 +118,10 @@ public class Utils {
 
         for (int i = 0; i < 20; i++) {
             if (coloredDisplay > 0) {
-                healthbar += spacer;
-                coloredDisplay--;
-            } else {
-                healthbar += " ";
+                    healthbar += spacer;
+                    coloredDisplay--;
+                } else {
+                    healthbar += " ";
             }
         }
 
