@@ -5,7 +5,6 @@ import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.heyzeer0.aladdin.Main;
-import net.heyzeer0.aladdin.configs.instances.BotConfig;
 import net.heyzeer0.aladdin.utils.Utils;
 
 import java.awt.*;
@@ -27,8 +26,6 @@ public class CrashProfile {
     String memory = "";
     String java_version = "";
     File file;
-
-    String auto_solve = "Ainda não há uma resolução automatica para este crash, tomei a liberade de enviar ele ao meu autor.";
 
     String finallines;
     String hastebin_url = "Ocorreu um erro ao enviar para o hastebin.";
@@ -63,24 +60,6 @@ public class CrashProfile {
             }
         }catch (Exception e) {}finally {file.delete();}
 
-        if(finallines.toLowerCase().contains("pixel format not accelerated")) {
-            auto_solve = "Os drivers da sua placa de vídeo podem estar desatualizados. Atualize-os e tente novamente — caso não funcione, sua placa de vídeo não possui suporte ao OpenGL requisitado.";
-        }
-        if(finallines.toLowerCase().contains("already tesselating!")) {
-            auto_solve = "Este erro ocorre quando algo sobrepõe uma renderização. Normalmente não é necessário fazer nada, apenas reabrir seu jogo. Caso o problema persista, contate os moderadores.";
-        }
-        if(finallines.toLowerCase().contains("could not get provider type for dimension")) {
-            auto_solve = "Você encontra-se em uma dimensão inválida.  Para resolver, peça para um administrador te mover ao spawn.";
-        }
-        if(finallines.toLowerCase().contains("outofmemoryerror")) {
-            auto_solve = "Seu jogo possui pouca memória alocada (" + memory + "). Aumente essa quantidade e seu problema será resolvido.";
-        }
-        if(finallines.toLowerCase().contains("kihira.foxlib.client.TextureHelper$.getPlayerSkinAsBufferedImage".toLowerCase())) {
-            auto_solve = "Este crash ainda não possui nenhuma solução viável. É causado pelo foxlib, e suas falhas são relacionadas a tentar pegar a skin do jogador (talvez relacionado a jogadores piratas).";
-        }
-        if(finallines.toLowerCase().contains("IndexOutOfBoundsException".toLowerCase())) {
-            auto_solve = "Este crash está relacionado a cliques em slots inválidos. Existem diversas causas, mas é geralmente resolvido só de abrir o jogo novamente.";
-        }
 
 
         if(finallines != null) {
@@ -93,21 +72,16 @@ public class CrashProfile {
 
     public Message applyEmbed(GuildMessageReceivedEvent e) {
 
-        if(auto_solve.contains("tomei a liberade de enviar ele ao meu autor")) {
-            e.getJDA().getUserById(BotConfig.bot_owner).openPrivateChannel().queue(pv -> pv.sendMessage("Crash Solver não presente " + hastebin_url).queue());
-        }
-
         EmbedBuilder b = new EmbedBuilder();
 
         b.setTitle("Crash Report Utilities", null);
-        b.setDescription("Inspeção iniciada por ``" + e.getAuthor().getName() + "``");
+        b.setDescription("Started by ``" + e.getAuthor().getName() + "``");
         b.setThumbnail(e.getAuthor().getAvatarUrl());
         b.setColor(Color.GREEN);
 
-        b.addField("Versão do Minecraft", minecraft_version, true);
-        b.addField("Memória (U/L/M)", memory, true);
-        b.addField("Solução automatica", auto_solve, false);
-        b.addField("Versão do Java", java_version, true);
+        b.addField("Minecraft Version", minecraft_version, true);
+        b.addField("Memory (U/F/M)", memory, true);
+        b.addField("Java Version", java_version, true);
         b.addField("Hastebin", hastebin_url, true);
 
         b.setFooter("Aladdin v" + Main.version, e.getJDA().getSelfUser().getAvatarUrl());
