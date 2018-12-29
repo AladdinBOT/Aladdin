@@ -90,7 +90,7 @@ public class LogEvents implements EventListener {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(cache.getAuthor_name(), null, cache.getAuthor_url())
                                         .setColor(Color.RED)
-                                        .setDescription("The user " + cache.getAuthor_name() + " deleted his message ```" + cache.getMessage() + "```")
+                                        .setDescription("The user " + cache.getAuthor_name() + " deleted their message ```" + cache.getMessage() + "```")
                                         .setFooter("ID: " + cache.getAuthor_id() + " #" + ev.getChannel().getName(), null)); }
                 }catch (Exception ignored) {}
             }
@@ -106,7 +106,7 @@ public class LogEvents implements EventListener {
                         Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                                 new EmbedBuilder().setAuthor(ev.getAuthor().getName() + "#" + ev.getAuthor().getDiscriminator(), null, ev.getAuthor().getEffectiveAvatarUrl())
                                         .setColor(Color.YELLOW)
-                                        .setDescription("The user " + ev.getAuthor().getAsMention() + " changed his message from ```" + old_message.getMessage() + "```to```" + ev.getMessage().getContentDisplay() + "```")
+                                        .setDescription("The user " + ev.getAuthor().getAsMention() + " changed their message from ```" + old_message.getMessage() + "```to```" + ev.getMessage().getContentDisplay() + "```")
                                         .setFooter("ID: " + ev.getAuthor().getId() + " #" + ev.getChannel().getName(), null).setTimestamp(ev.getMessage().getEditedTime()));
                     }
                 }catch (Exception ignored) {}
@@ -157,7 +157,7 @@ public class LogEvents implements EventListener {
                             Main.getDatabase().getGuildProfile(g2).sendLogMessage(g2, inputImage,
                                     new EmbedBuilder().setAuthor(ev.getUser().getName() + "#" + ev.getUser().getDiscriminator(), null, ev.getUser().getEffectiveAvatarUrl())
                                             .setColor(Color.GREEN)
-                                            .setDescription(ev.getUser().getAsMention() + " Just changed his avatar")
+                                            .setDescription(ev.getUser().getAsMention() + " Just changed their avatar")
                                             .setFooter("ID: " + ev.getUser().getId(), null));
                         }
 
@@ -207,7 +207,7 @@ public class LogEvents implements EventListener {
                 Main.getDatabase().getGuildProfile(ev.getGuild()).sendLogMessage(ev.getGuild(),
                         new EmbedBuilder().setAuthor(ev.getUser().getName() + "#" + ev.getUser().getDiscriminator(), null, ev.getUser().getEffectiveAvatarUrl())
                                 .setColor(Color.YELLOW)
-                                .setDescription(ev.getUser().getAsMention() + " Changed his nick from ```" + ev.getPrevNick() + "```to```" + ev.getNewNick() + "```")
+                                .setDescription(ev.getUser().getAsMention() + " Changed their nick from ```" + ev.getPrevNick() + "```to```" + ev.getNewNick() + "```")
                                 .setFooter("ID: " + ev.getUser().getId(), null));
                 return;
             }
