@@ -1,7 +1,5 @@
 package net.heyzeer0.aladdin.database.entities.profiles;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
@@ -26,13 +24,11 @@ import java.util.regex.Pattern;
  * Created by HeyZeer0 on 19/09/2017.
  * Copyright © HeyZeer0 - 2016
  */
-@Getter
 public class StarboardProfile {
 
     public static Pattern urlpattern = Pattern.compile("(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))");
 
     String emote;
-    @Setter
     int amount;
     String channel_id;
 
@@ -259,4 +255,27 @@ public class StarboardProfile {
         return false;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getEmote() {
+        return emote;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public String getChannel_id() {
+        return channel_id;
+    }
+
+    public HashMap<String, String> getMessages() {
+        return messages;
+    }
+
+    public HashMap<String, String> getBlocked_channels() {
+        return blocked_channels;
+    }
 }

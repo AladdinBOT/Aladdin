@@ -9,7 +9,6 @@
 package net.heyzeer0.aladdin.database.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.database.entities.profiles.GiveawayProfile;
 import net.heyzeer0.aladdin.database.interfaces.ManagedObject;
@@ -22,7 +21,6 @@ import java.util.HashMap;
 
 import static com.rethinkdb.RethinkDB.r;
 
-@Getter
 public class ServerProfile implements ManagedObject {
 
     public static final String DB_TABLE = "server";
@@ -111,6 +109,34 @@ public class ServerProfile implements ManagedObject {
     public void updateOsuSubscriptions(HashMap<String, ArrayList<String>> osu_subscriptions) {
         this.osu_subscriptions = osu_subscriptions;
         saveAsync();
+    }
+
+    public ArrayList<String> getUsers_who_upvoted() {
+        return users_who_upvoted;
+    }
+
+    public ArrayList<ReminderProfile> getReminders() {
+        return reminders;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public HashMap<String, GiveawayProfile> getGiveaways() {
+        return giveaways;
+    }
+
+    public HashMap<String, SubscriptionProfile> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public ArrayList<String> getSendedIds() {
+        return sendedIds;
+    }
+
+    public HashMap<String, ArrayList<String>> getOsu_subscriptions() {
+        return osu_subscriptions;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.profiles.custom.osu;
 
-import lombok.Getter;
 import net.heyzeer0.aladdin.utils.Utils;
 
 import java.beans.ConstructorProperties;
@@ -10,7 +9,6 @@ import java.beans.ConstructorProperties;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Getter
 public class OppaiInfo {
 
     String id;
@@ -65,4 +63,123 @@ public class OppaiInfo {
         this.aim_pp = aim_pp; this.speed_pp = speed_pp; this.acc_pp = acc_pp; this.pp = pp;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getBeatmap_id() {
+        return beatmap_id;
+    }
+
+    public String getOppai_version() {
+        return oppai_version;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getErrstr() {
+        return errstr;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public String getMods_str() {
+        return mods_str;
+    }
+
+    public int getMods() {
+        return mods;
+    }
+
+    public double getOd() {
+        return od;
+    }
+
+    public double getAr() {
+        return ar;
+    }
+
+    public double getCs() {
+        return cs;
+    }
+
+    public double getHp() {
+        return hp;
+    }
+
+    public int getCombo() {
+        return combo;
+    }
+
+    public int getMax_combo() {
+        return max_combo;
+    }
+
+    public int getNum_circles() {
+        return num_circles;
+    }
+
+    public int getNum_sliders() {
+        return num_sliders;
+    }
+
+    public int getNum_spinners() {
+        return num_spinners;
+    }
+
+    public int getMisses() {
+        return misses;
+    }
+
+    public int getScore_version() {
+        return score_version;
+    }
+
+    public long getStars() {
+        return stars;
+    }
+
+    public long getSpeed_stars() {
+        return speed_stars;
+    }
+
+    public long getAim_stars() {
+        return aim_stars;
+    }
+
+    public int getNsingles() {
+        return nsingles;
+    }
+
+    public int getNsingles_threshold() {
+        return nsingles_threshold;
+    }
+
+    public long getAim_pp() {
+        return aim_pp;
+    }
+
+    public long getSpeed_pp() {
+        return speed_pp;
+    }
+
+    public long getAcc_pp() {
+        return acc_pp;
+    }
+
+    public long getPp() {
+        return pp;
+    }
 }

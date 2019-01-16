@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.profiles.custom.osu;
 
-import lombok.Getter;
 import net.heyzeer0.aladdin.enums.OsuMods;
 import net.heyzeer0.aladdin.utils.Utils;
 
@@ -11,7 +10,6 @@ import java.util.ArrayList;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Getter
 public class OsuMatchProfile {
 
     String beatmap_id;
@@ -52,5 +50,67 @@ public class OsuMatchProfile {
         return Utils.toMD5(new StringBuilder().append(beatmap_id).append(score).append(maxcombo).append(count300).append(count100).append(count50).append(countmiss).append(countkatu).append(countgeki).append(perfect).append(enabled_mods).append(user_id).append(date).append(rank).append(pp).toString().replace(" ", ""));
     }
 
+    public String getBeatmap_id() {
+        return beatmap_id;
+    }
 
+    public String getScore() {
+        return score;
+    }
+
+    public String getMaxcombo() {
+        return maxcombo;
+    }
+
+    public String getCount300() {
+        return count300;
+    }
+
+    public String getCount100() {
+        return count100;
+    }
+
+    public String getCount50() {
+        return count50;
+    }
+
+    public String getCountmiss() {
+        return countmiss;
+    }
+
+    public String getCountkatu() {
+        return countkatu;
+    }
+
+    public String getCountgeki() {
+        return countgeki;
+    }
+
+    public String getPerfect() {
+        return perfect;
+    }
+
+    public String getEnabled_mods() {
+        return enabled_mods;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public String getPp() {
+        return pp;
+    }
+
+    public ArrayList<OsuMods> getMods() {
+        return mods;
+    }
 }

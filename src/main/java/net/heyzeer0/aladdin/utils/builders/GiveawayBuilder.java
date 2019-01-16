@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.utils.builders;
 
-import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -21,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  * Created by HeyZeer0 on 17/11/2017.
  * Copyright © HeyZeer0 - 2016
  */
-@Getter
 public class GiveawayBuilder {
 
     public static HashMap<String, GiveawayBuilder> builders = new HashMap<>();
@@ -346,6 +344,50 @@ public class GiveawayBuilder {
             updateMessage(ev);
             return;
         }
+    }
+
+    public static HashMap<String, GiveawayBuilder> getBuilders() {
+        return builders;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getEnd_time() {
+        return end_time;
+    }
+
+    public TextChannel getCh() {
+        return ch;
+    }
+
+    public MessageEvent getE() {
+        return e;
+    }
+
+    public ArrayList<Prize> getPrizes() {
+        return prizes;
+    }
+
+    public String getBuilder_message_id() {
+        return builder_message_id;
+    }
+
+    public ActualPhase getPhase() {
+        return phase;
+    }
+
+    public Prize getAddPrize() {
+        return addPrize;
+    }
+
+    public String getLast_text_message_id() {
+        return last_text_message_id;
+    }
+
+    public LangProfile getLp() {
+        return lp;
     }
 
     enum ActualPhase {

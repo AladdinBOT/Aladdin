@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.profiles.custom;
 
-import lombok.Getter;
 import net.dv8tion.jda.core.entities.Message;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.commands.AkinatorCommand;
@@ -265,7 +264,6 @@ public class AkinatorProfile {
         }
     }
 
-    @Getter
     class AkinatorQuestion {
 
         boolean gameOver;
@@ -295,9 +293,31 @@ public class AkinatorProfile {
             }
         }
 
+        public boolean isGameOver() {
+            return gameOver;
+        }
+
+        public String getSignature() {
+            return signature;
+        }
+
+        public String getSession() {
+            return session;
+        }
+
+        public String getQuestion() {
+            return question;
+        }
+
+        public int getStepNum() {
+            return stepNum;
+        }
+
+        public double getProgression() {
+            return progression;
+        }
     }
 
-    @Getter
     class AkinatorGuess {
 
         final String id;
@@ -328,6 +348,29 @@ public class AkinatorProfile {
             imgPath = character.getString("absolute_picture_path");
         }
 
+        public String getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public int getRanking() {
+            return ranking;
+        }
+
+        public String getPseudo() {
+            return pseudo;
+        }
+
+        public String getImgPath() {
+            return imgPath;
+        }
     }
 
 }

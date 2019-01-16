@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.database.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.*;
@@ -36,7 +35,6 @@ import static com.rethinkdb.RethinkDB.r;
  * Created by HeyZeer0 on 19/09/2017.
  * Copyright © HeyZeer0 - 2016
  */
-@Getter
 public class GuildProfile implements ManagedObject {
 
     public static final String DB_TABLE = "guilds";
@@ -535,4 +533,47 @@ public class GuildProfile implements ManagedObject {
     @Override
     public void save() { r.table(DB_TABLE).insert(this).optArg("conflict", "replace").runNoReply(Main.getDatabase().conn); }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public HashMap<GuildConfig, Object> getConfigs() {
+        return configs;
+    }
+
+    public HashMap<String, GroupProfile> getGroups() {
+        return groups;
+    }
+
+    public HashMap<String, String> getUser_group() {
+        return user_group;
+    }
+
+    public HashMap<String, ArrayList<String>> getUser_overrides() {
+        return user_overrides;
+    }
+
+    public HashMap<String, CustomCommand> getCommands() {
+        return commands;
+    }
+
+    public HashMap<String, StarboardProfile> getGuild_starboards() {
+        return guild_starboards;
+    }
+
+    public LogProfile getGuild_log() {
+        return guild_log;
+    }
+
+    public HashMap<String, ArrayList<String>> getIam_profiles() {
+        return iam_profiles;
+    }
+
+    public Lang getSelectedLanguage() {
+        return selectedLanguage;
+    }
 }

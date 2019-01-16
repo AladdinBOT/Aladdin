@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.music.instances;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import lombok.Getter;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -14,7 +13,6 @@ import net.heyzeer0.aladdin.utils.Utils;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Getter
 public class MusicContext {
 
     private AudioTrack audioTrack;
@@ -50,6 +48,18 @@ public class MusicContext {
 
     public String getLyrics() {
         return lyrics;
+    }
+
+    public AudioTrack getAudioTrack() {
+        return audioTrack;
+    }
+
+    public String getDj() {
+        return dj;
+    }
+
+    public int getShard_id() {
+        return shard_id;
     }
 
 }

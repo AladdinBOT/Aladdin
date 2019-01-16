@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.enums;
 
-import lombok.Getter;
 import net.heyzeer0.aladdin.Main;
 import net.heyzeer0.aladdin.utils.Utils;
 
@@ -15,7 +14,6 @@ import java.util.ArrayList;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Getter
 public enum OsuMods {
 
     NoFail(1, "NF", "mod_no-fail"),
@@ -95,4 +93,21 @@ public enum OsuMods {
         }
         return result;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
 }

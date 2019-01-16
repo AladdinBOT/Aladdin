@@ -1,12 +1,10 @@
 package net.heyzeer0.aladdin.profiles.custom;
 
-import lombok.Getter;
 
 /**
  * Created by HeyZeer0 on 18/10/2017.
  * Copyright © HeyZeer0 - 2016
  */
-@Getter
 public class PixaBayProfile {
 
     int downloads;
@@ -23,4 +21,23 @@ public class PixaBayProfile {
         this.pageURL = pageURL;
     }
 
+    public int getDownloads() {
+        return downloads;
+    }
+
+    public String getWebformatURL() {
+        return webformatURL;
+    }
+
+    public String getPageURL() {
+        return pageURL;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public int getViews() {
+        return views;
+    }
 }

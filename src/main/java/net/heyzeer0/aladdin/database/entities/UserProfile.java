@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.database.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.User;
 import net.heyzeer0.aladdin.Main;
@@ -17,7 +16,6 @@ import static com.rethinkdb.RethinkDB.r;
  * Created by HeyZeer0 on 19/09/2017.
  * Copyright © HeyZeer0 - 2016
  */
-@Getter
 public class UserProfile implements ManagedObject {
 
     public static final String DB_TABLE = "users";
@@ -164,6 +162,38 @@ public class UserProfile implements ManagedObject {
     public void addKeys(Integer amount) {
         premiumKeys+= amount;
         saveAsync();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Integer getPremiumKeys() {
+        return premiumKeys;
+    }
+
+    public boolean isPremiumActive() {
+        return premiumActive;
+    }
+
+    public long getPremiumTime() {
+        return premiumTime;
+    }
+
+    public boolean isAutoRenew() {
+        return autoRenew;
+    }
+
+    public boolean isTrialPremium() {
+        return trialPremium;
+    }
+
+    public String getOsuUsername() {
+        return osuUsername;
+    }
+
+    public ArrayList<String> getRecommendedBeatmaps() {
+        return recommendedBeatmaps;
     }
 
     @Override

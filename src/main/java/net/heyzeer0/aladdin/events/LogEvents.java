@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.events;
 
-import lombok.Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.Event;
@@ -452,7 +451,6 @@ public class LogEvents implements EventListener {
     }
 
 
-    @Getter
     public class CachedMessage {
 
         String message;
@@ -464,6 +462,21 @@ public class LogEvents implements EventListener {
             this.message = message; this.author_name = author_name; this.author_url = author_url; this.author_id = author_id;
         }
 
+        public String getMessage() {
+            return message;
+        }
+
+        public String getAuthor_name() {
+            return author_name;
+        }
+
+        public String getAuthor_url() {
+            return author_url;
+        }
+
+        public String getAuthor_id() {
+            return author_id;
+        }
     }
 
 }

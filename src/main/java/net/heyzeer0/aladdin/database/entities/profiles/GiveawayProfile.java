@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.database.entities.profiles;
 
-import lombok.Getter;
 import net.heyzeer0.aladdin.utils.builders.Prize;
 
 import java.beans.ConstructorProperties;
@@ -11,7 +10,6 @@ import java.util.List;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Getter
 public class GiveawayProfile {
 
     String messageID;
@@ -32,4 +30,35 @@ public class GiveawayProfile {
         endTime = System.currentTimeMillis() + 60000;
     }
 
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public String getChannelID() {
+        return channelID;
+    }
+
+    public String getGuildID() {
+        return guildID;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public String getAuthorAvatar() {
+        return authorAvatar;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public List<Prize> getPrizes() {
+        return prizes;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
 }

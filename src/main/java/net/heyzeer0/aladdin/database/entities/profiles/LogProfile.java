@@ -1,7 +1,6 @@
 package net.heyzeer0.aladdin.database.entities.profiles;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
 import net.heyzeer0.aladdin.enums.LogModules;
 import net.heyzeer0.aladdin.utils.Utils;
 
@@ -13,7 +12,6 @@ import java.util.HashMap;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Getter
 public class LogProfile {
 
     String channel_id;
@@ -42,5 +40,11 @@ public class LogProfile {
         channel_id = id;
     }
 
+    public String getChannel_id() {
+        return channel_id;
+    }
 
+    public HashMap<LogModules, Boolean> getModules() {
+        return modules;
+    }
 }

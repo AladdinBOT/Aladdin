@@ -37,7 +37,6 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
     compile 'com.rethinkdb:rethinkdb-driver:2.3.3'
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0.pr1'
-    compile 'org.projectlombok:lombok:1.16.16'
     compile 'com.sedmelluq:jda-nas:1.0.5'
     compile 'com.github.fedy2:yahoo-weather-java-api:2.0.2'
     compile 'com.udojava:EvalEx:1.0'

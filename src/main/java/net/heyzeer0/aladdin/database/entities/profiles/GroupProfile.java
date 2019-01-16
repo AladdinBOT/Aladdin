@@ -1,7 +1,5 @@
 package net.heyzeer0.aladdin.database.entities.profiles;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
@@ -11,13 +9,11 @@ import java.util.ArrayList;
  * Copyright © HeyZeer0 - 2016
  */
 
-@Getter
 public class GroupProfile {
 
     String id;
     public ArrayList<String> permissions = new ArrayList<>();
 
-    @Setter
     boolean isDefault;
 
     public GroupProfile(String nome, boolean isDefault) {
@@ -43,5 +39,19 @@ public class GroupProfile {
         }
     }
 
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public ArrayList<String> getPermissions() {
+        return permissions;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
 }

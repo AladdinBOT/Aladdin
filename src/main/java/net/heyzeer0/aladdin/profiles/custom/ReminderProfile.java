@@ -1,6 +1,5 @@
 package net.heyzeer0.aladdin.profiles.custom;
 
-import lombok.Getter;
 
 import java.beans.ConstructorProperties;
 
@@ -8,7 +7,6 @@ import java.beans.ConstructorProperties;
  * Created by HeyZeer0 on 18/10/2017.
  * Copyright © HeyZeer0 - 2016
  */
-@Getter
 public class ReminderProfile {
 
     String reminder;
@@ -22,4 +20,15 @@ public class ReminderProfile {
         this.userId = userId;
     }
 
+    public long getDuration() {
+        return duration;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getReminder() {
+        return reminder;
+    }
 }
