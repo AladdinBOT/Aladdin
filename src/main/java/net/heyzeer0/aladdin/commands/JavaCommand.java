@@ -23,7 +23,7 @@ public class JavaCommand implements CommandExecutor {
     @Command(command = "java", description = "Emule funções em java.", aliasses = {"eval", "evaluate"}, parameters = {"código"}, type = CommandType.BOT_ADMIN,
             usage = "a!java return \"oi\";", isAllowedToDefault = false)
     public CommandResult onCommand(ArgumentProfile args, MessageEvent e, LangProfile lp) {
-        String toEval = args.getComplete();
+        String toEval = e.getMessage().getContentRaw().replace("a!eval ", "");
 
         if(toEval.startsWith("-cl")) {
             toEval = toEval.replace("-cl ", "");
