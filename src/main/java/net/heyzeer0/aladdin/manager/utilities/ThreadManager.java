@@ -37,6 +37,9 @@ public class ThreadManager {
                         r.next().run();
                     }
 
+                    //i'm 100% sure this will cause problems, maybe'll add more delay to it
+                    System.gc();
+
                 }catch (Exception ex) { ex.printStackTrace(); }
             }
         });
