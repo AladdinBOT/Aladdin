@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 3/8/19 6:56 PM.
+ * Last Modification 3/8/19 6:56 PM.
+ *
+ * Copyright HeyZeer0 (c) 2019.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.events;
 
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -49,10 +57,6 @@ import java.io.FileInputStream;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Created by HeyZeer0 on 27/10/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class LogEvents implements EventListener {
 
     private static final Map<String, Optional<CachedMessage>> messageCache = Utils.createCache(35000);
@@ -98,6 +102,7 @@ public class LogEvents implements EventListener {
                 if(ev.getAuthor().isBot() || ev.getAuthor().isFake()) {
                     return;
                 }
+
                 try{
                     CachedMessage old_message = messageCache.get(ev.getMessageId()).orElse(null);
 
@@ -115,6 +120,7 @@ public class LogEvents implements EventListener {
         if(e instanceof GenericUserEvent) {
             if(e instanceof UserUpdateAvatarEvent) {
                 UserUpdateAvatarEvent ev = (UserUpdateAvatarEvent)e;
+                if(ev.getUser().isBot() || ev.getUser().isFake()) return;;
 
                 Utils.runAsync(() -> {
                     try{
@@ -161,7 +167,7 @@ public class LogEvents implements EventListener {
                         }
 
 
-                    }catch (Exception ex) { ex.printStackTrace();}
+                    }catch (Exception ex) { ex.printStackTrace(); }
                 });
 
             }
