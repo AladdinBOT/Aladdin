@@ -1,3 +1,11 @@
+/*
+ * Developed by HeyZeer0 on 6/7/19 3:47 PM.
+ * Last Modification 6/7/19 3:47 PM.
+ *
+ * Copyright HeyZeer0 (c) 2019.
+ * This project is over AGLP 3.0 License.
+ */
+
 package net.heyzeer0.aladdin.manager.commands;
 
 import net.dv8tion.jda.core.Permission;
@@ -23,10 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by HeyZeer0 on 14/01/2017.
- * Copyright © HeyZeer0 - 2016
- */
 public class CommandManager {
 
     public static HashMap<String, CommandContainer> commands = new HashMap<>();
@@ -172,7 +176,7 @@ public class CommandManager {
 
         if(e.getGuildProfile().hasCustomCommand(arg.invoke)) {
             String msg = e.getGuildProfile().getCustomCommand(arg.invoke).handleCommand(e, arg.args);
-            if(msg != null) e.sendMessage(msg);
+            if(msg != null && !msg.contains("@everyone") && !msg.contains("@here")) e.sendMessage(msg);
             return;
         }
 
